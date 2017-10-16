@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <Import Project="..\iHentai.Services.EHentai\iHentai.Services.EHentai.projitems" Label="Shared" />
+
+  <Import Project="..\iHentai.Services.NHentai\iHentai.Services.NHentai.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <PackageReference Include="Html2Model" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
