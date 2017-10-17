@@ -29,6 +29,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Services.EHentai", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Services.NHentai", "src\iHentai\Services\iHentai.Services.NHentai\iHentai.Services.NHentai.shproj", "{009BCCAE-8C65-499C-9F44-934291394DAE}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Shared", "src\iHentai\iHentai.Shared\iHentai.Shared.shproj", "{A512A150-5A61-439E-9A2E-8BA4C5220958}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\iHentai\Services\iHentai.Services.NHentai\iHentai.Services.NHentai.projitems*{009bccae-8c65-499c-9f44-934291394dae}*SharedItemsImports = 13
@@ -339,6 +341,7 @@ Global
 		{27CF796F-61F8-4558-89E8-99BAF7A921B6} = {FD52BAC8-5866-41E0-8CCC-6C593943D25E}
 		{88F16A5B-450B-4A45-8DA6-6B8790FD70A8} = {FD52BAC8-5866-41E0-8CCC-6C593943D25E}
 		{009BCCAE-8C65-499C-9F44-934291394DAE} = {FD52BAC8-5866-41E0-8CCC-6C593943D25E}
+		{A512A150-5A61-439E-9A2E-8BA4C5220958} = {7B1C40EF-F065-4CCB-8578-A550D5466650}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77481E86-259D-409F-B83B-AD580FAB08AD}

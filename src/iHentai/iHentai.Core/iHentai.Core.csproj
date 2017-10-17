@@ -30,4 +30,5 @@
   </ItemGroup>
   <Import Project="..\..\Toser\Toser\Toser.projitems" Label="Shared" />
   <Import Project="..\iHentai.Common\iHentai.Common.projitems" Label="Shared" />
+  <Import Project="..\iHentai.Shared\iHentai.Shared.projitems" Label="Shared" />
 </Project>
