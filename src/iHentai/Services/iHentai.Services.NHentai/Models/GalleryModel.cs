@@ -1,7 +1,7 @@
 ﻿using Html2Model.Attributes;
 using iHentai.Services.Core.Models.Interfaces;
 
-namespace iHentai.Services.Core.iHentai.Services.NHentai.Models
+namespace iHentai.Services.NHentai.Models
 {
     public class GalleryModel : IGalleryModel
     {

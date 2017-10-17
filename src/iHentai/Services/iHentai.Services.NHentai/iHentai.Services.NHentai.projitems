@@ -11,4 +11,8 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Apis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SearchOption.cs" />
+  </ItemGroup>
 </Project>
