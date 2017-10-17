@@ -8,4 +8,10 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>iHentai.Services.EHentai</Import_RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CategoryFlags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\HtmlConverters\RatingConverter.cs" />
+  </ItemGroup>
+  <ItemGroup />
 </Project>

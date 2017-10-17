@@ -12,5 +12,10 @@ namespace iHentai.Services.Core
         {
             return HtmlConvert.DeserializeObject<T>(await response.ReceiveString());
         }
+
+        public static async Task<object> ReceiveHtml(this Task<HttpResponseMessage> response, Type type)
+        {
+            return HtmlConvert.DeserializeObject(await response.ReceiveString(), type);
+        }
     }
 }
