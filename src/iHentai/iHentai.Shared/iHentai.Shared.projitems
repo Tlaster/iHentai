@@ -9,10 +9,6 @@
     <Import_RootNamespace>iHentai.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Fuel\FuelExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Fuel\FuelRequest.cs" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>

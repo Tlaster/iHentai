@@ -23,7 +23,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Common", "src\iHent
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FD52BAC8-5866-41E0-8CCC-6C593943D25E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Services.Core", "src\iHentai\Services\iHentai.Services.Core\iHentai.Services.Core.csproj", "{27CF796F-61F8-4558-89E8-99BAF7A921B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Services.Core", "src\iHentai\Services\iHentai.Services.Core\iHentai.Services.Core.csproj", "{27CF796F-61F8-4558-89E8-99BAF7A921B6}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Services.EHentai", "src\iHentai\Services\iHentai.Services.EHentai\iHentai.Services.EHentai.shproj", "{88F16A5B-450B-4A45-8DA6-6B8790FD70A8}"
 EndProject
@@ -37,6 +37,7 @@ Global
 		src\Toser\Toser\Toser.projitems*{183e1689-7093-4cdd-bfa3-3881d9997ce7}*SharedItemsImports = 13
 		src\iHentai\iHentai.Common\iHentai.Common.projitems*{4cf507b3-5e97-43ef-9a83-c08c3e903c0c}*SharedItemsImports = 13
 		src\iHentai\Services\iHentai.Services.EHentai\iHentai.Services.EHentai.projitems*{88f16a5b-450b-4a45-8da6-6b8790fd70a8}*SharedItemsImports = 13
+		src\iHentai\iHentai.Shared\iHentai.Shared.projitems*{a512a150-5a61-439e-9a2e-8ba4c5220958}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
