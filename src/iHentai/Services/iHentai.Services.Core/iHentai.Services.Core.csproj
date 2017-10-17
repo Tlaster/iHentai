@@ -9,7 +9,7 @@
   <Import Project="..\iHentai.Services.NHentai\iHentai.Services.NHentai.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="Html2Model" Version="1.0.0" />
+    <PackageReference Include="Html2Model" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
