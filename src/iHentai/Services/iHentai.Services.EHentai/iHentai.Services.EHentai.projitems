@@ -13,7 +13,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CategoryFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\HtmlConverters\RatingConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\LanguageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TagNamespaceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UconfigCategoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SearchOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UConfig.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>

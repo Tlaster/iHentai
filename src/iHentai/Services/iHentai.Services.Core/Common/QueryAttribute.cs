@@ -10,6 +10,6 @@ namespace iHentai.Services.Core.Common
         }
 
         public string Key { get; }
-        public bool HasValue { get; set; }
+        public bool HasValue { get; set; } = true;
     }
 }

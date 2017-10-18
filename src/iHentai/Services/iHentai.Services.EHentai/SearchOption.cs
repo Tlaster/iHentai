@@ -71,51 +71,26 @@ namespace iHentai.Services.EHentai
 
         [Query("f_srdd")]
         public int MinimumRating { get; set; } = 2;
-//        public OptionModel<string, string> KeyWord { get; } = new OptionModel<string, string>("f_search", null);
-//
-//        public OptionModel<CategoryFlags, bool> Doujinshi { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Doujinshi, true);
-//        public OptionModel<CategoryFlags, bool> Manga { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Manga, true);
-//        public OptionModel<CategoryFlags, bool> ArtistCG { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.ArtistCG, true);
-//        public OptionModel<CategoryFlags, bool> GameCG { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.GameCG, true);
-//        public OptionModel<CategoryFlags, bool> Western { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Western, true);
-//        public OptionModel<CategoryFlags, bool> NonH { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Nonh, true);
-//        public OptionModel<CategoryFlags, bool> ImageSet { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.ImageSet, true);
-//        public OptionModel<CategoryFlags, bool> Cosplay { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Cosplay, true);
-//        public OptionModel<CategoryFlags, bool> AsianPorn { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.AsianPorn, true);
-//        public OptionModel<CategoryFlags, bool> Misc { get; } = new OptionModel<CategoryFlags, bool>(CategoryFlags.Misc, true);
-//
-//        public OptionModel<string, bool> AdvSearch { get; } = new OptionModel<string, bool>("advsearch", false);
-//        public OptionModel<string, bool> SearchName { get; } = new OptionModel<string, bool>("f_sname=on", true);
-//        public OptionModel<string, bool> SearchTags { get; } = new OptionModel<string, bool>("f_stags=on", true);
-//        public OptionModel<string, bool> SearchDescription { get; } = new OptionModel<string, bool>("f_sdesc=on", false);
-//        public OptionModel<string, bool> SearchTorrentFileNames { get; } = new OptionModel<string, bool>("f_storr=on", false);
-//        public OptionModel<string, bool> OnlyShowWithTorrents { get; } = new OptionModel<string, bool>("f_sto=on", false);
-//        public OptionModel<string, bool> SearchLowPowerTags { get; } = new OptionModel<string, bool>("f_sdt1=on", false);
-//        public OptionModel<string, bool> SearchDownvotedTags { get; } = new OptionModel<string, bool>("f_sdt2=on", false);
-//        public OptionModel<string, bool> ShowExpunged { get; } = new OptionModel<string, bool>("f_sh=on", false);
-//        public OptionModel<string, bool> EnableMinimumRating { get; } = new OptionModel<string, bool>("f_sr=on", false);
-//
-//        public OptionModel<string, int> MinimumRating { get; } = new OptionModel<string, int>("f_srdd", 2);
-//
-//
-//        public SearchOption() : this(null)
-//        {
-//        }
-//
-//        public SearchOption(string keyword)
-//        {
-//            KeyWord.Value = keyword;
-//        }
-        
-//        public override string ToString() => $"&{string.Join("&", typeof(SearchOption).GetRuntimeProperties().Where(item => item.PropertyType.GetTypeInfo().IsGenericType).Select(item => item.GetValue(this).ToString()).Where(item => item != null))}&f_apply=Apply+Filter";    
         
         [Query("f_search")]
         public string Keyword { get; set; }
 
         public string ToQueryString()
         {
-            throw new NotImplementedException();
-//            $"{string.Join("&", typeof(SearchOption).GetRuntimeProperties().Where(item => Attribute.IsDefined(item, typeof(QueryAttribute))).Select(item => item.GetValue(this).ToString()))}";
+            return $"{string.Join("&", typeof(SearchOption).GetRuntimeProperties().Where(item => Attribute.IsDefined(item, typeof(QueryAttribute))).Select(GetValueFromPropertyInfo))}";
+        }
+
+        private string GetValueFromPropertyInfo(PropertyInfo info)
+        {
+            var item = info.GetValue(this);
+            var attribute = info.GetCustomAttribute<QueryAttribute>();
+            switch (item)
+            {
+                case bool value:
+                    return attribute.HasValue ? $"{attribute.Key}={Convert.ToInt32(value)}" : $"{(value ? attribute.Key : "")}";
+                default:
+                    return $"{attribute.Key}={item}";
+            }
         }
     }
 }
