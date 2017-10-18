@@ -11,7 +11,7 @@ namespace iHentai.Services.NHentai
         public string Host { get; } = "https://nhentai.net/";
         public IApiConfig ApiConfig { get; }
 
-        public Task<IGalleryModel> Gallery(int page = 0, ISearchOption searchOption = null)
+        public Task<IGalleryModel> Gallery(int page = 0, SearchOptionBase searchOption = null)
         {
             throw new System.NotImplementedException();
         }

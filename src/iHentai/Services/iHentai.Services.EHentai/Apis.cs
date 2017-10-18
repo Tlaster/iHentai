@@ -13,7 +13,7 @@ namespace iHentai.Services.EHentai
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
         public IApiConfig ApiConfig { get; } = new UConfig();
 
-        public async Task<IGalleryModel> Gallery(int page = 0, ISearchOption searchOption = null)
+        public async Task<IGalleryModel> Gallery(int page = 0, SearchOptionBase searchOption = null)
         {
             throw new NotImplementedException();
         }

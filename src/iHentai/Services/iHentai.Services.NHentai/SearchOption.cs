@@ -4,14 +4,9 @@ using iHentai.Services.Core.Common;
 
 namespace iHentai.Services.NHentai
 {
-    public class SearchOption : ISearchOption
+    public class SearchOption : SearchOptionBase
     {
-        [Query("q")]
-        public string Keyword { get; set; }
-
-        public string ToQueryString()
-        {
-            return $"q={Keyword}";
-        }
+        [StringValue("q")]
+        public override string Keyword { get; set; }
     }
 }

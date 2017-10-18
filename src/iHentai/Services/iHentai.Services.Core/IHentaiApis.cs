@@ -9,7 +9,7 @@ namespace iHentai.Services.Core
         string Cookie { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
-        Task<IGalleryModel> Gallery(int page = 0, ISearchOption searchOption = null);
+        Task<IGalleryModel> Gallery(int page = 0, SearchOptionBase searchOption = null);
         Task<IGalleryModel> TaggedGallery(string name, int page = 0);
         Task Login(string userName, string password);
     }
