@@ -8,6 +8,7 @@ namespace iHentai.Services.Core.Common.Attributes
         string Key { get; }
         string Separator { get; set; }
         string ToString(object instance);
+        string GetValue(object instance);
     }
 
     internal static class ValueAttributeExtension

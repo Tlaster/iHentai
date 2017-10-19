@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EqualsConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\Int32Extension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MarkupExtensions\LocalizationExtension.cs" />

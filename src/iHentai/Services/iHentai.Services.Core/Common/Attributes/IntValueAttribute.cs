@@ -12,11 +12,17 @@ namespace iHentai.Services.Core.Common.Attributes
 
         public string Key { get; }
         public string Separator { get; set; } = "=";
-        public string ToString(object instance)
+
+        public string GetValue(object instance)
         {
             if (instance is Enum value)
-                return $"{Key}{Separator}{(int)Enum.Parse(value.GetType(), value.ToString())}";
-            return $"{Key}{Separator}{instance}";
+                return ((int)Enum.Parse(value.GetType(), value.ToString())).ToString();
+            return instance + "";
+        }
+
+        public string ToString(object instance)
+        {
+            return $"{Key}{Separator}{GetValue(instance)}";
         }
     }
 }

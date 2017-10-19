@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Flurl.Http;
 using Html2Model;
+using System.Threading;
 
 namespace iHentai.Services.Core
 {
@@ -17,5 +18,11 @@ namespace iHentai.Services.Core
         {
             return HtmlConvert.DeserializeObject(await response.ReceiveString(), type);
         }
+
+        public static Task<T> GetHtmlAsync<T>(this IFlurlRequest request, CancellationToken cancellationToken = default, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead) where T : class, new()
+        {
+            return request.SendAsync(HttpMethod.Get, cancellationToken: cancellationToken, completionOption: completionOption).ReceiveHtml<T>();
+        }
+
     }
 }

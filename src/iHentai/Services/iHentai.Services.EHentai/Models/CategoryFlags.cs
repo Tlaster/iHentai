@@ -62,12 +62,13 @@ namespace iHentai.Services.EHentai.Models
     {
         public object ReadHtml(INode node, Type targetType, object existingValue)
         {
-            switch (node.Text())
+            var text = (node as IElement).GetAttribute("alt").ToLowerInvariant();
+            switch (text)
             {
-                case "NON-H":
+                case "non-h":
                     return CategoryFlags.Nonh;
                 default:
-                    return (CategoryFlags) Enum.Parse(typeof(CategoryFlags), node.Text(), true);
+                    return (CategoryFlags)Enum.Parse(typeof(CategoryFlags), text, true);
             }
         }
     }

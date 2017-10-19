@@ -149,5 +149,6 @@ namespace iHentai.Services.EHentai
 
         [StringValue("xl", Separator = UConfigItemSeparator)]
         public string ExcludedLanguages => string.Join("", Language.Select(item => item.Value.Value)).TrimEnd('x');
+        
     }
 }

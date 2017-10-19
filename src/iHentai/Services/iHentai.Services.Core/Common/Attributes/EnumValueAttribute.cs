@@ -12,10 +12,16 @@ namespace iHentai.Services.Core.Common.Attributes
 
         public string Key { get; }
         public string Separator { get; set; }
+
+        public string GetValue(object instance)
+        {
+            return instance.GetType().GetField(instance.GetType().GetEnumName(instance)).GetAttr(instance).Key;
+        }
+
         public string ToString(object instance)
         {
             return
-                $"{Key}{Separator}{instance.GetType().GetField(instance.GetType().GetEnumName(instance)).GetAttr(instance).Key}";
+                $"{Key}{Separator}{GetValue(instance)}";
         }
     }
 }

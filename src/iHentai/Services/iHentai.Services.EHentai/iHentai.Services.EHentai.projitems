@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Apis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CategoryFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\HtmlConverters\RatingConverter.cs" />

@@ -9,7 +9,6 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

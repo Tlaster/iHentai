@@ -15,9 +15,14 @@ namespace iHentai.Services.Core.Common.Attributes
         public string Key { get; }
         public string Separator { get; set; } = "=";
 
+        public string GetValue(object instance)
+        {
+            return (bool)instance ? OnValue : OffValue;
+        }
+
         public string ToString(object instance)
         {
-            return $"{Key}{Separator}{((bool)instance ? OnValue : OffValue)}";
+            return $"{Key}{Separator}{GetValue(instance)}";
         }
     }
 }

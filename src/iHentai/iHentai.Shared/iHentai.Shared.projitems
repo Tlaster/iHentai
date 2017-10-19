@@ -9,6 +9,9 @@
     <Import_RootNamespace>iHentai.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ISettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
   </ItemGroup>
 </Project>
