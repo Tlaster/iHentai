@@ -1,6 +1,7 @@
 ﻿using System;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Common;
+using iHentai.Services.Core.Common.Attributes;
 
 namespace iHentai.Services.NHentai
 {

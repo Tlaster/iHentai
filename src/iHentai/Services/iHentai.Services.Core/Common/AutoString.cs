@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using iHentai.Services.Core.Common.Attributes;
 
 namespace iHentai.Services.Core.Common
 {
@@ -12,12 +13,13 @@ namespace iHentai.Services.Core.Common
         {
             var values = GetType()
                 .GetProperties()
-                .Select(property => (Attribute: property
-                    .GetCustomAttributesData()
-                    .FirstOrDefault(attr => typeof(IValueAttribute).IsAssignableFrom(attr.AttributeType)), Property : property)
-                )
-                .Where(item => item.Attribute != null)
-                .Select(item => (item.Property.GetCustomAttribute(item.Attribute.AttributeType) as IValueAttribute)?.ToQueryString(item.Property.GetValue(this)))
+                .Select(item => item.Get(item.GetValue(this)))
+//                .Select(property => (Attribute: property
+//                    .GetCustomAttributesData()
+//                    .FirstOrDefault(attr => typeof(IValueAttribute).IsAssignableFrom(attr.AttributeType)), Property : property)
+//                )
+//                .Where(item => item.Attribute != null)
+//                .Select(item => (item.Property.GetCustomAttribute(item.Attribute.AttributeType) as IValueAttribute)?.ToString(item.Property.GetValue(this)))
                 .Where(item => !string.IsNullOrEmpty(item))
                 .ToList();
             return string.Join(Separator, values);

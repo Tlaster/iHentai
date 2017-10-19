@@ -6,26 +6,24 @@
         {
             ID = id;
         }
-        public int ID { get; }
 
-        public bool Original { get; set; } = false;
-        
-        public string OriginalID => $"{ID}";
+        private int ID { get; }
 
-        public bool Translated { get; set; } = false;
-        
-        public string TranslatedID => $"{ID + 1024}";
+        public bool Original { get; set; }
 
-        public bool Rewrite { get; set; } = false;
+        private string OriginalID => $"{ID}";
 
-        public string RewriteID => $"{ID + 2048}";
+        public bool Translated { get; set; }
+
+        private string TranslatedID => $"{ID + 1024}";
+
+        public bool Rewrite { get; set; }
+
+        private string RewriteID => $"{ID + 2048}";
 
         public bool All
         {
-            get
-            {
-                return Original && Translated && Rewrite;
-            }
+            get => Original && Translated && Rewrite;
             set
             {
                 Original = value;
@@ -34,8 +32,28 @@
             }
         }
 
-        public string Value => $"{(Original && ID != 0 ? $"{OriginalID}x" : null)}{(Translated ? $"{TranslatedID}x" : null)}{(Rewrite ? $"{RewriteID}x" : null)}";
-
+        internal string Value =>
+            $"{(Original && ID != 0 ? $"{OriginalID}x" : null)}{(Translated ? $"{TranslatedID}x" : null)}{(Rewrite ? $"{RewriteID}x" : null)}";
     }
 
+    public enum LanguageFlags
+    {
+        Japanese,
+        English,
+        Chinese,
+        Dutch,
+        French,
+        German,
+        Hungarian,
+        Italian,
+        Korean,
+        Polish,
+        Portuguese,
+        Russian,
+        Spanish,
+        Thai,
+        Vietnamese,
+        NA,
+        Other
+    }
 }
