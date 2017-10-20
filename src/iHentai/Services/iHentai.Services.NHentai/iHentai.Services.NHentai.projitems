@@ -9,10 +9,13 @@
     <Import_RootNamespace>iHentai.Services.NHentai</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Apis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryImagesModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GalleryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ImageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TagModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TitleModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SearchOption.cs" />
   </ItemGroup>
 </Project>

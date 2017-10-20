@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Flurl;
+using Flurl.Http;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Models.Interfaces;
+using iHentai.Services.NHentai.Models;
 using iHentai.Shared.Extensions;
-using System.Collections.Generic;
 
 namespace iHentai.Services.NHentai
 {
@@ -13,21 +17,36 @@ namespace iHentai.Services.NHentai
         public IApiConfig ApiConfig { get; }
         public ISettings Settings { get; }
 
-        public Dictionary<string, string> Cookie => throw new System.NotImplementedException();
+        public Dictionary<string, string> Cookie => throw new NotImplementedException();
 
-        public Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
+        public async Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
         {
-            throw new System.NotImplementedException();
+            if (searchOption == null)
+                return (await $"{Host}api/galleries/all".SetQueryParam(nameof(page), page + 1)
+                    .GetJsonAsync<GalleryListModel>()).Gallery;
+            return (await $"{Host}api/galleries/search".SetQueryParam(nameof(page), page + 1)
+                .SetQueryParams(searchOption.ToDictionary())
+                .GetJsonAsync<GalleryListModel>()).Gallery;
+//            return (await Host.SetQueryParam("page", page + 1).GetHtmlAsync<GalleryListModel>()).Gallery;
         }
 
         public Task<(bool State, string Message)> Login(string userName, string password)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task<IGalleryModel> TaggedGallery(string name, int page = 0)
+
+        public Task<IEnumerable<IGalleryModel>> TaggedGallery(string tag_id, int page = 0)
         {
-            throw new System.NotImplementedException();
+            return TaggedGallery(tag_id, page, false);
+        }
+
+        public async Task<IEnumerable<IGalleryModel>> TaggedGallery(string tag_id, int page = 0, bool sort = false)
+        {
+            return (await $"{Host}api/galleries/tagged".SetQueryParam(nameof(page), page + 1)
+                .SetQueryParam(nameof(tag_id), tag_id)
+                .SetQueryParam(nameof(sort), sort ? "popular" : null)
+                .GetJsonAsync<GalleryListModel>()).Gallery;
         }
     }
 }

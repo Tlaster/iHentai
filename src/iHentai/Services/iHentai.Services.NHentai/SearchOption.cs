@@ -7,7 +7,7 @@ namespace iHentai.Services.NHentai
 {
     public class SearchOption : SearchOptionBase
     {
-        [StringValue("q")]
+        [StringValue("query")]
         public override string Keyword { get; set; }
     }
 }

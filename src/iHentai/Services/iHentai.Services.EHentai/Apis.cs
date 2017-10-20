@@ -23,13 +23,19 @@ namespace iHentai.Services.EHentai
         public ISettings Settings { get; } = new Settings("ehentai");
         public Dictionary<string, string> Cookie
         {
+#if DEBUG
+            get;
+            set;
+#else
+            
             get => Settings.Get<string>("user_info").FromJson<Dictionary<string, string>>();
             set => Settings.Set("user_info", value.ToJson());
+#endif
         }
 
         public async Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
         {
-            return (await Host.SetQueryParam("page", page).SetQueryParams(searchOption?.ToDictionary(), NullValueHandling.Ignore).WithCookies(Cookie).WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>()).Gallery;
+            return (await Host.SetQueryParam("page", page).SetQueryParams(searchOption?.ToDictionary()).WithCookies(Cookie).WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>()).Gallery;
         }
 
         public async Task<(bool State, string Message)> Login(string userName, string password)
@@ -61,7 +67,7 @@ namespace iHentai.Services.EHentai
             return (true, string.Empty);
         }
 
-        public Task<IGalleryModel> TaggedGallery(string name, int page = 0)
+        public Task<IEnumerable<IGalleryModel>> TaggedGallery(string name, int page = 0)
         {
             throw new NotImplementedException();
         }
