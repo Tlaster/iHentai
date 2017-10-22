@@ -15,8 +15,10 @@ namespace iHentai.Common.Controls
         public ExListView()
         {
             ItemAppearing += ExListView_ItemAppearing;
+            
         }
-        
+
+
         private void ExListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (ItemsSource is IList items && items.IndexOf(e.Item) == items.Count - 1)

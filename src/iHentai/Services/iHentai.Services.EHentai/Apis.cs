@@ -21,6 +21,8 @@ namespace iHentai.Services.EHentai
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
         public IApiConfig ApiConfig { get; } = new UConfig();
         public ISettings Settings { get; } = new Settings("ehentai");
+        public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
+
         public Dictionary<string, string> Cookie
         {
 #if DEBUG

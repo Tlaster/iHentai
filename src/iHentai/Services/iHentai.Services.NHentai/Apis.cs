@@ -16,6 +16,7 @@ namespace iHentai.Services.NHentai
         public string Host { get; } = "https://nhentai.net/";
         public IApiConfig ApiConfig { get; }
         public ISettings Settings { get; }
+        public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public Dictionary<string, string> Cookie => throw new NotImplementedException();
 

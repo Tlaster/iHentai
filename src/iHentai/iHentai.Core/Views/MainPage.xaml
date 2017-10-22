@@ -9,6 +9,9 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
+            <ListView>
+                
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
