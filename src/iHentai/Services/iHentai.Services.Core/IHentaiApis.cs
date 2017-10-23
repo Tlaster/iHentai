@@ -8,6 +8,8 @@ namespace iHentai.Services.Core
     public interface IHentaiApis
     {
         bool FouceLogin { get; }
+        bool HasLogin { get; }
+        bool CanLogin { get; }
         Dictionary<string, string> Cookie { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }

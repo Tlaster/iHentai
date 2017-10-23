@@ -11,8 +11,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BehaviorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\EventToCommandBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ExListView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CollectionView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\EqualsConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IIncrementalSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IncrementalLoadingCollection.cs" />

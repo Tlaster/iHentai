@@ -13,6 +13,8 @@ namespace iHentai.Services.NHentai
     public class Apis : IHentaiApis
     {
         public bool FouceLogin { get; } = false;
+        public bool HasLogin => throw new NotImplementedException();
+        public bool CanLogin { get; } = true;
         public string Host { get; } = "https://nhentai.net/";
         public IApiConfig ApiConfig { get; }
         public ISettings Settings { get; }

@@ -1,7 +1,9 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
 
 namespace iHentai.Droid
 {
@@ -16,6 +18,7 @@ namespace iHentai.Droid
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            UserDialogs.Init(() => (Activity)Forms.Context);
             LoadApplication(new Core.App());
         }
     }

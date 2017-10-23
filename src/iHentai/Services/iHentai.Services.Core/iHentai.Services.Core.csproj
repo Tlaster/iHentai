@@ -8,9 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Flurl.Http" Version="2.0.1" />
     <PackageReference Include="Html2Model" Version="1.0.3" />
-    <PackageReference Include="MethodTimer.Fody" Version="1.19.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
   </ItemGroup>
   <Import Project="..\..\iHentai.Shared\iHentai.Shared.projitems" Label="Shared" />
 </Project>

@@ -18,6 +18,8 @@ namespace iHentai.Services.EHentai
     {
         public bool IsExhentaiMode { get; set; }
         public bool FouceLogin { get; } = true;
+        public bool HasLogin => Cookie.Any();
+        public bool CanLogin { get; } = true;
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
         public IApiConfig ApiConfig { get; } = new UConfig();
         public ISettings Settings { get; } = new Settings("ehentai");

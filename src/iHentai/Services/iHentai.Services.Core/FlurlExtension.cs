@@ -5,13 +5,11 @@ using Flurl.Http;
 using Html2Model;
 using System.Threading;
 using Flurl;
-using MethodTimer;
 
 namespace iHentai.Services.Core
 {
     internal static class FlurlExtension
     {
-        [Time]
         public static async Task<T> ReceiveHtml<T>(this Task<HttpResponseMessage> response) where T: class, new()
         {
             return HtmlConvert.DeserializeObject<T>(await response.ReceiveString());
@@ -26,7 +24,7 @@ namespace iHentai.Services.Core
         {
             return request.SendAsync(HttpMethod.Get, cancellationToken: cancellationToken, completionOption: completionOption).ReceiveHtml<T>();
         }
-        public static Task<T> GetHtmlAsync<T>(this Url url, CancellationToken cancellationToken = default (CancellationToken), HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead) where T : class, new()
+        public static Task<T> GetHtmlAsync<T>(this Url url, CancellationToken cancellationToken = default, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead) where T : class, new()
         {
             return new FlurlRequest(url).GetHtmlAsync<T>(cancellationToken, completionOption);
         }
