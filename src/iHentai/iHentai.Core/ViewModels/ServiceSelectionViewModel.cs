@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Acr.UserDialogs;
+using iHentai.Core.Common.Helpers;
 using iHentai.Services.Core;
-using iHentai.Common.Helpers;
 using iHentai.Core.Views;
 
 namespace iHentai.Core.ViewModels

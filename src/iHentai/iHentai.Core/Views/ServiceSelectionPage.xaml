@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.ServiceSelectionPage"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
-    xmlns:m="clr-namespace:iHentai.Common.MarkupExtensions">
+    xmlns:m="clr-namespace:iHentai.Core.Common.MarkupExtensions;assembly=iHentai.Core">
     <ContentPage.BindingContext>
         <viewModels:ServiceSelectionViewModel/>
     </ContentPage.BindingContext>
