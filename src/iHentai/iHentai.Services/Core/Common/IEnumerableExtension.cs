@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace iHentai.Shared.Extensions
+namespace iHentai.Services.Core.Common
 {
     internal static class IEnumerableExtension
     {

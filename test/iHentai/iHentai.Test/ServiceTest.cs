@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai;
+using iHentai.Services.EHentai.Models;
+using Newtonsoft.Json;
 using Xunit;
 using NApis = iHentai.Services.NHentai.Apis;
 
@@ -24,5 +26,6 @@ namespace iHentai.Test
             Assert.NotNull(res);
             Assert.NotEmpty(res);
         }
+        
     }
 }

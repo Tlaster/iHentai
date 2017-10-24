@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace iHentai.Shared.Extensions
+namespace iHentai.Core.Common.Extensions
 {
     internal static class TaskExtension
     {

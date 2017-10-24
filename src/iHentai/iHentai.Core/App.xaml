@@ -2,9 +2,10 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:iHentai.Core.Common.Converters;assembly=iHentai.Core"
+             xmlns:core="clr-namespace:iHentai.Services.Core;assembly=iHentai.Services"
              x:Class="iHentai.Core.App">
     <Application.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary MergedWith="core:Resources">
             <converters:EqualsConverter x:Key="Equals"/>
         </ResourceDictionary>
         <!-- Application resource dictionary -->

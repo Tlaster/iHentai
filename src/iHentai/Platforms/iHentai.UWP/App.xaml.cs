@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using FFImageLoading.Forms;
+using FFImageLoading.Forms.WinUWP;
+using iHentai.Core.Common.Helpers;
 
 namespace iHentai.UWP
 {
@@ -40,10 +45,14 @@ namespace iHentai.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+                var assembliesToInclude = new List<Assembly>
+                {
+                    typeof(CachedImage).GetTypeInfo().Assembly,
+                    typeof(CachedImageRenderer).GetTypeInfo().Assembly
+                };
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
-                Xamarin.Forms.Forms.Init(e);
-
-
+                Xamarin.Forms.DependencyService.Register<Settings>();
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application

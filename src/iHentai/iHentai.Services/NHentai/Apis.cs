@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Flurl;
 using Flurl.Http;
 using iHentai.Services.Core;
+using iHentai.Services.Core.Common;
 using iHentai.Services.Core.Models.Interfaces;
 using iHentai.Services.NHentai.Models;
-using iHentai.Shared.Extensions;
 
 namespace iHentai.Services.NHentai
 {

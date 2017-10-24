@@ -175,6 +175,9 @@
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.2.20</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>2.4.0.18342</Version>
     </PackageReference>

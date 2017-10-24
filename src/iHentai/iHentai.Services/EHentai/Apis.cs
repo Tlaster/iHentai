@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Flurl.Http;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Models.Interfaces;
-using iHentai.Shared.Extensions;
 using Flurl.Util;
 using System.Linq;
 using System.Text.RegularExpressions;
 using iHentai.Services.EHentai.Models;
 using Html2Model;
 using Flurl;
+using iHentai.Services.Core.Common;
 
 namespace iHentai.Services.EHentai
 {
@@ -22,7 +22,7 @@ namespace iHentai.Services.EHentai
         public bool CanLogin { get; } = true;
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
         public IApiConfig ApiConfig { get; } = new Config();
-        public ISettings Settings { get; } //= new Settings("ehentai");
+        public ISettings Settings { get; } = new Settings("EHentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public Dictionary<string, string> Cookie
@@ -31,7 +31,6 @@ namespace iHentai.Services.EHentai
             get;
             set;
 #else
-            
             get => Settings.Get<string>("user_info").FromJson<Dictionary<string, string>>();
             set => Settings.Set("user_info", value.ToJson());
 #endif

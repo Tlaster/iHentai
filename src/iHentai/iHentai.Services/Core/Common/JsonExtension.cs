@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace iHentai.Shared.Extensions
+namespace iHentai.Services.Core.Common
 {
     internal static class JsonExtension
     {

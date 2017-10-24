@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using iHentai.Services.Core.Models.Interfaces;
-using iHentai.Shared.Extensions;
 using System.Collections.Generic;
+using iHentai.Services.Core.Common;
 
 namespace iHentai.Services.Core
 {

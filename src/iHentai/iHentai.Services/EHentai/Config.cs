@@ -7,6 +7,7 @@ using iHentai.Services.Core;
 using iHentai.Services.Core.Common;
 using iHentai.Services.Core.Common.Attributes;
 using iHentai.Services.EHentai.Models;
+using Newtonsoft.Json;
 
 namespace iHentai.Services.EHentai
 {
@@ -14,7 +15,7 @@ namespace iHentai.Services.EHentai
     {
         private const string UConfigItemSeparator = "_";
         
-        public Dictionary<LanguageFlags, LanguageModel> Language { get; } = new Dictionary<LanguageFlags, LanguageModel>
+        public Dictionary<LanguageFlags, LanguageModel> Language { get; set; } = new Dictionary<LanguageFlags, LanguageModel>
         {
             {LanguageFlags.Japanese, new LanguageModel(0)},
             {LanguageFlags.English, new LanguageModel(1)},
@@ -34,8 +35,8 @@ namespace iHentai.Services.EHentai
             {LanguageFlags.NA, new LanguageModel(254)},
             {LanguageFlags.Other, new LanguageModel(255)},
         };
-
-        public Dictionary<TagNamespaceFlags, TagNamespaceModel> TagNamespace { get; } = new Dictionary<TagNamespaceFlags, TagNamespaceModel>
+        
+        public Dictionary<TagNamespaceFlags, TagNamespaceModel> TagNamespace { get; set; } = new Dictionary<TagNamespaceFlags, TagNamespaceModel>
         {
             {TagNamespaceFlags.Reclass, new TagNamespaceModel(1)},
             {TagNamespaceFlags.Language, new TagNamespaceModel(2)},
@@ -46,8 +47,8 @@ namespace iHentai.Services.EHentai
             {TagNamespaceFlags.Male, new TagNamespaceModel(7)},
             {TagNamespaceFlags.Female, new TagNamespaceModel(8)},
         };
-
-        public Dictionary<CategoryFlags,UconfigCategoryModel> Category { get; } = new Dictionary<CategoryFlags, UconfigCategoryModel>
+        
+        public Dictionary<CategoryFlags,UconfigCategoryModel> Category { get; set; } = new Dictionary<CategoryFlags, UconfigCategoryModel>
         {
             {CategoryFlags.Misc, new UconfigCategoryModel(0x1)},
             {CategoryFlags.Doujinshi, new UconfigCategoryModel(0x2)},
@@ -61,6 +62,7 @@ namespace iHentai.Services.EHentai
             {CategoryFlags.Western, new UconfigCategoryModel(0x200)},
         };
 
+        [JsonIgnore]
         protected override string Separator { get; } = "-";
 
         [BoolValue("uh", OnValue = "y", OffValue = "n", Separator = UConfigItemSeparator)]
@@ -84,12 +86,14 @@ namespace iHentai.Services.EHentai
         [BoolValue("prn", OnValue = "y", OffValue = "n", Separator = UConfigItemSeparator)]
         public bool Popular { get; set; } = true;
 
+        [JsonIgnore]
         [IntValue("cats", Separator = UConfigItemSeparator)]
         public int DefaultCategories => Category.Sum(item => item.Value.Value);
 
         [EnumValue("fs", Separator = UConfigItemSeparator)]
         public FavoritesSort FavoritesSort { get; set; } = FavoritesSort.FavoritedTime;
 
+        [JsonIgnore]
         [IntValue("xns", Separator = UConfigItemSeparator)]
         public int ExcludedNamespaces => TagNamespace.Sum(item => item.Value.Value);
 
@@ -147,8 +151,13 @@ namespace iHentai.Services.EHentai
         [StringValue("hk", Separator = UConfigItemSeparator)]
         public string HentaiAtHomeClientPasskey { get; set; } = "";
 
+        [JsonIgnore]
         [StringValue("xl", Separator = UConfigItemSeparator)]
         public string ExcludedLanguages => string.Join("", Language.Select(item => item.Value.Value)).TrimEnd('x');
-        
+
+        public string ToStorageString()
+        {
+            return this.ToJson();
+        }
     }
 }

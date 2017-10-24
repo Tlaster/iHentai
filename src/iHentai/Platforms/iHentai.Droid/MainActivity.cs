@@ -3,6 +3,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.Widget;
 using Android.OS;
+using FFImageLoading.Forms.Droid;
+using iHentai.Droid.Resources;
 using Xamarin.Forms;
 
 namespace iHentai.Droid
@@ -19,6 +21,7 @@ namespace iHentai.Droid
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             UserDialogs.Init(() => (Activity)Forms.Context);
+            CachedImageRenderer.Init();
             LoadApplication(new Core.App());
         }
     }

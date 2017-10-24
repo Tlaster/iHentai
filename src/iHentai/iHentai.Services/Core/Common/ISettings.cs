@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iHentai.Shared.Extensions
+﻿namespace iHentai.Services.Core.Common
 {
     public interface ISettings
     {

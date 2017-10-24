@@ -1,8 +1,7 @@
 ﻿using System;
-using iHentai.Services.Core.Common;
 using Plugin.Settings;
 
-namespace iHentai.Core.Common.Helpers
+namespace iHentai.Services.Core.Common
 {
     public class Settings : ISettings
     {
