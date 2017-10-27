@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Services.EHentai.Views.GalleryCell"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:converters="clr-namespace:iHentai.Services.Converters"
     xmlns:models="clr-namespace:iHentai.Services.EHentai.Models">
     <ViewCell.View>
         <Grid Padding="4">
@@ -27,7 +28,14 @@
                     <Label FontSize="12" HorizontalOptions="End" TextColor="Gray" VerticalOptions="Center" Text="{Binding PublishAt}"/>
                 </StackLayout>
                 <!--<control:RatingView Value="{Binding Rating}" Grid.Row="3" HeightRequest="15" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="80"/>-->
-                <Grid Padding="4" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="16" BackgroundColor="{Binding Category, Converter={StaticResource CategoryColor}}">
+                <Grid Padding="4" Grid.Row="4" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="16" >
+                    <Grid.BackgroundColor>
+                        <Binding Path="Category">
+                            <Binding.Converter>
+                                <converters:CategoryColorConverter/>
+                            </Binding.Converter>
+                        </Binding>
+                    </Grid.BackgroundColor>
                     <Label Text="{Binding Category}" FontSize="12" TextColor="White"/>
                 </Grid>
             </Grid>

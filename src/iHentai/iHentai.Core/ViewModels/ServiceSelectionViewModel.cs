@@ -7,6 +7,7 @@ using Acr.UserDialogs;
 using iHentai.Core.Common.Helpers;
 using iHentai.Services.Core;
 using iHentai.Core.Views;
+using Xamarin.Forms;
 
 namespace iHentai.Core.ViewModels
 {
@@ -38,8 +39,7 @@ namespace iHentai.Core.ViewModels
 
         public ICommand SkipCommand => new RelayCommand(() =>
         {
-            
-            new MainPage(SelectedApi);
+            Application.Current.MainPage.Navigation.PushAsync(new MainPage(SelectedApi));
         });
     }
 }

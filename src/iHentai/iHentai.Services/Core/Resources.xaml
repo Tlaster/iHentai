@@ -3,6 +3,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Services.Core.Resources"
+    xmlns:eviews="clr-namespace:iHentai.Services.EHentai.Views;assembly=iHentai.Services"
+    xmlns:nviews="clr-namespace:iHentai.Services.NHentai.Views;assembly=iHentai.Services"
     xmlns:converters="clr-namespace:iHentai.Services.Converters">
-    <converters:CategoryColorConverter x:Key="CategoryColor"/>
+    <DataTemplate x:Key="iHentai.Services.EHentai.Models.GalleryModel.DataTemplate">
+        <eviews:GalleryCell/>
+    </DataTemplate>
+    <DataTemplate x:Key="iHentai.Services.NHentai.Models.GalleryModel.DataTemplate">
+        <nviews:GalleryCell/>
+    </DataTemplate>
 </ResourceDictionary>

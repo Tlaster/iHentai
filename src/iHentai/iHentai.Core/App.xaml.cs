@@ -17,7 +17,8 @@ namespace iHentai.Core
 	        InitializeComponent();
             
             MainPage = new NavigationPage(new ServiceSelectionPage());
-	    }
+
+        }
 
 	    protected override void OnStart()
 	    {

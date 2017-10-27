@@ -4,7 +4,6 @@ using Android.Content.PM;
 using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Droid;
-using iHentai.Droid.Resources;
 using Xamarin.Forms;
 
 namespace iHentai.Droid

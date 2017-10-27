@@ -3,16 +3,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.MainPage"
-    xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels">
+    xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
+    xmlns:common="clr-namespace:iHentai.Core.Common;assembly=iHentai.Core">
     <ContentPage.Content>
         <Grid>
             <ListView HasUnevenRows="True">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            
-                        </ViewCell>
-                    </DataTemplate>
+                    <common:GalleryCellSelector/>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
