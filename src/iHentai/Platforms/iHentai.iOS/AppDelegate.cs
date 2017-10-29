@@ -1,5 +1,6 @@
 ﻿using FFImageLoading.Forms.Touch;
 using Foundation;
+using iHentai.Platforms.Shared;
 using UIKit;
 
 namespace iHentai.iOS
@@ -21,7 +22,7 @@ namespace iHentai.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            CachedImageRenderer.Init();
+            Initialization.Init();
             LoadApplication(new iHentai.Core.App());
             return base.FinishedLaunching(app, options);
         }

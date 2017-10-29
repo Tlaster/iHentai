@@ -2,8 +2,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
@@ -15,6 +13,8 @@
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.18342" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Toser\Toser\Toser.csproj" />
+    <ProjectReference Include="..\iHentai.Mvvm\iHentai.Mvvm.csproj" />
     <ProjectReference Include="..\iHentai.Services\iHentai.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -33,9 +33,4 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
-  </ItemGroup>
-  <Import Project="..\..\Toser\Toser\Toser.projitems" Label="Shared" />
-  <!--<Import Project="..\iHentai.Shared\iHentai.Shared.projitems" Label="Shared" />-->
 </Project>

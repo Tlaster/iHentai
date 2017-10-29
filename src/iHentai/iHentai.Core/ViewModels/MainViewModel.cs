@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using iHentai.Core.Views;
+using iHentai.Mvvm;
 using iHentai.Services.Core;
-using PropertyChanged;
 
 namespace iHentai.Core.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
-    public class MainViewModel
+    [Page(typeof(MainPage))]
+    public class MainViewModel : ViewModel
     {
-        
         private readonly IHentaiApis _apis;
-        
+
         public MainViewModel(IHentaiApis apis)
         {
             _apis = apis;

@@ -5,6 +5,7 @@ using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Droid;
 using Xamarin.Forms;
+using iHentai.Platforms.Shared;
 
 namespace iHentai.Droid
 {
@@ -20,7 +21,7 @@ namespace iHentai.Droid
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             UserDialogs.Init(() => (Activity)Forms.Context);
-            CachedImageRenderer.Init();
+            Initialization.Init();
             LoadApplication(new Core.App());
         }
     }

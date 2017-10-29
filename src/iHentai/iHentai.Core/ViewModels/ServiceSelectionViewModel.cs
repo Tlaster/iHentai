@@ -1,18 +1,16 @@
-﻿using PropertyChanged;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Windows.Input;
-using Acr.UserDialogs;
 using iHentai.Core.Common.Helpers;
-using iHentai.Services.Core;
 using iHentai.Core.Views;
+using iHentai.Mvvm;
+using iHentai.Services.Core;
+using PropertyChanged;
 using Xamarin.Forms;
 
 namespace iHentai.Core.ViewModels
 {
-    [AddINotifyPropertyChangedInterface]
-    public class ServiceSelectionViewModel
+    [Page(typeof(ServiceSelectionPage))]
+    public class ServiceSelectionViewModel : ViewModel
     {
         public ServiceSelectionViewModel()
         {
@@ -23,19 +21,15 @@ namespace iHentai.Core.ViewModels
         public string SelectedService { get; set; }
 
         [DependsOn(nameof(SelectedService))]
-        public IHentaiApis SelectedApi => ServiceInstances.Instance[(ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)];
+        public IHentaiApis SelectedApi =>
+            ServiceInstances.Instance[(ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)];
 
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public ICommand CancelCommand => new RelayCommand(() =>
-        {
-        });
+        public ICommand CancelCommand => new RelayCommand(() => { });
 
-        public ICommand ConfirmCommand => new RelayCommand(() =>
-        {
-            
-        });
+        public ICommand ConfirmCommand => new RelayCommand(() => { });
 
         public ICommand SkipCommand => new RelayCommand(() =>
         {

@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using FFImageLoading.Forms;
 using FFImageLoading.Forms.WinUWP;
 using iHentai.Core.Common.Helpers;
+using iHentai.Platforms.Shared;
 
 namespace iHentai.UWP
 {
@@ -52,6 +53,7 @@ namespace iHentai.UWP
                 };
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
+                Initialization.Init();
                 Xamarin.Forms.DependencyService.Register<Settings>();
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

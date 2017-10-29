@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iHentai.Core.Common.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using iHentai.Core.Views;
@@ -15,7 +16,6 @@ namespace iHentai.Core
 	    public App()
 	    {
 	        InitializeComponent();
-            
             MainPage = new NavigationPage(new ServiceSelectionPage());
 
         }
