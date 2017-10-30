@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,10 +12,13 @@ namespace iHentai.Core.Common.Controls
             BindableProperty.Create(nameof(ItemsSource), typeof(ISupportIncrementalLoading), typeof(CollectionView),
                 null, propertyChanged: OnItemsSourceChanged);
 
+
+        public static readonly BindableProperty AutoRefreshProperty =
+            BindableProperty.Create(nameof(AutoRefresh), typeof(bool), typeof(CollectionView), true);
+
         private bool _isEmpty;
         private bool _isError;
         private bool _isLoadingMore;
-
         private bool _isRefreshing;
 
         public CollectionView()
@@ -55,11 +57,12 @@ namespace iHentai.Core.Common.Controls
         public bool IsRefreshing
         {
             get => _isRefreshing;
-            private set
+            set
             {
-                RefreshingView.IsVisible = value;
-                CollectionListView.IsRefreshing = false;
                 _isRefreshing = value;
+                CollectionListView.IsPullToRefreshEnabled = !value;
+                if (value)
+                    Refresh();
             }
         }
 
@@ -99,6 +102,12 @@ namespace iHentai.Core.Common.Controls
             set => SetValue(ItemsSourceProperty, value);
         }
 
+        public bool AutoRefresh
+        {
+            get => (bool) GetValue(AutoRefreshProperty);
+            set => SetValue(AutoRefreshProperty, value);
+        }
+
         public bool IsError
         {
             get => _isError;
@@ -129,9 +138,30 @@ namespace iHentai.Core.Common.Controls
 
         private void OnItemsSourceChanged(ISupportIncrementalLoading value)
         {
+            value.OnRefresh = OnRefresh;
+            value.OnRefreshEnd = OnRefreshEnd;
             value.OnError = OnError;
-            CollectionListView.ItemsSource = value as IEnumerable;
-            Refresh();
+            CollectionListView.ItemsSource = value;
+            if (AutoRefresh)
+                Refresh();
+        }
+
+        private void OnRefreshEnd()
+        {
+            IsRefreshing = false;
+            RefreshingView.IsVisible = false;
+            if (!IsError) IsEmpty = ItemsSource.Count == 0;
+        }
+
+        private void OnRefresh()
+        {
+//            if (IsRefreshing || ItemsSource == null || IsLoadingMore)
+//                return;
+            IsError = false;
+            IsEmpty = false;
+            IsRefreshing = true;
+            RefreshingView.IsVisible = true;
+            CollectionListView.IsRefreshing = false;
         }
 
         private void OnError(Exception obj)
@@ -146,16 +176,9 @@ namespace iHentai.Core.Common.Controls
             Refresh();
         }
 
-        public async void Refresh()
+        private async void Refresh()
         {
-            if (IsRefreshing || ItemsSource == null || IsLoadingMore)
-                return;
-            IsError = false;
-            IsEmpty = false;
-            IsRefreshing = true;
             await ItemsSource?.RefreshAsync();
-            IsRefreshing = false;
-            if (!IsError) IsEmpty = (ItemsSource as ICollection).Count == 0;
         }
 
         private async void CollectionListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)

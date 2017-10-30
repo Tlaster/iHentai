@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace iHentai.Core.Common
 {
-    public interface ISupportIncrementalLoading : INotifyCollectionChanged
+    public interface ISupportIncrementalLoading : ICollection, INotifyCollectionChanged
     {
         bool HasMoreItems { get; }
 
-        Task LoadMoreItemsAsync();
-
         Action<Exception> OnError { get; set; }
 
-        Task RefreshAsync();
+        Action OnRefresh { get; set; }
+
+        Action OnRefreshEnd { get; set; }
 
         Action OnStartLoading { get; set; }
 
         Action OnEndLoading { get; set; }
+
+        Task LoadMoreItemsAsync();
+
+        Task RefreshAsync();
     }
 }

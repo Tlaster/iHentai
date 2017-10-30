@@ -29,12 +29,6 @@ namespace iHentai.Core.Common
             _hasMoreItems = true;
         }
 
-        public Action OnStartLoading { get; set; }
-
-        public Action OnEndLoading { get; set; }
-
-        public Action<Exception> OnError { get; set; }
-
         protected TSource Source { get; }
 
         protected int CurrentPageIndex { get; set; }
@@ -56,6 +50,16 @@ namespace iHentai.Core.Common
             }
         }
 
+        public Action OnStartLoading { get; set; }
+
+        public Action OnEndLoading { get; set; }
+
+        public Action<Exception> OnError { get; set; }
+
+        public Action OnRefresh { get; set; }
+
+        public Action OnRefreshEnd { get; set; }
+
         public bool HasMoreItems
         {
             get => !_cancellationToken.IsCancellationRequested && _hasMoreItems;
@@ -68,7 +72,10 @@ namespace iHentai.Core.Common
             }
         }
 
-        public Task LoadMoreItemsAsync() => LoadMoreItemsAsync(new CancellationToken(false));
+        public Task LoadMoreItemsAsync()
+        {
+            return LoadMoreItemsAsync(new CancellationToken(false));
+        }
 
         public async Task RefreshAsync()
         {
@@ -78,10 +85,12 @@ namespace iHentai.Core.Common
             }
             else
             {
+                OnRefresh?.Invoke();
                 Clear();
                 CurrentPageIndex = 0;
                 HasMoreItems = true;
                 await LoadMoreItemsAsync();
+                OnRefreshEnd?.Invoke();
             }
         }
 
