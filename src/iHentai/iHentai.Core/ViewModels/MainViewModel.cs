@@ -37,8 +37,8 @@ namespace iHentai.Core.ViewModels
         public async Task<IEnumerable<string>> GetPagedItemsAsync(int pageIndex, CancellationToken cancellationToken = default)
         {
             await Task.Delay(2000, cancellationToken);
-            return new List<string>();
-            //return Enumerable.Range((pageIndex) * 20, (pageIndex + 1) * 20).Select(item => item.ToString());
+//            return new List<string>();
+            return Enumerable.Range((pageIndex) * 20, (pageIndex + 1) * 20).Select(item => item.ToString());
         }
     }
 }

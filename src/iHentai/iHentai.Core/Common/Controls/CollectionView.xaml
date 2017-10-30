@@ -5,8 +5,14 @@
     x:Class="iHentai.Core.Common.Controls.CollectionView">
   <ContentView.Content>
         <Grid>
-            <ListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True"/>
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" x:Name="RefreshingView" IsVisible="False">
+            <ListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True">
+                <ListView.Footer>
+                    <Grid Padding="16" x:Name="LoadMoreView" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                        <ActivityIndicator IsRunning="True"/>
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+            <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="RefreshingView" IsVisible="False">
                 <ActivityIndicator IsRunning="True"/>
             </Grid>
             <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="EmptyView" IsVisible="False">

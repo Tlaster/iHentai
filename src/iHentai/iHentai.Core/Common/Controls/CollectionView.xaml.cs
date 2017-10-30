@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,9 +12,10 @@ namespace iHentai.Core.Common.Controls
         public static readonly BindableProperty ItemsSourceProperty =
             BindableProperty.Create(nameof(ItemsSource), typeof(ISupportIncrementalLoading), typeof(CollectionView),
                 null, propertyChanged: OnItemsSourceChanged);
-        
+
         private bool _isEmpty;
         private bool _isError;
+        private bool _isLoadingMore;
 
         private bool _isRefreshing;
 
@@ -27,24 +29,18 @@ namespace iHentai.Core.Common.Controls
             tapGestureRecognizer.Tapped += TapGestureRecognizer_Tapped;
             EmptyView.GestureRecognizers.Add(tapGestureRecognizer);
             ErrorView.GestureRecognizers.Add(tapGestureRecognizer);
-
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        public bool IsLoadingMore
         {
-            Refresh();
-        }
-
-        private void CollectionListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item == null)
+            get => _isLoadingMore;
+            private set
             {
-                return;
+                CollectionListView.IsPullToRefreshEnabled = !value;
+                LoadMoreView.IsVisible = value;
+                _isLoadingMore = value;
             }
-            CollectionListView.SelectedItem = null;
         }
-
-        public bool IsLoadingMore { get; private set; }
 
         public bool IsEmpty
         {
@@ -113,6 +109,18 @@ namespace iHentai.Core.Common.Controls
             }
         }
 
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void CollectionListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item == null)
+                return;
+            CollectionListView.SelectedItem = null;
+        }
+
 
         private static void OnItemsSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -138,9 +146,9 @@ namespace iHentai.Core.Common.Controls
             Refresh();
         }
 
-        private async void Refresh()
+        public async void Refresh()
         {
-            if (IsRefreshing || ItemsSource == null)
+            if (IsRefreshing || ItemsSource == null || IsLoadingMore)
                 return;
             IsError = false;
             IsEmpty = false;
