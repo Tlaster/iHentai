@@ -1,14 +1,12 @@
 ﻿using System.Linq;
-using System.Reflection;
 using iHentai.Services.Core.Common.Attributes;
 
 namespace iHentai.Services.Core.Common
 {
     public abstract class AutoString
     {
-        
         protected abstract string Separator { get; }
-        
+
         public override string ToString()
         {
             var values = GetType()

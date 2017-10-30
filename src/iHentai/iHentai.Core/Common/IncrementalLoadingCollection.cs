@@ -9,94 +9,67 @@ using System.Threading.Tasks;
 namespace iHentai.Core.Common
 {
     public class IncrementalLoadingCollection<TSource, IType> : ObservableCollection<IType>,
-             ISupportIncrementalLoading
-             where TSource : class, IIncrementalSource<IType>
+        ISupportIncrementalLoading
+        where TSource : class, IIncrementalSource<IType>
     {
-        public Action OnStartLoading { get; set; }
-        
-        public Action OnEndLoading { get; set; }
-        
-        public Action<Exception> OnError { get; set; }
-        
-        protected TSource Source { get; }
-        
-        protected int ItemsPerPage { get; }
-        
-        protected int CurrentPageIndex { get; set; }
+        private CancellationToken _cancellationToken;
+        private bool _hasMoreItems;
 
         private bool _isLoading;
-        private bool _hasMoreItems;
-        private CancellationToken _cancellationToken;
         private bool _refreshOnLoad;
-        
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
 
-            private set
-            {
-                if (value != _isLoading)
-                {
-                    _isLoading = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLoading)));
-
-                    if (_isLoading)
-                    {
-                        OnStartLoading?.Invoke();
-                    }
-                    else
-                    {
-                        OnEndLoading?.Invoke();
-                    }
-                }
-            }
-        }
-        
-        public bool HasMoreItems
-        {
-            get
-            {
-                if (_cancellationToken.IsCancellationRequested)
-                {
-                    return false;
-                }
-
-                return _hasMoreItems;
-            }
-
-            private set
-            {
-                if (value != _hasMoreItems)
-                {
-                    _hasMoreItems = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasMoreItems)));
-                }
-            }
-        }
-        
-        public IncrementalLoadingCollection(int itemsPerPage = 20, Action onStartLoading = null, Action onEndLoading = null, Action<Exception> onError = null)
-            : this(Activator.CreateInstance<TSource>(), itemsPerPage, onStartLoading, onEndLoading, onError)
+        public IncrementalLoadingCollection()
+            : this(Activator.CreateInstance<TSource>())
         {
         }
-        
-        public IncrementalLoadingCollection(TSource source, int itemsPerPage = 20, Action onStartLoading = null, Action onEndLoading = null, Action<Exception> onError = null)
+
+        public IncrementalLoadingCollection(TSource source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
-
-            OnStartLoading = onStartLoading;
-            OnEndLoading = onEndLoading;
-            OnError = onError;
-
-            ItemsPerPage = itemsPerPage;
             _hasMoreItems = true;
         }
-        
-        public Task LoadMoreItemsAsync()
-            => LoadDataAsync(new CancellationToken(false));
-        
+
+        public Action OnStartLoading { get; set; }
+
+        public Action OnEndLoading { get; set; }
+
+        public Action<Exception> OnError { get; set; }
+
+        protected TSource Source { get; }
+
+        protected int CurrentPageIndex { get; set; }
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+
+            private set
+            {
+                if (value == _isLoading) return;
+                _isLoading = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLoading)));
+
+                if (_isLoading)
+                    OnStartLoading?.Invoke();
+                else
+                    OnEndLoading?.Invoke();
+            }
+        }
+
+        public bool HasMoreItems
+        {
+            get => !_cancellationToken.IsCancellationRequested && _hasMoreItems;
+
+            private set
+            {
+                if (value == _hasMoreItems) return;
+                _hasMoreItems = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasMoreItems)));
+            }
+        }
+
+        public Task LoadMoreItemsAsync() => LoadMoreItemsAsync(new CancellationToken(false));
+
         public async Task RefreshAsync()
         {
             if (IsLoading)
@@ -111,16 +84,15 @@ namespace iHentai.Core.Common
                 await LoadMoreItemsAsync();
             }
         }
-        
+
         protected virtual async Task<IEnumerable<IType>> LoadDataAsync(CancellationToken cancellationToken)
         {
-            var result = await Source.GetPagedItemsAsync(CurrentPageIndex++, ItemsPerPage, cancellationToken);
+            var result = await Source.GetPagedItemsAsync(CurrentPageIndex++, cancellationToken);
             return result;
         }
 
-        private async Task LoadMoreItemsAsync(uint count, CancellationToken cancellationToken)
+        private async Task LoadMoreItemsAsync(CancellationToken cancellationToken)
         {
-            uint resultCount = 0;
             _cancellationToken = cancellationToken;
 
             try
@@ -143,18 +115,10 @@ namespace iHentai.Core.Common
                     }
 
                     if (data != null && data.Any() && !_cancellationToken.IsCancellationRequested)
-                    {
-                        resultCount = (uint)data.Count();
-
                         foreach (var item in data)
-                        {
                             Add(item);
-                        }
-                    }
                     else
-                    {
                         HasMoreItems = false;
-                    }
                 }
             }
             finally
@@ -169,5 +133,4 @@ namespace iHentai.Core.Common
             }
         }
     }
-
 }

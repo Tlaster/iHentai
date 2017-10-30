@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace iHentai.Core.Common.Behaviors
 {
-    public class EventToCommandBehavior : BehaviorBase<Xamarin.Forms.View>
+    public class EventToCommandBehavior : BehaviorBase<View>
     {
         public static readonly BindableProperty EventNameProperty = BindableProperty.Create(nameof(EventName),
             typeof(string),
@@ -47,13 +47,13 @@ namespace iHentai.Core.Common.Behaviors
             set => SetValue(InputConverterProperty, value);
         }
 
-        protected override void OnAttachedTo(Xamarin.Forms.View bindable)
+        protected override void OnAttachedTo(View bindable)
         {
             base.OnAttachedTo(bindable);
             RegisterEvent(EventName);
         }
 
-        protected override void OnDetachingFrom(Xamarin.Forms.View bindable)
+        protected override void OnDetachingFrom(View bindable)
         {
             base.OnDetachingFrom(bindable);
             DeregisterEvent(EventName);

@@ -23,7 +23,7 @@ namespace iHentai.Services.Core
         public static ServiceInstances Instance { get; } = new ServiceInstances();
 
         public IHentaiApis this[ServiceTypes type]
-        {    
+        {
             get
             {
                 if (!Services.ContainsKey(type))

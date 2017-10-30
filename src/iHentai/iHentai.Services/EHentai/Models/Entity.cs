@@ -2,222 +2,232 @@
 
 namespace iHentai.Services.EHentai.Models
 {
-
     public enum ImageSize
     {
         /// <summary>
-        /// Image Size Auto
+        ///     Image Size Auto
         /// </summary>
-        [StringValue("a")]
-        Auto,
+        [StringValue("a")] Auto,
+
         /// <summary>
-        /// Image Size 780x
+        ///     Image Size 780x
         /// </summary>
-        [StringValue("780")]
-        X780,
+        [StringValue("780")] X780,
+
         /// <summary>
-        /// Image Size 980x
+        ///     Image Size 980x
         /// </summary>
-        [StringValue("980")]
-        X980,
+        [StringValue("980")] X980,
+
         /// <summary>
-        /// Image Size 1280x
+        ///     Image Size 1280x
         /// </summary>
-        [StringValue("1280")]
-        X1280,
+        [StringValue("1280")] X1280,
+
         /// <summary>
-        /// Image Size 1600x
+        ///     Image Size 1600x
         /// </summary>
-        [StringValue("1600")]
-        X1600,
+        [StringValue("1600")] X1600,
+
         /// <summary>
-        /// Image Size 2400x
+        ///     Image Size 2400x
         /// </summary>
-        [StringValue("2400")]
-        X2400,
+        [StringValue("2400")] X2400
     }
 
     public enum GalleryTitle
     {
         /// <summary>
-        /// Default gallery title
+        ///     Default gallery title
         /// </summary>
-        [StringValue("r")]
-        Default,
+        [StringValue("r")] Default,
+
         /// <summary>
-        /// Japanese gallery title
+        ///     Japanese gallery title
         /// </summary>
-        [StringValue("j")]
-        Japanese,
+        [StringValue("j")] Japanese
     }
+
     public enum ArchiverDownload
     {
         /// <summary>
-        /// Manual Accept, Manual Start
+        ///     Manual Accept, Manual Start
         /// </summary>
         MAMS = 0,
+
         /// <summary>
-        /// Auto Accept, Manual Start
+        ///     Auto Accept, Manual Start
         /// </summary>
         AAMS,
+
         /// <summary>
-        /// Manual Accept, Auto Start
+        ///     Manual Accept, Auto Start
         /// </summary>
         MAAS,
+
         /// <summary>
-        /// Auto Accept, Auto Start
+        ///     Auto Accept, Auto Start
         /// </summary>
-        AAAS = 3,
+        AAAS = 3
     }
+
     public enum LayoutMode
     {
         /// <summary>
-        /// List View on the front and search pages
+        ///     List View on the front and search pages
         /// </summary>
-        [StringValue("l")]
-        List,
+        [StringValue("l")] List,
+
         /// <summary>
-        /// Thumbnail View on the front and search pages
+        ///     Thumbnail View on the front and search pages
         /// </summary>
-        [StringValue("t")]
-        Thumb,
+        [StringValue("t")] Thumb
     }
 
     public enum FavoritesSort
     {
         /// <summary>
-        /// Sort favorites by last gallery update time
+        ///     Sort favorites by last gallery update time
         /// </summary>
-        [StringValue("p")]
-        GalleryUpdateTime,
+        [StringValue("p")] GalleryUpdateTime,
+
         /// <summary>
-        /// Sort favorites by favorited time
+        ///     Sort favorites by favorited time
         /// </summary>
-        [StringValue("f")]
-        FavoritedTime,
+        [StringValue("f")] FavoritedTime
     }
+
     public enum ResultCount
     {
         /// <summary>
-        /// 25 results per page for the index/search page and torrent search pages
+        ///     25 results per page for the index/search page and torrent search pages
         /// </summary>
         C25 = 0,
+
         /// <summary>
-        /// 50 results per page for the index/search page and torrent search pages
+        ///     50 results per page for the index/search page and torrent search pages
         /// </summary>
         C50,
+
         /// <summary>
-        /// 100 results per page for the index/search page and torrent search pages
+        ///     100 results per page for the index/search page and torrent search pages
         /// </summary>
         C100,
+
         /// <summary>
-        /// 200 results per page for the index/search page and torrent search pages
+        ///     200 results per page for the index/search page and torrent search pages
         /// </summary>
         C200 = 3
     }
+
     public enum MouseOver
     {
         /// <summary>
-        /// On mouse-over
+        ///     On mouse-over
         /// </summary>
-        [StringValue("m")]
-        Yes,
+        [StringValue("m")] Yes,
+
         /// <summary>
-        /// On page load
+        ///     On page load
         /// </summary>
-        [StringValue("p")]
-        NO
+        [StringValue("p")] NO
     }
+
     public enum PreviewSize
     {
         /// <summary>
-        /// Preview normal size
+        ///     Preview normal size
         /// </summary>
-        [StringValue("m")]
-        Normal,
+        [StringValue("m")] Normal,
+
         /// <summary>
-        /// Preview large size
+        ///     Preview large size
         /// </summary>
-        [StringValue("l")]
-        Large,
+        [StringValue("l")] Large
     }
+
     public enum PreviewRowCount
     {
         /// <summary>
-        /// 4 row preview per page
+        ///     4 row preview per page
         /// </summary>
         R4 = 2,
+
         /// <summary>
-        /// 10 row preview per page
+        ///     10 row preview per page
         /// </summary>
         R10 = 5,
+
         /// <summary>
-        /// 20 row preview per page
+        ///     20 row preview per page
         /// </summary>
         R20 = 10,
+
         /// <summary>
-        /// 40 row preview per page
+        ///     40 row preview per page
         /// </summary>
-        R40 = 20,
+        R40 = 20
     }
+
     public enum CommentsSort
     {
         /// <summary>
-        /// Oldest comments first
+        ///     Oldest comments first
         /// </summary>
-        [StringValue("a")]
-        OldestFirst,
+        [StringValue("a")] OldestFirst,
+
         /// <summary>
-        /// Recent comments first
+        ///     Recent comments first
         /// </summary>
-        [StringValue("d")]
-        RecentFirst,
+        [StringValue("d")] RecentFirst,
+
         /// <summary>
-        /// By highest score
+        ///     By highest score
         /// </summary>
-        [StringValue("s")]
-        HighestScoreFirst,
+        [StringValue("s")] HighestScoreFirst
     }
+
     public enum CommentVotes
     {
         /// <summary>
-        /// Show gallery comment votes On score hover or click
+        ///     Show gallery comment votes On score hover or click
         /// </summary>
         Pop = 0,
+
         /// <summary>
-        /// Always show gallery comment votes
+        ///     Always show gallery comment votes
         /// </summary>
-        Always = 1,
+        Always = 1
     }
+
     public enum TagSort
     {
         /// <summary>
-        /// Sort order for gallery tags alphabetically
+        ///     Sort order for gallery tags alphabetically
         /// </summary>
-        [StringValue("a")]
-        Alphabetically,
+        [StringValue("a")] Alphabetically,
+
         /// <summary>
-        /// Sort order for gallery tags by tag power
+        ///     Sort order for gallery tags by tag power
         /// </summary>
-        [StringValue("p")]
-        Power,
+        [StringValue("p")] Power
     }
+
     public enum MultiPageStyle
     {
         /// <summary>
-        /// Align left, only scale if image is larger than browser width
+        ///     Align left, only scale if image is larger than browser width
         /// </summary>
-        [StringValue("n")]
-        N,
+        [StringValue("n")] N,
+
         /// <summary>
-        /// Align center, only scale if image is larger than browser width
+        ///     Align center, only scale if image is larger than browser width
         /// </summary>
-        [StringValue("c")]
-        C,
+        [StringValue("c")] C,
+
         /// <summary>
-        /// Align center, Always scale images to fit browser width
+        ///     Align center, Always scale images to fit browser width
         /// </summary>
-        [StringValue("y")]
-        Y,
+        [StringValue("y")] Y
     }
 }

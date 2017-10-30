@@ -1,44 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Acr.UserDialogs;
 
-namespace iHentai.Core.Common.Helpers
+namespace iHentai.Mvvm
 {
-    public class RelayAsyncCommand : ICommand
-    {
-        private readonly Func<bool> _canExecute;
-        private readonly Func<Task> _execute;
-
-        public RelayAsyncCommand(Func<Task> execute, Func<bool> canExecute = null)
-        {
-            _execute = execute;
-            if (_execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || _canExecute();
-        }
-
-        public async void Execute(object parameter)
-        {
-            if (UserDialogs.Instance.Loading().IsShowing)
-                return;
-            UserDialogs.Instance.ShowLoading();
-            await _execute();
-            UserDialogs.Instance.HideLoading();
-        }
-
-        public void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
     public class RelayCommand : ICommand
     {
         private readonly Func<bool> _canExecute;

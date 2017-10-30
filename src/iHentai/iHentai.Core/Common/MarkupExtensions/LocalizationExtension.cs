@@ -14,6 +14,5 @@ namespace iHentai.Core.Common.MarkupExtensions
         {
             return Text.ToLocalized();
         }
-
     }
 }

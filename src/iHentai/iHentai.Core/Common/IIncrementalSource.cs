@@ -6,6 +6,6 @@ namespace iHentai.Core.Common
 {
     public interface IIncrementalSource<IType>
     {
-        Task<IEnumerable<IType>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = default);
+        Task<IEnumerable<IType>> GetPagedItemsAsync(int pageIndex, CancellationToken cancellationToken = default);
     }
 }

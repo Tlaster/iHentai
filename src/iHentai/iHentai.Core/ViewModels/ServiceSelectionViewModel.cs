@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
-using iHentai.Core.Common.Helpers;
+using Acr.UserDialogs;
 using iHentai.Core.Views;
 using iHentai.Mvvm;
 using iHentai.Services.Core;
 using PropertyChanged;
-using Xamarin.Forms;
 
 namespace iHentai.Core.ViewModels
 {
     [Page(typeof(ServiceSelectionPage))]
-    public class ServiceSelectionViewModel : ViewModel
+    public class ServiceSelectionViewModel : ViewModel<IHentaiApis>
     {
         public ServiceSelectionViewModel()
         {
@@ -29,11 +28,19 @@ namespace iHentai.Core.ViewModels
 
         public ICommand CancelCommand => new RelayCommand(() => { });
 
-        public ICommand ConfirmCommand => new RelayCommand(() => { });
-
-        public ICommand SkipCommand => new RelayCommand(() =>
+        public ICommand ConfirmCommand => new RelayCommand(async () =>
         {
-            Application.Current.MainPage.Navigation.PushAsync(new MainPage(SelectedApi));
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
+                return;
+            UserDialogs.Instance.ShowLoading();
+            var res = await SelectedApi.Login(UserName, Password);
+            UserDialogs.Instance.HideLoading();
+            if (res.State)
+                Close(SelectedApi);
+            else
+                UserDialogs.Instance.Toast(res.Message);
         });
+
+        public ICommand SkipCommand => new RelayCommand(() => { Close(SelectedApi); });
     }
 }

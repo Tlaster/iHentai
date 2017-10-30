@@ -2,7 +2,7 @@
 
 namespace iHentai.Services.Core.Common.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     internal sealed class StringValueAttribute : Attribute, IValueAttribute
     {
         public StringValueAttribute(string key)

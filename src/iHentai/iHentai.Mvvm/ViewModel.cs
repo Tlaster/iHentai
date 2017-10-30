@@ -30,19 +30,20 @@ namespace iHentai.Mvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public async Task<TResult> Navigate<T, TResult>(CancellationToken cancellationToken = default(CancellationToken), params object[] args)
+        public async Task<TResult> Navigate<T, TResult>(
+            CancellationToken cancellationToken = default(CancellationToken), params object[] args)
             where T : ViewModel<TResult>
         {
             if (_navigation == null)
                 throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
 
             var attr = typeof(T).GetCustomAttribute<PageAttribute>();
-            var vm = Activator.CreateInstance(typeof(T), args);
+            var vm = Activator.CreateInstance(typeof(T), args) as ViewModel<TResult>;
             var page = Activator.CreateInstance(attr.PageType);
             if (cancellationToken != default(CancellationToken))
-                cancellationToken.Register(() => (vm as ViewModel<TResult>).Close(default(TResult)));
+                cancellationToken.Register(() => vm.Close(default(TResult)));
             var tcs = new TaskCompletionSource<TResult>();
-            (vm as ViewModel<TResult>).CloseCompletionSource = tcs;
+            vm.CloseCompletionSource = tcs;
             (page as BindableObject).BindingContext = vm;
             await _navigation.PushAsync(page as Page);
             try
@@ -68,7 +69,7 @@ namespace iHentai.Mvvm
 
             if (pInfo.IsSubclassOf(typeof(ViewModel)) && attr != null)
             {
-                var vm = Activator.CreateInstance(pageType, args);
+                var vm = Activator.CreateInstance(pageType, args) as ViewModel;
                 page = Activator.CreateInstance(attr.PageType);
                 (page as BindableObject).BindingContext = vm;
             }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using iHentai.Services.Core;
-using iHentai.Services.Core.Common;
+﻿using iHentai.Services.Core;
 using iHentai.Services.Core.Common.Attributes;
-using iHentai.Services.EHentai.Models;
 
 namespace iHentai.Services.EHentai
 {
@@ -49,7 +44,7 @@ namespace iHentai.Services.EHentai
         [BoolValue("", Separator = "", OnValue = "f_stags=on")]
         public bool SearchTags { get; set; }
 
-        [BoolValue("", Separator = "", OnValue     = "f_sdesc=on")]
+        [BoolValue("", Separator = "", OnValue = "f_sdesc=on")]
         public bool SearchDescription { get; set; }
 
         [BoolValue("", Separator = "", OnValue = "f_storr=on")]
@@ -72,9 +67,8 @@ namespace iHentai.Services.EHentai
 
         [IntValue("f_srdd")]
         public int MinimumRating { get; set; } = 2;
-        
+
         [StringValue("f_search")]
         public override string Keyword { get; set; }
-
     }
 }

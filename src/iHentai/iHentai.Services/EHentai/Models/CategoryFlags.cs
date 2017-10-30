@@ -1,6 +1,5 @@
 ﻿using System;
 using AngleSharp.Dom;
-using AngleSharp.Extensions;
 using Html2Model;
 
 namespace iHentai.Services.EHentai.Models
@@ -68,7 +67,7 @@ namespace iHentai.Services.EHentai.Models
                 case "non-h":
                     return CategoryFlags.Nonh;
                 default:
-                    return (CategoryFlags)Enum.Parse(typeof(CategoryFlags), text, true);
+                    return (CategoryFlags) Enum.Parse(typeof(CategoryFlags), text, true);
             }
         }
     }

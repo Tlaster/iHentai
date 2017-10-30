@@ -1,7 +1,6 @@
 ﻿using System;
 using iHentai.Services.Core.Models.Interfaces;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace iHentai.Services.NHentai.Models
 {
@@ -10,20 +9,28 @@ namespace iHentai.Services.NHentai.Models
         [JsonProperty("upload_date")]
         [JsonConverter(typeof(UploadDateConverter))]
         public DateTime UploadDate { get; set; }
+
         [JsonProperty("num_favorites")]
         public int NumFavorites { get; set; }
+
         [JsonProperty("media_id")]
         public string MediaId { get; set; }
+
         [JsonProperty("title")]
         public TitleModel Title { get; set; }
+
         [JsonProperty("images")]
         public GalleryImagesModel Images { get; set; }
+
         [JsonProperty("scanlator")]
         public string Scanlator { get; set; }
+
         [JsonProperty("tags")]
         public TagModel[] Tags { get; set; }
+
         [JsonProperty("id")]
         public int Id { get; set; }
+
         [JsonProperty("num_pages")]
         public int NumPages { get; set; }
     }
@@ -35,9 +42,10 @@ namespace iHentai.Services.NHentai.Models
             throw new NotImplementedException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-            return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long)reader.Value);
+            return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((long) reader.Value);
         }
 
         public override bool CanConvert(Type objectType)

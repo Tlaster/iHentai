@@ -32,6 +32,9 @@ namespace iHentai.Services.Core.Common
                     return (T) (object) CrossSettings.Current.GetValueOrDefault(key, value, FileName);
                 case DateTime value:
                     return (T) (object) CrossSettings.Current.GetValueOrDefault(key, value, FileName);
+                case Enum value:
+                    return (T) Enum.Parse(typeof(T),
+                        CrossSettings.Current.GetValueOrDefault(key, Enum.GetName(typeof(T), value), FileName));
                 default:
                     throw new NotSupportedException();
             }
@@ -57,6 +60,8 @@ namespace iHentai.Services.Core.Common
                     return CrossSettings.Current.AddOrUpdateValue(key, value, FileName);
                 case DateTime value:
                     return CrossSettings.Current.AddOrUpdateValue(key, value, FileName);
+                case Enum value:
+                    return CrossSettings.Current.AddOrUpdateValue(key, Enum.GetName(typeof(T), value), FileName);
                 default:
                     throw new NotSupportedException();
             }
@@ -72,5 +77,4 @@ namespace iHentai.Services.Core.Common
             return CrossSettings.Current.Contains(key, FileName);
         }
     }
-
 }

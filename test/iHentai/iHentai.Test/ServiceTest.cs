@@ -1,9 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai;
-using iHentai.Services.EHentai.Models;
-using Newtonsoft.Json;
 using Xunit;
 using NApis = iHentai.Services.NHentai.Apis;
 
@@ -12,13 +9,6 @@ namespace iHentai.Test
     public class ServiceTest
     {
         [Fact]
-        public void TestSearchOption()
-        {
-            var options = new SearchOption();
-            Assert.NotNull(options.ToString());
-        }
-
-        [Fact]
         public async Task GalleryTest()
         {
             var apis = ServiceInstances.Instance[ServiceTypes.NHentai];
@@ -26,6 +16,12 @@ namespace iHentai.Test
             Assert.NotNull(res);
             Assert.NotEmpty(res);
         }
-        
+
+        [Fact]
+        public void TestSearchOption()
+        {
+            var options = new SearchOption();
+            Assert.NotNull(options.ToString());
+        }
     }
 }

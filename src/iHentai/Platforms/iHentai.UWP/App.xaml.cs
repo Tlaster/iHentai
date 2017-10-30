@@ -4,12 +4,14 @@ using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using FFImageLoading.Forms;
 using FFImageLoading.Forms.WinUWP;
 using iHentai.Core.Common.Helpers;
 using iHentai.Platforms.Shared;
+using Xamarin.Forms;
+using Application = Windows.UI.Xaml.Application;
+using Frame = Windows.UI.Xaml.Controls.Frame;
 
 namespace iHentai.UWP
 {
@@ -35,11 +37,9 @@ namespace iHentai.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            var rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
@@ -51,10 +51,10 @@ namespace iHentai.UWP
                     typeof(CachedImage).GetTypeInfo().Assembly,
                     typeof(CachedImageRenderer).GetTypeInfo().Assembly
                 };
-                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+                Forms.Init(e, assembliesToInclude);
 
                 Initialization.Init();
-                Xamarin.Forms.DependencyService.Register<Settings>();
+                //DependencyService.Register<Settings>();
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application

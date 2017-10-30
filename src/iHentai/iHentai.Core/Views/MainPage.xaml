@@ -1,17 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.MainPage"
+    xmlns:controls="clr-namespace:iHentai.Core.Common.Controls"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
     xmlns:common="clr-namespace:iHentai.Core.Common;assembly=iHentai.Core">
+    <ContentPage.BindingContext>
+        <viewModels:MainViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>
-            <ListView HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <common:GalleryCellSelector/>
-                </ListView.ItemTemplate>
-            </ListView>
+            <controls:CollectionView ItemsSource="{Binding ListSource}">
+
+            </controls:CollectionView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

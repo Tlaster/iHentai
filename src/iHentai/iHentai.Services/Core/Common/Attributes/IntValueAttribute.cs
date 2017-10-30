@@ -2,7 +2,7 @@
 
 namespace iHentai.Services.Core.Common.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     internal sealed class IntValueAttribute : Attribute, IValueAttribute
     {
         public IntValueAttribute(string key)
@@ -16,7 +16,7 @@ namespace iHentai.Services.Core.Common.Attributes
         public string GetValue(object instance)
         {
             if (instance is Enum value)
-                return ((int)Enum.Parse(value.GetType(), value.ToString())).ToString();
+                return ((int) Enum.Parse(value.GetType(), value.ToString())).ToString();
             return instance + "";
         }
 

@@ -13,9 +13,7 @@ namespace iHentai.Core.Common.Behaviors
             AssociatedObject = bindable;
 
             if (bindable.BindingContext != null)
-            {
                 BindingContext = bindable.BindingContext;
-            }
 
             bindable.BindingContextChanged += OnBindingContextChanged;
         }
@@ -27,7 +25,7 @@ namespace iHentai.Core.Common.Behaviors
             AssociatedObject = null;
         }
 
-        void OnBindingContextChanged(object sender, EventArgs e)
+        private void OnBindingContextChanged(object sender, EventArgs e)
         {
             OnBindingContextChanged();
         }
@@ -38,5 +36,4 @@ namespace iHentai.Core.Common.Behaviors
             BindingContext = AssociatedObject.BindingContext;
         }
     }
-
 }

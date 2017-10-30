@@ -1,31 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.ServiceSelectionPage"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
     xmlns:m="clr-namespace:iHentai.Core.Common.MarkupExtensions;assembly=iHentai.Core">
     <ContentPage.BindingContext>
-        <viewModels:ServiceSelectionViewModel/>
+        <viewModels:ServiceSelectionViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="8">
-            <Label Text="Please select a service"/>
-            <Picker x:Name="ServicePicker" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}"/>
+            <Label Text="Please select a service" />
+            <Picker x:Name="ServicePicker" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}" />
             <StackLayout IsVisible="{Binding SelectedApi.CanLogin}">
-                <Label Text="User Name"/>
+                <Label Text="User Name" />
                 <Entry />
-                <Label Text="Password"/>
-                <Entry/>
+                <Label Text="Password" />
+                <Entry />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding CancelCommand}" Text="Cancel"/>
-                    <Button Command="{Binding ConfirmCommand}" Grid.Column="1" Text="Confirm"/>
+                    <Button Command="{Binding CancelCommand}" Text="Cancel" />
+                    <Button Command="{Binding ConfirmCommand}" Grid.Column="1" Text="Confirm" />
                 </Grid>
-                <Button Command="{Binding SkipCommand}" Text="Skip" IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}"/>
+                <Button Command="{Binding SkipCommand}" Text="Skip"
+                        IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -104,6 +104,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\ActivityIndicatorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -187,10 +188,12 @@
       <Project>{be571a72-69e6-4051-a1a4-ea6b97566a80}</Project>
       <Name>iHentai.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\iHentai.Mvvm\iHentai.Mvvm.csproj">
+      <Project>{f15440be-b12c-4358-a0ab-228becf3ab1e}</Project>
+      <Name>iHentai.Mvvm</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Renderers\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

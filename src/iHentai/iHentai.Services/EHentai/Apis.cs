@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Flurl.Http;
-using iHentai.Services.Core;
-using iHentai.Services.Core.Models.Interfaces;
-using Flurl.Util;
 using System.Linq;
 using System.Text.RegularExpressions;
-using iHentai.Services.EHentai.Models;
-using Html2Model;
+using System.Threading.Tasks;
 using Flurl;
+using Flurl.Http;
+using iHentai.Services.Core;
 using iHentai.Services.Core.Common;
+using iHentai.Services.Core.Models.Interfaces;
+using iHentai.Services.EHentai.Models;
 
 namespace iHentai.Services.EHentai
 {
@@ -38,33 +36,37 @@ namespace iHentai.Services.EHentai
 
         public async Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
         {
-            return (await Host.SetQueryParam("page", page).SetQueryParams(searchOption?.ToDictionary()).WithCookies(Cookie).WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>()).Gallery;
+            return (await Host.SetQueryParam("page", page).SetQueryParams(searchOption?.ToDictionary())
+                    .WithCookies(Cookie).WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>())
+                .Gallery;
         }
 
         public async Task<(bool State, string Message)> Login(string userName, string password)
         {
             Dictionary<string, string> cookie = null;
-            using (var res = (await "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1".EnableCookies()
-                                             .PostUrlEncodedAsync(new
-                                             {
-                                                 UserName = userName,
-                                                 PassWord = password,
-                                                 x = 0,
-                                                 y = 0,
-                                             })))
+            using (var res = await "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1".EnableCookies()
+                .PostUrlEncodedAsync(new
+                {
+                    UserName = userName,
+                    PassWord = password,
+                    x = 0,
+                    y = 0
+                }))
             {
                 res.Headers.TryGetValues("Set-Cookie", out var cookies);
                 cookie = cookies
-                    .Select(item => (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Value: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[2].Value))
+                    .Select(item =>
+                        (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Value: Regex.Matches(item,
+                            "([^=]*)=([^;]*);")[0].Groups[2].Value))
                     .Distinct(item => item.Key)
                     .ToDictionary(item => item.Key, item => item.Value);
             }
-            using (var res = await "https://exhentai.org/".WithCookies(cookie).WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
+            using (var res = await "https://exhentai.org/".WithCookies(cookie)
+                .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
             {
-                if (res.Headers.Contains("ContentType") && res.Headers.GetValues("ContentType")?.FirstOrDefault() == "image/gif")
-                {
+                if (res.Headers.Contains("ContentType") &&
+                    res.Headers.GetValues("ContentType")?.FirstOrDefault() == "image/gif")
                     return (false, "No access to exhentai.org");
-                }
             }
             Cookie = cookie;
             return (true, string.Empty);

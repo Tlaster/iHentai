@@ -9,8 +9,5 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
 </uwp:WindowsPage>
-

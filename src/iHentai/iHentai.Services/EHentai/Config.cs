@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Common;
 using iHentai.Services.Core.Common.Attributes;
@@ -14,53 +11,56 @@ namespace iHentai.Services.EHentai
     public class Config : AutoString, IApiConfig
     {
         private const string UConfigItemSeparator = "_";
-        
-        public Dictionary<LanguageFlags, LanguageModel> Language { get; set; } = new Dictionary<LanguageFlags, LanguageModel>
-        {
-            {LanguageFlags.Japanese, new LanguageModel(0)},
-            {LanguageFlags.English, new LanguageModel(1)},
-            {LanguageFlags.Chinese, new LanguageModel(10)},
-            {LanguageFlags.Dutch, new LanguageModel(20)},
-            {LanguageFlags.French, new LanguageModel(30)},
-            {LanguageFlags.German, new LanguageModel(40)},
-            {LanguageFlags.Hungarian, new LanguageModel(50)},
-            {LanguageFlags.Italian, new LanguageModel(60)},
-            {LanguageFlags.Korean, new LanguageModel(70)},
-            {LanguageFlags.Polish, new LanguageModel(80)},
-            {LanguageFlags.Portuguese, new LanguageModel(90)},
-            {LanguageFlags.Russian, new LanguageModel(100)},
-            {LanguageFlags.Spanish, new LanguageModel(110)},
-            {LanguageFlags.Thai, new LanguageModel(120)},
-            {LanguageFlags.Vietnamese, new LanguageModel(130)},
-            {LanguageFlags.NA, new LanguageModel(254)},
-            {LanguageFlags.Other, new LanguageModel(255)},
-        };
-        
-        public Dictionary<TagNamespaceFlags, TagNamespaceModel> TagNamespace { get; set; } = new Dictionary<TagNamespaceFlags, TagNamespaceModel>
-        {
-            {TagNamespaceFlags.Reclass, new TagNamespaceModel(1)},
-            {TagNamespaceFlags.Language, new TagNamespaceModel(2)},
-            {TagNamespaceFlags.Parody, new TagNamespaceModel(3)},
-            {TagNamespaceFlags.Character, new TagNamespaceModel(4)},
-            {TagNamespaceFlags.Group, new TagNamespaceModel(5)},
-            {TagNamespaceFlags.Artist, new TagNamespaceModel(6)},
-            {TagNamespaceFlags.Male, new TagNamespaceModel(7)},
-            {TagNamespaceFlags.Female, new TagNamespaceModel(8)},
-        };
-        
-        public Dictionary<CategoryFlags,UconfigCategoryModel> Category { get; set; } = new Dictionary<CategoryFlags, UconfigCategoryModel>
-        {
-            {CategoryFlags.Misc, new UconfigCategoryModel(0x1)},
-            {CategoryFlags.Doujinshi, new UconfigCategoryModel(0x2)},
-            {CategoryFlags.Manga, new UconfigCategoryModel(0x4)},
-            {CategoryFlags.ArtistCG, new UconfigCategoryModel(0x8)},
-            {CategoryFlags.GameCG, new UconfigCategoryModel(0x10)},
-            {CategoryFlags.ImageSet, new UconfigCategoryModel(0x20)},
-            {CategoryFlags.Cosplay, new UconfigCategoryModel(0x40)},
-            {CategoryFlags.AsianPorn, new UconfigCategoryModel(0x80)},
-            {CategoryFlags.Nonh, new UconfigCategoryModel(0x100)},
-            {CategoryFlags.Western, new UconfigCategoryModel(0x200)},
-        };
+
+        public Dictionary<LanguageFlags, LanguageModel> Language { get; set; } =
+            new Dictionary<LanguageFlags, LanguageModel>
+            {
+                {LanguageFlags.Japanese, new LanguageModel(0)},
+                {LanguageFlags.English, new LanguageModel(1)},
+                {LanguageFlags.Chinese, new LanguageModel(10)},
+                {LanguageFlags.Dutch, new LanguageModel(20)},
+                {LanguageFlags.French, new LanguageModel(30)},
+                {LanguageFlags.German, new LanguageModel(40)},
+                {LanguageFlags.Hungarian, new LanguageModel(50)},
+                {LanguageFlags.Italian, new LanguageModel(60)},
+                {LanguageFlags.Korean, new LanguageModel(70)},
+                {LanguageFlags.Polish, new LanguageModel(80)},
+                {LanguageFlags.Portuguese, new LanguageModel(90)},
+                {LanguageFlags.Russian, new LanguageModel(100)},
+                {LanguageFlags.Spanish, new LanguageModel(110)},
+                {LanguageFlags.Thai, new LanguageModel(120)},
+                {LanguageFlags.Vietnamese, new LanguageModel(130)},
+                {LanguageFlags.NA, new LanguageModel(254)},
+                {LanguageFlags.Other, new LanguageModel(255)}
+            };
+
+        public Dictionary<TagNamespaceFlags, TagNamespaceModel> TagNamespace { get; set; } =
+            new Dictionary<TagNamespaceFlags, TagNamespaceModel>
+            {
+                {TagNamespaceFlags.Reclass, new TagNamespaceModel(1)},
+                {TagNamespaceFlags.Language, new TagNamespaceModel(2)},
+                {TagNamespaceFlags.Parody, new TagNamespaceModel(3)},
+                {TagNamespaceFlags.Character, new TagNamespaceModel(4)},
+                {TagNamespaceFlags.Group, new TagNamespaceModel(5)},
+                {TagNamespaceFlags.Artist, new TagNamespaceModel(6)},
+                {TagNamespaceFlags.Male, new TagNamespaceModel(7)},
+                {TagNamespaceFlags.Female, new TagNamespaceModel(8)}
+            };
+
+        public Dictionary<CategoryFlags, UconfigCategoryModel> Category { get; set; } =
+            new Dictionary<CategoryFlags, UconfigCategoryModel>
+            {
+                {CategoryFlags.Misc, new UconfigCategoryModel(0x1)},
+                {CategoryFlags.Doujinshi, new UconfigCategoryModel(0x2)},
+                {CategoryFlags.Manga, new UconfigCategoryModel(0x4)},
+                {CategoryFlags.ArtistCG, new UconfigCategoryModel(0x8)},
+                {CategoryFlags.GameCG, new UconfigCategoryModel(0x10)},
+                {CategoryFlags.ImageSet, new UconfigCategoryModel(0x20)},
+                {CategoryFlags.Cosplay, new UconfigCategoryModel(0x40)},
+                {CategoryFlags.AsianPorn, new UconfigCategoryModel(0x80)},
+                {CategoryFlags.Nonh, new UconfigCategoryModel(0x100)},
+                {CategoryFlags.Western, new UconfigCategoryModel(0x200)}
+            };
 
         [JsonIgnore]
         protected override string Separator { get; } = "-";

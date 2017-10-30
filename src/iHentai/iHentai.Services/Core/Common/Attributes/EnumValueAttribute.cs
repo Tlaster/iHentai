@@ -2,7 +2,7 @@
 
 namespace iHentai.Services.Core.Common.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     public sealed class EnumValueAttribute : Attribute, IValueAttribute
     {
         public EnumValueAttribute(string key)

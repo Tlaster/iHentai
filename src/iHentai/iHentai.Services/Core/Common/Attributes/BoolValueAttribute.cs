@@ -2,7 +2,7 @@
 
 namespace iHentai.Services.Core.Common.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     internal sealed class BoolValueAttribute : Attribute, IValueAttribute
     {
         public BoolValueAttribute(string key)
@@ -17,7 +17,7 @@ namespace iHentai.Services.Core.Common.Attributes
 
         public string GetValue(object instance)
         {
-            return (bool)instance ? OnValue : OffValue;
+            return (bool) instance ? OnValue : OffValue;
         }
 
         public string ToString(object instance)

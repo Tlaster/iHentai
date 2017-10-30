@@ -21,8 +21,8 @@ namespace iHentai.Services.Core.Common.Attributes
                     (memberInfo.GetCustomAttribute(item.AttributeType) as IValueAttribute)?.ToString(instance))
                 .FirstOrDefault();
         }
-        
-        
+
+
         public static IValueAttribute GetAttr(this MemberInfo memberInfo, object instance)
         {
             return memberInfo.GetCustomAttributesData()

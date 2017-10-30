@@ -6,8 +6,10 @@ namespace iHentai.Services.NHentai.Models
     {
         [JsonProperty("h")]
         public int H { get; set; }
+
         [JsonProperty("t")]
         public string Type { get; set; }
+
         [JsonProperty("w")]
         public int Width { get; set; }
     }

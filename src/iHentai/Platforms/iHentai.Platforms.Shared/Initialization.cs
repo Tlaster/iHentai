@@ -4,8 +4,8 @@ using FFImageLoading.Forms.WinUWP;
 using FFImageLoading.Forms.Touch;
 #elif ANDROID
 using FFImageLoading.Forms.Droid;
-#endif
 
+#endif
 
 
 namespace iHentai.Platforms.Shared

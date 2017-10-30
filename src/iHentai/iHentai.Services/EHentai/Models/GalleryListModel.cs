@@ -1,7 +1,5 @@
-﻿using Html2Model.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Html2Model.Attributes;
 
 namespace iHentai.Services.EHentai.Models
 {

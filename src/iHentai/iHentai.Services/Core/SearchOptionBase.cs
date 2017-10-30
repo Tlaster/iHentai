@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq;
 using iHentai.Services.Core.Common;
-using System;
-using System.Collections.Generic;
 using iHentai.Services.Core.Common.Attributes;
 
 namespace iHentai.Services.Core
@@ -16,7 +14,8 @@ namespace iHentai.Services.Core
         {
             return GetType()
                 .GetProperties()
-                .ToDictionary(item => item.GetAttr(item.GetValue(this)).Key, item => item.GetAttr(this).GetValue(item.GetValue(this)));
+                .ToDictionary(item => item.GetAttr(item.GetValue(this)).Key,
+                    item => item.GetAttr(this).GetValue(item.GetValue(this)));
         }
     }
 }

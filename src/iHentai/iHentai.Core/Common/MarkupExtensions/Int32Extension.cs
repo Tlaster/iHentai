@@ -8,6 +8,7 @@ namespace iHentai.Core.Common.MarkupExtensions
     public sealed class Int32Extension : IMarkupExtension<int>
     {
         public string Value { get; set; }
+
         public int ProvideValue(IServiceProvider serviceProvider)
         {
             return int.Parse(Value);
@@ -23,6 +24,7 @@ namespace iHentai.Core.Common.MarkupExtensions
     public sealed class BoolExtension : IMarkupExtension<bool>
     {
         public string Value { get; set; }
+
         public bool ProvideValue(IServiceProvider serviceProvider)
         {
             return bool.Parse(Value);
