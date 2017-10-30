@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,7 +13,6 @@ namespace iHentai.Core.Common.Controls
             BindableProperty.Create(nameof(ItemsSource), typeof(ISupportIncrementalLoading), typeof(CollectionView),
                 null, propertyChanged: OnItemsSourceChanged);
 
-
         public static readonly BindableProperty AutoRefreshProperty =
             BindableProperty.Create(nameof(AutoRefresh), typeof(bool), typeof(CollectionView), true);
 
@@ -20,6 +20,8 @@ namespace iHentai.Core.Common.Controls
         private bool _isError;
         private bool _isLoadingMore;
         private bool _isRefreshing;
+
+        public ICommand ItemClickedCommand;
 
         public CollectionView()
         {
@@ -118,6 +120,8 @@ namespace iHentai.Core.Common.Controls
             }
         }
 
+        public event EventHandler<ItemTappedEventArgs> ItemClicked;
+
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             Refresh();
@@ -127,6 +131,9 @@ namespace iHentai.Core.Common.Controls
         {
             if (e.Item == null)
                 return;
+            if (ItemClickedCommand != null && ItemClickedCommand.CanExecute(e.Item))
+                ItemClickedCommand?.Execute(e.Item);
+            ItemClicked?.Invoke(this, e);
             CollectionListView.SelectedItem = null;
         }
 

@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
-[assembly: ExportRenderer(typeof(ActivityIndicator), typeof(ActivityIndicatorRenderer))]
+[assembly: ExportRenderer(typeof(ActivityIndicator), typeof(iHentai.UWP.Renderers.ActivityIndicatorRenderer))]
 namespace iHentai.UWP.Renderers
 {
     public class ActivityIndicatorRenderer : ViewRenderer<ActivityIndicator, ProgressRing>
