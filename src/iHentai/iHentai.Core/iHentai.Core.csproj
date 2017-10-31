@@ -10,7 +10,7 @@
     <PackageReference Include="PropertyChanged.Fody" Version="2.1.4" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.22" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.18342" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.38779" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Toser\Toser\Toser.csproj" />
