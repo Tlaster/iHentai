@@ -26,7 +26,7 @@ namespace iHentai.Core.Common.Controls
         public CollectionView()
         {
             InitializeComponent();
-            CollectionListView.ItemAppearing += CollectionListView_ItemAppearing;
+            CollectionListView.ItemAppearing += CollectionListView_ItemAppearing;//Not working properly on UWP
             CollectionListView.Refreshing += CollectionListView_Refreshing;
             CollectionListView.ItemTapped += CollectionListView_ItemTapped;
             var tapGestureRecognizer = new TapGestureRecognizer {NumberOfTapsRequired = 1};
@@ -63,8 +63,8 @@ namespace iHentai.Core.Common.Controls
             {
                 _isRefreshing = value;
                 CollectionListView.IsPullToRefreshEnabled = !value;
-                if (value)
-                    Refresh();
+                //if (value)
+                //    Refresh();
             }
         }
 
@@ -190,7 +190,7 @@ namespace iHentai.Core.Common.Controls
 
         private async void CollectionListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if (IsLoadingMore || !ItemsSource.HasMoreItems || !ShouldLoadMore(e.Item)) return;
+            if (IsRefreshing || IsLoadingMore || !ItemsSource.HasMoreItems || !ShouldLoadMore(e.Item)) return;
             IsLoadingMore = true;
             await ItemsSource.LoadMoreItemsAsync();
             IsLoadingMore = false;

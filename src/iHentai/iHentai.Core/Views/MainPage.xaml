@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>
-            <controls:CollectionView ItemsSource="{Binding ListSource}" AutoRefresh="false">
+            <controls:CollectionView ItemsSource="{Binding ListSource}">
 
             </controls:CollectionView>
         </Grid>

@@ -19,7 +19,7 @@ using System.ComponentModel;
 using Windows.UI;
 using Windows.UI.Xaml.Shapes;
 
-[assembly: ExportRenderer(typeof(ListView), typeof(iHentai.UWP.Renderers.ListViewRenderer))]
+//[assembly: ExportRenderer(typeof(ListView), typeof(iHentai.UWP.Renderers.ListViewRenderer))]
 namespace iHentai.UWP.Renderers
 {
     public class ListViewRenderer : Xamarin.Forms.Platform.UWP.ListViewRenderer
@@ -36,11 +36,11 @@ namespace iHentai.UWP.Renderers
                 {
                     _behavior = new PullToRefreshBehavior();
                     // Not working
-                    //var icon = new SymbolIcon(Symbol.Refresh)
-                    //{
-                    //    Foreground = new SolidColorBrush(Colors.Black)
-                    //};
-                    //_behavior.IconElement = icon;
+                    var icon = new SymbolIcon(Symbol.Refresh)
+                    {
+                        Foreground = new SolidColorBrush(Colors.Black)
+                    };
+                    _behavior.IconElement = icon;
                     _behavior.RefreshRequested += Behavior_RefreshRequested;
                     Interaction.GetBehaviors(List).Add(_behavior);
                 }

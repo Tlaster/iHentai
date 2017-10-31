@@ -38,7 +38,7 @@ namespace iHentai.Core.ViewModels
         {
             await Task.Delay(2000, cancellationToken);
 //            return new List<string>();
-            return Enumerable.Range((pageIndex) * 20, (pageIndex + 1) * 20).Select(item => item.ToString());
+            return Enumerable.Range((pageIndex) * 40, (pageIndex + 1) * 40).Select(item => item.ToString());
         }
     }
 }
