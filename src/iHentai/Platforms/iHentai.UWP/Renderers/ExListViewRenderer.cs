@@ -17,10 +17,17 @@ namespace iHentai.UWP.Renderers
             base.OnElementChanged(e);
 
             if (e.NewElement != null)
+            {
                 if (List != null)
                 {
                     List.Loaded += List_Loaded;
                 }
+            }
+            else if (e.OldElement != null)
+            {
+                if (_scrollViewer != null)
+                    _scrollViewer.ViewChanged -= OnViewChanged;
+            }
         }
 
         private void List_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -35,6 +42,7 @@ namespace iHentai.UWP.Renderers
 
         private void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
+            (Element as ExListView).InvokeScrollChanged(_scrollViewer.VerticalOffset, _scrollViewer.HorizontalOffset);
             if (_scrollViewer.VerticalOffset == _scrollViewer.ScrollableHeight)
                 (Element as ExListView).RequestLoadMore();
         }

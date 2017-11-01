@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,5 +13,11 @@ namespace iHentai.Core.Views
         {
             InitializeComponent();
         }
+
+        //private void GridSizeChanged(object sender, EventArgs e)
+        //{
+        //    Debug.WriteLine($"height : {(sender as Grid).Height}");
+        //    Debug.WriteLine($"width : {(sender as Grid).Width}");
+        //}
     }
 }

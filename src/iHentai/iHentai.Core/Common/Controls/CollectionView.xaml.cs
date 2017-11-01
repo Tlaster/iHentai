@@ -22,32 +22,22 @@ namespace iHentai.Core.Common.Controls
         private bool _isRefreshing;
 
         public ICommand ItemClickedCommand;
+        public event EventHandler<ItemTappedEventArgs> ItemClicked;
+        public event EventHandler<int> ScrollChanged;
 
         public CollectionView()
         {
             InitializeComponent();
             if (Device.RuntimePlatform == Device.UWP)
-            {
                 CollectionListView.LoadMoreRequest += CollectionListView_LoadMoreRequest;
-            }
             else
-            {
-                CollectionListView.ItemAppearing += CollectionListView_ItemAppearing;//Not working properly on UWP
-            }
+                CollectionListView.ItemAppearing += CollectionListView_ItemAppearing; //Not working properly on UWP
             CollectionListView.Refreshing += CollectionListView_Refreshing;
             CollectionListView.ItemTapped += CollectionListView_ItemTapped;
             var tapGestureRecognizer = new TapGestureRecognizer {NumberOfTapsRequired = 1};
             tapGestureRecognizer.Tapped += TapGestureRecognizer_Tapped;
             EmptyView.GestureRecognizers.Add(tapGestureRecognizer);
             ErrorView.GestureRecognizers.Add(tapGestureRecognizer);
-        }
-
-        private async void CollectionListView_LoadMoreRequest(object sender, EventArgs e)
-        {
-            if (IsRefreshing || IsLoadingMore || !ItemsSource.HasMoreItems) return;
-            IsLoadingMore = true;
-            await ItemsSource.LoadMoreItemsAsync();
-            IsLoadingMore = false;
         }
 
         public bool IsLoadingMore
@@ -135,7 +125,18 @@ namespace iHentai.Core.Common.Controls
             }
         }
 
-        public event EventHandler<ItemTappedEventArgs> ItemClicked;
+        private async void CollectionListView_LoadMoreRequest(object sender, EventArgs e)
+        {
+            if (IsRefreshing || IsLoadingMore || !ItemsSource.HasMoreItems) return;
+            IsLoadingMore = true;
+            await ItemsSource.LoadMoreItemsAsync();
+            IsLoadingMore = false;
+        }
+
+        public void InvokeScrollChanged(int value)
+        {
+            ScrollChanged?.Invoke(this, value);
+        }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
