@@ -2,16 +2,17 @@
 <ContentView 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="iHentai.Core.Common.Controls.CollectionView">
+    x:Class="iHentai.Core.Common.Controls.CollectionView"
+    xmlns:local="clr-namespace:iHentai.Core.Common.Controls">
   <ContentView.Content>
         <Grid>
-            <ListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True">
+            <local:ExListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True">
                 <ListView.Footer>
                     <Grid Padding="16" x:Name="LoadMoreView" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
                         <ActivityIndicator IsRunning="True"/>
                     </Grid>
                 </ListView.Footer>
-            </ListView>
+            </local:ExListView>
             <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="RefreshingView" IsVisible="False">
                 <ActivityIndicator IsRunning="True"/>
             </Grid>
