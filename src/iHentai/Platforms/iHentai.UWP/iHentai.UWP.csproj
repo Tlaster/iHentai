@@ -168,6 +168,12 @@
     <PackageReference Include="Plugin.VersionTracking">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize">
+      <Version>2.0.0.37-beta</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize.FontAwesome">
+      <Version>2.0.0.37-beta</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>

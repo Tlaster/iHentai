@@ -143,6 +143,12 @@
     <Reference Include="FFImageLoading.Platform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.22\lib\Xamarin.iOS10\FFImageLoading.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Iconize, Version=2.0.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.2.0.0.37-beta\lib\Xamarin.iOS10\Plugin.Iconize.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Iconize.FontAwesome, Version=2.0.0.37, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.FontAwesome.2.0.0.37-beta\lib\Xamarin.iOS10\Plugin.Iconize.FontAwesome.dll</HintPath>
+    </Reference>
     <Reference Include="Plugin.Settings, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Xam.Plugins.Settings.3.1.1\lib\Xamarin.iOS10\Plugin.Settings.dll</HintPath>
     </Reference>

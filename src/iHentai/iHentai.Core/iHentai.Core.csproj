@@ -12,6 +12,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Plugin.VersionTracking" Version="2.0.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="2.1.4" />
+    <PackageReference Include="Xam.Plugin.Iconize" Version="2.0.0.37-beta" />
+    <PackageReference Include="Xam.Plugin.Iconize.FontAwesome" Version="2.0.0.37-beta" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.22" />
     <PackageReference Include="Xamarin.Forms" Version="2.4.0.38779" />

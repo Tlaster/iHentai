@@ -8,6 +8,7 @@ namespace iHentai.Core
         public App()
         {
             InitializeComponent();
+            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
             MainPage = new MainPage();
         }
 
