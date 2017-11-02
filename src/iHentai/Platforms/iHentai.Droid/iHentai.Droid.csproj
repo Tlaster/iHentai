@@ -194,6 +194,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ContextHelpers.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\ExListViewRenderer.cs" />
     <Compile Include="Renderers\PickerRenderer.cs" />

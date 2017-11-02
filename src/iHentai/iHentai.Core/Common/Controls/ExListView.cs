@@ -34,8 +34,8 @@ namespace iHentai.Core.Common.Controls
             });
             _prevHorizontalOffset = horizontalOffset;
             _prevVerticalOffset = verticalOffset;
-            Debug.WriteLine($"verticalOffset : {verticalOffset}");
-            Debug.WriteLine($"horizontalOffset : {horizontalOffset}");
+//            Debug.WriteLine($"verticalOffset : {verticalOffset}");
+//            Debug.WriteLine($"horizontalOffset : {horizontalOffset}");
         }
 
     }
