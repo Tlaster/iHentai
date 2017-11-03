@@ -129,7 +129,8 @@ namespace iHentai.Core.Common.Controls
 
         private void CollectionListViewOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
-            ScrollChanged?.Invoke(this, scrollChangedEventArgs);
+            if(!IsRefreshing)
+                ScrollChanged?.Invoke(this, scrollChangedEventArgs);
         }
 
         private async void CollectionListView_LoadMoreRequest(object sender, EventArgs e)

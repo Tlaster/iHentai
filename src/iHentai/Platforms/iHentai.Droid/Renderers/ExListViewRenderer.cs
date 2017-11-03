@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Widget;
 using iHentai.Core.Common.Controls;
 using iHentai.Droid.Common;
@@ -13,6 +14,8 @@ namespace iHentai.Droid.Renderers
 {
     public class ExListViewRenderer : ListViewRenderer
     {
+        private int _prevFirstVisibleItem;
+
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
             base.OnElementChanged(e);
@@ -26,14 +29,37 @@ namespace iHentai.Droid.Renderers
 
         private void Control_Scroll(object sender, AbsListView.ScrollEventArgs e)
         {
-            (Element as ExListView).InvokeScrollChanged(GetTopItemScrollY(), 0);
+            if (Control.ChildCount > 0)
+            {
+                (Element as ExListView).InvokeScrollChanged(GetScrollY(), 0);
+            }
+//            if (e.FirstVisibleItem != _prevFirstVisibleItem)
+//            {
+//                _prevFirstVisibleItem = e.FirstVisibleItem;
+//            }
+//            else
+//            {
+//                (Element as ExListView).InvokeScrollChanged(GetTopItemScrollY(), 0);
+//            }
         }
+        
+        private readonly Dictionary<int, int> _listViewItemHeights = new Dictionary<int, int>(); 
+        private int GetScrollY() {
+            var child = Control.GetChildAt(0); //this is the first visible row
+            if (child == null) return 0;
 
-        private int GetTopItemScrollY()
-        {
-            if (Control?.GetChildAt(0) == null) return 0;
-            var topChild = Control.GetChildAt(0);
-            return topChild.Top;
+            var scrollY = -child.Top;
+
+            _listViewItemHeights.TryAdd(Control.FirstVisiblePosition, child.Height);
+
+            for (var i = 0; i < Control.FirstVisiblePosition; ++i) {
+                var hei = _listViewItemHeights[i];
+                //Manual add hei each row into scrollY
+                if (hei != null)
+                    scrollY += hei;
+            }
+
+            return scrollY;
         }
     }
 }
