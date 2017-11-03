@@ -31,7 +31,7 @@ namespace iHentai.Mvvm
         }
 
         public async Task<TResult> Navigate<T, TResult>(
-            CancellationToken cancellationToken = default(CancellationToken), params object[] args)
+            CancellationToken cancellationToken = default, params object[] args)
             where T : ViewModel<TResult>
         {
             if (_navigation == null)
@@ -40,8 +40,8 @@ namespace iHentai.Mvvm
             var attr = typeof(T).GetCustomAttribute<PageAttribute>();
             var vm = Activator.CreateInstance(typeof(T), args) as ViewModel<TResult>;
             var page = Activator.CreateInstance(attr.PageType);
-            if (cancellationToken != default(CancellationToken))
-                cancellationToken.Register(() => vm.Close(default(TResult)));
+            if (cancellationToken != default)
+                cancellationToken.Register(() => vm.Close(default));
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
             (page as BindableObject).BindingContext = vm;
@@ -52,7 +52,7 @@ namespace iHentai.Mvvm
             }
             catch
             {
-                return default(TResult);
+                return default;
             }
         }
 

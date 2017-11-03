@@ -5,7 +5,7 @@ namespace iHentai.Services.NHentai.Models
     public class ImageModel
     {
         [JsonProperty("h")]
-        public int H { get; set; }
+        public int Height { get; set; }
 
         [JsonProperty("t")]
         public string Type { get; set; }

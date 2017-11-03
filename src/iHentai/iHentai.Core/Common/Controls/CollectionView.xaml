@@ -3,7 +3,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Common.Controls.CollectionView"
-    xmlns:local="clr-namespace:iHentai.Core.Common.Controls">
+    xmlns:local="clr-namespace:iHentai.Core.Common.Controls"
+    xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+    xmlns:m="clr-namespace:iHentai.Core.Common.MarkupExtensions">
   <ContentView.Content>
         <Grid>
             <local:ExListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True">
@@ -16,12 +18,14 @@
             <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="RefreshingView" IsVisible="False">
                 <ActivityIndicator IsRunning="True"/>
             </Grid>
-            <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="EmptyView" IsVisible="False">
-                <Label Text="Empty"/>
-            </Grid>
-            <Grid Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="ErrorView" IsVisible="False">
-                <Label Text="Error"/>
-            </Grid>
+            <StackLayout Orientation="Vertical" Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="EmptyView" IsVisible="False">
+                <iconize:IconImage HeightRequest="20" Icon="fa-meh-o" IconColor="Gray" WidthRequest="20" />
+                <Label Text="{m:Localization empty}"/>
+            </StackLayout>
+            <StackLayout Orientation="Vertical" Padding="16" HorizontalOptions="Center" VerticalOptions="Center" x:Name="ErrorView" IsVisible="False">
+                <iconize:IconImage HeightRequest="20" Icon="fa-frown-o" IconColor="Gray" WidthRequest="20" />
+                <Label Text="Error" x:Name="ErrorLabel"/>
+            </StackLayout>
         </Grid>
   </ContentView.Content>
 </ContentView>

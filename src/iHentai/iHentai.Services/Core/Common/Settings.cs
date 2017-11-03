@@ -3,7 +3,7 @@ using Plugin.Settings;
 
 namespace iHentai.Services.Core.Common
 {
-    public class Settings : ISettings
+    internal class Settings : ISettings
     {
         public Settings(string fileName)
         {
@@ -36,7 +36,7 @@ namespace iHentai.Services.Core.Common
                     return (T) Enum.Parse(typeof(T),
                         CrossSettings.Current.GetValueOrDefault(key, Enum.GetName(typeof(T), value), FileName));
                 default:
-                    throw new NotSupportedException();
+                    return (T) (object) CrossSettings.Current.GetValueOrDefault(key, defaultValue.ToJson(), FileName);
             }
         }
 
@@ -63,7 +63,7 @@ namespace iHentai.Services.Core.Common
                 case Enum value:
                     return CrossSettings.Current.AddOrUpdateValue(key, Enum.GetName(typeof(T), value), FileName);
                 default:
-                    throw new NotSupportedException();
+                    return CrossSettings.Current.AddOrUpdateValue(key, setValue.ToJson(), FileName);
             }
         }
 

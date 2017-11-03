@@ -7,5 +7,7 @@ namespace iHentai.Services.NHentai
     {
         [StringValue("query")]
         public override string Keyword { get; set; }
+
+        public bool SortEnabled { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,8 +18,14 @@ namespace iHentai.Services.EHentai
         public bool HasLogin => Cookie.Any();
         public bool CanLogin { get; } = true;
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
-        public IApiConfig ApiConfig { get; } = new Config();
-        public ISettings Settings { get; } = new Settings("EHentai");
+
+        public IApiConfig ApiConfig
+        {
+            get => Settings.Get("ehentai_config", new Config());
+            set => Settings.Set("ehentai_config", value);
+        }
+
+        public ISettings Settings { get; } = new Settings("ehentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public Dictionary<string, string> Cookie
@@ -34,11 +39,18 @@ namespace iHentai.Services.EHentai
 #endif
         }
 
-        public async Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+            SearchOptionBase searchOption = null)
         {
-            return (await Host.SetQueryParam("page", page).SetQueryParams(searchOption?.ToDictionary())
-                    .WithCookies(Cookie).WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>())
-                .Gallery;
+            Url req;
+            if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
+                req = $"{Host}{searchOption.Keyword}"
+                    .AppendPathSegment("tag");
+            else
+                req = Host.SetQueryParams(searchOption?.ToDictionary());
+            var res = await req.SetQueryParam("page", page).WithCookies(Cookie)
+                .WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>();
+            return (res.MaxPage, res.Gallery);
         }
 
         public async Task<(bool State, string Message)> Login(string userName, string password)
@@ -70,11 +82,6 @@ namespace iHentai.Services.EHentai
             }
             Cookie = cookie;
             return (true, string.Empty);
-        }
-
-        public Task<IEnumerable<IGalleryModel>> TaggedGallery(string name, int page = 0)
-        {
-            throw new NotImplementedException();
         }
     }
 }

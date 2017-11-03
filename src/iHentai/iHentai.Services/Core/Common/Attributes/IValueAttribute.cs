@@ -23,7 +23,7 @@ namespace iHentai.Services.Core.Common.Attributes
         }
 
 
-        public static IValueAttribute GetAttr(this MemberInfo memberInfo, object instance)
+        public static IValueAttribute GetAttr(this MemberInfo memberInfo)
         {
             return memberInfo.GetCustomAttributesData()
                 .Where(attr => typeof(IValueAttribute).IsAssignableFrom(attr.AttributeType))

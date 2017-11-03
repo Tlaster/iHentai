@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Common;
 using iHentai.Services.Core.Common.Attributes;
@@ -154,10 +156,5 @@ namespace iHentai.Services.EHentai
         [JsonIgnore]
         [StringValue("xl", Separator = UConfigItemSeparator)]
         public string ExcludedLanguages => string.Join("", Language.Select(item => item.Value.Value)).TrimEnd('x');
-
-        public string ToStorageString()
-        {
-            return this.ToJson();
-        }
     }
 }

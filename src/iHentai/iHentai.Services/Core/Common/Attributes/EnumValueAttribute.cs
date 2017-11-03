@@ -15,7 +15,7 @@ namespace iHentai.Services.Core.Common.Attributes
 
         public string GetValue(object instance)
         {
-            return instance.GetType().GetField(instance.GetType().GetEnumName(instance)).GetAttr(instance).Key;
+            return instance.GetType().GetField(instance.GetType().GetEnumName(instance)).GetAttr().Key;
         }
 
         public string ToString(object instance)

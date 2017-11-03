@@ -9,7 +9,7 @@ using PropertyChanged;
 namespace iHentai.Core.ViewModels
 {
     [Page(typeof(ServiceSelectionPage))]
-    public class ServiceSelectionViewModel : ViewModel<IHentaiApis>
+    public class ServiceSelectionViewModel : ViewModel<(IHentaiApis, ServiceTypes)>
     {
         public ServiceSelectionViewModel()
         {
@@ -36,11 +36,14 @@ namespace iHentai.Core.ViewModels
             var res = await SelectedApi.Login(UserName, Password);
             UserDialogs.Instance.HideLoading();
             if (res.State)
-                Close(SelectedApi);
+                Close((SelectedApi, (ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)));
             else
                 UserDialogs.Instance.Toast(res.Message);
         });
 
-        public ICommand SkipCommand => new RelayCommand(() => { Close(SelectedApi); });
+        public ICommand SkipCommand => new RelayCommand(() =>
+        {
+            Close((SelectedApi, (ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)));
+        });
     }
 }

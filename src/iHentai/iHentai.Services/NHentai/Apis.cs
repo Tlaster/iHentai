@@ -17,39 +17,39 @@ namespace iHentai.Services.NHentai
         public bool CanLogin { get; } = false;
         public string Host { get; } = "https://nhentai.net/";
         public IApiConfig ApiConfig { get; }
-        public ISettings Settings { get; }
+        public ISettings Settings { get; } = new Settings("nhentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public Dictionary<string, string> Cookie => throw new NotImplementedException();
 
-        public async Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null)
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+            SearchOptionBase searchOption = null)
         {
+            var req = Host.AppendPathSegment("api").AppendPathSegment("galleries");
             if (searchOption == null)
-                return (await $"{Host}api/galleries/all".SetQueryParam(nameof(page), page + 1)
-                    .GetJsonAsync<GalleryListModel>()).Gallery;
-            return (await $"{Host}api/galleries/search".SetQueryParam(nameof(page), page + 1)
-                .SetQueryParams(searchOption.ToDictionary())
-                .GetJsonAsync<GalleryListModel>()).Gallery;
-//            return (await Host.SetQueryParam("page", page + 1).GetHtmlAsync<GalleryListModel>()).Gallery;
+                req.AppendPathSegment("all");
+            else
+                switch (searchOption.SearchType)
+                {
+                    case SearchTypes.Keyword:
+                        req.AppendPathSegment("search").SetQueryParams(searchOption.ToDictionary());
+                        break;
+                    case SearchTypes.Tag:
+                        req.AppendPathSegment("tagged").SetQueryParam("tag_id", searchOption.Keyword)
+                            .SetQueryParam("sort",
+                                (searchOption as SearchOption)?.SortEnabled == true ? "popular" : null);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            var res = await req.SetQueryParam(nameof(page), page + 1)
+                .GetJsonAsync<GalleryListModel>();
+            return (res.NumPages, res.Gallery);
         }
 
         public Task<(bool State, string Message)> Login(string userName, string password)
         {
             throw new NotImplementedException();
-        }
-
-
-        public Task<IEnumerable<IGalleryModel>> TaggedGallery(string tag_id, int page = 0)
-        {
-            return TaggedGallery(tag_id, page, false);
-        }
-
-        public async Task<IEnumerable<IGalleryModel>> TaggedGallery(string tag_id, int page = 0, bool sort = false)
-        {
-            return (await $"{Host}api/galleries/tagged".SetQueryParam(nameof(page), page + 1)
-                .SetQueryParam(nameof(tag_id), tag_id)
-                .SetQueryParam(nameof(sort), sort ? "popular" : null)
-                .GetJsonAsync<GalleryListModel>()).Gallery;
         }
     }
 }

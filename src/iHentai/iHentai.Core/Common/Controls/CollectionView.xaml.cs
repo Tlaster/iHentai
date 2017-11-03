@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Net;
+using System.Net.Http;
 using System.Windows.Input;
+using Flurl.Http;
+using iHentai.Core.Common.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -194,6 +198,24 @@ namespace iHentai.Core.Common.Controls
         {
             if (IsEmpty)
                 return;
+            switch (obj)
+            {
+                case FlurlHttpTimeoutException exception:
+                    ErrorLabel.Text = "error_network_timeout".ToLocalized();
+                    break;
+                case FlurlHttpException exception:
+                    ErrorLabel.Text = "error_network".ToLocalized();
+                    break;
+                case HttpRequestException exception:
+                    ErrorLabel.Text = "error_network".ToLocalized();
+                    break;
+                case WebException exception:
+                    ErrorLabel.Text = "error_network".ToLocalized();
+                    break;
+                default:
+                    ErrorLabel.Text = "error".ToLocalized();
+                    break;
+            }
             IsError = true;
         }
 

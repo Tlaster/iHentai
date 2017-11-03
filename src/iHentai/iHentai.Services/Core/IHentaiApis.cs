@@ -15,8 +15,7 @@ namespace iHentai.Services.Core
         IApiConfig ApiConfig { get; }
         ISettings Settings { get; }
         SearchOptionBase GenerateSearchOptionBase { get; }
-        Task<IEnumerable<IGalleryModel>> Gallery(int page = 0, SearchOptionBase searchOption = null);
-        Task<IEnumerable<IGalleryModel>> TaggedGallery(string name, int page = 0);
+        Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0, SearchOptionBase searchOption = null);
         Task<(bool State, string Message)> Login(string userName, string password);
     }
 }

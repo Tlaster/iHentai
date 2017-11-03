@@ -1,4 +1,5 @@
-﻿using iHentai.Core.Views;
+﻿using iHentai.Core.ViewModels;
+using iHentai.Core.Views;
 using Xamarin.Forms;
 
 namespace iHentai.Core
@@ -9,7 +10,10 @@ namespace iHentai.Core
         {
             InitializeComponent();
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
-            MainPage = new MainPage();
+            MainPage = new GalleryPage
+            {
+                BindingContext = new GalleryViewModel()
+            };
         }
 
         protected override void OnStart()

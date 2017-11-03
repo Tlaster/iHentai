@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace iHentai.Droid
 {
-    [Activity(Label = "EHTool", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "iHentai", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity
     {
