@@ -21,7 +21,7 @@ namespace iHentai.Mvvm
 
     public abstract class ViewModel : INotifyPropertyChanged
     {
-        private readonly INavigation _navigation = DependencyService.Get<INavigation>();
+        private INavigation Navigation => Application.Current.MainPage.Navigation;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,18 +34,21 @@ namespace iHentai.Mvvm
             CancellationToken cancellationToken = default, params object[] args)
             where T : ViewModel<TResult>
         {
-            if (_navigation == null)
+            if (Navigation == null)
                 throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
 
             var attr = typeof(T).GetCustomAttribute<PageAttribute>();
-            var vm = Activator.CreateInstance(typeof(T), args) as ViewModel<TResult>;
+            if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
+                throw new ArgumentException();
             var page = Activator.CreateInstance(attr.PageType);
+            if (!(page is Page))
+                throw new ArgumentException();
             if (cancellationToken != default)
                 cancellationToken.Register(() => vm.Close(default));
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
             (page as BindableObject).BindingContext = vm;
-            await _navigation.PushAsync(page as Page);
+            await Navigation.PushAsync(page as Page);
             try
             {
                 return await tcs.Task;
@@ -58,7 +61,7 @@ namespace iHentai.Mvvm
 
         public void Navigate<T>(params object[] args) where T : class
         {
-            if (_navigation == null)
+            if (Navigation == null)
                 throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
 
             object page;
@@ -71,6 +74,8 @@ namespace iHentai.Mvvm
             {
                 var vm = Activator.CreateInstance(pageType, args) as ViewModel;
                 page = Activator.CreateInstance(attr.PageType);
+                if (!(page is Page))
+                    throw new ArgumentException();
                 (page as BindableObject).BindingContext = vm;
             }
             else if (pInfo.IsAssignableFrom(xfPage) || pInfo.IsSubclassOf(typeof(Page)))
@@ -81,12 +86,12 @@ namespace iHentai.Mvvm
             {
                 throw new ArgumentException("Page Type must be based on Xamarin.Forms.Page");
             }
-            _navigation.PushAsync(page as Page);
+            Navigation.PushAsync(page as Page);
         }
 
         public void Close()
         {
-            _navigation.PopAsync().Start();
+            Navigation.PopAsync().Start();
         }
 
         public void RunOnUiThread(Action action)
