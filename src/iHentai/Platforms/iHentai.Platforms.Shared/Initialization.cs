@@ -4,7 +4,8 @@ using FFImageLoading.Forms.WinUWP;
 using FFImageLoading.Forms.Touch;
 #elif ANDROID
 using FFImageLoading.Forms.Droid;
-
+#elif __MACOS__
+using FFImageLoading.Forms.Mac;
 #endif
 
 
