@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iHentai", "iHentai", "{7B1C40EF-F065-4CCB-8578-A550D5466650}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Core", "src\iHentai\iHentai.Core\iHentai.Core.csproj", "{BE571A72-69E6-4051-A1A4-EA6B97566A80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Core", "src\iHentai\iHentai.Core\iHentai.Core.csproj", "{BE571A72-69E6-4051-A1A4-EA6B97566A80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{63BFCB2B-F135-4109-B51A-7995957CA969}"
 EndProject
@@ -19,15 +19,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toser", "Toser", "{DA1EEF04
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{30846289-6DFF-441B-80AD-EDAEEBF09518}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Test", "test\iHentai\iHentai.Test\iHentai.Test.csproj", "{CAD3BA7B-F95F-4096-8E76-E048EF3B6E4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Test", "test\iHentai\iHentai.Test\iHentai.Test.csproj", "{CAD3BA7B-F95F-4096-8E76-E048EF3B6E4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Services", "src\iHentai\iHentai.Services\iHentai.Services.csproj", "{1BC0DCF4-F772-468C-B9EB-607DC15E711F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Services", "src\iHentai\iHentai.Services\iHentai.Services.csproj", "{1BC0DCF4-F772-468C-B9EB-607DC15E711F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toser", "src\Toser\Toser\Toser.csproj", "{CE07B459-75A1-4BE0-89EC-CC1F7C0BD229}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toser", "src\Toser\Toser\Toser.csproj", "{CE07B459-75A1-4BE0-89EC-CC1F7C0BD229}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Platforms.Shared", "src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.shproj", "{7C50BC40-EAD8-4FE2-AA1C-CF78356798AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Mvvm", "src\iHentai\iHentai.Mvvm\iHentai.Mvvm.csproj", "{F15440BE-B12C-4358-A0AB-228BECF3AB1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.MacOS", "src\iHentai\Platforms\iHentai.MacOS\iHentai.MacOS.csproj", "{917B1B01-42D3-404E-957A-5CCF248C5687}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -467,6 +469,54 @@ Global
 		{F15440BE-B12C-4358-A0AB-228BECF3AB1E}.Release|x64.Build.0 = Release|Any CPU
 		{F15440BE-B12C-4358-A0AB-228BECF3AB1E}.Release|x86.ActiveCfg = Release|Any CPU
 		{F15440BE-B12C-4358-A0AB-228BECF3AB1E}.Release|x86.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|ARM.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|x64.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|x64.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Ad-Hoc|x86.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|ARM.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|iPhoneSimulator.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|x64.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|x64.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.AppStore|x86.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|ARM.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|x64.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Debug|x86.Build.0 = Debug|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|ARM.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|ARM.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|iPhone.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|x64.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|x64.Build.0 = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|x86.ActiveCfg = Release|Any CPU
+		{917B1B01-42D3-404E-957A-5CCF248C5687}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -483,6 +533,7 @@ Global
 		{CE07B459-75A1-4BE0-89EC-CC1F7C0BD229} = {DA1EEF04-4486-4E80-BF55-F72B338254C2}
 		{7C50BC40-EAD8-4FE2-AA1C-CF78356798AD} = {63BFCB2B-F135-4109-B51A-7995957CA969}
 		{F15440BE-B12C-4358-A0AB-228BECF3AB1E} = {7B1C40EF-F065-4CCB-8578-A550D5466650}
+		{917B1B01-42D3-404E-957A-5CCF248C5687} = {63BFCB2B-F135-4109-B51A-7995957CA969}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77481E86-259D-409F-B83B-AD580FAB08AD}
