@@ -14,15 +14,18 @@ namespace iHentai.iOS.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<ListView> e)
         {
             base.OnElementChanged(e);
-            if (e.OldElement != null)
-            {
-                Control.Scrolled -= Control_Scrolled;
-            }
-            else if (e.NewElement != null)
-            {
-                Control.Scrolled += Control_Scrolled;
-            }
+            //if (e.OldElement != null)
+            //{
+            //    Control.Scrolled -= Control_Scrolled;
+            //}
+            //else if (e.NewElement != null)
+            //{
+            //    Control.Scrolled += Control_Scrolled;
+            //}
+            
         }
+
+
 
         private void Control_Scrolled(object sender, EventArgs e)
         {

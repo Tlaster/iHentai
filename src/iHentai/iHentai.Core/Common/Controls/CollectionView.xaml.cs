@@ -70,7 +70,11 @@ namespace iHentai.Core.Common.Controls
             set
             {
                 _isRefreshing = value;
-                CollectionListView.IsPullToRefreshEnabled = !value;
+                //CollectionListView.IsPullToRefreshEnabled = !value;
+                if (Device.RuntimePlatform == Device.UWP)
+                    RefreshingView.IsVisible = value;
+                else
+                    CollectionListView.IsRefreshing = value;
                 //if (value)
                 //    Refresh();
             }
@@ -179,7 +183,6 @@ namespace iHentai.Core.Common.Controls
         private void OnRefreshEnd()
         {
             IsRefreshing = false;
-            RefreshingView.IsVisible = false;
             if (!IsError) IsEmpty = ItemsSource.Count == 0;
         }
 
@@ -190,8 +193,6 @@ namespace iHentai.Core.Common.Controls
             IsError = false;
             IsEmpty = false;
             IsRefreshing = true;
-            RefreshingView.IsVisible = true;
-            CollectionListView.IsRefreshing = false;
         }
 
         private void OnError(Exception obj)
@@ -221,12 +222,15 @@ namespace iHentai.Core.Common.Controls
 
         private void CollectionListView_Refreshing(object sender, EventArgs e)
         {
-            Refresh();
+            if (ItemsSource != null)
+            {
+                Refresh();
+            }
         }
 
         private async void Refresh()
         {
-            await ItemsSource?.RefreshAsync();
+            await ItemsSource.RefreshAsync();
         }
 
         private async void CollectionListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)

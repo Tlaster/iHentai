@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Core.Common;
@@ -18,25 +19,34 @@ namespace iHentai.Core.ViewModels
 
         public GalleryViewModel()
         {
-            Init();
+            //Init();
         }
 
-        public IncrementalLoadingCollection<MainDataSource, IGalleryModel> Source { get; set; }
+        public IncrementalLoadingCollection<MyClass, string> Source { get; set; } = new IncrementalLoadingCollection<MyClass, string>();
 
-        private async void Init()
+        //private async void Init()
+        //{
+        //    IHentaiApis apis;
+        //    if (Settings.Contains(DefaultHentaiService))
+        //    {
+        //        apis = ServiceInstances.Instance[Settings.Get(DefaultHentaiService, ServiceTypes.NHentai)];
+        //    }
+        //    else
+        //    {
+        //        var result = await Navigate<ServiceSelectionViewModel, (IHentaiApis apis, ServiceTypes types)>();
+        //        apis = result.apis;
+        //        Settings.Set(DefaultHentaiService, result.types);
+        //    }
+        //    Source = new IncrementalLoadingCollection<MainDataSource, IGalleryModel>(new MainDataSource(apis));
+        //}
+    }
+
+    public class MyClass : IIncrementalSource<string>
+    {
+        public async Task<IEnumerable<string>> GetPagedItemsAsync(int pageIndex, CancellationToken cancellationToken = default)
         {
-            IHentaiApis apis;
-            if (Settings.Contains(DefaultHentaiService))
-            {
-                apis = ServiceInstances.Instance[Settings.Get(DefaultHentaiService, ServiceTypes.NHentai)];
-            }
-            else
-            {
-                var result = await Navigate<ServiceSelectionViewModel, (IHentaiApis apis, ServiceTypes types)>();
-                apis = result.apis;
-                Settings.Set(DefaultHentaiService, result.types);
-            }
-            Source = new IncrementalLoadingCollection<MainDataSource, IGalleryModel>(new MainDataSource(apis));
+            await Task.Delay(2000);
+            return Enumerable.Range(0, 50).Select(item => item.ToString());
         }
     }
 

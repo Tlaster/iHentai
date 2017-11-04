@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="iHentai.Core.Views.GalleryPage">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="iHentai.Core.Views.GalleryPage"
+    xmlns:controls="clr-namespace:iHentai.Core.Common.Controls"
+    xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels">
+    <ContentPage.BindingContext>
+        <viewModels:GalleryViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <controls:CollectionView ItemsSource="{Binding Path=Source}"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

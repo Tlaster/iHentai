@@ -10,10 +10,7 @@ namespace iHentai.Core
         {
             InitializeComponent();
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
-            MainPage = new GalleryPage
-            {
-                BindingContext = new GalleryViewModel()
-            };
+            MainPage = new GalleryPage();
         }
 
         protected override void OnStart()
