@@ -8,6 +8,7 @@ namespace iHentai.Mvvm
         {
             base.OnBindingContextChanged();
             ViewModel.Navigation = Navigation;
+            ViewModel.Init();
         }
 
 

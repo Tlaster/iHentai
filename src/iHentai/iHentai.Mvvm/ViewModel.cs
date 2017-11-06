@@ -97,6 +97,11 @@ namespace iHentai.Mvvm
         {
             
         }
+
+        public virtual void Init()
+        {
+            
+        }
         
         public void Close()
         {

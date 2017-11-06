@@ -22,7 +22,6 @@ namespace iHentai.iOS.Renderers
             //{
             //    Control.Scrolled += Control_Scrolled;
             //}
-            
         }
 
 
