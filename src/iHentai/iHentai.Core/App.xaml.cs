@@ -10,7 +10,7 @@ namespace iHentai.Core
         {
             InitializeComponent();
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
-            MainPage = new GalleryPage();
+            MainPage = new NavigationPage(new GalleryPage());
         }
 
         protected override void OnStart()

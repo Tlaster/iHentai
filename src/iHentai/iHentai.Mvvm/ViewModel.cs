@@ -21,7 +21,7 @@ namespace iHentai.Mvvm
 
     public abstract class ViewModel : INotifyPropertyChanged
     {
-        private INavigation Navigation => Application.Current.MainPage.Navigation;
+        internal INavigation Navigation;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -34,8 +34,6 @@ namespace iHentai.Mvvm
             CancellationToken cancellationToken = default, params object[] args)
             where T : ViewModel<TResult>
         {
-            if (Navigation == null)
-                throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
 
             var attr = typeof(T).GetCustomAttribute<PageAttribute>();
             if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
@@ -48,6 +46,8 @@ namespace iHentai.Mvvm
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
             (page as BindableObject).BindingContext = vm;
+            if (Navigation == null)
+                throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
             await Navigation.PushAsync(page as Page);
             try
             {
@@ -61,9 +61,6 @@ namespace iHentai.Mvvm
 
         public void Navigate<T>(params object[] args) where T : class
         {
-            if (Navigation == null)
-                throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
-
             object page;
             var pageType = typeof(T);
             var pInfo = pageType.GetTypeInfo();
@@ -86,9 +83,21 @@ namespace iHentai.Mvvm
             {
                 throw new ArgumentException("Page Type must be based on Xamarin.Forms.Page");
             }
+            if (Navigation == null)
+                throw new InvalidOperationException("Xamarin Forms Navigation Service not found");
             Navigation.PushAsync(page as Page);
         }
 
+        public virtual void Appearing()
+        {
+            
+        }
+
+        public virtual void Disappearing()
+        {
+            
+        }
+        
         public void Close()
         {
             Navigation.PopAsync().Start();

@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<mvvm:MvvmPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.GalleryPage"
     xmlns:controls="clr-namespace:iHentai.Core.Common.Controls"
-    xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels">
-    <ContentPage.BindingContext>
+    xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
+    xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm">
+    <mvvm:MvvmPage.BindingContext>
         <viewModels:GalleryViewModel/>
-    </ContentPage.BindingContext>
+    </mvvm:MvvmPage.BindingContext>
     <ContentPage.Content>
         <Grid>
-            <controls:CollectionView ItemsSource="{Binding Path=Source}"/>
+            <Button Command="{Binding Command}"/>
         </Grid>
     </ContentPage.Content>
-</ContentPage>
+</mvvm:MvvmPage>

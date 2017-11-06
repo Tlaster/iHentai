@@ -21,7 +21,7 @@ namespace iHentai.Core.ViewModels
 
         [DependsOn(nameof(SelectedService))]
         public IHentaiApis SelectedApi =>
-            ServiceInstances.Instance[(ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)];
+            string.IsNullOrEmpty(SelectedService) ? null : ServiceInstances.Instance[(ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)];
 
         public string UserName { get; set; }
         public string Password { get; set; }

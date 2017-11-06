@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iHentai", "iHentai", "{7B1C40EF-F065-4CCB-8578-A550D5466650}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Core", "src\iHentai\iHentai.Core\iHentai.Core.csproj", "{BE571A72-69E6-4051-A1A4-EA6B97566A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Core", "src\iHentai\iHentai.Core\iHentai.Core.csproj", "{BE571A72-69E6-4051-A1A4-EA6B97566A80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{63BFCB2B-F135-4109-B51A-7995957CA969}"
 EndProject
@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toser", "Toser", "{DA1EEF04
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{30846289-6DFF-441B-80AD-EDAEEBF09518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Test", "test\iHentai\iHentai.Test\iHentai.Test.csproj", "{CAD3BA7B-F95F-4096-8E76-E048EF3B6E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Test", "test\iHentai\iHentai.Test\iHentai.Test.csproj", "{CAD3BA7B-F95F-4096-8E76-E048EF3B6E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Services", "src\iHentai\iHentai.Services\iHentai.Services.csproj", "{1BC0DCF4-F772-468C-B9EB-607DC15E711F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Services", "src\iHentai\iHentai.Services\iHentai.Services.csproj", "{1BC0DCF4-F772-468C-B9EB-607DC15E711F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toser", "src\Toser\Toser\Toser.csproj", "{CE07B459-75A1-4BE0-89EC-CC1F7C0BD229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toser", "src\Toser\Toser\Toser.csproj", "{CE07B459-75A1-4BE0-89EC-CC1F7C0BD229}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Platforms.Shared", "src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.shproj", "{7C50BC40-EAD8-4FE2-AA1C-CF78356798AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Mvvm", "src\iHentai\iHentai.Mvvm\iHentai.Mvvm.csproj", "{F15440BE-B12C-4358-A0AB-228BECF3AB1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Mvvm", "src\iHentai\iHentai.Mvvm\iHentai.Mvvm.csproj", "{F15440BE-B12C-4358-A0AB-228BECF3AB1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.MacOS", "src\iHentai\Platforms\iHentai.MacOS\iHentai.MacOS.csproj", "{917B1B01-42D3-404E-957A-5CCF248C5687}"
 EndProject
@@ -36,6 +36,7 @@ Global
 		src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.projitems*{240e1fbd-10bf-4523-807e-8dbb457cfd17}*SharedItemsImports = 4
 		src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.projitems*{305963a9-aba3-4d85-be70-1884584dc219}*SharedItemsImports = 4
 		src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.projitems*{7c50bc40-ead8-4fe2-aa1c-cf78356798ad}*SharedItemsImports = 13
+		src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.projitems*{917b1b01-42d3-404e-957a-5ccf248c5687}*SharedItemsImports = 4
 		src\iHentai\Platforms\iHentai.Platforms.Shared\iHentai.Platforms.Shared.projitems*{e5648ec6-9a73-421d-b4da-52a9f73cc9bb}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

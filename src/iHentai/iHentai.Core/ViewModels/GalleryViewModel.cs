@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using iHentai.Core.Common;
-using iHentai.Core.Common.Helpers;
 using iHentai.Core.Views;
 using iHentai.Mvvm;
 using iHentai.Services.Core;
 using iHentai.Services.Core.Models.Interfaces;
-using Xamarin.Forms;
 
 namespace iHentai.Core.ViewModels
 {
@@ -17,13 +16,15 @@ namespace iHentai.Core.ViewModels
     {
         private const string DefaultHentaiService = "default_hentai_service";
 
-        public GalleryViewModel()
+
+        public IncrementalLoadingCollection<MyClass, string> Source { get; set; } =
+            new IncrementalLoadingCollection<MyClass, string>();
+
+        public ICommand Command => new RelayCommand(async () =>
         {
-            //Init();
-        }
-
-        public IncrementalLoadingCollection<MyClass, string> Source { get; set; } = new IncrementalLoadingCollection<MyClass, string>();
-
+            var result = await Navigate<ServiceSelectionViewModel, (IHentaiApis apis, ServiceTypes types)>();
+        });
+        
         //private async void Init()
         //{
         //    IHentaiApis apis;
@@ -43,7 +44,8 @@ namespace iHentai.Core.ViewModels
 
     public class MyClass : IIncrementalSource<string>
     {
-        public async Task<IEnumerable<string>> GetPagedItemsAsync(int pageIndex, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<string>> GetPagedItemsAsync(int pageIndex,
+            CancellationToken cancellationToken = default)
         {
             await Task.Delay(2000);
             return Enumerable.Range(0, 50).Select(item => item.ToString());

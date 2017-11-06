@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage
+<mvvm:MvvmPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.ServiceSelectionPage"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
-    xmlns:m="clr-namespace:iHentai.Core.Common.MarkupExtensions;assembly=iHentai.Core">
+    xmlns:m="clr-namespace:iHentai.Core.Common.MarkupExtensions;assembly=iHentai.Core"
+    xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm">
     <ContentPage.BindingContext>
         <viewModels:ServiceSelectionViewModel />
     </ContentPage.BindingContext>
@@ -31,4 +32,4 @@
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</mvvm:MvvmPage>
