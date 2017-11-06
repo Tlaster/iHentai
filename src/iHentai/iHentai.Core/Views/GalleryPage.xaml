@@ -3,6 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="iHentai.Core.Views.GalleryPage"
+    NavigationPage.HasNavigationBar="false"
     xmlns:controls="clr-namespace:iHentai.Core.Common.Controls"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
     xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm"
@@ -12,15 +13,12 @@
     </mvvm:MvvmPage.BindingContext>
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <controls:CollectionView ItemsSource="{Binding Path=Source}" >
+            <controls:CollectionView ItemsSource="{Binding Path=Source}" ScrollChanged="CollectionViewOnScrollChanged" >
                 <controls:CollectionView.ItemTemplate>
                     <common:GalleryCellSelector/>
                 </controls:CollectionView.ItemTemplate>
             </controls:CollectionView>
+            <SearchBar x:Name="SearchBar" VerticalOptions="Start"/>
         </Grid>
     </ContentPage.Content>
 </mvvm:MvvmPage>

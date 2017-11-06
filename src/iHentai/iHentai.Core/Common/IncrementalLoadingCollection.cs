@@ -25,11 +25,11 @@ namespace iHentai.Core.Common
 
         public IncrementalLoadingCollection(TSource source)
         {
-            Source = source ?? throw new ArgumentNullException(nameof(source));
+            DataSource = source ?? throw new ArgumentNullException(nameof(source));
             _hasMoreItems = true;
         }
 
-        protected TSource Source { get; }
+        public TSource DataSource { get; }
 
         protected int CurrentPageIndex { get; set; }
 
@@ -96,7 +96,7 @@ namespace iHentai.Core.Common
 
         protected virtual async Task<IEnumerable<IType>> LoadDataAsync(CancellationToken cancellationToken)
         {
-            var result = await Source.GetPagedItemsAsync(CurrentPageIndex++, cancellationToken);
+            var result = await DataSource.GetPagedItemsAsync(CurrentPageIndex++, cancellationToken);
             return result;
         }
 

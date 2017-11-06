@@ -25,8 +25,8 @@ namespace iHentai.Droid.Renderers
 
         private void Control_Scroll(object sender, AbsListView.ScrollEventArgs e)
         {
-//            if (Control.ChildCount > 0)
-//                (Element as ExListView).InvokeScrollChanged(GetScrollY(), 0);
+            if (Control.ChildCount > 0)
+                (Element as ExListView).InvokeScrollChanged(GetScrollY(), 0);
         }
 
         private int GetScrollY()
@@ -39,12 +39,9 @@ namespace iHentai.Droid.Renderers
             _listViewItemHeights.TryAdd(Control.FirstVisiblePosition, child.Height);
 
             for (var i = 0; i < Control.FirstVisiblePosition; ++i)
-            {
-                var hei = _listViewItemHeights[i];
                 //Manual add hei each row into scrollY
-                if (hei != null)
+                if (_listViewItemHeights.TryGetValue(i, out var hei))
                     scrollY += hei;
-            }
 
             return scrollY;
         }
