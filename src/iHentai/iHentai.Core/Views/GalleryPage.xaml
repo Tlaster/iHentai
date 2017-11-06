@@ -5,13 +5,22 @@
     x:Class="iHentai.Core.Views.GalleryPage"
     xmlns:controls="clr-namespace:iHentai.Core.Common.Controls"
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels"
-    xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm">
+    xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm"
+    xmlns:common="clr-namespace:iHentai.Core.Common;assembly=iHentai.Core">
     <mvvm:MvvmPage.BindingContext>
         <viewModels:GalleryViewModel/>
     </mvvm:MvvmPage.BindingContext>
     <ContentPage.Content>
         <Grid>
-            <Button Command="{Binding Command}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <controls:CollectionView ItemsSource="{Binding Path=Source}" >
+                <controls:CollectionView.ItemTemplate>
+                    <common:GalleryCellSelector/>
+                </controls:CollectionView.ItemTemplate>
+            </controls:CollectionView>
         </Grid>
     </ContentPage.Content>
 </mvvm:MvvmPage>

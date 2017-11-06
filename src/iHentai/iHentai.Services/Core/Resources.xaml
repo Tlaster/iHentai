@@ -7,10 +7,10 @@
     xmlns:eviews="clr-namespace:iHentai.Services.EHentai.Views;assembly=iHentai.Services"
     xmlns:nviews="clr-namespace:iHentai.Services.NHentai.Views;assembly=iHentai.Services"
     xmlns:converters="clr-namespace:iHentai.Services.Converters">
-    <DataTemplate x:Key="iHentai.Services.EHentai.Models.GalleryModel.DataTemplate">
-        <eviews:GalleryCell />
-    </DataTemplate>
-    <DataTemplate x:Key="iHentai.Services.NHentai.Models.GalleryModel.DataTemplate">
-        <nviews:GalleryCell />
-    </DataTemplate>
+<!--    <DataTemplate x:Key="iHentai.Services.EHentai.Models.GalleryModel.DataTemplate">-->
+<!--        <eviews:GalleryCell />-->
+<!--    </DataTemplate>-->
+<!--    <DataTemplate x:Key="iHentai.Services.NHentai.Models.GalleryModel.DataTemplate">-->
+<!--        <nviews:GalleryCell />-->
+<!--    </DataTemplate>-->
 </ResourceDictionary>

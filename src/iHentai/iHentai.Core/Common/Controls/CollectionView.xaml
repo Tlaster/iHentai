@@ -10,8 +10,8 @@
         <Grid>
             <local:ExListView HasUnevenRows="True" x:Name="CollectionListView" IsPullToRefreshEnabled="True">
                 <ListView.Footer>
-                    <Grid Padding="16" x:Name="LoadMoreView" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                        <ActivityIndicator IsRunning="True"/>
+                    <Grid x:Name="LoadMoreView" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                        <ActivityIndicator Margin="16" IsRunning="True"/>
                     </Grid>
                 </ListView.Footer>
             </local:ExListView>

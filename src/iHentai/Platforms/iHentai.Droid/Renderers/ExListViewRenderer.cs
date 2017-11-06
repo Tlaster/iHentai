@@ -25,8 +25,8 @@ namespace iHentai.Droid.Renderers
 
         private void Control_Scroll(object sender, AbsListView.ScrollEventArgs e)
         {
-            if (Control.ChildCount > 0)
-                (Element as ExListView).InvokeScrollChanged(GetScrollY(), 0);
+//            if (Control.ChildCount > 0)
+//                (Element as ExListView).InvokeScrollChanged(GetScrollY(), 0);
         }
 
         private int GetScrollY()

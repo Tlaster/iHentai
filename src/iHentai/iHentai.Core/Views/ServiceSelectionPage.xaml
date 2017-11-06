@@ -27,9 +27,9 @@
                     <Button Command="{Binding CancelCommand}" Text="Cancel" />
                     <Button Command="{Binding ConfirmCommand}" Grid.Column="1" Text="Confirm" />
                 </Grid>
-                <Button Command="{Binding SkipCommand}" Text="Skip"
-                        IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
             </StackLayout>
+            <Button Command="{Binding SkipCommand}" Text="Skip"
+                    IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
         </StackLayout>
     </ContentPage.Content>
 </mvvm:MvvmPage>

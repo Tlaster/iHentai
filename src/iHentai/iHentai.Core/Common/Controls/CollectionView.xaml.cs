@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Windows.Input;
@@ -197,27 +198,37 @@ namespace iHentai.Core.Common.Controls
 
         private void OnError(Exception obj)
         {
-            if (IsEmpty)
-                return;
+//            if (IsEmpty)
+//                return;
+            var message = "";
             switch (obj)
             {
                 case FlurlHttpTimeoutException exception:
-                    ErrorLabel.Text = "error_network_timeout".ToLocalized();
+                    message = "error_network_timeout".ToLocalized();
                     break;
                 case FlurlHttpException exception:
-                    ErrorLabel.Text = "error_network".ToLocalized();
+                    message = "error_network".ToLocalized();
                     break;
                 case HttpRequestException exception:
-                    ErrorLabel.Text = "error_network".ToLocalized();
+                    message = "error_network".ToLocalized();
                     break;
                 case WebException exception:
-                    ErrorLabel.Text = "error_network".ToLocalized();
+                    message = "error_network".ToLocalized();
                     break;
                 default:
-                    ErrorLabel.Text = "error".ToLocalized();
+                    message = "error".ToLocalized();
                     break;
             }
-            IsError = true;
+            if (ItemsSource.Count != 0)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast(message);
+                _isError = true;
+            }
+            else
+            {
+                ErrorLabel.Text = message;
+                IsError = true;
+            }
         }
 
         private void CollectionListView_Refreshing(object sender, EventArgs e)

@@ -108,26 +108,26 @@ namespace iHentai.Core.Common
             {
                 if (!_cancellationToken.IsCancellationRequested)
                 {
-                    IEnumerable<IType> data = null;
                     try
                     {
                         IsLoading = true;
-                        data = await LoadDataAsync(_cancellationToken);
+                        var data = await LoadDataAsync(_cancellationToken);
+                        if (data != null && data.Any() && !_cancellationToken.IsCancellationRequested)
+                            foreach (var item in data)
+                                Add(item);
+                        else
+                            HasMoreItems = false;
                     }
                     catch (OperationCanceledException)
                     {
                         // The operation has been canceled using the Cancellation Token.
+                        CurrentPageIndex--;
                     }
-                    catch (Exception ex) when (OnError != null)
+                    catch (Exception ex)// when (OnError != null)
                     {
-                        OnError.Invoke(ex);
+                        CurrentPageIndex--;
+                        OnError?.Invoke(ex);
                     }
-
-                    if (data != null && data.Any() && !_cancellationToken.IsCancellationRequested)
-                        foreach (var item in data)
-                            Add(item);
-                    else
-                        HasMoreItems = false;
                 }
             }
             finally
