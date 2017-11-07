@@ -31,7 +31,7 @@ namespace iHentai.Droid.Renderers
 
         private int GetScrollY()
         {
-            var child = Control.GetChildAt(0); //this is the first visible row
+            var child = Control.GetChildAt(0);
             if (child == null) return 0;
 
             var scrollY = -child.Top;
@@ -39,7 +39,6 @@ namespace iHentai.Droid.Renderers
             _listViewItemHeights.TryAdd(Control.FirstVisiblePosition, child.Height);
 
             for (var i = 0; i < Control.FirstVisiblePosition; ++i)
-                //Manual add hei each row into scrollY
                 if (_listViewItemHeights.TryGetValue(i, out var hei))
                     scrollY += hei;
 

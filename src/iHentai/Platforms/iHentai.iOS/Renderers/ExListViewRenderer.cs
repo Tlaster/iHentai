@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Foundation;
 using iHentai.Core.Common.Controls;
 using iHentai.iOS.Renderers;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(ExListView), typeof(ExListViewRenderer))]
+
 namespace iHentai.iOS.Renderers
 {
     public class ExListViewRenderer : ListViewRenderer
@@ -22,13 +23,64 @@ namespace iHentai.iOS.Renderers
             //{
             //    Control.Scrolled += Control_Scrolled;
             //}
+            if (e.NewElement != null)
+            {
+                Control.Delegate = new ListViewDelegate(this);
+            }
         }
 
 
+        //private void Control_Scrolled(object sender, EventArgs e)
+        //{
+        //    (Element as ExListView).InvokeScrollChanged(Control.ContentOffset.Y, Control.ContentOffset.X);
+        //}
+    }
 
-        private void Control_Scrolled(object sender, EventArgs e)
+    internal class ListViewDelegate : UITableViewDelegate
+    {
+        private readonly ListView _element;
+        private readonly UITableViewSource _source;
+
+        public ListViewDelegate(ListViewRenderer renderer)
         {
-            (Element as ExListView).InvokeScrollChanged(Control.ContentOffset.Y, Control.ContentOffset.X);
+            _element = renderer.Element;
+            _source = renderer.Control.Source;
+        }
+
+        public override void DraggingEnded(UIScrollView scrollView, bool willDecelerate)
+        {
+            _source.DraggingEnded(scrollView, willDecelerate);
+        }
+
+        public override void DraggingStarted(UIScrollView scrollView)
+        {
+            _source.DraggingStarted(scrollView);
+        }
+
+        public override nfloat GetHeightForHeader(UITableView tableView, nint section)
+        {
+            return _source.GetHeightForHeader(tableView, section);
+        }
+
+        public override UIView GetViewForHeader(UITableView tableView, nint section)
+        {
+            return _source.GetViewForHeader(tableView, section);
+        }
+
+        public override void RowDeselected(UITableView tableView, NSIndexPath indexPath)
+        {
+            _source.RowDeselected(tableView, indexPath);
+        }
+
+        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            _source.RowSelected(tableView, indexPath);
+        }
+
+        public override void Scrolled(UIScrollView scrollView)
+        {
+            _source.Scrolled(scrollView);
+            (_element as ExListView).InvokeScrollChanged(scrollView.ContentOffset.Y, scrollView.ContentOffset.X);
         }
     }
 }
