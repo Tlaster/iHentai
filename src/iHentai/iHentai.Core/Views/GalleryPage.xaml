@@ -17,8 +17,20 @@
                 <controls:CollectionView.ItemTemplate>
                     <common:GalleryCellSelector/>
                 </controls:CollectionView.ItemTemplate>
+                <controls:CollectionView.Header>
+                    <Grid Margin="8" HeightRequest="{Binding Source={x:Reference SearchBar}, Path=Height}"/>
+                </controls:CollectionView.Header>
             </controls:CollectionView>
-            <SearchBar x:Name="SearchBar" VerticalOptions="Start"/>
+            <Frame x:Name="SearchBar" OutlineColor="Gray" CornerRadius="2" Margin="8" HasShadow="True" VerticalOptions="Start" BackgroundColor="White">
+                <Frame.Padding>
+                    <OnPlatform x:TypeArguments="Thickness" Default="4">
+                        <On Platform="UWP" Value="8"/>
+                    </OnPlatform>
+                </Frame.Padding>
+                <Grid>
+                    <Entry/>
+                </Grid>
+            </Frame>
         </Grid>
     </ContentPage.Content>
-</mvvm:MvvmPage>
+</mvvm:MvvmPage>    

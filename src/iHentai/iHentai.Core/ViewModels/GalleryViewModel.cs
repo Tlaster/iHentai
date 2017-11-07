@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Core.Common;
@@ -29,15 +27,13 @@ namespace iHentai.Core.ViewModels
         }
 
         public ServiceTypes ServiceType { get; set; }
-        
+
         public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; set; }
-        
+
         protected override async void Init()
         {
             if (Source != null)
-            {
                 return;
-            }
             IHentaiApis apis;
             if (Settings.Contains(DefaultHentaiService))
             {
