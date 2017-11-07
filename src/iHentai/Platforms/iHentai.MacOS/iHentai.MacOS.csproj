@@ -70,6 +70,9 @@
     <Reference Include="FFImageLoading.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.23\lib\Xamarin.Mac20\FFImageLoading.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Iconize.Material, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.Material.2.0.0.37-beta\lib\netstandard1.0\Plugin.Iconize.Material.dll</HintPath>
+    </Reference>
     <Reference Include="Plugin.VersionTracking, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Plugin.VersionTracking.2.1.0\lib\Xamarin.Mac20\Plugin.VersionTracking.dll</HintPath>
     </Reference>
@@ -105,9 +108,6 @@
     </Reference>
     <Reference Include="Plugin.Iconize">
       <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.2.0.0.37-beta\lib\netstandard1.0\Plugin.Iconize.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Iconize.FontAwesome">
-      <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.FontAwesome.2.0.0.37-beta\lib\netstandard1.0\Plugin.Iconize.FontAwesome.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Settings.Abstractions">
       <HintPath>..\..\..\..\packages\Xam.Plugins.Settings.3.1.1\lib\Xamarin.Mac20\Plugin.Settings.Abstractions.dll</HintPath>
