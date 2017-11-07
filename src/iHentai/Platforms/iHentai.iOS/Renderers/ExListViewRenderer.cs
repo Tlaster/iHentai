@@ -46,7 +46,7 @@ namespace iHentai.iOS.Renderers
             _element = renderer.Element;
             _source = renderer.Control.Source;
         }
-
+        
         public override void DraggingEnded(UIScrollView scrollView, bool willDecelerate)
         {
             _source.DraggingEnded(scrollView, willDecelerate);
