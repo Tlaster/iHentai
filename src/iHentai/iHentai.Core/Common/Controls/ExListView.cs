@@ -14,8 +14,8 @@ namespace iHentai.Core.Common.Controls
 
     public class ExListView : ListView
     {
-        private double _prevVerticalOffset = 0f;
-        private double _prevHorizontalOffset = 0f;
+        private double _prevVerticalOffset = 0d;
+        private double _prevHorizontalOffset = 0d;
         public event EventHandler LoadMoreRequest;
         public event EventHandler<ScrollChangedEventArgs> ScrollChanged;
         public void RequestLoadMore()
