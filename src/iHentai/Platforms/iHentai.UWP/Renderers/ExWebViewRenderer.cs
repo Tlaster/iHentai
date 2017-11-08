@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.UI.Xaml.Controls;
 using iHentai.Core.Common.Controls;
 using iHentai.UWP.Renderers;
 using Xamarin.Forms.Platform.UWP;
@@ -30,7 +31,7 @@ namespace iHentai.UWP.Renderers
         {
             (Element as ExWebView).OnNavigated(new CookieNavigatedEventArgs
             {
-                Cookies = sender.InvokeScript("eval", new[] {"document.cookie"}),
+                Cookies = await sender.InvokeScriptAsync("eval", new[] {"document.cookie"}),
                 Url = args.Uri.ToString()
             });
         }

@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using iHentai.Core.Common.Controls;
-using Xamarin.Forms;
+﻿using iHentai.Core.Common.Controls;
+using iHentai.Core.ViewModels;
 using Xamarin.Forms.Xaml;
 
 namespace iHentai.Core.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class WebLoginPage 
-	{
-		public WebLoginPage ()
-		{
-			InitializeComponent ();
-		}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class WebLoginPage
+    {
+        public WebLoginPage()
+        {
+            InitializeComponent();
+        }
 
-	    private void ExWebView_OnNavigated(object sender, CookieNavigatedEventArgs e)
-	    {
-	        
-	    }
-	}
+        private void ExWebView_OnNavigated(object sender, CookieNavigatedEventArgs e)
+        {
+            (ViewModel as WebLoginViewModel).WebViewNavigated(e.Url, e.Cookies);
+        }
+    }
 }
