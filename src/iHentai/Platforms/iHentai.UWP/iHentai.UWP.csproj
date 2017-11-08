@@ -103,6 +103,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\ActivityIndicatorRenderer.cs" />
     <Compile Include="Renderers\ExListViewRenderer.cs" />
+    <Compile Include="Renderers\ExWebViewRenderer.cs" />
     <Compile Include="Renderers\ListViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>

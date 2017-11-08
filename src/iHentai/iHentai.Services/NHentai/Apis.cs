@@ -15,10 +15,17 @@ namespace iHentai.Services.NHentai
         public bool FouceLogin { get; } = false;
         public bool HasLogin { get; } = true;
         public bool CanLogin { get; } = false;
+        public bool CanLoginWithWebView { get; } = false;
+        public string LoginWebViewUrl { get; }
         public string Host { get; } = "https://nhentai.net/";
         public IApiConfig ApiConfig { get; }
         public ISettings Settings { get; } = new Settings("nhentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
+
+        public bool WebViewLoginHandler(string url, string cookie)
+        {
+            throw new NotImplementedException();
+        }
 
         public Dictionary<string, string> Cookie => throw new NotImplementedException();
 

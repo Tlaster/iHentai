@@ -45,5 +45,10 @@ namespace iHentai.Core.ViewModels
         {
             Close((SelectedApi, (ServiceTypes) Enum.Parse(typeof(ServiceTypes), SelectedService)));
         });
+
+        public ICommand WebViewLoginCommand => new RelayCommand(() =>
+        {
+            
+        });
     }
 }

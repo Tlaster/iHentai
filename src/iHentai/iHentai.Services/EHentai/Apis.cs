@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Flurl;
@@ -17,6 +18,8 @@ namespace iHentai.Services.EHentai
         public bool FouceLogin { get; } = true;
         public bool HasLogin => Cookie?.Any() == true;
         public bool CanLogin { get; } = true;
+        public bool CanLoginWithWebView { get; } = true;
+        public string LoginWebViewUrl { get; } = "http://forums.e-hentai.org/index.php?act=Login";
         public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
 
         public IApiConfig ApiConfig
@@ -36,6 +39,20 @@ namespace iHentai.Services.EHentai
 
         public ISettings Settings { get; } = new Settings("ehentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
+
+        public bool WebViewLoginHandler(string url, string cookie)
+        {
+            if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
+            var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
+            var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
+
+            Cookie = new Dictionary<string, string>
+            {
+                {"ipb_member_id", memberid},
+                {"ipb_pass_hash", passHash}
+            };
+            return true;
+        }
 
         public Dictionary<string, string> Cookie
         {
@@ -90,6 +107,10 @@ namespace iHentai.Services.EHentai
                             "([^=]*)=([^;]*);")[0].Groups[2].Value))
                     .Distinct(item => item.Key)
                     .ToDictionary(item => item.Key, item => item.Value);
+            }
+            if (!cookie.Any())
+            {
+                return (false, "Require more informations");
             }
             using (var res = await "https://exhentai.org/".WithCookies(cookie)
                 .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())

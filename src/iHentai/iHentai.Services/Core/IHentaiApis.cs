@@ -10,6 +10,9 @@ namespace iHentai.Services.Core
         bool FouceLogin { get; }
         bool HasLogin { get; }
         bool CanLogin { get; }
+        bool CanLoginWithWebView { get; }
+        string LoginWebViewUrl { get; }
+        bool WebViewLoginHandler(string url, string cookie);
         Dictionary<string, string> Cookie { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }

@@ -30,11 +30,12 @@
                     </Grid>
                     <Button Command="{Binding SkipCommand}" Text="Skip"
                         IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
+                    <Button Command="{Binding WebViewLoginCommand}" Text="Login by web"
+                            IsVisible="{Binding SelectedApi.CanLoginWithWebView}" />
                 </StackLayout>
             </Grid>
             <Button IsVisible="{Binding SelectedApi.HasLogin}" Command="{Binding SkipCommand}" Text="Confirm"/>
-<!--            <Button Command="{Binding SkipCommand}" Text="Skip"-->
-<!--                    IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />-->
+
         </StackLayout>
     </ContentPage.Content>
 </mvvm:MvvmPage>

@@ -197,6 +197,7 @@
     <Compile Include="Common\ContextHelpers.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\ExListViewRenderer.cs" />
+    <Compile Include="Renderers\ExWebViewRenderer.cs" />
     <Compile Include="Renderers\PickerRenderer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
