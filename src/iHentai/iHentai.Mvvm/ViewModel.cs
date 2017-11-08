@@ -99,7 +99,7 @@ namespace iHentai.Mvvm
         {
         }
 
-        protected void Close()
+        protected internal virtual void Close()
         {
             Navigation.PopAsync();
         }
@@ -118,6 +118,15 @@ namespace iHentai.Mvvm
         {
             CloseCompletionSource?.TrySetResult(result);
             Close();
+        }
+
+        protected internal override void Disappearing()
+        {
+            if (CloseCompletionSource != null && !CloseCompletionSource.Task.IsCompleted && !CloseCompletionSource.Task.IsFaulted)
+            {
+                CloseCompletionSource.TrySetCanceled();
+            }
+            base.Disappearing();
         }
     }
 }

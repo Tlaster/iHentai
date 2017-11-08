@@ -10,7 +10,7 @@ namespace iHentai.Mvvm
             ViewModel.Navigation = Navigation;
             ViewModel.Init();
         }
-
+        
 
         public ViewModel ViewModel
         {
