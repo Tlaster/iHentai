@@ -11,12 +11,8 @@ namespace iHentai.Test
         [Fact]
         public async Task GalleryTest()
         {
-            var apis = ServiceInstances.Instance[ServiceTypes.NHentai];
-            var res = await apis.Gallery(searchOption: new Services.NHentai.SearchOption
-            {
-                Keyword = "taniguchi",
-                SearchType = SearchTypes.Keyword
-            });
+            var apis = ServiceInstances.Instance[ServiceTypes.EHentai];
+            var res = await apis.Gallery();
             Assert.NotNull(res.Gallery);
             Assert.NotEmpty(res.Gallery);
         }

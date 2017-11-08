@@ -21,9 +21,18 @@ namespace iHentai.Services.EHentai
 
         public IApiConfig ApiConfig
         {
+#if DEBUG
+            
+            get;
+            set;
+#else
             get => Settings.Get("ehentai_config", new Config());
             set => Settings.Set("ehentai_config", value);
+#endif
         }
+#if DEBUG
+        = new Config();
+#endif
 
         public ISettings Settings { get; } = new Settings("ehentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
@@ -53,6 +62,15 @@ namespace iHentai.Services.EHentai
             return (res.MaxPage, res.Gallery);
         }
 
+        public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
+        {
+            Cookie = new Dictionary<string, string>
+            {
+                {nameof(ipb_member_id), ipb_member_id},
+                {nameof(ipb_pass_hash), ipb_pass_hash}
+            };
+        }
+        
         public async Task<(bool State, string Message)> Login(string userName, string password)
         {
             Dictionary<string, string> cookie = null;
