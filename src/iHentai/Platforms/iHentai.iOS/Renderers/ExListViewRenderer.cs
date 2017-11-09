@@ -27,8 +27,20 @@ namespace iHentai.iOS.Renderers
             {
                 Control.Delegate = new ListViewDelegate(this);
             }
+            if (e.OldElement != null)
+            {
+                Control.Delegate = null;
+            }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Control.Delegate = null;   
+            }
+            base.Dispose(disposing);
+        }
 
         //private void Control_Scrolled(object sender, EventArgs e)
         //{

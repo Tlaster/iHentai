@@ -17,6 +17,11 @@ namespace iHentai.MacOS.Renderers
         {
             base.OnElementChanged(e);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 
 }

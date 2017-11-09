@@ -26,6 +26,16 @@ namespace iHentai.UWP.Renderers
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && Control != null)
+            {
+                Control.NavigationCompleted -= ControlOnNavigationCompleted;
+                Control.NavigationStarting -= ControlOnNavigationStarting;
+            }
+            base.Dispose(disposing);
+        }
+
         private async void ControlOnNavigationCompleted(Windows.UI.Xaml.Controls.WebView sender,
             WebViewNavigationCompletedEventArgs args)
         {

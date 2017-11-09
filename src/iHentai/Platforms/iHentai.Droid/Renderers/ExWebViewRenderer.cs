@@ -21,6 +21,19 @@ namespace iHentai.Droid.Renderers
                 Control.Settings.JavaScriptEnabled = true;
                 Control.SetWebViewClient(new ExWebViewClient(Element as ExWebView));
             }
+            if (e.OldElement != null)
+            {
+                Control.SetWebViewClient(null);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Control?.SetWebViewClient(null);
+            }
+            base.Dispose(disposing);
         }
     }
 

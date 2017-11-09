@@ -17,7 +17,7 @@ namespace iHentai.UWP.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<ActivityIndicator> e)
         {
             base.OnElementChanged(e);
-            if (Control == null && Element != null)
+            if (e.NewElement != null)
             {
                 SetNativeControl(new ProgressRing());
                 Control.IsActive = Element.IsRunning;

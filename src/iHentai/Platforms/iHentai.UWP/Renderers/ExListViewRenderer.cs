@@ -30,6 +30,16 @@ namespace iHentai.UWP.Renderers
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_scrollViewer != null)
+                    _scrollViewer.ViewChanged -= OnViewChanged;
+            }
+            base.Dispose(disposing);
+        }
+
         private void List_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             List.Loaded -= List_Loaded;

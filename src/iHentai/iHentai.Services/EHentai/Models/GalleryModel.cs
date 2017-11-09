@@ -66,7 +66,7 @@ namespace iHentai.Services.EHentai.Models
             else
             {
                 var text = (node as IElement).TextContent;
-                var match = Regex.Match(text, "inits~(.*)~(.*)~");
+                var match = Regex.Match(text, "inits~([^~]*)~([^~]*)~");
                 return $"https://{match.Groups[1].Value}/{match.Groups[2].Value}";
             }
         }

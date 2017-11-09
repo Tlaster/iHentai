@@ -23,6 +23,15 @@ namespace iHentai.Droid.Renderers
                 Control.Scroll += Control_Scroll;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && Control != null)
+            {
+                Control.Scroll -= Control_Scroll;
+            }
+            base.Dispose(disposing);
+        }
+
         private void Control_Scroll(object sender, AbsListView.ScrollEventArgs e)
         {
             if (Control.ChildCount > 0)

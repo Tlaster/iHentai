@@ -17,6 +17,19 @@ namespace iHentai.iOS.Renderers
             base.OnElementChanged(e);
             if (e.NewElement != null)
                 Delegate = new WebViewDelegate(Element as ExWebView);
+            if (e.OldElement != null)
+            {
+                Delegate = null;
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Delegate = null;
+            }
+            base.Dispose(disposing);
         }
     }
 

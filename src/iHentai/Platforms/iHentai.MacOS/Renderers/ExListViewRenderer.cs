@@ -20,10 +20,22 @@ namespace iHentai.MacOS.Renderers
             {
                 (Control as NSScrollView).ContentView.PostsBoundsChangedNotifications = true;
                 NSNotificationCenter.DefaultCenter.AddObserver(this, new Selector("boundsDidChangeNotification"), BoundsChangedNotification, (Control as NSScrollView).ContentView);
-
             }
-            
+            if (e.OldElement != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification", (Control as NSScrollView).ContentView);
+            }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification", (Control as NSScrollView).ContentView);
+            }
+            base.Dispose(disposing);
+        }
+
         [Export("boundsDidChangeNotification")]
         public void BoundsDidChangeNotification()
         {
