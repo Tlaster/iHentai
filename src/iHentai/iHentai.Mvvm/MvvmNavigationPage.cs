@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace iHentai.Mvvm
 {
@@ -14,17 +13,13 @@ namespace iHentai.Mvvm
         private void OnPushed(object sender, NavigationEventArgs e)
         {
             if (e.Page is MvvmPage page)
-            {
                 page.OnCreate();
-            }
         }
 
         private void OnPopped(object sender, NavigationEventArgs e)
         {
             if (e.Page is MvvmPage page)
-            {
                 page.OnDestory();
-            }
         }
     }
 }

@@ -9,9 +9,6 @@
     xmlns:mvvm="clr-namespace:iHentai.Mvvm;assembly=iHentai.Mvvm"
     xmlns:common="clr-namespace:iHentai.Core.Common;assembly=iHentai.Core"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize">
-    <mvvm:MvvmPage.BindingContext>
-        <viewModels:GalleryViewModel/>
-    </mvvm:MvvmPage.BindingContext>
     <ContentPage.Content>
         <Grid>
             <controls:CollectionView ItemsSource="{Binding Path=Source}" ScrollChanged="CollectionViewOnScrollChanged" >

@@ -20,7 +20,11 @@ namespace iHentai.Services.EHentai
         public bool CanLogin { get; } = true;
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "http://forums.e-hentai.org/index.php?act=Login";
-        public string Host => IsExhentaiMode ? "http://g.e-hentai.org/" : "https://exhentai.org/";
+        public Dictionary<string, string> ImageRequestHeader => new Dictionary<string, string>
+        {
+            {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new []{"igneous="}))}
+        };
+        public string Host => IsExhentaiMode ? "g.e-hentai.org" : "exhentai.org";
 
         public IApiConfig ApiConfig
         {
@@ -70,10 +74,10 @@ namespace iHentai.Services.EHentai
         {
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
-                req = $"{Host}{searchOption.Keyword}"
+                req = $"https://{Host}/{searchOption.Keyword}"
                     .AppendPathSegment("tag");
             else
-                req = Host.SetQueryParams(searchOption?.ToDictionary());
+                req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
             var res = await req.SetQueryParam("page", page).WithCookies(Cookie)
                 .WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>();
             return (res.MaxPage, res.Gallery);

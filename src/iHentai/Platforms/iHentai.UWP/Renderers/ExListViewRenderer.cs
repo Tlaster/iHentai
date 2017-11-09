@@ -23,11 +23,6 @@ namespace iHentai.UWP.Renderers
                     List.Loaded += List_Loaded;
                 }
             }
-            else if (e.OldElement != null)
-            {
-                if (_scrollViewer != null)
-                    _scrollViewer.ViewChanged -= OnViewChanged;
-            }
         }
 
         protected override void Dispose(bool disposing)

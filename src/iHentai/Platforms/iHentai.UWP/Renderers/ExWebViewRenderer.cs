@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using iHentai.Core.Common.Controls;
 using iHentai.UWP.Renderers;
@@ -14,11 +15,6 @@ namespace iHentai.UWP.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<WebView> e)
         {
             base.OnElementChanged(e);
-            if (e.OldElement != null)
-            {
-                Control.NavigationCompleted -= ControlOnNavigationCompleted;
-                Control.NavigationStarting -= ControlOnNavigationStarting;
-            }
             if (e.NewElement != null)
             {
                 Control.NavigationCompleted += ControlOnNavigationCompleted;
@@ -28,10 +24,12 @@ namespace iHentai.UWP.Renderers
 
         protected override void Dispose(bool disposing)
         {
+            Debug.WriteLine("webview disposing");
             if (disposing && Control != null)
             {
                 Control.NavigationCompleted -= ControlOnNavigationCompleted;
                 Control.NavigationStarting -= ControlOnNavigationStarting;
+                Control.Stop();
             }
             base.Dispose(disposing);
         }
@@ -39,9 +37,11 @@ namespace iHentai.UWP.Renderers
         private async void ControlOnNavigationCompleted(Windows.UI.Xaml.Controls.WebView sender,
             WebViewNavigationCompletedEventArgs args)
         {
+            var res = await sender.InvokeScriptAsync("eval", new[] {"document.cookie"});
+            Debug.WriteLine("webview ControlOnNavigationCompleted");
             (Element as ExWebView).OnNavigated(new CookieNavigatedEventArgs
             {
-                Cookies = await sender.InvokeScriptAsync("eval", new[] {"document.cookie"}),
+                Cookies = res,
                 Url = args.Uri.ToString()
             });
         }
@@ -53,6 +53,7 @@ namespace iHentai.UWP.Renderers
             {
                 Url = args.Uri.ToString()
             });
+            Debug.WriteLine("webview ControlOnNavigationStarting");
         }
     }
 }

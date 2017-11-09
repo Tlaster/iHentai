@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace iHentai.Services.Core
 {
@@ -34,5 +35,7 @@ namespace iHentai.Services.Core
                 return Services[type];
             }
         }
+
+        public IHentaiApis this[string host] => Services.FirstOrDefault(item => item.Value.Host == host).Value;
     }
 }

@@ -17,7 +17,8 @@ namespace iHentai.Services.NHentai
         public bool CanLogin { get; } = false;
         public bool CanLoginWithWebView { get; } = false;
         public string LoginWebViewUrl { get; }
-        public string Host { get; } = "https://nhentai.net/";
+        public Dictionary<string, string> ImageRequestHeader { get; }
+        public string Host { get; } = "nhentai.net";
         public IApiConfig ApiConfig { get; }
         public ISettings Settings { get; } = new Settings("nhentai");
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
@@ -32,7 +33,7 @@ namespace iHentai.Services.NHentai
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
             SearchOptionBase searchOption = null)
         {
-            var req = Host.AppendPathSegment("api").AppendPathSegment("galleries");
+            var req = $"https://{Host}/".AppendPathSegment("api").AppendPathSegment("galleries");
             if (searchOption == null)
                 req.AppendPathSegment("all");
             else

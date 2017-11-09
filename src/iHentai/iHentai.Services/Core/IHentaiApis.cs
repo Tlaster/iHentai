@@ -14,6 +14,7 @@ namespace iHentai.Services.Core
         string LoginWebViewUrl { get; }
         bool WebViewLoginHandler(string url, string cookie);
         Dictionary<string, string> Cookie { get; }
+        Dictionary<string, string> ImageRequestHeader { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
         ISettings Settings { get; }

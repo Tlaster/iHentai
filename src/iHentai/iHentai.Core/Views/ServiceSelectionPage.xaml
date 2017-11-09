@@ -14,12 +14,13 @@
         <StackLayout Padding="8">
             <Label Text="Please select a service" />
             <Picker x:Name="ServicePicker" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}" />
-            <Grid IsVisible="{Binding SelectedApi.HasLogin, Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}">
+            <Grid
+                IsVisible="{Binding SelectedApi.HasLogin, Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}">
                 <StackLayout IsVisible="{Binding SelectedApi.CanLogin}">
                     <Label Text="User Name" />
-                    <Entry />
+                    <Entry Text="{Binding UserName}" />
                     <Label Text="Password" />
-                    <Entry />
+                    <Entry IsPassword="true" Text="{Binding Password}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -29,12 +30,12 @@
                         <Button Command="{Binding ConfirmCommand}" Grid.Column="1" Text="Login" />
                     </Grid>
                     <Button Command="{Binding SkipCommand}" Text="Skip"
-                        IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
+                            IsVisible="{Binding SelectedApi.FouceLogin,Converter={StaticResource Equals}, ConverterParameter={m:Bool false}}" />
                     <Button Command="{Binding WebViewLoginCommand}" Text="Login by web"
                             IsVisible="{Binding SelectedApi.CanLoginWithWebView}" />
                 </StackLayout>
             </Grid>
-            <Button IsVisible="{Binding SelectedApi.HasLogin}" Command="{Binding SkipCommand}" Text="Confirm"/>
+            <Button IsVisible="{Binding SelectedApi.HasLogin}" Command="{Binding SkipCommand}" Text="Confirm" />
 
         </StackLayout>
     </ContentPage.Content>

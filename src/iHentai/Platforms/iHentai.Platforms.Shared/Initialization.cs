@@ -7,7 +7,10 @@ using FFImageLoading.Forms.Droid;
 #elif __MACOS__
 using FFImageLoading.Forms.Mac;
 #endif
-
+using FFImageLoading.Config;
+using iHentai.Core.Common;
+using FFImageLoading;
+using System.Net.Http;
 
 namespace iHentai.Platforms.Shared
 {
@@ -16,6 +19,10 @@ namespace iHentai.Platforms.Shared
         public static void Init()
         {
             CachedImageRenderer.Init();
+            ImageService.Instance.Initialize(new Configuration
+            {
+                HttpClient = new HttpClient(new HentaiHttpClient())
+            });
         }
     }
 }

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
+using ActivityIndicatorRenderer = iHentai.UWP.Renderers.ActivityIndicatorRenderer;
 
-[assembly: ExportRenderer(typeof(ActivityIndicator), typeof(iHentai.UWP.Renderers.ActivityIndicatorRenderer))]
+[assembly: ExportRenderer(typeof(ActivityIndicator), typeof(ActivityIndicatorRenderer))]
+
 namespace iHentai.UWP.Renderers
 {
     public class ActivityIndicatorRenderer : ViewRenderer<ActivityIndicator, ProgressRing>
@@ -35,17 +32,16 @@ namespace iHentai.UWP.Renderers
                 UpdateColor();
         }
 
-        void UpdateColor()
+        private void UpdateColor()
         {
-            Color color = Element.Color;
+            var color = Element.Color;
             if (color == Color.Default)
                 Control.ClearValue(Windows.UI.Xaml.Controls.Control.ForegroundProperty);
             else
-                Control.Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(
-                    Windows.UI.Color.FromArgb((byte)(color.A * 255), (byte)(color.R * 255), (byte)(color.G * 255),
-                        (byte)(color.B * 255)));
+                Control.Foreground = new SolidColorBrush(
+                    Windows.UI.Color.FromArgb((byte) (color.A * 255), (byte) (color.R * 255), (byte) (color.G * 255),
+                        (byte) (color.B * 255)));
         }
-
     }
     //public class ActivityIndicatorRenderer : ViewRenderer<ActivityIndicator, ProgressRing>
     //{
