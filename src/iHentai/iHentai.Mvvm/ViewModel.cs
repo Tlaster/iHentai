@@ -95,11 +95,19 @@ namespace iHentai.Mvvm
         {
         }
 
+        protected internal virtual void Destory()
+        {
+        }
+
+        protected internal virtual void Create()
+        {
+        }
+
         protected internal virtual void Init()
         {
         }
 
-        protected internal virtual void Close()
+        protected virtual void Close()
         {
             Navigation.PopAsync();
         }
@@ -120,13 +128,12 @@ namespace iHentai.Mvvm
             Close();
         }
 
-        protected internal override void Disappearing()
+        protected internal override void Destory()
         {
-            if (CloseCompletionSource != null && !CloseCompletionSource.Task.IsCompleted && !CloseCompletionSource.Task.IsFaulted)
-            {
+            if (CloseCompletionSource != null && !CloseCompletionSource.Task.IsCompleted &&
+                !CloseCompletionSource.Task.IsFaulted)
                 CloseCompletionSource.TrySetCanceled();
-            }
-            base.Disappearing();
+            base.Destory();
         }
     }
 }

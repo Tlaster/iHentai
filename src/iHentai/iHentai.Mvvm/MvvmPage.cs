@@ -17,6 +17,11 @@ namespace iHentai.Mvvm
             get => (ViewModel) BindingContext;
             set => BindingContext = value;
         }
+
+        protected internal virtual void OnCreate()
+        {
+            ViewModel?.Create();
+        }
         
         protected override void OnAppearing()
         {
@@ -28,6 +33,11 @@ namespace iHentai.Mvvm
         {
             base.OnDisappearing();
             ViewModel?.Disappearing();
+        }
+
+        protected internal virtual void OnDestory()
+        {
+            ViewModel?.Destory();
         }
         
     }
