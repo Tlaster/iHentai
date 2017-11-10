@@ -1,5 +1,4 @@
 ﻿using iHentai.Mvvm;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace iHentai.Core.Views

@@ -12,14 +12,17 @@ namespace iHentai.Services.Core
         bool CanLogin { get; }
         bool CanLoginWithWebView { get; }
         string LoginWebViewUrl { get; }
-        bool WebViewLoginHandler(string url, string cookie);
         Dictionary<string, string> Cookie { get; }
         Dictionary<string, string> ImageRequestHeader { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
         ISettings Settings { get; }
         SearchOptionBase GenerateSearchOptionBase { get; }
-        Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0, SearchOptionBase searchOption = null);
+        bool WebViewLoginHandler(string url, string cookie);
+
+        Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+            SearchOptionBase searchOption = null);
+
         Task<(bool State, string Message)> Login(string userName, string password);
     }
 }

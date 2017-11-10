@@ -24,21 +24,15 @@ namespace iHentai.iOS.Renderers
             //    Control.Scrolled += Control_Scrolled;
             //}
             if (e.NewElement != null)
-            {
                 Control.Delegate = new ListViewDelegate(this);
-            }
             if (e.OldElement != null)
-            {
                 Control.Delegate = null;
-            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                Control.Delegate = null;   
-            }
+                Control.Delegate = null;
             base.Dispose(disposing);
         }
 
@@ -58,7 +52,7 @@ namespace iHentai.iOS.Renderers
             _element = renderer.Element;
             _source = renderer.Control.Source;
         }
-        
+
         public override void DraggingEnded(UIScrollView scrollView, bool willDecelerate)
         {
             _source.DraggingEnded(scrollView, willDecelerate);

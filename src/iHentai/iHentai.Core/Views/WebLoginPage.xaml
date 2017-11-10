@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<mvvm:MvvmPage 
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<mvvm:MvvmPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="false"
@@ -8,6 +9,6 @@
     xmlns:viewModels="clr-namespace:iHentai.Core.ViewModels;assembly=iHentai.Core"
     x:Class="iHentai.Core.Views.WebLoginPage">
     <ContentPage.Content>
-        <controls:ExWebView Navigated="ExWebView_OnNavigated" Source="{Binding Apis.LoginWebViewUrl}"/>
+        <controls:ExWebView Navigated="ExWebView_OnNavigated" Source="{Binding Apis.LoginWebViewUrl}" />
     </ContentPage.Content>
 </mvvm:MvvmPage>

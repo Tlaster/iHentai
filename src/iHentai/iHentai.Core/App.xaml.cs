@@ -1,10 +1,8 @@
-﻿using System.Net.Http;
-using FFImageLoading;
-using FFImageLoading.Config;
-using iHentai.Core.Common;
-using iHentai.Core.ViewModels;
+﻿using iHentai.Core.ViewModels;
 using iHentai.Core.Views;
 using iHentai.Mvvm;
+using Plugin.Iconize;
+using Plugin.Iconize.Fonts;
 using Xamarin.Forms;
 
 namespace iHentai.Core
@@ -14,7 +12,7 @@ namespace iHentai.Core
         public App()
         {
             InitializeComponent();
-            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
+            Iconize.With(new MaterialModule());
             MainPage = new MvvmNavigationPage(new GalleryPage
             {
                 BindingContext = new GalleryViewModel()

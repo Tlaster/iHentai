@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
@@ -49,7 +48,7 @@ namespace iHentai.Services.EHentai.Models
         [HtmlItem(".it2", Attr = "style")]
         [HtmlConverter(typeof(ThumbHeightConverter))]
         public int ThumbHeight { get; set; }
-        
+
         [HtmlItem(".it2", Attr = "style")]
         [HtmlConverter(typeof(ThumbWidthConverter))]
         public int ThumbWidth { get; set; }
@@ -60,18 +59,13 @@ namespace iHentai.Services.EHentai.Models
         public object ReadHtml(INode node, Type targetType, object existingValue)
         {
             if (node.HasChildNodes && node.ChildNodes[0] is IHtmlImageElement element)
-            {
                 return element.Attributes["src"].Value;
-            }
-            else
-            {
-                var text = (node as IElement).TextContent;
-                var match = Regex.Match(text, "inits~([^~]*)~([^~]*)~");
-                return $"https://{match.Groups[1].Value}/{match.Groups[2].Value}";
-            }
+            var text = (node as IElement).TextContent;
+            var match = Regex.Match(text, "inits~([^~]*)~([^~]*)~");
+            return $"https://{match.Groups[1].Value}/{match.Groups[2].Value}";
         }
     }
-    
+
     internal class ThumbHeightConverter : IHtmlConverter
     {
         public object ReadHtml(INode node, Type targetType, object existingValue)
@@ -80,8 +74,8 @@ namespace iHentai.Services.EHentai.Models
             return int.TryParse(Regex.Match(text, "height:(.*)px;").Groups[1].Value, out var res) ? res : 0;
         }
     }
-    
-    
+
+
     internal class ThumbWidthConverter : IHtmlConverter
     {
         public object ReadHtml(INode node, Type targetType, object existingValue)

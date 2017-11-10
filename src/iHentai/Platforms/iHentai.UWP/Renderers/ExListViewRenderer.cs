@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using iHentai.Core.Common.Controls;
 using iHentai.UWP.Renderers;
 using Xamarin.Forms.Platform.UWP;
@@ -17,32 +18,24 @@ namespace iHentai.UWP.Renderers
             base.OnElementChanged(e);
 
             if (e.NewElement != null)
-            {
                 if (List != null)
-                {
                     List.Loaded += List_Loaded;
-                }
-            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 if (_scrollViewer != null)
                     _scrollViewer.ViewChanged -= OnViewChanged;
-            }
             base.Dispose(disposing);
         }
 
-        private void List_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void List_Loaded(object sender, RoutedEventArgs e)
         {
             List.Loaded -= List_Loaded;
             _scrollViewer = List.GetScrollViewer();
             if (_scrollViewer != null)
-            {
                 _scrollViewer.ViewChanged += OnViewChanged;
-            }
         }
 
         private void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

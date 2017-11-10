@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using Flurl.Http;
 using iHentai.Core.Common.Helpers;
 using Xamarin.Forms;
@@ -44,7 +43,7 @@ namespace iHentai.Core.Common.Controls
             EmptyView.GestureRecognizers.Add(tapGestureRecognizer);
             ErrorView.GestureRecognizers.Add(tapGestureRecognizer);
         }
-        
+
         public bool IsLoadingMore
         {
             get => _isLoadingMore;
@@ -139,7 +138,7 @@ namespace iHentai.Core.Common.Controls
 
         private void CollectionListViewOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
-            if(!IsRefreshing)
+            if (!IsRefreshing)
                 ScrollChanged?.Invoke(this, scrollChangedEventArgs);
         }
 
@@ -222,7 +221,7 @@ namespace iHentai.Core.Common.Controls
             }
             if (ItemsSource.Count != 0)
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast(message);
+                UserDialogs.Instance.Toast(message);
                 _isError = true;
             }
             else
@@ -235,9 +234,7 @@ namespace iHentai.Core.Common.Controls
         private void CollectionListView_Refreshing(object sender, EventArgs e)
         {
             if (ItemsSource != null)
-            {
                 Refresh();
-            }
         }
 
         private async void Refresh()

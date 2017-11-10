@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
-using Foundation;
-using iHentai.Core.Common.Controls;
+﻿using iHentai.Core.Common.Controls;
 using iHentai.MacOS.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.MacOS;
@@ -23,5 +19,4 @@ namespace iHentai.MacOS.Renderers
             base.Dispose(disposing);
         }
     }
-
 }

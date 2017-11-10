@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using iHentai.Core.Common.Controls;
 using iHentai.Mvvm;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace iHentai.Core.Views

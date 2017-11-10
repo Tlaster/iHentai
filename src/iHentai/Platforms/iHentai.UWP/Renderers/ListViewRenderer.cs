@@ -1,23 +1,22 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 using Microsoft.Xaml.Interactivity;
 using Xamarin.Forms.Platform.UWP;
 using CompositionTarget = Windows.UI.Xaml.Media.CompositionTarget;
+using IListViewController = Xamarin.Forms.IListViewController;
 using ListView = Xamarin.Forms.ListView;
-using System.ComponentModel;
-using Windows.UI;
-using Windows.UI.Xaml.Shapes;
 
 //[assembly: ExportRenderer(typeof(ListView), typeof(iHentai.UWP.Renderers.ListViewRenderer))]
 namespace iHentai.UWP.Renderers
@@ -30,8 +29,6 @@ namespace iHentai.UWP.Renderers
         {
             base.OnElementChanged(e);
             if (e.NewElement != null)
-            {
-
                 if (List != null)
                 {
                     _behavior = new PullToRefreshBehavior();
@@ -44,12 +41,11 @@ namespace iHentai.UWP.Renderers
                     _behavior.RefreshRequested += Behavior_RefreshRequested;
                     Interaction.GetBehaviors(List).Add(_behavior);
                 }
-            }
         }
 
         private void Behavior_RefreshRequested(object sender, RefreshRequestedEventArgs args)
         {
-            Xamarin.Forms.IListViewController controller = Element;
+            IListViewController controller = Element;
             controller.SendRefreshing();
             //Not the right way
             args.GetDeferral().Complete();
@@ -71,7 +67,7 @@ namespace iHentai.UWP.Renderers
             }
         }
     }
-    
+
     public class RefreshRequestedEventArgs
     {
         internal RefreshRequestedEventArgs(DeferralCompletedHandler handler)
@@ -82,23 +78,16 @@ namespace iHentai.UWP.Renderers
         private DeferralCompletedHandler Handler { get; }
         private Deferral Deferral { get; set; }
 
-        public Deferral GetDeferral() => 
-            Deferral ?? (Deferral = new Deferral(Handler));
+        public Deferral GetDeferral()
+        {
+            return Deferral ?? (Deferral = new Deferral(Handler));
+        }
     }
 
     public delegate void RefreshRequestedEventHandler(object sender, RefreshRequestedEventArgs args);
 
     public class AsyncDelegateCommand : ICommand
     {
-        #region Fields
-
-        private readonly Func<Task> _execute;
-        private readonly Func<bool> _canExecute;
-
-        private bool _isExecuting;
-
-        #endregion
-
         public AsyncDelegateCommand(Func<Task> execute, Func<bool> canExcute = null)
         {
             _execute = execute;
@@ -111,16 +100,26 @@ namespace iHentai.UWP.Renderers
 
         #endregion
 
+        #region Fields
+
+        private readonly Func<Task> _execute;
+        private readonly Func<bool> _canExecute;
+
+        private bool _isExecuting;
+
+        #endregion
+
         #region Methods
 
-        public bool CanExecute(object parameter) => !_isExecuting && _canExecute();
+        public bool CanExecute(object parameter)
+        {
+            return !_isExecuting && _canExecute();
+        }
 
         public bool CanExecute(object parameter, bool ignoreIsExecutingFlag)
         {
             if (ignoreIsExecutingFlag)
-            {
                 return _canExecute();
-            }
 
             return !_isExecuting && _canExecute();
         }
@@ -157,22 +156,16 @@ namespace iHentai.UWP.Renderers
             }
         }
 
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
     }
 
     public class AsyncDelegateCommand<T> : ICommand
     {
-        #region Fields
-
-        private readonly Func<T, Task> _execute;
-        private readonly Func<T, bool> _canExecute;
-
-        private bool _isExecuting;
-
-        #endregion
-
         public AsyncDelegateCommand(Func<T, Task> execute, Func<T, bool> canExcute = null)
         {
             _execute = execute;
@@ -185,18 +178,28 @@ namespace iHentai.UWP.Renderers
 
         #endregion
 
+        #region Fields
+
+        private readonly Func<T, Task> _execute;
+        private readonly Func<T, bool> _canExecute;
+
+        private bool _isExecuting;
+
+        #endregion
+
         #region Methods
 
-        public bool CanExecute(object parameter) => !_isExecuting && _canExecute((T)parameter);
+        public bool CanExecute(object parameter)
+        {
+            return !_isExecuting && _canExecute((T) parameter);
+        }
 
         public bool CanExecute(object parameter, bool ignoreIsExecutingFlag)
         {
             if (ignoreIsExecutingFlag)
-            {
-                return _canExecute((T)parameter);
-            }
+                return _canExecute((T) parameter);
 
-            return !_isExecuting && _canExecute((T)parameter);
+            return !_isExecuting && _canExecute((T) parameter);
         }
 
         public async void Execute(object parameter)
@@ -206,7 +209,7 @@ namespace iHentai.UWP.Renderers
             try
             {
                 RaiseCanExecuteChanged();
-                await _execute((T)parameter);
+                await _execute((T) parameter);
             }
             finally
             {
@@ -222,7 +225,7 @@ namespace iHentai.UWP.Renderers
             try
             {
                 RaiseCanExecuteChanged();
-                await _execute((T)parameter);
+                await _execute((T) parameter);
             }
             finally
             {
@@ -231,7 +234,10 @@ namespace iHentai.UWP.Renderers
             }
         }
 
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
     }
@@ -368,7 +374,6 @@ namespace iHentai.UWP.Renderers
 
         private string PullThresholdExpression =>
             $"(ScrollManipulation.MaxOverpan * {nameof(PullThresholdMaxOverpanRatio)})";
-        
 
         #endregion
 

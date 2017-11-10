@@ -107,7 +107,6 @@ namespace iHentai.Core.Common
             try
             {
                 if (!_cancellationToken.IsCancellationRequested)
-                {
                     try
                     {
                         IsLoading = true;
@@ -123,12 +122,11 @@ namespace iHentai.Core.Common
                         // The operation has been canceled using the Cancellation Token.
                         CurrentPageIndex--;
                     }
-                    catch (Exception ex)// when (OnError != null)
+                    catch (Exception ex) // when (OnError != null)
                     {
                         CurrentPageIndex--;
                         OnError?.Invoke(ex);
                     }
-                }
             }
             finally
             {

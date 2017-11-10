@@ -3,6 +3,7 @@ using FFImageLoading.Forms.WinUWP;
 #elif __IOS__
 using FFImageLoading.Forms.Touch;
 #elif ANDROID
+using System.Net.Http;
 using Xamarin.Android.Net;
 using FFImageLoading.Forms.Droid;
 #elif __MACOS__

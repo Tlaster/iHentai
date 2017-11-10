@@ -26,9 +26,7 @@ namespace iHentai.Droid.Renderers
         protected override void Dispose(bool disposing)
         {
             if (disposing && Control != null)
-            {
                 Control.Scroll -= Control_Scroll;
-            }
             base.Dispose(disposing);
         }
 

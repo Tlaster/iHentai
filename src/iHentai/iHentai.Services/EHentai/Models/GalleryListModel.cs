@@ -7,6 +7,7 @@ namespace iHentai.Services.EHentai.Models
     {
         [HtmlItem(".ptt > tbody > tr > td:nth-last-child(2) > a")]
         public int MaxPage { get; set; }
+
         [HtmlMultiItems("[class^=gtr]")]
         public List<GalleryModel> Gallery { get; set; }
     }

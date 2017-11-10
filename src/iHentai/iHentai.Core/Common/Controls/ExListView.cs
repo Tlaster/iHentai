@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace iHentai.Core.Common.Controls
@@ -14,10 +13,11 @@ namespace iHentai.Core.Common.Controls
 
     public class ExListView : ListView
     {
-        private double _prevVerticalOffset = 0d;
-        private double _prevHorizontalOffset = 0d;
+        private double _prevHorizontalOffset;
+        private double _prevVerticalOffset;
         public event EventHandler LoadMoreRequest;
         public event EventHandler<ScrollChangedEventArgs> ScrollChanged;
+
         public void RequestLoadMore()
         {
             LoadMoreRequest?.Invoke(this, EventArgs.Empty);
@@ -37,6 +37,5 @@ namespace iHentai.Core.Common.Controls
 //            Debug.WriteLine($"verticalOffset : {verticalOffset}");
 //            Debug.WriteLine($"horizontalOffset : {horizontalOffset}");
         }
-
     }
 }

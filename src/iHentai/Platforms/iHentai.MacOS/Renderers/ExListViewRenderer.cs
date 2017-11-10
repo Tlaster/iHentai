@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AppKit;
+﻿using AppKit;
 using CoreGraphics;
 using Foundation;
 using iHentai.Core.Common.Controls;
@@ -8,7 +7,8 @@ using ObjCRuntime;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.MacOS;
 
-[assembly:ExportRenderer(typeof(ExListView), typeof(ExListViewRenderer))]
+[assembly: ExportRenderer(typeof(ExListView), typeof(ExListViewRenderer))]
+
 namespace iHentai.MacOS.Renderers
 {
     public class ExListViewRenderer : ListViewRenderer
@@ -19,28 +19,28 @@ namespace iHentai.MacOS.Renderers
             if (e.NewElement != null)
             {
                 (Control as NSScrollView).ContentView.PostsBoundsChangedNotifications = true;
-                NSNotificationCenter.DefaultCenter.AddObserver(this, new Selector("boundsDidChangeNotification"), BoundsChangedNotification, (Control as NSScrollView).ContentView);
+                NSNotificationCenter.DefaultCenter.AddObserver(this, new Selector("boundsDidChangeNotification"),
+                    BoundsChangedNotification, (Control as NSScrollView).ContentView);
             }
             if (e.OldElement != null)
-            {
-                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification", (Control as NSScrollView).ContentView);
-            }
+                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification",
+                    (Control as NSScrollView).ContentView);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification", (Control as NSScrollView).ContentView);
-            }
+                NSNotificationCenter.DefaultCenter.RemoveObserver(this, "boundsDidChangeNotification",
+                    (Control as NSScrollView).ContentView);
             base.Dispose(disposing);
         }
 
         [Export("boundsDidChangeNotification")]
         public void BoundsDidChangeNotification()
         {
-            (Element as ExListView).InvokeScrollChanged((Control as NSScrollView).ContentView.Bounds.Location.Y, (Control as NSScrollView).ContentView.Bounds.Location.X);
-        } 
+            (Element as ExListView).InvokeScrollChanged((Control as NSScrollView).ContentView.Bounds.Location.Y,
+                (Control as NSScrollView).ContentView.Bounds.Location.X);
+        }
 
         public override void ScrollPoint(CGPoint aPoint)
         {

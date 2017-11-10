@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using iHentai.Services.Core;
-using iHentai.Services.EHentai;
 using Xunit;
 using NApis = iHentai.Services.NHentai.Apis;
 

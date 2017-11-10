@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using FFImageLoading.Forms;
 using FFImageLoading.Forms.WinUWP;
-using iHentai.Core.Common.Helpers;
 using iHentai.Platforms.Shared;
 using Xamarin.Forms;
 using Application = Windows.UI.Xaml.Application;

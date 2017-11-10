@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Flurl;
@@ -20,16 +19,18 @@ namespace iHentai.Services.EHentai
         public bool CanLogin { get; } = true;
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "http://forums.e-hentai.org/index.php?act=Login";
+
         public Dictionary<string, string> ImageRequestHeader => new Dictionary<string, string>
         {
-            {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new []{"igneous="}))}
+            {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new[] {"igneous="}))}
         };
+
         public string Host => IsExhentaiMode ? "g.e-hentai.org" : "exhentai.org";
 
         public IApiConfig ApiConfig
         {
 #if DEBUG
-            
+
             get;
             set;
 #else
@@ -38,7 +39,7 @@ namespace iHentai.Services.EHentai
 #endif
         }
 #if DEBUG
-        = new Config();
+            = new Config();
 #endif
 
         public ISettings Settings { get; } = new Settings("ehentai");
@@ -83,15 +84,6 @@ namespace iHentai.Services.EHentai
             return (res.MaxPage, res.Gallery);
         }
 
-        public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
-        {
-            Cookie = new Dictionary<string, string>
-            {
-                {nameof(ipb_member_id), ipb_member_id},
-                {nameof(ipb_pass_hash), ipb_pass_hash}
-            };
-        }
-        
         public async Task<(bool State, string Message)> Login(string userName, string password)
         {
             Dictionary<string, string> cookie = null;
@@ -113,9 +105,7 @@ namespace iHentai.Services.EHentai
                     .ToDictionary(item => item.Key, item => item.Value);
             }
             if (!cookie.Any())
-            {
                 return (false, "Require more informations");
-            }
             using (var res = await "https://exhentai.org/".WithCookies(cookie)
                 .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
             {
@@ -125,6 +115,15 @@ namespace iHentai.Services.EHentai
             }
             Cookie = cookie;
             return (true, string.Empty);
+        }
+
+        public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
+        {
+            Cookie = new Dictionary<string, string>
+            {
+                {nameof(ipb_member_id), ipb_member_id},
+                {nameof(ipb_pass_hash), ipb_pass_hash}
+            };
         }
     }
 }
