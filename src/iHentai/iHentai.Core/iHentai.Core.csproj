@@ -16,8 +16,8 @@
     <PackageReference Include="Xam.Plugin.Iconize.Material" Version="2.0.0.37-beta" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.2.24" />
-    <PackageReference Include="Xamarin.Forms" Version="2.4.0.38779" />
-    <PackageReference Include="Fody" Version="2.2.0" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.74863" />
+    <PackageReference Include="Fody" Version="2.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Toser\Toser\Toser.csproj" />
