@@ -18,7 +18,7 @@ namespace iHentai.Services.EHentai
         public bool HasLogin => Cookie?.Any() == true;
         public bool CanLogin { get; } = true;
         public bool CanLoginWithWebView { get; } = true;
-        public string LoginWebViewUrl { get; } = "http://forums.e-hentai.org/index.php?act=Login";
+        public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
 
         public Dictionary<string, string> ImageRequestHeader => new Dictionary<string, string>
         {
