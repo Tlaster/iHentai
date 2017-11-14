@@ -179,7 +179,7 @@
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
-      <Version>2.2.24</Version>
+      <Version>2.2.25</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>2.4.0.74863</Version>

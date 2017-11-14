@@ -16,7 +16,6 @@ namespace iHentai.Core.Views
 
         private void CollectionViewOnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            Debug.WriteLine($"VerticalChanged : {e.VerticalChanged}");
             if (e.VerticalChanged == 0d)
                 return;
             var res = SearchBar.TranslationY + e.VerticalChanged;

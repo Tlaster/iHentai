@@ -59,16 +59,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.24\lib\Xamarin.Mac20\FFImageLoading.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.25\lib\Xamarin.Mac20\FFImageLoading.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.24\lib\Xamarin.Mac20\FFImageLoading.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.25\lib\Xamarin.Mac20\FFImageLoading.Forms.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Forms.Mac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.24\lib\Xamarin.Mac20\FFImageLoading.Forms.Mac.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.25\lib\Xamarin.Mac20\FFImageLoading.Forms.Mac.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.24\lib\Xamarin.Mac20\FFImageLoading.Platform.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.25\lib\Xamarin.Mac20\FFImageLoading.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Iconize.Material, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Xam.Plugin.Iconize.Material.2.0.0.37-beta\lib\netstandard1.0\Plugin.Iconize.Material.dll</HintPath>

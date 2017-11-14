@@ -137,16 +137,16 @@
       <HintPath>..\..\..\..\packages\BTProgressHUD.1.2.0.6\lib\Xamarin.iOS10\BTProgressHUD.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.24\lib\Xamarin.iOS10\FFImageLoading.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.25\lib\Xamarin.iOS10\FFImageLoading.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Forms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.24\lib\Xamarin.iOS10\FFImageLoading.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.25\lib\Xamarin.iOS10\FFImageLoading.Forms.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Forms.Touch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.24\lib\Xamarin.iOS10\FFImageLoading.Forms.Touch.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Forms.2.2.25\lib\Xamarin.iOS10\FFImageLoading.Forms.Touch.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.24\lib\Xamarin.iOS10\FFImageLoading.Platform.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.2.25\lib\Xamarin.iOS10\FFImageLoading.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Flurl, Version=2.5.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\packages\Flurl.2.5.0\lib\netstandard1.3\Flurl.dll</HintPath>
