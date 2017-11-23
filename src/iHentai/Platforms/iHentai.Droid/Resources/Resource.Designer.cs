@@ -64,7 +64,6 @@ namespace iHentai.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::iHentai.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::iHentai.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::Splat.Resource.String.library_name = global::iHentai.Droid.Resource.String.library_name;
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::iHentai.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation
