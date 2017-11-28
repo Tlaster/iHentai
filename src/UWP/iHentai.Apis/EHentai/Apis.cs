@@ -8,12 +8,13 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
+using iHentai.Helpers;
 
 namespace iHentai.Apis.EHentai
 {
     public class Apis : IHentaiApis
     {
-        public bool IsExhentaiMode { get; set; }
+        public bool IsExhentaiMode { get; set; } = true;
         public bool FouceLogin { get; } = true;
         public bool HasLogin => Cookie?.Any() == true;
         public bool CanLogin { get; } = true;
@@ -25,24 +26,21 @@ namespace iHentai.Apis.EHentai
             {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new[] {"igneous="}))}
         };
 
-        public string Host => IsExhentaiMode ? "g.e-hentai.org" : "exhentai.org";
+        public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";
 
         public IApiConfig ApiConfig
         {
-#if DEBUG
-
-            get;
-            set;
-#else
-            get => Settings.Get("ehentai_config", new Config());
-            set => Settings.Set("ehentai_config", value);
-#endif
+            get => "exhentai_config".Read(new Config());
+            set => value.Save("exhentai_config");
         }
-#if DEBUG
-            = new Config();
-#endif
 
-        public ISettings Settings { get; } = new Settings("ehentai");
+        public Dictionary<string, string> Cookie
+        {
+            get => "exhentai_user_info".Read(new Dictionary<string, string>());
+            set => value.Save("exhentai_user_info");
+        }
+
+
         public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public bool WebViewLoginHandler(string url, string cookie)
@@ -57,17 +55,6 @@ namespace iHentai.Apis.EHentai
                 {"ipb_pass_hash", passHash}
             };
             return true;
-        }
-
-        public Dictionary<string, string> Cookie
-        {
-#if DEBUG
-            get;
-            set;
-#else
-            get => Settings.Get<string>("user_info").FromJson<Dictionary<string, string>>();
-            set => Settings.Set("user_info", value.ToJson());
-#endif
         }
 
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,

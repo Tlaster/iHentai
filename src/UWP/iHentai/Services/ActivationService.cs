@@ -70,7 +70,7 @@ namespace iHentai.Services
         private async Task InitializeAsync()
         {
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
-            await ThemeSelectorService.InitializeAsync();
+            ThemeSelectorService.Initialize();
             await Task.CompletedTask;
         }
 

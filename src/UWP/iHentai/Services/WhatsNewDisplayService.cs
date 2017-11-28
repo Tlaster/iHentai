@@ -14,17 +14,17 @@ namespace iHentai.Services
         {
             var currentVersion = PackageVersionToReadableString(Package.Current.Id.Version);
 
-            var lastVersion = await ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(currentVersion));
+            var lastVersion = nameof(currentVersion).Read<string>();
 
             if (lastVersion == null)
             {
-                await ApplicationData.Current.LocalSettings.SaveAsync(nameof(currentVersion), currentVersion);
+                currentVersion.Save(nameof(currentVersion));
             }
             else
             {
                 if (currentVersion != lastVersion)
                 {
-                    await ApplicationData.Current.LocalSettings.SaveAsync(nameof(currentVersion), currentVersion);
+                    currentVersion.Save(nameof(currentVersion));
 
                     var dialog = new WhatsNewDialog();
                     await dialog.ShowAsync();

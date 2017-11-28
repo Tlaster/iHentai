@@ -12,17 +12,17 @@ namespace iHentai.Services
 
         public static ElementTheme Theme { get; set; } = ElementTheme.Default;
 
-        public static async Task InitializeAsync()
+        public static void Initialize()
         {
-            Theme = await LoadThemeFromSettingsAsync();
+            Theme = LoadThemeFromSettings();
         }
 
-        public static async Task SetThemeAsync(ElementTheme theme)
+        public static void SetTheme(ElementTheme theme)
         {
             Theme = theme;
 
             SetRequestedTheme();
-            await SaveThemeInSettingsAsync(Theme);
+            SaveThemeInSettings(Theme);
         }
 
         public static void SetRequestedTheme()
@@ -31,10 +31,10 @@ namespace iHentai.Services
                 frameworkElement.RequestedTheme = Theme;
         }
 
-        private static async Task<ElementTheme> LoadThemeFromSettingsAsync()
+        private static ElementTheme LoadThemeFromSettings()
         {
             var cacheTheme = ElementTheme.Default;
-            var themeName = await ApplicationData.Current.LocalSettings.ReadAsync<string>(SettingsKey);
+            var themeName = SettingsKey.Read<string>();
 
             if (!string.IsNullOrEmpty(themeName))
                 Enum.TryParse(themeName, out cacheTheme);
@@ -42,9 +42,9 @@ namespace iHentai.Services
             return cacheTheme;
         }
 
-        private static async Task SaveThemeInSettingsAsync(ElementTheme theme)
+        private static void SaveThemeInSettings(ElementTheme theme)
         {
-            await ApplicationData.Current.LocalSettings.SaveAsync(SettingsKey, theme.ToString());
+            theme.Save(SettingsKey);
         }
     }
 }

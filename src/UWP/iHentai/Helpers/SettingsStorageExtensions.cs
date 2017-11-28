@@ -21,7 +21,7 @@ namespace iHentai.Helpers
         public static async Task SaveAsync<T>(this StorageFolder folder, string name, T content)
         {
             var file = await folder.CreateFileAsync(GetFileName(name), CreationCollisionOption.ReplaceExisting);
-            var fileContent = await Json.StringifyAsync(content);
+            var fileContent = content.ToJson();
 
             await FileIO.WriteTextAsync(file, fileContent);
         }
@@ -34,26 +34,40 @@ namespace iHentai.Helpers
             var file = await folder.GetFileAsync($"{name}.json");
             var fileContent = await FileIO.ReadTextAsync(file);
 
-            return await Json.ToObjectAsync<T>(fileContent);
+            return fileContent.JsonTo<T>();
         }
 
-        public static async Task SaveAsync<T>(this ApplicationDataContainer settings, string key, T value)
+        public static T Read<T>(this string key, T defaultValue = default)
         {
-            settings.SaveString(key, await Json.StringifyAsync(value));
+            return ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj)
+                ? ((string) obj).JsonTo<T>()
+                : defaultValue;
         }
 
-        public static void SaveString(this ApplicationDataContainer settings, string key, string value)
+
+        public static void Save<T>(this T obj, string key)
         {
-            settings.Values[key] = value;
+            ApplicationData.Current.LocalSettings.Values[key] = obj.ToJson();
         }
 
-        public static async Task<T> ReadAsync<T>(this ApplicationDataContainer settings, string key)
+
+        public static T Read<T>(this (string Container, string Key) value, T defaultValue = default)
         {
-            if (settings.Values.TryGetValue(key, out var obj))
-                return await Json.ToObjectAsync<T>((string) obj);
-
-            return default;
+            return ApplicationData.Current.LocalSettings
+                .CreateContainer(value.Container, ApplicationDataCreateDisposition.Always)
+                .Values.TryGetValue(value.Key, out var obj)
+                ? ((string) obj).JsonTo<T>()
+                : defaultValue;
         }
+
+
+        public static void Save<T>(this T obj, string container, string key)
+        {
+            ApplicationData.Current.LocalSettings
+                .CreateContainer(container, ApplicationDataCreateDisposition.Always)
+                .Values[key] = obj.ToJson();
+        }
+
 
         public static async Task<StorageFile> SaveFileAsync(this StorageFolder folder, byte[] content, string fileName,
             CreationCollisionOption options = CreationCollisionOption.ReplaceExisting)

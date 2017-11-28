@@ -11,11 +11,11 @@ namespace iHentai.Services
         internal static async Task ShowIfAppropriateAsync()
         {
             var hasShownFirstRun = false;
-            hasShownFirstRun = await ApplicationData.Current.LocalSettings.ReadAsync<bool>(nameof(hasShownFirstRun));
+            hasShownFirstRun = nameof(hasShownFirstRun).Read<bool>();
 
             if (!hasShownFirstRun)
             {
-                await ApplicationData.Current.LocalSettings.SaveAsync(nameof(hasShownFirstRun), true);
+                true.Save(nameof(hasShownFirstRun));
                 var dialog = new FirstRunDialog();
                 await dialog.ShowAsync();
             }

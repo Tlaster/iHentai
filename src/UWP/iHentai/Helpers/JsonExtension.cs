@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iHentai.Apis.Core.Common
+namespace iHentai.Helpers
 {
     internal static class JsonExtension
     {
@@ -8,13 +8,13 @@ namespace iHentai.Apis.Core.Common
         {
             return JsonConvert.SerializeObject(obj);
         }
-
-        public static object FromJson(this string value)
+        
+        public static object JsonToObject(this string value)
         {
             return JsonConvert.DeserializeObject(value);
         }
 
-        public static T FromJson<T>(this string value)
+        public static T JsonTo<T>(this string value)
         {
             return JsonConvert.DeserializeObject<T>(value);
         }

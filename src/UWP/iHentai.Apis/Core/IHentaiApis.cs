@@ -16,7 +16,6 @@ namespace iHentai.Apis.Core
         Dictionary<string, string> ImageRequestHeader { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
-        ISettings Settings { get; }
         SearchOptionBase GenerateSearchOptionBase { get; }
         bool WebViewLoginHandler(string url, string cookie);
 

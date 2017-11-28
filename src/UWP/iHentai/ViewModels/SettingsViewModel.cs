@@ -25,10 +25,10 @@ namespace iHentai.ViewModels
         }
 
         public ICommand SwitchThemeCommand => new RelayCommand<ElementTheme>(
-            async param =>
+            param =>
             {
                 ElementTheme = param;
-                await ThemeSelectorService.SetThemeAsync(param);
+                ThemeSelectorService.SetTheme(param);
             });
     }
 }
