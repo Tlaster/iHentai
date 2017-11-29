@@ -17,7 +17,7 @@ namespace iHentai.Apis.NHentai.Models
         public string MediaId { get; set; }
 
         [JsonProperty("title")]
-        public TitleModel Title { get; set; }
+        public TitleModel TitleModel { get; set; }
 
         [JsonProperty("images")]
         public GalleryImagesModel Images { get; set; }
@@ -33,6 +33,11 @@ namespace iHentai.Apis.NHentai.Models
 
         [JsonProperty("num_pages")]
         public int NumPages { get; set; }
+
+        public string Title => TitleModel?.English;
+        public string Thumb => $"https://t.nhentai.net/galleries/{MediaId}/cover.{(string.Equals(Images.Cover.Type, "j", StringComparison.OrdinalIgnoreCase) ? "jpg" : "png")}";
+        public double ThumbHeight => Images.Cover.Height;
+        public double ThumbWidth => Images.Cover.Width;
     }
 
     internal class UploadDateConverter : JsonConverter

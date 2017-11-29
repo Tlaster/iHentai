@@ -3,6 +3,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using iHentai.Services;
 using iHentai.ViewModels;
+using iHentai.Views;
 
 namespace iHentai
 {
@@ -33,7 +34,7 @@ namespace iHentai
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(MainViewModel));
+            return new ActivationService(this, typeof(RootPage));
         }
 
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)

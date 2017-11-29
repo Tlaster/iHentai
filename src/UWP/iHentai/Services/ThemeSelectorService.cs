@@ -20,7 +20,6 @@ namespace iHentai.Services
         public static void SetTheme(ElementTheme theme)
         {
             Theme = theme;
-
             SetRequestedTheme();
             SaveThemeInSettings(Theme);
         }

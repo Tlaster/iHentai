@@ -1,0 +1,23 @@
+﻿<mvvm:MvvmPage
+    x:Class="iHentai.Views.GalleryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:controls="using:Marduk.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer>
+            <controls:WaterfallFlowView Spacing="0" IsAdaptiveEnable="True" ItemSource="{x:Bind ViewModel.Source}">
+                <controls:WaterfallFlowView.ItemTemplate>
+                    <DataTemplate>
+                        <local:GalleryGridItem/>
+                    </DataTemplate>
+                </controls:WaterfallFlowView.ItemTemplate>
+            </controls:WaterfallFlowView>
+        </ScrollViewer>
+    </Grid>
+</mvvm:MvvmPage>

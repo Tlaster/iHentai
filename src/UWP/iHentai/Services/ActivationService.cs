@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using FFImageLoading;
+using FFImageLoading.Config;
 using iHentai.Activation;
+using iHentai.Apis.Core;
 using iHentai.Helpers;
 using iHentai.Mvvm;
 
@@ -62,15 +69,28 @@ namespace iHentai.Services
                 // Ensure the current window is active
                 Window.Current.Activate();
 
+                ExtendAcrylicIntoTitleBar();
+
                 // Tasks after activation
                 await StartupAsync();
             }
+        }
+        private void ExtendAcrylicIntoTitleBar()
+        {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
 
         private async Task InitializeAsync()
         {
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
+            ImageService.Instance.Initialize(new Configuration
+            {
+                HttpClient = new HttpClient(new HentaiHttpClient())
+            });
             await Task.CompletedTask;
         }
 

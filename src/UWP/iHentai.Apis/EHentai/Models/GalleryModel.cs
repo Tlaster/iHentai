@@ -47,11 +47,11 @@ namespace iHentai.Apis.EHentai.Models
 
         [HtmlItem(".it2", Attr = "style")]
         [HtmlConverter(typeof(ThumbHeightConverter))]
-        public int ThumbHeight { get; set; }
+        public double ThumbHeight { get; set; }
 
         [HtmlItem(".it2", Attr = "style")]
         [HtmlConverter(typeof(ThumbWidthConverter))]
-        public int ThumbWidth { get; set; }
+        public double ThumbWidth { get; set; }
     }
 
     internal class ThumbConverter : IHtmlConverter

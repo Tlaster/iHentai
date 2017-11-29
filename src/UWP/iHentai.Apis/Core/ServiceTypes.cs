@@ -30,7 +30,7 @@ namespace iHentai.Apis.Core
                 if (!Services.ContainsKey(type))
                     Services.Add(type,
                         Activator.CreateInstance(
-                                Type.GetType($"iHentai.Services.{Enum.GetName(typeof(ServiceTypes), type)}.Apis")) as
+                                Type.GetType($"iHentai.Apis.{Enum.GetName(typeof(ServiceTypes), type)}.Apis")) as
                             IHentaiApis);
                 return Services[type];
             }

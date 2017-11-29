@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Common\AutoString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Common\IEnumerableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\FlurlExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\HentaiHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IApiConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryModel.cs" />
@@ -42,5 +43,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\TagModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\TitleModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\SearchOption.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)EHentai\Views\" />
+    <Folder Include="$(MSBuildThisFileDirectory)NHentai\Views\" />
   </ItemGroup>
 </Project>

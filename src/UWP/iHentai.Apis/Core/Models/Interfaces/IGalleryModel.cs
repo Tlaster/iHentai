@@ -2,8 +2,11 @@
 {
     public interface IGalleryModel
     {
-//        string Title { get; set; }
-//        string Thumb { get; set; }
+        string Title { get; }
+        string Thumb { get; }
+        double ThumbHeight { get; }
+        double ThumbWidth { get; }
+
 //        string Link { get; set; }
     }
 }
