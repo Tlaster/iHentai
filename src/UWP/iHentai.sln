@@ -9,11 +9,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Mvvm", "iHentai.Mvv
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Apis", "iHentai.Apis\iHentai.Apis.shproj", "{FB618F38-1740-4B04-A541-5B8B759694FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.UnitTest", "iHentai.UnitTest\iHentai.UnitTest.csproj", "{07632768-EF78-4134-B1FF-2719BC4743EF}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		iHentai.Apis\iHentai.Apis.projitems*{07632768-ef78-4134-b1ff-2719bc4743ef}*SharedItemsImports = 4
 		iHentai.Mvvm\iHentai.Mvvm.projitems*{a4b765c6-54dd-426d-8cfe-d05a19a3cbc3}*SharedItemsImports = 13
 		iHentai.Apis\iHentai.Apis.projitems*{bfa72ae1-0cb0-4991-a23c-4a3ad836ccf4}*SharedItemsImports = 4
 		iHentai.Mvvm\iHentai.Mvvm.projitems*{bfa72ae1-0cb0-4991-a23c-4a3ad836ccf4}*SharedItemsImports = 4
@@ -50,26 +47,6 @@ Global
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.ActiveCfg = Release|x86
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.Build.0 = Release|x86
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.Deploy.0 = Release|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|ARM.ActiveCfg = Debug|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|ARM.Build.0 = Debug|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|ARM.Deploy.0 = Debug|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x64.ActiveCfg = Debug|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x64.Build.0 = Debug|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x64.Deploy.0 = Debug|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x86.ActiveCfg = Debug|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x86.Build.0 = Debug|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Debug|x86.Deploy.0 = Debug|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|Any CPU.ActiveCfg = Release|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|ARM.ActiveCfg = Release|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|ARM.Build.0 = Release|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|ARM.Deploy.0 = Release|ARM
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x64.ActiveCfg = Release|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x64.Build.0 = Release|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x64.Deploy.0 = Release|x64
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x86.ActiveCfg = Release|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x86.Build.0 = Release|x86
-		{07632768-EF78-4134-B1FF-2719BC4743EF}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

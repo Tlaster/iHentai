@@ -9,6 +9,7 @@
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
     xmlns:ffimage="using:FFImageLoading"
+    xmlns:uwp="using:FontAwesome.UWP"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance model:IGalleryModel}"
     d:DesignHeight="300"
@@ -26,6 +27,9 @@
         </controls:DropShadowPanel>
         <Grid>
             <ffimage:FFImage Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}"/>
+            <Button Click="{x:Bind MoreButtonClick}" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

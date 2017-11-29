@@ -44,8 +44,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\TitleModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\SearchOption.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)EHentai\Views\" />
-    <Folder Include="$(MSBuildThisFileDirectory)NHentai\Views\" />
-  </ItemGroup>
 </Project>

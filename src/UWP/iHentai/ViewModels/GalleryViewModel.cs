@@ -9,6 +9,7 @@ using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Mvvm;
 using iHentai.Views;
 using Microsoft.Toolkit.Uwp;
+using GalleryPage = iHentai.Pages.GalleryPage;
 
 namespace iHentai.ViewModels
 {

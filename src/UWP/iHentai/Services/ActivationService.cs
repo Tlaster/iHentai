@@ -96,9 +96,9 @@ namespace iHentai.Services
 
         private async Task StartupAsync()
         {
+            ThemeSelectorService.SetRequestedTheme();
             await WhatsNewDisplayService.ShowIfAppropriateAsync();
             await FirstRunDisplayService.ShowIfAppropriateAsync();
-            ThemeSelectorService.SetRequestedTheme();
             await Task.CompletedTask;
         }
 

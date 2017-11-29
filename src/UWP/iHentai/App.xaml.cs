@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using iHentai.Services;
 using iHentai.ViewModels;
 using iHentai.Views;
+using RootPage = iHentai.Pages.RootPage;
 
 namespace iHentai
 {

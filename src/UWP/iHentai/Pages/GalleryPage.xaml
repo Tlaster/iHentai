@@ -1,0 +1,106 @@
+﻿<mvvm:MvvmPage
+    x:Class="iHentai.Pages.GalleryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:views="using:iHentai.Views"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:ffImageLoading="using:FFImageLoading"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    SizeChanged="GalleryPage_OnSizeChanged"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer>
+            <waterfall:WaterfallFlowView xmlns:waterfall="using:Marduk.Controls" Spacing="0" x:Name="WaterfallLayout" IsAdaptiveEnable="True"
+                                        ItemSource="{x:Bind ViewModel.Source}">
+                <waterfall:WaterfallFlowView.ItemTemplate>
+                    <DataTemplate>
+                        <views:GalleryGridItem MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
+                    </DataTemplate>
+                </waterfall:WaterfallFlowView.ItemTemplate>
+            </waterfall:WaterfallFlowView>
+        </ScrollViewer>
+
+        <Canvas Background="Transparent"
+                Tapped="MoreInfoCanvas_OnTapped"
+                x:Name="MoreInfoCanvas"
+                Visibility="Collapsed"
+                Grid.RowSpan="2">
+
+            <Grid x:Name="MoreInfoContent"
+                  extensions:VisualEx.NormalizedCenterPoint="0.5">
+                <Grid VerticalAlignment="Top">
+
+                    <controls:DropShadowPanel VerticalContentAlignment="Stretch"
+                                               HorizontalContentAlignment="Stretch"
+                                               ShadowOpacity="0.6"
+                                               Color="Black"
+                                               OffsetY="6"
+                                               BlurRadius="60">
+                        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                Opacity="0.66">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:Blur AutomaticallyStart="True"
+                                                Delay="0"
+                                                Value="10"
+                                                Duration="0" />
+                            </interactivity:Interaction.Behaviors>
+                        </Border>
+                    </controls:DropShadowPanel>
+
+                    <Grid Padding="10" x:Name="MoreInfoContentRoot">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <ffImageLoading:FFImage
+                            x:Name="MoreInfoImage"
+                            Grid.Row="0"
+                            Source="{Binding Thumb}" />
+
+                        <StackPanel Grid.Row="1" x:Name="MoreInfoText">
+                            <TextBlock Margin="0, 10"
+                                       FontSize="14"
+                                       TextWrapping="Wrap"
+                                       FontWeight="SemiBold"
+                                       Text="{Binding Title}"
+                                       TextTrimming="CharacterEllipsis"
+                                       x:Name="MoreInfoTitle" />
+
+                            <TextBlock FontSize="12"
+                                       Text="about"
+                                       TextWrapping="Wrap" />
+                            <animations:Implicit.ShowAnimations>
+                                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.2"
+                                                             SetInitialValueBeforeDelay="True" />
+                                <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
+                                                                 Delay="0:0:0.2" />
+                            </animations:Implicit.ShowAnimations>
+                        </StackPanel>
+
+
+                    </Grid>
+                </Grid>
+
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:ScaleAnimation From="0.5" To="1" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:ScaleAnimation To="0.5" From="1" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Grid>
+
+        </Canvas>
+    </Grid>
+</mvvm:MvvmPage>

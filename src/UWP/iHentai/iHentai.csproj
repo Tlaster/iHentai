@@ -104,6 +104,9 @@
     <PackageReference Include="Fody">
       <Version>2.2.1</Version>
     </PackageReference>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="Html2Model">
       <Version>1.0.3</Version>
     </PackageReference>
@@ -168,13 +171,13 @@
     <Compile Include="Views\GalleryGridItem.xaml.cs">
       <DependentUpon>GalleryGridItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GalleryPage.xaml.cs">
+    <Compile Include="Pages\GalleryPage.xaml.cs">
       <DependentUpon>GalleryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RootPage.xaml.cs">
+    <Compile Include="Pages\RootPage.xaml.cs">
       <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
@@ -223,7 +226,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GalleryPage.xaml">
+    <Page Include="Pages\GalleryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,7 +234,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RootPage.xaml">
+    <Page Include="Pages\RootPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
