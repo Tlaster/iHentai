@@ -13,11 +13,12 @@
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:waterfall="using:WaterFallView"
+    xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d">
 
     <Grid>
-        <ScrollViewer>
+        <ScrollViewer x:Name="ScrollViewer">
             <interactivity:Interaction.Behaviors>
                 <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
                                                            xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
@@ -53,7 +54,8 @@
                 Tapped="MoreInfoCanvas_OnTapped"
                 x:Name="MoreInfoCanvas"
                 Visibility="Collapsed"
-                Grid.RowSpan="2">
+                Grid.RowSpan="2"
+                d:DataContext="{d:DesignInstance interfaces:IGalleryModel}">
 
             <Grid x:Name="MoreInfoContent"
                   extensions:VisualEx.NormalizedCenterPoint="0.5">

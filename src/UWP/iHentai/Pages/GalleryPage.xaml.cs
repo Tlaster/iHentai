@@ -45,6 +45,7 @@ namespace iHentai.Pages
         {
             base.SaveState(bundleState);
             bundleState.Add("tappedItem", _tappedItem);
+            //bundleState.Add("scroll_position", ScrollViewer.VerticalOffset);
         }
 
         protected override void RestoreState(Dictionary<string, object> bundleState)
@@ -54,6 +55,10 @@ namespace iHentai.Pages
             {
                 _tappedItem = (UIElement) item;
             }
+            //if (bundleState.TryGetValue("scroll_position", out var position))
+            //{
+            //    ScrollViewer.ChangeView(null, (double) position, null, true);
+            //}
         }
 
         protected override void OnResume()

@@ -18,5 +18,6 @@ namespace iHentai.ViewModels
         }
 
         public IGalleryModel Model { get; set; }
+        
     }
 }
