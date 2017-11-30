@@ -18,8 +18,15 @@
 
     <Grid>
         <ScrollViewer>
+            <interactivity:Interaction.Behaviors>
+                <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}" xmlns:hentaiBehaviors="using:iHentai.Behaviors"/>
+            </interactivity:Interaction.Behaviors>
             <waterfall:WaterfallFlowView xmlns:waterfall="using:Marduk.Controls" Spacing="0" x:Name="WaterfallLayout" IsAdaptiveEnable="True"
                                         ItemSource="{x:Bind ViewModel.Source}">
+                <waterfall:WaterfallFlowView.Header>
+                    <Grid Height="100">
+                    </Grid>
+                </waterfall:WaterfallFlowView.Header>
                 <waterfall:WaterfallFlowView.ItemTemplate>
                     <DataTemplate>
                         <views:GalleryGridItem MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
@@ -28,6 +35,11 @@
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
 
+        <Border Background="BlueViolet" VerticalAlignment="Top" Height="100" x:Name="Header">
+            <Grid>
+                <TextBlock Text="dsafdsafdsa"/>
+            </Grid>
+        </Border>
         <Canvas Background="Transparent"
                 Tapped="MoreInfoCanvas_OnTapped"
                 x:Name="MoreInfoCanvas"

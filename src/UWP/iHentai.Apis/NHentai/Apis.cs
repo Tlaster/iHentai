@@ -51,7 +51,7 @@ namespace iHentai.Apis.NHentai
                 }
             var res = await req.SetQueryParam(nameof(page), page + 1)
                 .GetJsonAsync<GalleryListModel>();
-            return (res.NumPages, res.Gallery);
+            return (res.NumPages, res.Gallery.WithoutShit());
         }
 
         public Task<(bool State, string Message)> Login(string userName, string password)

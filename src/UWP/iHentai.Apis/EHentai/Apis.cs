@@ -86,7 +86,7 @@ namespace iHentai.Apis.EHentai
                 req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
             var res = await req.SetQueryParam("page", page).WithCookies(Cookie)
                 .WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>();
-            return (res.MaxPage, res.Gallery);
+            return (res.MaxPage, res.Gallery.WithoutShit());
         }
 
         public async Task<(bool State, string Message)> Login(string userName, string password)

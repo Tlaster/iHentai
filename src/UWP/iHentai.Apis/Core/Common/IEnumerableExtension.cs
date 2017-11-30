@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using iHentai.Apis.Core.Models.Interfaces;
 
 namespace iHentai.Apis.Core.Common
 {
     internal static class IEnumerableExtension
     {
+        public static IList<T> WithoutShit<T>(this IEnumerable<T> source) where T : IGalleryModel
+        {
+            return source.Where(item => !item.Title.Contains("沒有漢化")).ToList();
+        }
+
         public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
         {
             return source.Distinct(new EqualityComparer<T, V>(keySelector));

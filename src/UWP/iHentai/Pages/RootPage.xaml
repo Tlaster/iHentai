@@ -12,7 +12,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="TitleBar" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+        <Frame Grid.Row="1" x:Name="RootFrame"/>
+        <Grid Grid.Row="0" x:Name="TitleBar" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
                 <ColumnDefinition/>
@@ -29,6 +30,5 @@
                 <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" />
             </Grid>
         </Grid>
-        <Frame Grid.Row="1" x:Name="RootFrame"/>
     </Grid>
 </Page>

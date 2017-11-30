@@ -28,6 +28,7 @@ namespace iHentai.Pages
             // Register a handler for when the title bar visibility changes.
             // For example, when the title bar is invoked in full screen mode.
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+            //Canvas.SetZIndex(TitleBar, short.MaxValue - 1);
         }
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {

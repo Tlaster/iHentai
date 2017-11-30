@@ -149,6 +149,7 @@
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="BackgroundTasks\BackgroundTask.cs" />
     <Compile Include="BackgroundTasks\NotifyTask.cs" />
+    <Compile Include="Behaviors\QuickReturnHeaderBehavior.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\JsonExtension.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
@@ -257,7 +258,6 @@
     <Compile Include="Helpers\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
