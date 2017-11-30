@@ -11,12 +11,12 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using FFImageLoading;
-using FFImageLoading.Config;
 using iHentai.Activation;
 using iHentai.Apis.Core;
 using iHentai.Helpers;
 using iHentai.Mvvm;
+using Microsoft.Toolkit.Uwp.UI;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace iHentai.Services
 {
@@ -87,10 +87,7 @@ namespace iHentai.Services
         {
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
-            ImageService.Instance.Initialize(new Configuration
-            {
-                HttpClient = new HttpClient(new HentaiHttpClient())
-            });
+            await ImageCache.Instance.InitializeAsync(httpMessageHandler: new HentaiHttpClient());
             await Task.CompletedTask;
         }
 

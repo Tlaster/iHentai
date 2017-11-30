@@ -11,7 +11,6 @@
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-    xmlns:ffImageLoading="using:FFImageLoading"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:waterfall="using:WaterFallView"
     SizeChanged="GalleryPage_OnSizeChanged"
@@ -83,7 +82,9 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Image
+                        <controls:ImageEx
+                            Style="{StaticResource ImageExNoTransition}"
+                            IsCacheEnabled="True"
                             Tapped="MoreInfoImage_OnTapped"
                             x:Name="MoreInfoImage"
                             Grid.Row="0"

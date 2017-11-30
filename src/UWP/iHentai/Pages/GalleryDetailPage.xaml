@@ -6,12 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
-    xmlns:ffImageLoading="using:FFImageLoading"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image
+        <controls:ImageEx
+            Style="{StaticResource ImageExNoTransition}"
+            IsCacheEnabled="True"
             Height="100"
             Width="100"
             x:Name="ThumbImage"

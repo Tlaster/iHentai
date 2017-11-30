@@ -135,9 +135,6 @@
     <PackageReference Include="PropertyChanged.Fody">
       <Version>2.1.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading">
-      <Version>2.2.25</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
@@ -199,6 +196,11 @@
     <Page Include="Pages\GalleryDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ImageEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\Page.xaml">
       <Generator>MSBuild:Compile</Generator>
