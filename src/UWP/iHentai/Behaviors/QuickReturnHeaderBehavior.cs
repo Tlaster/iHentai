@@ -6,7 +6,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
-using Marduk.Controls;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Animations.Behaviors;
 using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
@@ -113,8 +112,8 @@ namespace iHentai.Behaviors
             if (_scrollViewer == null)
                 return false;
 
-            var waterfall = AssociatedObject as Marduk.Controls.VirtualizingPanel ??
-                            AssociatedObject.FindDescendant<Marduk.Controls.VirtualizingPanel>();
+            var waterfall = AssociatedObject as WaterFallView.VirtualizingPanel ??
+                            AssociatedObject.FindDescendant<WaterFallView.VirtualizingPanel>();
             var listView = AssociatedObject as ListViewBase ?? AssociatedObject.FindDescendant<ListViewBase>();
 
             if (listView?.ItemsPanelRoot != null)

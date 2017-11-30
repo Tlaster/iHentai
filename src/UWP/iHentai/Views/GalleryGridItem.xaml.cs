@@ -7,11 +7,26 @@ using Windows.UI.Xaml.Input;
 using iHentai.Apis.Core.Models.Interfaces;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
+using WaterFallView;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace iHentai.Views
 {
+    public class GalleryItemResizer : IItemResizer
+    {
+        public Size Resize(object item, Size oldSize, Size availableSize)
+        {
+            if (!(item is IGalleryModel))
+                return availableSize;
+            var model = (IGalleryModel)item;
+            var size = new Size(availableSize.Width,
+                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
+            //VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");
+            return size;
+        }
+    }
+
     public sealed partial class GalleryGridItem : UserControl
     {
         public event EventHandler<IGalleryModel> MoreInfoRequest; 
@@ -19,11 +34,6 @@ namespace iHentai.Views
         public GalleryGridItem()
         {
             InitializeComponent();
-        }
-
-        public void MoreButtonClick()
-        {
-            MoreInfoRequest?.Invoke(this, DataContext as IGalleryModel);
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -73,6 +83,12 @@ namespace iHentai.Views
             base.OnPointerReleased(e);
             var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(1200), To = "1.1"};
             parentAnimation.StartAnimation(RootGrid);
+        }
+
+        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            MoreInfoRequest?.Invoke(this, DataContext as IGalleryModel);
         }
     }
 }

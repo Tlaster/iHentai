@@ -110,9 +110,6 @@
     <PackageReference Include="Html2Model">
       <Version>1.0.3</Version>
     </PackageReference>
-    <PackageReference Include="Marduk.Controls">
-      <Version>1.0.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.2</Version>
     </PackageReference>
@@ -155,6 +152,9 @@
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\TaskExtensions.cs" />
+    <Compile Include="Pages\GalleryDetailPage.xaml.cs">
+      <DependentUpon>GalleryDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />
     <Compile Include="Services\BackgroundTaskService.cs" />
@@ -163,6 +163,7 @@
     <Compile Include="Services\ToastNotificationsService.cs" />
     <Compile Include="Services\ToastNotificationsService.Samples.cs" />
     <Compile Include="Services\WhatsNewDisplayService.cs" />
+    <Compile Include="ViewModels\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -195,6 +196,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Pages\GalleryDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Page.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -279,6 +284,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WaterFallView\WaterFallView.vcxproj">
+      <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
+      <Name>WaterFallView</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\iHentai.Mvvm\iHentai.Mvvm.projitems" Label="Shared" />
   <Import Project="..\iHentai.Apis\iHentai.Apis.projitems" Label="Shared" />

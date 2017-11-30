@@ -9,6 +9,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Mvvm", "iHentai.Mvv
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iHentai.Apis", "iHentai.Apis\iHentai.Apis.shproj", "{FB618F38-1740-4B04-A541-5B8B759694FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaterFallView", "WaterFallView\WaterFallView.vcxproj", "{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		iHentai.Mvvm\iHentai.Mvvm.projitems*{a4b765c6-54dd-426d-8cfe-d05a19a3cbc3}*SharedItemsImports = 13
@@ -47,6 +49,20 @@ Global
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.ActiveCfg = Release|x86
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.Build.0 = Release|x86
 		{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}.Release|x86.Deploy.0 = Release|x86
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|ARM.ActiveCfg = Debug|ARM
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|ARM.Build.0 = Debug|ARM
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|x64.ActiveCfg = Debug|x64
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|x64.Build.0 = Debug|x64
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|x86.ActiveCfg = Debug|Win32
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Debug|x86.Build.0 = Debug|Win32
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|Any CPU.ActiveCfg = Release|Win32
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|ARM.ActiveCfg = Release|ARM
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|ARM.Build.0 = Release|ARM
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|x64.ActiveCfg = Release|x64
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|x64.Build.0 = Release|x64
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|x86.ActiveCfg = Release|Win32
+		{1BD1BC4B-F0B7-4B8A-B27D-741413A19518}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

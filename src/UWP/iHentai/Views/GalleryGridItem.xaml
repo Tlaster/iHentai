@@ -26,8 +26,8 @@
             <Border></Border>
         </controls:DropShadowPanel>
         <Grid>
-            <ffimage:FFImage Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}"/>
-            <Button Click="{x:Bind MoreButtonClick}" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}"/>
+            <Button Tapped="UIElement_OnTapped" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
             </Button>
         </Grid>

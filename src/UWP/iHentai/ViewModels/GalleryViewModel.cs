@@ -24,6 +24,11 @@ namespace iHentai.ViewModels
         public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; set; } =
             new IncrementalLoadingCollection<GalleryDataSource, IGalleryModel>(
                 new GalleryDataSource(ServiceInstances.Instance[ServiceTypes.NHentai]));
+
+        public void GoDetail(IGalleryModel model)
+        {
+            Navigate<GalleryDetailViewModel>(model);
+        }
     }
 
 

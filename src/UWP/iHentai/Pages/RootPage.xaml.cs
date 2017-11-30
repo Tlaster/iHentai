@@ -1,6 +1,10 @@
 ﻿using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Flurl.Util;
 using iHentai.Mvvm;
 using iHentai.ViewModels;
 
@@ -28,7 +32,6 @@ namespace iHentai.Pages
             // Register a handler for when the title bar visibility changes.
             // For example, when the title bar is invoked in full screen mode.
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
-            //Canvas.SetZIndex(TitleBar, short.MaxValue - 1);
         }
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
@@ -44,6 +47,7 @@ namespace iHentai.Pages
 
             // Update title bar control size as needed to account for system size changes.
             TitleBar.Height = coreTitleBar.Height;
+            
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)

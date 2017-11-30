@@ -13,33 +13,43 @@
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:ffImageLoading="using:FFImageLoading"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:waterfall="using:WaterFallView"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d">
 
     <Grid>
         <ScrollViewer>
             <interactivity:Interaction.Behaviors>
-                <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}" xmlns:hentaiBehaviors="using:iHentai.Behaviors"/>
+                <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
+                                                           xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
             </interactivity:Interaction.Behaviors>
-            <waterfall:WaterfallFlowView xmlns:waterfall="using:Marduk.Controls" Spacing="0" x:Name="WaterfallLayout" IsAdaptiveEnable="True"
-                                        ItemSource="{x:Bind ViewModel.Source}">
+            <waterfall:WaterfallFlowView Spacing="0" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{x:Bind ViewModel.Source}">
+                <waterfall:WaterfallFlowView.Resizer>
+                    <views:GalleryItemResizer/>
+                </waterfall:WaterfallFlowView.Resizer>
                 <waterfall:WaterfallFlowView.Header>
-                    <Grid Height="100">
-                    </Grid>
+                    <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
                 </waterfall:WaterfallFlowView.Header>
+                <waterfall:WaterfallFlowView.ItemContainerStyle>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </waterfall:WaterfallFlowView.ItemContainerStyle>
                 <waterfall:WaterfallFlowView.ItemTemplate>
                     <DataTemplate>
-                        <views:GalleryGridItem MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
+                        <views:GalleryGridItem Tapped="UIElement_OnTapped" MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
                     </DataTemplate>
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
 
-        <Border Background="BlueViolet" VerticalAlignment="Top" Height="100" x:Name="Header">
-            <Grid>
-                <TextBlock Text="dsafdsafdsa"/>
+        <Grid VerticalAlignment="Top" x:Name="Header">
+            <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" />
+            <Grid Padding="16">
+                <TextBlock Text="dsafdsafdsa" />
             </Grid>
-        </Border>
+        </Grid>
         <Canvas Background="Transparent"
                 Tapped="MoreInfoCanvas_OnTapped"
                 x:Name="MoreInfoCanvas"
@@ -51,11 +61,11 @@
                 <Grid VerticalAlignment="Top">
 
                     <controls:DropShadowPanel VerticalContentAlignment="Stretch"
-                                               HorizontalContentAlignment="Stretch"
-                                               ShadowOpacity="0.6"
-                                               Color="Black"
-                                               OffsetY="6"
-                                               BlurRadius="60">
+                                              HorizontalContentAlignment="Stretch"
+                                              ShadowOpacity="0.6"
+                                              Color="Black"
+                                              OffsetY="6"
+                                              BlurRadius="60">
                         <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                 Opacity="0.66">
                             <interactivity:Interaction.Behaviors>
@@ -73,7 +83,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <ffImageLoading:FFImage
+                        <Image
+                            Tapped="MoreInfoImage_OnTapped"
                             x:Name="MoreInfoImage"
                             Grid.Row="0"
                             Source="{Binding Thumb}" />
@@ -105,11 +116,11 @@
 
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-                    <animations:ScaleAnimation From="0.5" To="1" Duration="0:0:0.3" />
+                    <!--<animations:ScaleAnimation From="0.5" To="1" Duration="0:0:0.3" />-->
                 </animations:Implicit.ShowAnimations>
                 <animations:Implicit.HideAnimations>
                     <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-                    <animations:ScaleAnimation To="0.5" From="1" Duration="0:0:0.2" />
+                    <!--<animations:ScaleAnimation To="0.5" From="1" Duration="0:0:0.2" />-->
                 </animations:Implicit.HideAnimations>
             </Grid>
 
