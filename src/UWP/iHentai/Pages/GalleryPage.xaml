@@ -18,6 +18,29 @@
     mc:Ignorable="d">
 
     <Grid>
+        <!--<GridView ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:QuickReturnHeaderBehavior />
+            </interactivity:Interaction.Behaviors>
+            <GridView.Header>
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="Header">
+                    <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" />
+                    <Grid Padding="16">
+                        <TextBlock Text="dsafdsafdsa" />
+                    </Grid>
+                </Grid>
+            </GridView.Header>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <views:GalleryGridItem Tapped="UIElement_OnTapped" MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>-->
         <ScrollViewer x:Name="ScrollViewer">
             <interactivity:Interaction.Behaviors>
                 <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
@@ -44,7 +67,7 @@
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
 
-        <Grid VerticalAlignment="Top" x:Name="Header">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="Header">
             <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" />
             <Grid Padding="16">
                 <TextBlock Text="dsafdsafdsa" />

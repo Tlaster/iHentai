@@ -18,6 +18,11 @@ namespace iHentai.ViewModels
         }
 
         public IGalleryModel Model { get; set; }
-        
+
+        public void ShowGallery()
+        {
+            Navigate<GalleryViewModel>();
+        }
+
     }
 }

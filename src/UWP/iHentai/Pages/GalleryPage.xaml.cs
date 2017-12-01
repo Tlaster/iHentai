@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -10,6 +11,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Helpers;
 using iHentai.ViewModels;
 using iHentai.Views;
 using Microsoft.Toolkit.Uwp;
@@ -28,11 +30,12 @@ namespace iHentai.Pages
     public sealed partial class GalleryPage
     {
         private UIElement _tappedItem;
+        private int _tappedIndex;
 
         public GalleryPage()
         {
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Required;
+            //NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         public new GalleryViewModel ViewModel
@@ -45,7 +48,8 @@ namespace iHentai.Pages
         {
             base.SaveState(bundleState);
             bundleState.Add("tappedItem", _tappedItem);
-            //bundleState.Add("scroll_position", ScrollViewer.VerticalOffset);
+            //bundleState.Add("scroll_position", ScrollViewer.GetScrollViewerOffsetProportion());
+            bundleState.Add("tapped_index", _tappedIndex);
         }
 
         protected override void RestoreState(Dictionary<string, object> bundleState)
@@ -57,25 +61,42 @@ namespace iHentai.Pages
             }
             //if (bundleState.TryGetValue("scroll_position", out var position))
             //{
-            //    ScrollViewer.ChangeView(null, (double) position, null, true);
+            //    ScrollViewer.Post(() => ScrollViewer.ScrollToProportion((double)position));
+            //}
+            //if (bundleState.TryGetValue("tapped_index", out var index))
+            //{
+            //    WaterfallLayout.Post(() =>
+            //    {
+
+            //        WaterfallLayout.ScrollIntoView((int)index);
+            //    });
             //}
         }
 
         protected override void OnResume()
         {
             base.OnResume();
-            if (MoreInfoCanvas.Visibility == Visibility.Visible)
+            //if (_scrollPosition > 0)
+            //{
+            //    var res = ScrollViewer.ChangeView(0, _scrollPosition, 1, true);
+            //    _scrollPosition = 0;
+            //}
+            var detailImageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image");
+            if (detailImageAnimation != null)
             {
-                ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(MoreInfoImage);
-            }
-            else if (_tappedItem != null)
-            {
-                ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(_tappedItem);
-                _tappedItem = null;
-            }
-            else
-            {
-                ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.Cancel();
+                if (MoreInfoCanvas.Visibility == Visibility.Visible)
+                {
+                    detailImageAnimation.TryStart(MoreInfoImage);
+                }
+                else if (_tappedItem != null)
+                {
+                    detailImageAnimation.TryStart(_tappedItem);
+                    _tappedItem = null;
+                }
+                else
+                {
+                    detailImageAnimation.Cancel();
+                }
             }
         }
 
@@ -159,8 +180,8 @@ namespace iHentai.Pages
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
+            //_tappedIndex = WaterfallLayout.GetIndexFormItem((sender as GalleryGridItem).DataContext);
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
-
             ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
         }
     }

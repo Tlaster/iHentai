@@ -17,6 +17,7 @@
             Height="100"
             Width="100"
             x:Name="ThumbImage"
+            Tapped="{x:Bind ViewModel.ShowGallery}"
             Source="{x:Bind ViewModel.Model.Thumb}" />
     </Grid>
 </mvvm:MvvmPage>

@@ -42,7 +42,7 @@ namespace iHentai.Views
                 return base.MeasureOverride(availableSize);
             var model = (IGalleryModel) DataContext;
             var size = new Size(availableSize.Width,
-                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
+                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * (availableSize.Width));
             VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");
             return size;
         }

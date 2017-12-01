@@ -37,12 +37,12 @@ VirtualizingPanel::VirtualizingPanel()
     UIElement::AddHandler(UIElement::KeyDownEvent, ref new Input::KeyEventHandler(this, &VirtualizingPanel::OnKeyDown), true);
     UIElement::AddHandler(UIElement::KeyUpEvent, ref new Input::KeyEventHandler(this, &VirtualizingPanel::OnKeyUp), true);
 
-    ChildrenTransitions = ref new Media::Animation::TransitionCollection();
-    ChildrenTransitions->Append(ref new Media::Animation::RepositionThemeTransition());
-    ChildrenTransitions->Append(ref new Media::Animation::AddDeleteThemeTransition());
-    ChildrenTransitions->Append(ref new Media::Animation::ReorderThemeTransition());
-    ChildrenTransitions->Append(ref new Media::Animation::PaneThemeTransition());
-    ChildrenTransitions->Append(ref new Media::Animation::EdgeUIThemeTransition());
+    //ChildrenTransitions = ref new Media::Animation::TransitionCollection();
+    //ChildrenTransitions->Append(ref new Media::Animation::RepositionThemeTransition());
+    //ChildrenTransitions->Append(ref new Media::Animation::AddDeleteThemeTransition());
+    //ChildrenTransitions->Append(ref new Media::Animation::ReorderThemeTransition());
+    //ChildrenTransitions->Append(ref new Media::Animation::PaneThemeTransition());
+    //ChildrenTransitions->Append(ref new Media::Animation::EdgeUIThemeTransition());
 }
 
 void VirtualizingPanel::RegisterDependencyProperties()
@@ -393,8 +393,18 @@ Object^ VirtualizingPanel::GetItemFormIndex(int index)
     {
         throw ref new OutOfBoundsException("Index out of bounds.");
     }
+	return _items->GetAt(index);
+}
 
-    return _items->GetAt(index);
+int VirtualizingPanel::GetIndexFormItem(Platform::Object^ item) 
+{
+	if (item == nullptr)
+	{
+		throw ref new InvalidArgumentException();
+	}
+	unsigned int index;
+	_items->IndexOf(item, &index);
+	return index;
 }
 
 void VirtualizingPanel::OnItemSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)

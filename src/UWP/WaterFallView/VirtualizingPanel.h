@@ -85,6 +85,7 @@ namespace WaterFallView
 		VirtualizingViewItem^ GetContainerFormIndex(int index);
 		Platform::Object^ GetItemFormContainer(VirtualizingViewItem^ container);
 		Platform::Object^ GetItemFormIndex(int index);
+		int GetIndexFormItem(Platform::Object^ item);
 
 		event ItemTappedEventHandler^ ItemTapped;
 		event SeletionChangedEventHandler^ SeletionChanged;

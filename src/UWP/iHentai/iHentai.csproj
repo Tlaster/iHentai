@@ -145,8 +145,10 @@
     <Compile Include="BackgroundTasks\NotifyTask.cs" />
     <Compile Include="Behaviors\QuickReturnHeaderBehavior.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
+    <Compile Include="Helpers\FrameworkElementExtensions.cs" />
     <Compile Include="Helpers\JsonExtension.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\ScrollViewerExtensions.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\TaskExtensions.cs" />
     <Compile Include="Pages\GalleryDetailPage.xaml.cs">

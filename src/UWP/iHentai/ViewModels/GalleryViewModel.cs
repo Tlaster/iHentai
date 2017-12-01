@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Helpers;
 using iHentai.Mvvm;
 using iHentai.Views;
 using Microsoft.Toolkit.Uwp;
@@ -19,6 +20,7 @@ namespace iHentai.ViewModels
         protected internal override void OnCreate()
         {
             base.OnCreate();
+            Source.RefreshAsync().FireAndForget();
         }
 
         public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; set; } =
