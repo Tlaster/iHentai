@@ -15,6 +15,7 @@ using iHentai.Activation;
 using iHentai.Apis.Core;
 using iHentai.Helpers;
 using iHentai.Mvvm;
+using iHentai.Paging;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 
@@ -30,7 +31,7 @@ namespace iHentai.Services
         public ActivationService(App app, Type defaultNavItem, UIElement shell = null)
         {
             _app = app;
-            _shell = shell ?? new Frame();
+            _shell = shell ?? new HentaiFrame();
             _defaultNavItem = defaultNavItem;
         }
 
@@ -47,7 +48,7 @@ namespace iHentai.Services
                 {
                     // Create a Frame to act as the navigation context and navigate to the first page
                     Window.Current.Content = _shell;
-                    NavigationService.NavigationFailed += (sender, e) => throw e.Exception;
+                    //NavigationService.NavigationFailed += (sender, e) => throw e.Exception;
                     NavigationService.Navigated += Frame_Navigated;
                     if (SystemNavigationManager.GetForCurrentView() != null)
                         SystemNavigationManager.GetForCurrentView().BackRequested += ActivationService_BackRequested;
@@ -110,7 +111,7 @@ namespace iHentai.Services
             return args is IActivatedEventArgs;
         }
 
-        private void Frame_Navigated(object sender, NavigationEventArgs e)
+        private void Frame_Navigated(object sender, HentaiNavigationEventArgs e)
         {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = NavigationService.CanGoBack
                 ? AppViewBackButtonVisibility.Visible

@@ -9,9 +9,9 @@
     xmlns:xaml="using:Windows.UI.Xaml"
     xmlns:mvvm="using:iHentai.Mvvm"
     mc:Ignorable="d">
-    <Page.Resources>
+    <mvvm:MvvmPage.Resources>
         <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme" />
-    </Page.Resources>
+    </mvvm:MvvmPage.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Margin="{StaticResource MediumLeftRightMargin}">

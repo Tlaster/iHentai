@@ -22,38 +22,38 @@ namespace iHentai.Mvvm
         public Type PageType { get; }
     }
 
-    internal sealed class MvvmBundle
-    {
-        public ViewModel ViewModel { get; set; }
+    //internal sealed class MvvmBundle
+    //{
+    //    public ViewModel ViewModel { get; set; }
 
-        public Dictionary<string, object> PageState { get; set; } = new Dictionary<string, object>();
-    }
+    //    public Dictionary<string, object> PageState { get; set; } = new Dictionary<string, object>();
+    //}
 
-    public class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected async Task<TResult> Navigate<T, TResult>(
-            CancellationToken cancellationToken = default, params object[] args)
-            where T : ViewModel<TResult>
-        {
-            var attr = typeof(T).GetTypeInfo().GetCustomAttribute<PageAttribute>();
-            if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
-                throw new ArgumentException();
-            if (cancellationToken != default)
-                cancellationToken.Register(() => vm.Close(default));
-            var tcs = new TaskCompletionSource<TResult>();
-            vm.CloseCompletionSource = tcs;
-            NavigationService.Navigate(attr.PageType, new MvvmBundle {ViewModel = vm});
-            try
-            {
-                return await tcs.Task;
-            }
-            catch
-            {
-                return default;
-            }
-        }
+        //protected async Task<TResult> Navigate<T, TResult>(
+        //    CancellationToken cancellationToken = default, params object[] args)
+        //    where T : ViewModel<TResult>
+        //{
+        //    var attr = typeof(T).GetTypeInfo().GetCustomAttribute<PageAttribute>();
+        //    if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
+        //        throw new ArgumentException();
+        //    if (cancellationToken != default)
+        //        cancellationToken.Register(() => vm.Close(default));
+        //    var tcs = new TaskCompletionSource<TResult>();
+        //    vm.CloseCompletionSource = tcs;
+        //    NavigationService.Navigate(attr.PageType, new MvvmBundle {ViewModel = vm});
+        //    try
+        //    {
+        //        return await tcs.Task;
+        //    }
+        //    catch
+        //    {
+        //        return default;
+        //    }
+        //}
 
         protected void Navigate<T>(params object[] args) where T : class
         {
@@ -78,31 +78,36 @@ namespace iHentai.Mvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected internal virtual void OnCreate()
-        {
-        }
+        //protected internal virtual void OnCreate()
+        //{
+        //}
 
-        protected internal virtual void OnDestory()
-        {
-        }
-    }
+        //protected internal virtual void OnDestory()
+        //{
+        //}
 
-    public abstract class ViewModel<TResult> : ViewModel
-    {
-        internal TaskCompletionSource<TResult> CloseCompletionSource { get; set; }
-
-        protected internal void Close(TResult result)
+        protected internal virtual void Init()
         {
-            CloseCompletionSource?.TrySetResult(result);
-            Close();
-        }
-
-        protected internal override void OnDestory()
-        {
-            if (CloseCompletionSource != null && !CloseCompletionSource.Task.IsCompleted &&
-                !CloseCompletionSource.Task.IsFaulted)
-                CloseCompletionSource.TrySetCanceled();
-            base.OnDestory();
+            
         }
     }
+
+    //public abstract class ViewModel<TResult> : ViewModel
+    //{
+    //    internal TaskCompletionSource<TResult> CloseCompletionSource { get; set; }
+
+    //    protected internal void Close(TResult result)
+    //    {
+    //        CloseCompletionSource?.TrySetResult(result);
+    //        Close();
+    //    }
+
+    //    protected internal override void OnDestory()
+    //    {
+    //        if (CloseCompletionSource != null && !CloseCompletionSource.Task.IsCompleted &&
+    //            !CloseCompletionSource.Task.IsFaulted)
+    //            CloseCompletionSource.TrySetCanceled();
+    //        base.OnDestory();
+    //    }
+    //}
 }

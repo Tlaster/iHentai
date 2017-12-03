@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using iHentai.Paging;
+using NavigatedEventHandler = Windows.UI.Xaml.Navigation.NavigatedEventHandler;
 
 namespace iHentai.Mvvm
 {
     public static class NavigationService
     {
-        private static Frame _frame;
+        private static HentaiFrame _frame;
 
-        public static Frame Frame
+        public static HentaiFrame Frame
         {
             get
             {
                 if (_frame == null)
                 {
-                    _frame = Window.Current.Content as Frame;
+                    _frame = Window.Current.Content as HentaiFrame;
                     RegisterFrameEvents();
                 }
 
@@ -35,40 +38,40 @@ namespace iHentai.Mvvm
         public static bool CanGoBack => Frame.CanGoBack;
 
         public static bool CanGoForward => Frame.CanGoForward;
-        public static event NavigatedEventHandler Navigated;
+        public static event EventHandler<HentaiNavigationEventArgs> Navigated;
 
-        public static event NavigationFailedEventHandler NavigationFailed;
+        //public static event NavigationFailedEventHandler NavigationFailed;
 
         public static void GoBack()
         {
-            Frame.GoBack();
+            Frame.GoBackAsync();
         }
 
         public static void GoForward()
         {
-            Frame.GoForward();
+            Frame.GoForwardAsync();
         }
 
-        public static bool Navigate(Type pageType, object parameter = null,
+        public static async Task<bool> Navigate(Type pageType, object parameter = null,
             NavigationTransitionInfo infoOverride = null)
         {
             // Don't open the same page multiple times
-            return Frame.Content?.GetType() != pageType && Frame.Navigate(pageType, parameter, infoOverride);
+            return Frame.Content?.GetType() != pageType && await Frame.NavigateAsync(pageType, parameter);
         }
 
-        public static bool Navigate<T>(object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public static Task<bool> Navigate<T>(object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : Page
         {
             return Navigate(typeof(T), parameter, infoOverride);
         }
 
-        public static bool NavigateViewModel<T>(params object[] args)
+        public static Task<bool> NavigateViewModel<T>(params object[] args)
             where T : class
         {
             return NavigateViewModel(typeof(T), args);
         }
 
-        public static bool NavigateViewModel(Type vmType, params object[] args)
+        public static Task<bool> NavigateViewModel(Type vmType, params object[] args)
         {
             var pInfo = vmType.GetTypeInfo();
             var uwpPage = typeof(Page).GetTypeInfo();
@@ -77,7 +80,7 @@ namespace iHentai.Mvvm
             if (pInfo.IsSubclassOf(typeof(ViewModel)) && attr != null)
             {
                 var vm = Activator.CreateInstance(vmType, args) as ViewModel;
-                return Navigate(attr.PageType, new MvvmBundle {ViewModel = vm});
+                return Navigate(attr.PageType, vm);
             }
             if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(Page)))
                 return Navigate(vmType);
@@ -89,7 +92,7 @@ namespace iHentai.Mvvm
             if (_frame != null)
             {
                 _frame.Navigated += Frame_Navigated;
-                _frame.NavigationFailed += Frame_NavigationFailed;
+                //_frame.NavigationFailed += Frame_NavigationFailed;
             }
         }
 
@@ -98,16 +101,16 @@ namespace iHentai.Mvvm
             if (_frame != null)
             {
                 _frame.Navigated -= Frame_Navigated;
-                _frame.NavigationFailed -= Frame_NavigationFailed;
+                //_frame.NavigationFailed -= Frame_NavigationFailed;
             }
         }
 
-        private static void Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            NavigationFailed?.Invoke(sender, e);
-        }
+        //private static void Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        //{
+        //    NavigationFailed?.Invoke(sender, e);
+        //}
 
-        private static void Frame_Navigated(object sender, NavigationEventArgs e)
+        private static void Frame_Navigated(object sender, HentaiNavigationEventArgs e)
         {
             Navigated?.Invoke(sender, e);
         }

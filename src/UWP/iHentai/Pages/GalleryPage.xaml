@@ -14,8 +14,10 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:waterfall="using:WaterFallView"
     xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
+    xmlns:viewModels="using:iHentai.ViewModels"
     SizeChanged="GalleryPage_OnSizeChanged"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
 
     <Grid>
         <!--<GridView ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
@@ -46,7 +48,7 @@
                 <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
                                                            xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
             </interactivity:Interaction.Behaviors>
-            <waterfall:WaterfallFlowView Spacing="0" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{x:Bind ViewModel.Source}">
+            <waterfall:WaterfallFlowView Spacing="0" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{Binding Source}">
                 <waterfall:WaterfallFlowView.Resizer>
                     <views:GalleryItemResizer/>
                 </waterfall:WaterfallFlowView.Resizer>

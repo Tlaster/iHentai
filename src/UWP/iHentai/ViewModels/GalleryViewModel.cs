@@ -17,9 +17,9 @@ namespace iHentai.ViewModels
     [Page(typeof(GalleryPage))]
     public class GalleryViewModel : ViewModel
     {
-        protected internal override void OnCreate()
+        protected override void Init()
         {
-            base.OnCreate();
+            base.Init();
             Source.RefreshAsync().FireAndForget();
         }
 

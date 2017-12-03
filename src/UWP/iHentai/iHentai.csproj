@@ -290,12 +290,19 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iHentai.Mvvm\iHentai.Mvvm.csproj">
+      <Project>{834bd393-52af-43db-879f-934f9cadf811}</Project>
+      <Name>iHentai.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iHentai.Paging\iHentai.Paging.csproj">
+      <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
+      <Name>iHentai.Paging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WaterFallView\WaterFallView.vcxproj">
       <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
       <Name>WaterFallView</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\iHentai.Mvvm\iHentai.Mvvm.projitems" Label="Shared" />
   <Import Project="..\iHentai.Apis\iHentai.Apis.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

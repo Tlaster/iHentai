@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using iHentai.Paging;
 using iHentai.ViewModels;
 using iHentai.Views;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
@@ -25,16 +26,28 @@ namespace iHentai.Pages
             set => base.ViewModel = value;
         }
 
-        protected override void OnClose()
+        protected override void OnNavigatedTo(HentaiNavigationEventArgs e)
         {
-            base.OnClose();
+            base.OnNavigatedTo(e);
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
+        }
+
+        protected override void OnNavigatingFrom(HentaiNavigatingCancelEventArgs args)
+        {
+            base.OnNavigatingFrom(args);
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", ThumbImage);
         }
 
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
-        }
+        //protected override void OnClose()
+        //{
+        //    base.OnClose();
+        //    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", ThumbImage);
+        //}
+
+        //protected override void OnCreate()
+        //{
+        //    base.OnCreate();
+        //    ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
+        //}
     }
 }

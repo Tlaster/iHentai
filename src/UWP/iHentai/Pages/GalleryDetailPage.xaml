@@ -8,7 +8,9 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    mc:Ignorable="d">
+    xmlns:viewModels="using:iHentai.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <controls:ImageEx
@@ -18,7 +20,7 @@
             Width="100"
             x:Name="ThumbImage"
             Tapped="{x:Bind ViewModel.ShowGallery}"
-            Source="{x:Bind ViewModel.Model.Thumb}" />
+            Source="{Binding Model.Thumb}" />
     </Grid>
 </mvvm:MvvmPage>
 
