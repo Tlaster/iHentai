@@ -13,6 +13,7 @@
     d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+         
         <controls:ImageEx
             Style="{StaticResource ImageExNoTransition}"
             IsCacheEnabled="True"

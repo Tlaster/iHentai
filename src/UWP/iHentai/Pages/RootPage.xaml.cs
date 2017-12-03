@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Flurl.Util;
 using iHentai.Mvvm;
+using iHentai.Paging.Animations;
 using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -23,6 +24,7 @@ namespace iHentai.Pages
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
+            RootFrame.PageAnimation = new FadeAnimation();
             NavigationService.Frame = RootFrame;
             NavigationService.NavigateViewModel<GalleryViewModel>();
             // Register a handler for when the size of the overlaid caption control changes.
