@@ -7,8 +7,8 @@ namespace iHentai.Paging.Handlers
 {
     public class BackKeyPressedHandler
     {
-        private Type _hardwareButtonsType = null;
-        private object _registrationToken;
+        //private Type _hardwareButtonsType = null;
+        //private object _registrationToken;
         private bool _isEventRegistered;
 
         private readonly List<Tuple<HentaiPage, Func<object, bool>>> _handlers;

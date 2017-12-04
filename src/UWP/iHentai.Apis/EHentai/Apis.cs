@@ -122,6 +122,11 @@ namespace iHentai.Apis.EHentai
             return (true, string.Empty);
         }
 
+        public Task<IGalleryDetailModel> Detail(IGalleryModel model)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
         {
             Cookie = new Dictionary<string, string>

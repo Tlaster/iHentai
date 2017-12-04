@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace iHentai.Apis.NHentai.Models
 {
-    public class GalleryModel : IGalleryModel
+    public class GalleryModel : IGalleryModel, IGalleryDetailModel
     {
         [JsonProperty("upload_date")]
         [JsonConverter(typeof(UploadDateConverter))]
@@ -36,8 +36,8 @@ namespace iHentai.Apis.NHentai.Models
 
         public string Title => TitleModel?.English;
         public string Thumb => $"https://t.nhentai.net/galleries/{MediaId}/cover.{(string.Equals(Images.Cover.Type, "j", StringComparison.OrdinalIgnoreCase) ? "jpg" : "png")}";
-        public double ThumbHeight => Images.Cover.Height;
-        public double ThumbWidth => Images.Cover.Width;
+        public double ThumbHeight => Images?.Cover?.Height ?? -1d;
+        public double ThumbWidth => Images?.Cover?.Width ?? -1d;
     }
 
     internal class UploadDateConverter : JsonConverter

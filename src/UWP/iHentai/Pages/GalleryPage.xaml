@@ -16,40 +16,18 @@
     xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
     xmlns:viewModels="using:iHentai.ViewModels"
     xmlns:selectors="using:iHentai.Selectors"
+    xmlns:uwp="using:FontAwesome.UWP"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
 
     <Grid>
-        <!--<GridView ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
-            <interactivity:Interaction.Behaviors>
-                <behaviors:QuickReturnHeaderBehavior />
-            </interactivity:Interaction.Behaviors>
-            <GridView.Header>
-                <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="Header">
-                    <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" />
-                    <Grid Padding="16">
-                        <TextBlock Text="dsafdsafdsa" />
-                    </Grid>
-                </Grid>
-            </GridView.Header>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <views:GalleryGridItem Tapped="UIElement_OnTapped" MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>-->
         <ScrollViewer x:Name="ScrollViewer">
             <interactivity:Interaction.Behaviors>
                 <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
                                                            xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
             </interactivity:Interaction.Behaviors>
-            <waterfall:WaterfallFlowView Spacing="0" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{Binding Source}">
+            <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{Binding Source}">
                 <waterfall:WaterfallFlowView.Resizer>
                     <views:GalleryItemResizer/>
                 </waterfall:WaterfallFlowView.Resizer>
@@ -86,12 +64,17 @@
             <Grid x:Name="MoreInfoContent"
                   extensions:VisualEx.NormalizedCenterPoint="0.5">
                 <Grid VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
                     <controls:DropShadowPanel VerticalContentAlignment="Stretch"
                                               HorizontalContentAlignment="Stretch"
                                               ShadowOpacity="0.6"
                                               Color="Black"
                                               OffsetY="6"
+                                              Grid.RowSpan="2"
                                               BlurRadius="60">
                         <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                 Opacity="0.66">
@@ -104,7 +87,7 @@
                         </Border>
                     </controls:DropShadowPanel>
 
-                    <Grid Padding="10" x:Name="MoreInfoContentRoot">
+                    <Grid Grid.Row="0" Padding="10" x:Name="MoreInfoContentRoot">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -126,12 +109,11 @@
                                        Text="{Binding Title}"
                                        TextTrimming="CharacterEllipsis"
                                        x:Name="MoreInfoTitle" />
-                            <ContentControl Content="{Binding}">
+                            <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
                                 <ContentControl.ContentTemplateSelector>
                                     <selectors:GalleryInfoViewSelector/>
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
-                            
                             <animations:Implicit.ShowAnimations>
                                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.2"
                                                              SetInitialValueBeforeDelay="True" />
@@ -139,8 +121,21 @@
                                                                  Delay="0:0:0.2" />
                             </animations:Implicit.ShowAnimations>
                         </StackPanel>
+                    </Grid>
 
-
+                    <Grid Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Stretch" Content="Read"/>
+                        <Button HorizontalAlignment="Stretch" Grid.Column="1" Content="Download"/>
+                        <animations:Implicit.ShowAnimations>
+                            <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.4"
+                                                         SetInitialValueBeforeDelay="True" />
+                            <!--<animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
+                                                             Delay="0:0:0.4" />-->
+                        </animations:Implicit.ShowAnimations>
                     </Grid>
                 </Grid>
 

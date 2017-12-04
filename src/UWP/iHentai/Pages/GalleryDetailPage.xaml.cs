@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Mvvm;
@@ -30,7 +31,17 @@ namespace iHentai.Pages
         protected override void OnStart()
         {
             base.OnStart();
-            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
+            if (ViewModel.Model.ThumbHeight > 0d && ViewModel.Model.ThumbWidth > 0d)
+            {
+                var reqHeight = ViewModel.Model.ThumbHeight / ViewModel.Model.ThumbWidth * 300d;
+                var reqWidth = ViewModel.Model.ThumbWidth / ViewModel.Model.ThumbHeight * 300d;
+                var itemHeight = Math.Min(reqHeight, 300d);
+                var itemWidth = Math.Min(reqWidth, 300d);
+                ThumbImage.Width = itemWidth;
+                ThumbImage.Height = itemHeight;
+            }
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage, new []{ GalleryInfoContainer });
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title")?.TryStart(TitleTextBlock);
         }
 
         protected override void OnClose()

@@ -4,7 +4,6 @@
     xmlns:paging="using:iHentai.Paging">
 
     <Style TargetType="paging:HentaiFrame">
-        <Setter Property="Background" Value="{StaticResource ApplicationPageBackgroundThemeBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="paging:HentaiFrame">

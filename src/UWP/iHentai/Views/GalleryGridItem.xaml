@@ -8,7 +8,9 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
+    ToolTipService.ToolTip="{Binding Title}"
     xmlns:uwp="using:FontAwesome.UWP"
+    IsHoldingEnabled="True"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance model:IGalleryModel}"
     d:DesignHeight="300"
@@ -26,7 +28,7 @@
         </controls:DropShadowPanel>
         <Grid>
             <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}"/>
-            <Button Tapped="UIElement_OnTapped" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
             </Button>
         </Grid>

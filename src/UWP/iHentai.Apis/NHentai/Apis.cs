@@ -58,5 +58,10 @@ namespace iHentai.Apis.NHentai
         {
             throw new NotImplementedException();
         }
+
+        public Task<IGalleryDetailModel> Detail(IGalleryModel model)
+        {
+            return Task.FromResult(model as IGalleryDetailModel);
+        }
     }
 }

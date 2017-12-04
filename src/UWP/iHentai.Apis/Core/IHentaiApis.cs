@@ -23,5 +23,7 @@ namespace iHentai.Apis.Core
             SearchOptionBase searchOption = null);
 
         Task<(bool State, string Message)> Login(string userName, string password);
+
+        Task<IGalleryDetailModel> Detail(IGalleryModel model);
     }
 }

@@ -167,6 +167,7 @@
     <Compile Include="Pages\GalleryDetailPage.xaml.cs">
       <DependentUpon>GalleryDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Selectors\GalleryDetailInfoViewSelector.cs" />
     <Compile Include="Selectors\GalleryInfoViewSelector.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />
@@ -212,6 +213,11 @@
     <Page Include="Pages\GalleryDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\ImageEx.xaml">
       <SubType>Designer</SubType>

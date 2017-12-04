@@ -12,16 +12,32 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-         
-        <controls:ImageEx
-            Style="{StaticResource ImageExNoTransition}"
-            IsCacheEnabled="True"
-            Height="100"
-            Width="100"
-            x:Name="ThumbImage"
-            Tapped="{x:Bind ViewModel.ShowGallery}"
-            Source="{Binding Model.Thumb}" />
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:ImageEx
+                        Style="{StaticResource ImageExNoTransition}"
+                        IsCacheEnabled="True"
+                        MaxHeight="300"
+                        MaxWidth="300"
+                        x:Name="ThumbImage"
+                        Tapped="{x:Bind ViewModel.ShowGallery}"
+                        Source="{Binding Model.Thumb}" />
+                    <StackPanel Orientation="Vertical" Grid.Column="1" x:Name="GalleryInfoContainer">
+                        <TextBlock Text="{Binding Model.Title}" x:Name="TitleTextBlock" Style="{ThemeResource TitleTextBlockStyle}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Download"/>
+                            <Button Content="Read"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </mvvm:MvvmPage>
 

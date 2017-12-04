@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,17 +60,14 @@ namespace iHentai.Mvvm
 
         protected internal virtual void Init()
         {
-            
         }
 
         protected internal virtual void OnDestory()
         {
-            
         }
 
         protected internal virtual void OnStart()
         {
-            
         }
     }
 

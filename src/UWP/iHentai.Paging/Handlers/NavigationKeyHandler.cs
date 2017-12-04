@@ -230,11 +230,13 @@ namespace iHentai.Paging.Handlers
 
         private void GoBack()
         {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             _page.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 if (_page.Frame.CanGoBack && !_page.Frame.IsNavigating)
                     await _page.Frame.GoBackAsync();
             });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
     }
 }

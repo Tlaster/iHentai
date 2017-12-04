@@ -20,9 +20,10 @@ namespace iHentai.Views
             if (!(item is IGalleryModel))
                 return availableSize;
             var model = (IGalleryModel)item;
+            if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
+                return availableSize;
             var size = new Size(availableSize.Width,
                 model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
-            //VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");
             return size;
         }
     }
@@ -34,6 +35,21 @@ namespace iHentai.Views
         public GalleryGridItem()
         {
             InitializeComponent();
+            
+        }
+
+        protected override void OnHolding(HoldingRoutedEventArgs e)
+        {
+            base.OnHolding(e);
+            e.Handled = true;
+            MoreInfoRequest?.Invoke(this, DataContext as IGalleryModel);
+        }
+
+        protected override void OnRightTapped(RightTappedRoutedEventArgs e)
+        {
+            base.OnRightTapped(e);
+            e.Handled = true;
+            MoreInfoRequest?.Invoke(this, DataContext as IGalleryModel);
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -41,6 +57,8 @@ namespace iHentai.Views
             if (!(DataContext is IGalleryModel))
                 return base.MeasureOverride(availableSize);
             var model = (IGalleryModel) DataContext;
+            if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
+                return base.MeasureOverride(availableSize);
             var size = new Size(availableSize.Width,
                 model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * (availableSize.Width));
             VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");

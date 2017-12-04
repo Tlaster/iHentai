@@ -48,6 +48,11 @@ namespace iHentai.Pages
         {
             base.OnRestart();
             var detailImageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image");
+            var detailTitleAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title");
+            if (MoreInfoCanvas.Visibility == Visibility.Visible)
+            {
+                detailTitleAnimation?.TryStart(MoreInfoTitle);
+            }
             if (detailImageAnimation != null)
             {
                 if (MoreInfoCanvas.Visibility == Visibility.Visible)
@@ -129,7 +134,7 @@ namespace iHentai.Pages
 
         private void GalleryPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.PreviousSize.Width == 0d && e.PreviousSize.Height == 0d)
+            if (e.PreviousSize.Width <= 0d && e.PreviousSize.Height <= 0d)
             {
                 return;
             }
@@ -140,6 +145,7 @@ namespace iHentai.Pages
         {
             e.Handled = true;
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", MoreInfoImage);
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_title", MoreInfoTitle);
             ViewModel.GoDetail(MoreInfoImage.DataContext as IGalleryModel);
         }
 

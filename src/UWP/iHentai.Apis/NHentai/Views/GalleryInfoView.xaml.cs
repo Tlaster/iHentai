@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Humanizer;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
 
@@ -24,6 +25,21 @@ namespace iHentai.Apis.NHentai.Views
         public GalleryInfoView()
         {
             this.InitializeComponent();
+        }
+
+        private void GalleryInfoView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            LanguageTextBlock.Text = string.Empty;
+            if (!(args.NewValue is GalleryModel))
+                return;
+            var model = (GalleryModel) args.NewValue;
+            if (model.Tags == null)
+                return;
+            var tags = model.Tags?.GroupBy(item => item.Type).ToDictionary(item => item.Key, item => item.ToList());
+            if (tags.TryGetValue("language", out var res))
+            {
+                LanguageTextBlock.Text = res.LastOrDefault()?.Name?.Humanize(LetterCasing.Title) ?? string.Empty;
+            }
         }
     }
 }
