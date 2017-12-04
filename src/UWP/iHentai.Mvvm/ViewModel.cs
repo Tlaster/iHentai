@@ -37,7 +37,7 @@ namespace iHentai.Mvvm
                 cancellationToken.Register(() => vm.Close(default));
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
-            NavigationService.Navigate(attr.PageType, vm);
+            await NavigationService.Navigate(attr.PageType, vm);
             try
             {
                 return await tcs.Task;
@@ -70,14 +70,6 @@ namespace iHentai.Mvvm
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        //protected internal virtual void OnCreate()
-        //{
-        //}
-
-        //protected internal virtual void OnDestory()
-        //{
-        //}
 
         protected internal virtual void Init()
         {

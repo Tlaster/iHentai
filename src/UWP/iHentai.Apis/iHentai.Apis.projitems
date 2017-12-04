@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\HentaiHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IApiConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryInfoView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SearchOptionBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ServiceTypes.cs" />
@@ -35,6 +36,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\TagNamespaceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\UconfigCategoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\SearchOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryInfoView.xaml.cs">
+      <DependentUpon>GalleryInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Apis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryImagesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryListModel.cs" />
@@ -43,5 +47,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\TagModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\TitleModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\SearchOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NHentai\Views\GalleryInfoView.xaml.cs">
+      <DependentUpon>GalleryInfoView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)EHentai\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)NHentai\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)NHentai\Views\GalleryInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

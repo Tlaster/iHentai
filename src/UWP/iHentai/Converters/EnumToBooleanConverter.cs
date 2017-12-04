@@ -1,7 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
+using iHentai.Helpers;
 
-namespace iHentai.Helpers
+namespace iHentai.Converters
 {
     public class EnumToBooleanConverter : IValueConverter
     {

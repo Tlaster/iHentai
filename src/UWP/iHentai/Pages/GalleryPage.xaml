@@ -15,6 +15,7 @@
     xmlns:waterfall="using:WaterFallView"
     xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
     xmlns:viewModels="using:iHentai.ViewModels"
+    xmlns:selectors="using:iHentai.Selectors"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
@@ -125,10 +126,12 @@
                                        Text="{Binding Title}"
                                        TextTrimming="CharacterEllipsis"
                                        x:Name="MoreInfoTitle" />
-
-                            <TextBlock FontSize="12"
-                                       Text="about"
-                                       TextWrapping="Wrap" />
+                            <ContentControl Content="{Binding}">
+                                <ContentControl.ContentTemplateSelector>
+                                    <selectors:GalleryInfoViewSelector/>
+                                </ContentControl.ContentTemplateSelector>
+                            </ContentControl>
+                            
                             <animations:Implicit.ShowAnimations>
                                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.2"
                                                              SetInitialValueBeforeDelay="True" />

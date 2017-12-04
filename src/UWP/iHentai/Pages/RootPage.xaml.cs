@@ -48,7 +48,6 @@ namespace iHentai.Pages
 
             // Update title bar control size as needed to account for system size changes.
             TitleBar.Height = coreTitleBar.Height;
-            
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)

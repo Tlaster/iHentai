@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace iHentai.Apis.Core
 {
@@ -14,14 +15,17 @@ namespace iHentai.Apis.Core
     {
         private ServiceInstances()
         {
-//            Services = Enum.GetValues(typeof(ServiceTypes)).Cast<ServiceTypes>().ToDictionary(item => item,
-//                item => Activator.CreateInstance(
-//                    Type.GetType($"iHentai.Services.{Enum.GetName(typeof(ServiceTypes), item)}.Apis")) as IHentaiApis);
+            KnownApis = typeof(IHentaiApis).GetTypeInfo().Assembly.DefinedTypes.Where(item =>
+                item.IsClass && item.ImplementedInterfaces.Contains(typeof(IHentaiApis)));
         }
+
+        public IEnumerable<TypeInfo> KnownApis { get; }
 
         private Dictionary<ServiceTypes, IHentaiApis> Services { get; } = new Dictionary<ServiceTypes, IHentaiApis>();
 
         public static ServiceInstances Instance { get; } = new ServiceInstances();
+
+        public IHentaiApis this[string host] => Services.FirstOrDefault(item => item.Value.Host == host).Value;
 
         public IHentaiApis this[ServiceTypes type]
         {
@@ -30,12 +34,10 @@ namespace iHentai.Apis.Core
                 if (!Services.ContainsKey(type))
                     Services.Add(type,
                         Activator.CreateInstance(
-                                Type.GetType($"iHentai.Apis.{Enum.GetName(typeof(ServiceTypes), type)}.Apis")) as
-                            IHentaiApis);
+                            KnownApis.FirstOrDefault(item =>
+                                item.Namespace.Contains(Enum.GetName(typeof(ServiceTypes), type)))) as IHentaiApis);
                 return Services[type];
             }
         }
-
-        public IHentaiApis this[string host] => Services.FirstOrDefault(item => item.Value.Host == host).Value;
     }
 }

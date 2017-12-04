@@ -6,7 +6,5 @@
         string Thumb { get; }
         double ThumbHeight { get; }
         double ThumbWidth { get; }
-
-//        string Link { get; set; }
     }
 }
