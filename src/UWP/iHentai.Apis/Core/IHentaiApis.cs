@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 
 namespace iHentai.Apis.Core

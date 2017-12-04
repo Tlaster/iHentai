@@ -1,12 +1,6 @@
 ﻿using Windows.ApplicationModel.Core;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Flurl.Util;
 using iHentai.Mvvm;
-using iHentai.Paging.Animations;
 using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -14,13 +8,13 @@ using iHentai.ViewModels;
 namespace iHentai.Pages
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class RootPage
     {
         public RootPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
@@ -34,6 +28,7 @@ namespace iHentai.Pages
             // For example, when the title bar is invoked in full screen mode.
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
         }
+
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
             UpdateTitleBarLayout(sender);

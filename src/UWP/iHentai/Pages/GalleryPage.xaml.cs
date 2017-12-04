@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Helpers;
 using iHentai.Mvvm;
-using iHentai.Paging;
 using iHentai.ViewModels;
 using iHentai.Views;
-using Microsoft.Toolkit.Uwp;
-using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 using WaterFallView;
@@ -50,11 +41,8 @@ namespace iHentai.Pages
             var detailImageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image");
             var detailTitleAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title");
             if (MoreInfoCanvas.Visibility == Visibility.Visible)
-            {
                 detailTitleAnimation?.TryStart(MoreInfoTitle);
-            }
             if (detailImageAnimation != null)
-            {
                 if (MoreInfoCanvas.Visibility == Visibility.Visible)
                 {
                     detailImageAnimation.TryStart(MoreInfoImage);
@@ -68,7 +56,6 @@ namespace iHentai.Pages
                 {
                     detailImageAnimation.Cancel();
                 }
-            }
         }
 
         private void HideMoreInfo()
@@ -135,9 +122,7 @@ namespace iHentai.Pages
         private void GalleryPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.PreviousSize.Width <= 0d && e.PreviousSize.Height <= 0d)
-            {
                 return;
-            }
             HideMoreInfo();
         }
 

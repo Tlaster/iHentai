@@ -1,16 +1,15 @@
 ﻿using System;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
-using Windows.UI.Composition;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.Toolkit.Uwp.UI.Animations.Behaviors;
-using Microsoft.Toolkit.Uwp.UI.Animations.Expressions;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 using ListViewBase = Windows.UI.Xaml.Controls.ListViewBase;
+using VirtualizingPanel = WaterFallView.VirtualizingPanel;
 
 namespace iHentai.Behaviors
 {
@@ -25,6 +24,8 @@ namespace iHentai.Behaviors
 
         //private CompositionPropertySet _animationProperties;
         private double _headerPosition;
+
+        private double _prevVerticalOffset;
         //private Visual _headerVisual;
         //private CompositionPropertySet _scrollProperties;
 
@@ -112,8 +113,8 @@ namespace iHentai.Behaviors
             if (_scrollViewer == null)
                 return false;
 
-            var waterfall = AssociatedObject as WaterFallView.VirtualizingPanel ??
-                            AssociatedObject.FindDescendant<WaterFallView.VirtualizingPanel>();
+            var waterfall = AssociatedObject as VirtualizingPanel ??
+                            AssociatedObject.FindDescendant<VirtualizingPanel>();
             var listView = AssociatedObject as ListViewBase ?? AssociatedObject.FindDescendant<ListViewBase>();
 
             if (listView?.ItemsPanelRoot != null)
@@ -127,14 +128,14 @@ namespace iHentai.Behaviors
 
             // Implicit operation: Find the Header object of the control if it uses ListViewBase
             if (HeaderElement == null)
-            {
                 if (listView != null)
+                {
                     HeaderElement = listView.Header as UIElement;
+                }
                 else if (waterfall != null)
                 {
                     //HeaderElement = waterfall.Header as UIElement;
                 }
-            }
             if (!(HeaderElement is FrameworkElement headerElement) || headerElement.RenderSize.Height == 0)
                 return false;
 
@@ -177,10 +178,7 @@ namespace iHentai.Behaviors
         private void RemoveAnimation()
         {
             if (_scrollViewer != null)
-            {
                 _scrollViewer.ViewChanged -= ScrollViewer_ViewChanged;
-                //_scrollViewer.GotFocus -= ScrollViewer_GotFocus;
-            }
 
             if (HeaderElement is FrameworkElement element)
                 element.SizeChanged -= ScrollHeader_SizeChanged;
@@ -210,29 +208,27 @@ namespace iHentai.Behaviors
             AssignAnimation();
         }
 
-        private double _prevVerticalOffset;
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             //if (_animationProperties != null)
             //{
-                var header = (FrameworkElement) HeaderElement;
-                var headerHeight = header.ActualHeight;
-                var changed = _prevVerticalOffset - _scrollViewer.VerticalOffset;
-                var res = _headerPosition + changed;
-                if (changed > 0)
-                {
-                    _headerPosition = Math.Min(0d, res);
-                    header.Offset(offsetY: (float)_headerPosition, duration: 0).Start();
-                    //_animationProperties.InsertScalar("OffsetY", (float)Math.Min(0d, res));
-                }
-                else if (changed < 0)
-                {
-
-                    _headerPosition = Math.Max(-headerHeight, res);
-                    header.Offset(offsetY: (float)_headerPosition, duration: 0).Start();
-                    //_animationProperties.InsertScalar("OffsetY", (float)Math.Max(-headerHeight, res));
-                }
-                _prevVerticalOffset = _scrollViewer.VerticalOffset;
+            var header = (FrameworkElement) HeaderElement;
+            var headerHeight = header.ActualHeight;
+            var changed = _prevVerticalOffset - _scrollViewer.VerticalOffset;
+            var res = _headerPosition + changed;
+            if (changed > 0)
+            {
+                _headerPosition = Math.Min(0d, res);
+                header.Offset(offsetY: (float) _headerPosition, duration: 0).Start();
+                //_animationProperties.InsertScalar("OffsetY", (float)Math.Min(0d, res));
+            }
+            else if (changed < 0)
+            {
+                _headerPosition = Math.Max(-headerHeight, res);
+                header.Offset(offsetY: (float) _headerPosition, duration: 0).Start();
+                //_animationProperties.InsertScalar("OffsetY", (float)Math.Max(-headerHeight, res));
+            }
+            _prevVerticalOffset = _scrollViewer.VerticalOffset;
             //}
         }
 

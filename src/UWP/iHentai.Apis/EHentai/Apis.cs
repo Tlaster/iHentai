@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
 #if !UNIT_TEST
 using iHentai.Helpers;
+
 #endif
 
 namespace iHentai.Apis.EHentai
@@ -49,7 +51,7 @@ namespace iHentai.Apis.EHentai
 #if UNIT_TEST
             get;
             set;
-#else 
+#else
             get => "exhentai_user_info".Read(new Dictionary<string, string>());
             set => value.Save("exhentai_user_info");
 #endif
@@ -124,7 +126,7 @@ namespace iHentai.Apis.EHentai
 
         public Task<IGalleryDetailModel> Detail(IGalleryModel model)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)

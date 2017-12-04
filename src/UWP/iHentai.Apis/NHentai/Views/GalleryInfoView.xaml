@@ -13,7 +13,8 @@
     d:DataContext="{d:DesignInstance models:GalleryModel}">
 
     <Grid>
-        <TextBlock x:Name="LanguageTextBlock" HorizontalAlignment="Left"/>
-        <TextBlock Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}" HorizontalAlignment="Right"/>
+        <TextBlock x:Name="LanguageTextBlock" HorizontalAlignment="Left" />
+        <TextBlock Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}"
+                   HorizontalAlignment="Right" />
     </Grid>
 </UserControl>

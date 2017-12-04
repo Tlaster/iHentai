@@ -7,4 +7,8 @@
         double ThumbHeight { get; }
         double ThumbWidth { get; }
     }
+
+    public interface IGalleryDetailModel
+    {
+    }
 }

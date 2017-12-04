@@ -11,14 +11,6 @@ namespace iHentai.Apis.EHentai.Models
 {
     public class GalleryModel : IGalleryModel
     {
-        [HtmlItem(".it5")]
-        public string Title { get; set; }
-
-//        [HtmlItem(".it2 img", Attr = "src")]
-        [HtmlItem(".it2")]
-        [HtmlConverter(typeof(ThumbConverter))]
-        public string Thumb { get; set; }
-
         [HtmlItem(".it5 a", Attr = "href")]
         public string Link { get; set; }
 
@@ -44,6 +36,14 @@ namespace iHentai.Apis.EHentai.Models
 
         [HtmlItem(".itu div a", Attr = "href")]
         public string UploaderLink { get; set; }
+
+        [HtmlItem(".it5")]
+        public string Title { get; set; }
+
+//        [HtmlItem(".it2 img", Attr = "src")]
+        [HtmlItem(".it2")]
+        [HtmlConverter(typeof(ThumbConverter))]
+        public string Thumb { get; set; }
 
         [HtmlItem(".it2", Attr = "style")]
         [HtmlConverter(typeof(ThumbHeightConverter))]

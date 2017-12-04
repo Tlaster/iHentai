@@ -20,8 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\HentaiHttpClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IApiConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryDetailModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryInfoView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryContentView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SearchOptionBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ServiceTypes.cs" />
@@ -62,19 +61,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)EHentai\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryDetailInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryInfoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)NHentai\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

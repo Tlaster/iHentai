@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
     此文件包含运行时指令，应用程序通过反射和其他动态代码模式
     所访问的类型的规范。运行时指令用于控制
@@ -27,7 +28,7 @@
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
   <Library Name="iHentai.Mvvm">
 
-  	<!--在此处为库添加指令-->
+    <!--在此处为库添加指令-->
 
   </Library>
 </Directives>

@@ -1,5 +1,4 @@
 ﻿using iHentai.Mvvm;
-using iHentai.Views;
 
 namespace iHentai.ViewModels
 {

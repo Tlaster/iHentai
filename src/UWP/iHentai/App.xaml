@@ -15,11 +15,8 @@
                 <ResourceDictionary Source="/Styles/Page.xaml" />
                 <ResourceDictionary Source="/Styles/ImageEx.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
-                
-                <ResourceDictionary Source="EHentai/Generic.xaml"/>
-                <ResourceDictionary Source="NHentai/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <converters:HumanizerConverter x:Name="HumanizerConverter"/>
+            <converters:HumanizerConverter x:Name="HumanizerConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

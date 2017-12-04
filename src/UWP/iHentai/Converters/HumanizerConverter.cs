@@ -12,7 +12,7 @@ namespace iHentai.Converters
             {
                 case DateTime dateTime:
                     //bool.TryParse(parameter + "", out var isUtc);
-                    return dateTime.Humanize(/*isUtc*/);
+                    return dateTime.Humanize( /*isUtc*/);
                 default:
                     return null;
             }

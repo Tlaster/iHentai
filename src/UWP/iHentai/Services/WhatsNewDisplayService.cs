@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Storage;
 using iHentai.Helpers;
 using iHentai.Views;
 

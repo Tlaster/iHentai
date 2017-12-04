@@ -19,7 +19,7 @@ namespace iHentai.Views
         {
             if (!(item is IGalleryModel))
                 return availableSize;
-            var model = (IGalleryModel)item;
+            var model = (IGalleryModel) item;
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return availableSize;
             var size = new Size(availableSize.Width,
@@ -30,13 +30,12 @@ namespace iHentai.Views
 
     public sealed partial class GalleryGridItem : UserControl
     {
-        public event EventHandler<IGalleryModel> MoreInfoRequest; 
-
         public GalleryGridItem()
         {
             InitializeComponent();
-            
         }
+
+        public event EventHandler<IGalleryModel> MoreInfoRequest;
 
         protected override void OnHolding(HoldingRoutedEventArgs e)
         {
@@ -60,7 +59,7 @@ namespace iHentai.Views
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return base.MeasureOverride(availableSize);
             var size = new Size(availableSize.Width,
-                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * (availableSize.Width));
+                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
             VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");
             return size;
         }

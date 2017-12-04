@@ -56,7 +56,7 @@ namespace iHentai.Paging
 
 
         public static HentaiFrame Current => Window.Current.Content as HentaiFrame;
-        
+
 
         public bool AutomaticBackButtonHandling
         {

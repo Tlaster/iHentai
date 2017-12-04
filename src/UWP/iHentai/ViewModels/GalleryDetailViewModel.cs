@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using iHentai.Apis.Core.Models.Interfaces;
+﻿using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Mvvm;
-using iHentai.Pages;
 
 namespace iHentai.ViewModels
 {
@@ -22,6 +16,5 @@ namespace iHentai.ViewModels
         {
             Navigate<GalleryViewModel>();
         }
-
     }
 }

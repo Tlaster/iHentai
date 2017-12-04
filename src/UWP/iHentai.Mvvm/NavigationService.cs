@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using iHentai.Paging;
 using iHentai.Shared.Helpers;
-using NavigatedEventHandler = Windows.UI.Xaml.Navigation.NavigatedEventHandler;
 
 namespace iHentai.Mvvm
 {
@@ -20,6 +18,7 @@ namespace iHentai.Mvvm
 
     public static class NavigationService
     {
+        private static HentaiFrame _frame;
 
         static NavigationService()
         {
@@ -27,14 +26,12 @@ namespace iHentai.Mvvm
                 .Select(item =>
                     item.IsClass &&
                     ReflectionHelper.ImplementsGenericDefinition(item, typeof(IMvvmView<>), out var res)
-                        ? new { ViewType = item, GenericType = res.GetGenericArguments()[0] }
+                        ? new {ViewType = item, GenericType = res.GetGenericArguments()[0]}
                         : null).Where(item => item != null)
                 .ToDictionary(item => item.GenericType, item => item.ViewType);
         }
 
         public static Dictionary<Type, TypeInfo> KnownViews { get; }
-
-        private static HentaiFrame _frame;
 
         public static HentaiFrame Frame
         {
@@ -110,19 +107,13 @@ namespace iHentai.Mvvm
         private static void RegisterFrameEvents()
         {
             if (_frame != null)
-            {
                 _frame.Navigated += Frame_Navigated;
-                //_frame.NavigationFailed += Frame_NavigationFailed;
-            }
         }
 
         private static void UnregisterFrameEvents()
         {
             if (_frame != null)
-            {
                 _frame.Navigated -= Frame_Navigated;
-                //_frame.NavigationFailed -= Frame_NavigationFailed;
-            }
         }
 
         //private static void Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)

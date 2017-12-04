@@ -12,13 +12,13 @@ namespace iHentai.Paging.Handlers
 
         public int CurrentIndex
         {
-            get { return _currentIndex; }
+            get => _currentIndex;
             private set
             {
                 if (_currentIndex != value)
                 {
                     _currentIndex = value;
-                    
+
                     if (AutomaticBackButtonHandling)
                         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                             CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
@@ -109,7 +109,7 @@ namespace iHentai.Paging.Handlers
             }
             return false;
         }
-        
+
         public void ClearBackStack()
         {
             for (var i = _currentIndex - 1; i >= 0; i--)

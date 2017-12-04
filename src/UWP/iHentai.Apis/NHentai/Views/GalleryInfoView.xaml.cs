@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Linq;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Humanizer;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
@@ -20,11 +8,12 @@ using iHentai.Apis.NHentai.Models;
 
 namespace iHentai.Apis.NHentai.Views
 {
-    public sealed partial class GalleryInfoView : IGalleryInfoView<GalleryModel>
+    [ContentType(ContentTypes.Info)]
+    public sealed partial class GalleryInfoView : IGalleryContentView<GalleryModel>
     {
         public GalleryInfoView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void GalleryInfoView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -37,9 +26,7 @@ namespace iHentai.Apis.NHentai.Views
                 return;
             var tags = model.Tags?.GroupBy(item => item.Type).ToDictionary(item => item.Key, item => item.ToList());
             if (tags.TryGetValue("language", out var res))
-            {
                 LanguageTextBlock.Text = res.LastOrDefault()?.Name?.Humanize(LetterCasing.Title) ?? string.Empty;
-            }
         }
     }
 }

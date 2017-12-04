@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using iHentai.Helpers;
 

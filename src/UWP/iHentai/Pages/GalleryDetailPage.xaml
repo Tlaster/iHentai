@@ -17,8 +17,8 @@
             <StackPanel Orientation="Vertical">
                 <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <controls:ImageEx
                         Style="{StaticResource ImageExNoTransition}"
@@ -29,10 +29,11 @@
                         Tapped="{x:Bind ViewModel.ShowGallery}"
                         Source="{Binding Model.Thumb}" />
                     <StackPanel Orientation="Vertical" Grid.Column="1" x:Name="GalleryInfoContainer">
-                        <TextBlock Text="{Binding Model.Title}" x:Name="TitleTextBlock" Style="{ThemeResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Model.Title}" x:Name="TitleTextBlock"
+                                   Style="{ThemeResource TitleTextBlockStyle}" />
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="Download"/>
-                            <Button Content="Read"/>
+                            <Button Content="Download" />
+                            <Button Content="Read" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -40,4 +41,3 @@
         </ScrollViewer>
     </Grid>
 </mvvm:MvvmPage>
-

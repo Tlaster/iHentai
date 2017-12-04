@@ -6,7 +6,8 @@ namespace iHentai.Paging
     public static class HentaiSuspensionManager
     {
         private static readonly DependencyProperty FrameSessionStateKeyProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(string), typeof(HentaiSuspensionManager),
+            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(string),
+                typeof(HentaiSuspensionManager),
                 null);
 
         private static readonly DependencyProperty FrameSessionStateProperty =

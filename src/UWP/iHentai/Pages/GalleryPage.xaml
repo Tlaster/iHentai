@@ -27,22 +27,24 @@
                 <hentaiBehaviors:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}"
                                                            xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
             </interactivity:Interaction.Behaviors>
-            <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased" x:Name="WaterfallLayout" ItemSource="{Binding Source}">
+            <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased"
+                                         x:Name="WaterfallLayout" ItemSource="{Binding Source}">
                 <waterfall:WaterfallFlowView.Resizer>
-                    <views:GalleryItemResizer/>
+                    <views:GalleryItemResizer />
                 </waterfall:WaterfallFlowView.Resizer>
                 <waterfall:WaterfallFlowView.Header>
                     <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
                 </waterfall:WaterfallFlowView.Header>
                 <waterfall:WaterfallFlowView.ItemContainerStyle>
                     <Style TargetType="ContentControl">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     </Style>
                 </waterfall:WaterfallFlowView.ItemContainerStyle>
                 <waterfall:WaterfallFlowView.ItemTemplate>
                     <DataTemplate>
-                        <views:GalleryGridItem Tapped="UIElement_OnTapped" MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
+                        <views:GalleryGridItem Tapped="UIElement_OnTapped"
+                                               MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
                     </DataTemplate>
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
@@ -111,7 +113,7 @@
                                        x:Name="MoreInfoTitle" />
                             <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
                                 <ContentControl.ContentTemplateSelector>
-                                    <selectors:GalleryInfoViewSelector/>
+                                    <selectors:GalleryContentViewSelector ContentType="Info" />
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
                             <animations:Implicit.ShowAnimations>
@@ -123,13 +125,13 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid Grid.Row="1" >
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Stretch" Content="Read"/>
-                        <Button HorizontalAlignment="Stretch" Grid.Column="1" Content="Download"/>
+                        <Button HorizontalAlignment="Stretch" Content="Read" />
+                        <Button HorizontalAlignment="Stretch" Grid.Column="1" Content="Download" />
                         <animations:Implicit.ShowAnimations>
                             <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.4"
                                                          SetInitialValueBeforeDelay="True" />

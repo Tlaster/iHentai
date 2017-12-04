@@ -1,12 +1,7 @@
 ﻿using System;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using iHentai.Mvvm;
-using iHentai.Paging;
 using iHentai.ViewModels;
-using iHentai.Views;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -40,7 +35,8 @@ namespace iHentai.Pages
                 ThumbImage.Width = itemWidth;
                 ThumbImage.Height = itemHeight;
             }
-            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage, new []{ GalleryInfoContainer });
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")
+                ?.TryStart(ThumbImage, new[] {GalleryInfoContainer});
             ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title")?.TryStart(TitleTextBlock);
         }
 
@@ -49,6 +45,5 @@ namespace iHentai.Pages
             base.OnClose();
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", ThumbImage);
         }
-        
     }
 }

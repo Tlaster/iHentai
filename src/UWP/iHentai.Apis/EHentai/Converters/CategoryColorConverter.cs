@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
@@ -9,10 +8,9 @@ namespace iHentai.Apis.EHentai.Converters
 {
     public class CategoryColorConverter : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var category = (CategoryFlags)value;
+            var category = (CategoryFlags) value;
             string color;
             switch (category)
             {

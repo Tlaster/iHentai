@@ -35,7 +35,10 @@ namespace iHentai.Apis.NHentai.Models
         public int NumPages { get; set; }
 
         public string Title => TitleModel?.English;
-        public string Thumb => $"https://t.nhentai.net/galleries/{MediaId}/cover.{(string.Equals(Images.Cover.Type, "j", StringComparison.OrdinalIgnoreCase) ? "jpg" : "png")}";
+
+        public string Thumb =>
+            $"https://t.nhentai.net/galleries/{MediaId}/cover.{(string.Equals(Images.Cover.Type, "j", StringComparison.OrdinalIgnoreCase) ? "jpg" : "png")}";
+
         public double ThumbHeight => Images?.Cover?.Height ?? -1d;
         public double ThumbWidth => Images?.Cover?.Width ?? -1d;
     }

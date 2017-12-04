@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iHentai.Shared.Helpers
 {
     internal static class ReflectionHelper
     {
-        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
+        public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition,
+            out Type implementingType)
         {
             if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
-            {
-                throw new ArgumentNullException($"'{genericInterfaceDefinition}' is not a generic interface definition.");
-            }
+                throw new ArgumentNullException(
+                    $"'{genericInterfaceDefinition}' is not a generic interface definition.");
 
             if (type.IsInterface)
-            {
                 if (type.IsGenericType)
                 {
                     var interfaceDefinition = type.GetGenericTypeDefinition();
@@ -27,7 +22,6 @@ namespace iHentai.Shared.Helpers
                         return true;
                     }
                 }
-            }
 
             foreach (var i in type.GetInterfaces())
             {

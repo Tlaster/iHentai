@@ -4,7 +4,6 @@ using Windows.UI.Xaml;
 using iHentai.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
-using iHentai.Views;
 
 namespace iHentai.ViewModels
 {

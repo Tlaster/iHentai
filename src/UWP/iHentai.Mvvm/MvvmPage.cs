@@ -74,12 +74,12 @@ namespace iHentai.Mvvm
             Debug.WriteLine($"{GetType().Name}: ${nameof(OnStart)}");
             ViewModel?.OnStart();
         }
-        
+
         protected virtual void OnRestart()
         {
             Debug.WriteLine($"{GetType().Name}: ${nameof(OnRestart)}");
         }
-        
+
         protected virtual void OnPause()
         {
             Debug.WriteLine($"{GetType().Name}: ${nameof(OnPause)}");

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -11,10 +7,8 @@ namespace iHentai.Paging.Animations
     public class FadeAnimation : IPageAnimation
     {
         public double Duration { get; set; } = 250d;
-        public FadeAnimation()
-        {
-        }
         public PageInsertionMode PageInsertionMode => PageInsertionMode.ConcurrentAbove;
+
         public async Task AnimateForwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 1d;

@@ -167,8 +167,7 @@
     <Compile Include="Pages\GalleryDetailPage.xaml.cs">
       <DependentUpon>GalleryDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Selectors\GalleryDetailInfoViewSelector.cs" />
-    <Compile Include="Selectors\GalleryInfoViewSelector.cs" />
+    <Compile Include="Selectors\GalleryContentViewSelector.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />
     <Compile Include="Services\BackgroundTaskService.cs" />

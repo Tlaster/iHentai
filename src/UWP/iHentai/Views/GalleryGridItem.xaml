@@ -24,10 +24,11 @@
                                   OffsetY="3"
                                   extensions:VisualEx.Opacity="0"
                                   Visibility="Collapsed">
-            <Border></Border>
+            <Border />
         </controls:DropShadowPanel>
         <Grid>
-            <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}"/>
+            <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage"
+                              Source="{Binding Thumb}" />
             <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
             </Button>

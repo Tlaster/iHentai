@@ -27,7 +27,6 @@ namespace iHentai.Paging
 
         public HentaiPage()
         {
-
             UseBackKeyToNavigate = true;
             IsSuspendable = true;
             UseAltLeftOrRightToNavigate = true;
@@ -131,7 +130,6 @@ namespace iHentai.Paging
             NavigationKeyHandler.RemoveGoBackAsyncHandler(handler);
         }
 
-        
 
         protected internal virtual void OnLoadState(Dictionary<string, object> pageState)
         {
@@ -193,7 +191,7 @@ namespace iHentai.Paging
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
         }
-        
+
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -261,6 +259,5 @@ namespace iHentai.Paging
             OnNavigatedTo(e);
             PageStateHandler.OnNavigatedTo(e);
         }
-        
     }
 }

@@ -8,7 +8,7 @@ namespace iHentai.Helpers
         {
             return JsonConvert.SerializeObject(obj);
         }
-        
+
         public static object JsonToObject(this string value)
         {
             return JsonConvert.DeserializeObject(value);

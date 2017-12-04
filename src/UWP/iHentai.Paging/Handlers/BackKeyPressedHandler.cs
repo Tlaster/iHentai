@@ -7,11 +7,11 @@ namespace iHentai.Paging.Handlers
 {
     public class BackKeyPressedHandler
     {
+        private readonly List<Tuple<HentaiPage, Func<object, bool>>> _handlers;
+
         //private Type _hardwareButtonsType = null;
         //private object _registrationToken;
         private bool _isEventRegistered;
-
-        private readonly List<Tuple<HentaiPage, Func<object, bool>>> _handlers;
 
         public BackKeyPressedHandler()
         {
@@ -41,7 +41,7 @@ namespace iHentai.Paging.Handlers
                 _isEventRegistered = false;
             }
         }
-        
+
 
         private void OnBackKeyPressed(object sender, BackRequestedEventArgs args)
         {
