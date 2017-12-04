@@ -11,42 +11,31 @@ using Windows.UI.Xaml;
 
 namespace iHentai.Mvvm
 {
-    //[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    //public sealed class PageAttribute : Attribute
-    //{
-    //    public PageAttribute(Type pageType)
-    //    {
-    //        PageType = pageType;
-    //    }
-
-    //    public Type PageType { get; }
-    //}
-
     public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //protected async Task<TResult> Navigate<T, TResult>(
-        //    CancellationToken cancellationToken = default, params object[] args)
-        //    where T : ViewModel<TResult>
-        //{
-        //    //var attr = typeof(T).GetTypeInfo().GetCustomAttribute<PageAttribute>();
-        //    if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
-        //        throw new ArgumentException();
-        //    if (cancellationToken != default)
-        //        cancellationToken.Register(() => vm.Close(default));
-        //    var tcs = new TaskCompletionSource<TResult>();
-        //    vm.CloseCompletionSource = tcs;
-        //    await NavigationService.Navigate(attr.PageType, vm);
-        //    try
-        //    {
-        //        return await tcs.Task;
-        //    }
-        //    catch
-        //    {
-        //        return default;
-        //    }
-        //}
+        protected async Task<TResult> Navigate<T, TResult>(
+            CancellationToken cancellationToken = default, params object[] args)
+            where T : ViewModel<TResult>
+        {
+            if (!(Activator.CreateInstance(typeof(T), args) is ViewModel<TResult> vm))
+                throw new ArgumentException();
+            if (cancellationToken != default)
+                cancellationToken.Register(() => vm.Close(default));
+            var tcs = new TaskCompletionSource<TResult>();
+            vm.CloseCompletionSource = tcs;
+            NavigationService.KnownViews.TryGetValue(typeof(ViewModel<TResult>), out var page);
+            await NavigationService.Navigate(page, vm);
+            try
+            {
+                return await tcs.Task;
+            }
+            catch
+            {
+                return default;
+            }
+        }
 
         protected void Navigate<T>(params object[] args) where T : class
         {

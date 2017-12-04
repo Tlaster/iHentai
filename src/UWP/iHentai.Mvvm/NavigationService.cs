@@ -97,7 +97,6 @@ namespace iHentai.Mvvm
         {
             var pInfo = vmType.GetTypeInfo();
             var uwpPage = typeof(Page).GetTypeInfo();
-            //var attr = pInfo.GetCustomAttribute<PageAttribute>();
             if (pInfo.IsSubclassOf(typeof(ViewModel)) && KnownViews.TryGetValue(vmType, out var pageInfo))
             {
                 var vm = Activator.CreateInstance(vmType, args) as ViewModel;
