@@ -23,7 +23,7 @@ namespace iHentai.Views
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return availableSize;
             var size = new Size(availableSize.Width,
-                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
+                model.ThumbHeight / model.ThumbWidth * availableSize.Width);
             return size;
         }
     }
@@ -59,28 +59,32 @@ namespace iHentai.Views
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return base.MeasureOverride(availableSize);
             var size = new Size(availableSize.Width,
-                model.ThumbHeight * 1d / (model.ThumbWidth * 1d) * availableSize.Width);
-            VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2}, {size.Height / 2}, 0");
+                model.ThumbHeight / model.ThumbWidth * availableSize.Width);
+            VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2d}, {size.Height / 2d}, 0");
             return size;
         }
 
         protected override void OnPointerExited(PointerRoutedEventArgs e)
         {
             base.OnPointerExited(e);
-            var animation = new OpacityAnimation {To = 0, Duration = TimeSpan.FromMilliseconds(1200)};
-            animation.StartAnimation(ShadowPanel);
-
-            var parentAnimation = new ScaleAnimation {To = "1", Duration = TimeSpan.FromMilliseconds(1200)};
-            parentAnimation.StartAnimation(RootGrid);
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
+            {
+                var animation = new OpacityAnimation {To = 0d, Duration = TimeSpan.FromMilliseconds(1200)};
+                animation.StartAnimation(ShadowPanel);
+                var parentAnimation = new ScaleAnimation {To = "1", Duration = TimeSpan.FromMilliseconds(1200)};
+                parentAnimation.StartAnimation(RootGrid);
+            }
         }
 
         protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
             base.OnPointerEntered(e);
-            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
             {
                 ShadowPanel.Visibility = Visibility.Visible;
-                var animation = new OpacityAnimation {To = 1, Duration = TimeSpan.FromMilliseconds(600)};
+                var animation = new OpacityAnimation {To = 1d, Duration = TimeSpan.FromMilliseconds(600)};
                 animation.StartAnimation(ShadowPanel);
 
                 var parentAnimation = new ScaleAnimation {To = "1.1", Duration = TimeSpan.FromMilliseconds(600)};
@@ -91,15 +95,31 @@ namespace iHentai.Views
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
         {
             base.OnPointerPressed(e);
-            var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(600), To = "1"};
-            parentAnimation.StartAnimation(RootGrid);
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+            {
+                var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(600), To = "0.9"};
+                parentAnimation.StartAnimation(RootGrid);
+            }
+            else
+            {
+                var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(600), To = "1"};
+                parentAnimation.StartAnimation(RootGrid);
+            }
         }
 
         protected override void OnPointerReleased(PointerRoutedEventArgs e)
         {
             base.OnPointerReleased(e);
-            var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(1200), To = "1.1"};
-            parentAnimation.StartAnimation(RootGrid);
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Touch)
+            {
+                var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(1200), To = "1"};
+                parentAnimation.StartAnimation(RootGrid);
+            }
+            else
+            {
+                var parentAnimation = new ScaleAnimation {Duration = TimeSpan.FromMilliseconds(1200), To = "1.1"};
+                parentAnimation.StartAnimation(RootGrid);
+            }
         }
 
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
