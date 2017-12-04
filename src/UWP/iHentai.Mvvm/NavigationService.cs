@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -6,12 +8,32 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Paging;
+using iHentai.Shared.Helpers;
 using NavigatedEventHandler = Windows.UI.Xaml.Navigation.NavigatedEventHandler;
 
 namespace iHentai.Mvvm
 {
+    public interface IMvvmView<T> where T : ViewModel
+    {
+        T ViewModel { get; set; }
+    }
+
     public static class NavigationService
     {
+
+        static NavigationService()
+        {
+            KnownViews = Application.Current.GetType().GetTypeInfo().Assembly.DefinedTypes
+                .Select(item =>
+                    item.IsClass &&
+                    ReflectionHelper.ImplementsGenericDefinition(item, typeof(IMvvmView<>), out var res)
+                        ? new { ViewType = item, GenericType = res.GetGenericArguments()[0] }
+                        : null).Where(item => item != null)
+                .ToDictionary(item => item.GenericType, item => item.ViewType);
+        }
+
+        public static Dictionary<Type, TypeInfo> KnownViews { get; }
+
         private static HentaiFrame _frame;
 
         public static HentaiFrame Frame
@@ -75,12 +97,11 @@ namespace iHentai.Mvvm
         {
             var pInfo = vmType.GetTypeInfo();
             var uwpPage = typeof(Page).GetTypeInfo();
-            var attr = pInfo.GetCustomAttribute<PageAttribute>();
-
-            if (pInfo.IsSubclassOf(typeof(ViewModel)) && attr != null)
+            //var attr = pInfo.GetCustomAttribute<PageAttribute>();
+            if (pInfo.IsSubclassOf(typeof(ViewModel)) && KnownViews.TryGetValue(vmType, out var pageInfo))
             {
                 var vm = Activator.CreateInstance(vmType, args) as ViewModel;
-                return Navigate(attr.PageType, vm);
+                return Navigate(pageInfo, vm);
             }
             if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(Page)))
                 return Navigate(vmType);

@@ -8,7 +8,6 @@ using iHentai.Views;
 
 namespace iHentai.ViewModels
 {
-    [Page(typeof(SettingsPage))]
     public class SettingsViewModel : ViewModel
     {
         public ElementTheme ElementTheme { get; set; } = ThemeSelectorService.Theme;

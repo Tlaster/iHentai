@@ -5,13 +5,13 @@ using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Helpers;
+using iHentai.Shared.Helpers;
 
 namespace iHentai.Selectors
 {
     public class GalleryInfoViewSelector : DataTemplateSelector
     {
-        public GalleryInfoViewSelector()
+        static GalleryInfoViewSelector()
         {
             KnownViews = typeof(IGalleryInfoView<>).GetTypeInfo().Assembly.DefinedTypes
                 .Select(item =>
@@ -22,7 +22,7 @@ namespace iHentai.Selectors
                 .ToDictionary(item => item.GenericType, item => item.ViewType);
         }
 
-        public Dictionary<Type, TypeInfo> KnownViews { get; }
+        public static Dictionary<Type, TypeInfo> KnownViews { get; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {

@@ -9,7 +9,6 @@ using iHentai.Pages;
 
 namespace iHentai.ViewModels
 {
-    [Page(typeof(GalleryDetailPage))]
     public class GalleryDetailViewModel : ViewModel
     {
         public GalleryDetailViewModel(IGalleryModel model)

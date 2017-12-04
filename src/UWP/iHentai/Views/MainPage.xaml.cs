@@ -1,8 +1,9 @@
-﻿using iHentai.ViewModels;
+﻿using iHentai.Mvvm;
+using iHentai.ViewModels;
 
 namespace iHentai.Views
 {
-    public sealed partial class MainPage
+    public sealed partial class MainPage : IMvvmView<MainViewModel>
     {
         public MainPage()
         {

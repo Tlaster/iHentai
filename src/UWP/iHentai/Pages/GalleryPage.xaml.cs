@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Navigation;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Helpers;
+using iHentai.Mvvm;
 using iHentai.Paging;
 using iHentai.ViewModels;
 using iHentai.Views;
@@ -28,7 +29,7 @@ namespace iHentai.Pages
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GalleryPage
+    public sealed partial class GalleryPage : IMvvmView<GalleryViewModel>
     {
         private UIElement _tappedItem;
 

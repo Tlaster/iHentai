@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iHentai.Helpers
+namespace iHentai.Shared.Helpers
 {
-    public static class ReflectionHelper
+    internal static class ReflectionHelper
     {
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
         {

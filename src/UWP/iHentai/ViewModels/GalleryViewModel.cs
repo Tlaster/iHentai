@@ -14,7 +14,6 @@ using GalleryPage = iHentai.Pages.GalleryPage;
 
 namespace iHentai.ViewModels
 {
-    [Page(typeof(GalleryPage))]
     public class GalleryViewModel : ViewModel
     {
         protected override void Init()

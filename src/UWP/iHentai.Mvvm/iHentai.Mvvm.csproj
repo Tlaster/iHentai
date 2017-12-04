@@ -131,6 +131,7 @@
       <Name>iHentai.Paging</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\iHentai.Shared\iHentai.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

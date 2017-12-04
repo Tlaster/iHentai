@@ -4,7 +4,7 @@ using iHentai.Paging;
 
 namespace iHentai.Mvvm
 {
-    public class MvvmPage : HentaiPage
+    public abstract class MvvmPage : HentaiPage
     {
         public ViewModel ViewModel { get; set; }
 
