@@ -26,28 +26,17 @@ namespace iHentai.Pages
             set => base.ViewModel = value;
         }
 
-        protected override void OnNavigatedTo(HentaiNavigationEventArgs e)
+        protected override void OnStart()
         {
-            base.OnNavigatedTo(e);
+            base.OnStart();
             ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
         }
 
-        protected override void OnNavigatingFrom(HentaiNavigatingCancelEventArgs args)
+        protected override void OnClose()
         {
-            base.OnNavigatingFrom(args);
+            base.OnClose();
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", ThumbImage);
         }
-
-        //protected override void OnClose()
-        //{
-        //    base.OnClose();
-        //    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", ThumbImage);
-        //}
-
-        //protected override void OnCreate()
-        //{
-        //    base.OnCreate();
-        //    ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")?.TryStart(ThumbImage);
-        //}
+        
     }
 }

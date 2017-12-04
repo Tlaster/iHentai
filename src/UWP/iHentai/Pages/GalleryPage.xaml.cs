@@ -35,7 +35,6 @@ namespace iHentai.Pages
         public GalleryPage()
         {
             InitializeComponent();
-            //NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         public new GalleryViewModel ViewModel
@@ -44,38 +43,9 @@ namespace iHentai.Pages
             set => base.ViewModel = value;
         }
 
-        //protected override void SaveState(Dictionary<string, object> bundleState)
-        //{
-        //    base.SaveState(bundleState);
-        //    bundleState.Add("tappedItem", _tappedItem);
-        //    //bundleState.Add("scroll_position", ScrollViewer.GetScrollViewerOffsetProportion());
-        //    bundleState.Add("tapped_index", _tappedIndex);
-        //}
-
-        //protected override void RestoreState(Dictionary<string, object> bundleState)
-        //{
-        //    base.RestoreState(bundleState);
-        //    if (bundleState.TryGetValue("tappedItem", out var item))
-        //    {
-        //        _tappedItem = (UIElement) item;
-        //    } 
-        //    //if (bundleState.TryGetValue("scroll_position", out var position))
-        //    //{
-        //    //    ScrollViewer.Post(() => ScrollViewer.ScrollToProportion((double)position));
-        //    //}
-        //    //if (bundleState.TryGetValue("tapped_index", out var index))
-        //    //{
-        //    //    WaterfallLayout.Post(() =>
-        //    //    {
-
-        //    //        WaterfallLayout.ScrollIntoView((int)index);
-        //    //    });
-        //    //}
-        //}
-
-        protected override void OnNavigatedTo(HentaiNavigationEventArgs e)
+        protected override void OnRestart()
         {
-            base.OnNavigatedTo(e);
+            base.OnRestart();
             var detailImageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image");
             if (detailImageAnimation != null)
             {
@@ -94,33 +64,6 @@ namespace iHentai.Pages
                 }
             }
         }
-
-        //protected override void OnResume()
-        //{
-        //    base.OnResume();
-        //    //if (_scrollPosition > 0)
-        //    //{
-        //    //    var res = ScrollViewer.ChangeView(0, _scrollPosition, 1, true);
-        //    //    _scrollPosition = 0;
-        //    //}
-        //    var detailImageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image");
-        //    if (detailImageAnimation != null)
-        //    {
-        //        if (MoreInfoCanvas.Visibility == Visibility.Visible)
-        //        {
-        //            detailImageAnimation.TryStart(MoreInfoImage);
-        //        }
-        //        else if (_tappedItem != null)
-        //        {
-        //            detailImageAnimation.TryStart(_tappedItem);
-        //            _tappedItem = null;
-        //        }
-        //        else
-        //        {
-        //            detailImageAnimation.Cancel();
-        //        }
-        //    }
-        //}
 
         private void HideMoreInfo()
         {
@@ -202,7 +145,6 @@ namespace iHentai.Pages
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
-            //_tappedIndex = WaterfallLayout.GetIndexFormItem((sender as GalleryGridItem).DataContext);
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
             ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
         }

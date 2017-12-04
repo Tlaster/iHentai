@@ -24,7 +24,6 @@ namespace iHentai.Pages
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
-            RootFrame.PageAnimation = new FadeAnimation();
             NavigationService.Frame = RootFrame;
             NavigationService.NavigateViewModel<GalleryViewModel>();
             // Register a handler for when the size of the overlaid caption control changes.

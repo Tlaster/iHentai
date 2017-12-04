@@ -10,7 +10,7 @@ namespace iHentai.Paging.Animations
 {
     public class FadeAnimation : IPageAnimation
     {
-        private const double Duration = 250d;
+        public double Duration { get; set; } = 250d;
         public FadeAnimation()
         {
         }
@@ -19,28 +19,28 @@ namespace iHentai.Paging.Animations
         {
             previousPage.Opacity = 1d;
             nextPage.Opacity = 0d;
-            await previousPage.Fade(0, Duration).StartAsync();
+            await previousPage.Fade(0, Duration / 2).StartAsync();
         }
 
         public async Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 0;
             nextPage.Opacity = 1;
-            await nextPage.Fade(1, Duration).StartAsync();
+            await nextPage.Fade(1, Duration / 2).StartAsync();
         }
 
         public async Task AnimateBackwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 1;
             nextPage.Opacity = 0;
-            await previousPage.Fade(0, Duration).StartAsync();
+            await previousPage.Fade(0, Duration / 2).StartAsync();
         }
 
         public async Task AnimateBackwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 0;
             nextPage.Opacity = 1;
-            await nextPage.Fade(1, Duration).StartAsync();
+            await nextPage.Fade(1, Duration / 2).StartAsync();
         }
     }
 }
