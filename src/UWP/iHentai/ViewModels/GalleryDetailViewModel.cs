@@ -1,20 +1,29 @@
-﻿using iHentai.Apis.Core.Models.Interfaces;
+﻿using System.Threading.Tasks;
+using iHentai.Apis.Core;
+using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Mvvm;
+using Nito.AsyncEx;
 
 namespace iHentai.ViewModels
 {
     public class GalleryDetailViewModel : ViewModel
     {
-        public GalleryDetailViewModel(IGalleryModel model)
+        private readonly ServiceTypes _serviceType;
+
+        public GalleryDetailViewModel(ServiceTypes serviceType, IGalleryModel model)
         {
             Model = model;
+            _serviceType = serviceType;
+            DetailModel = NotifyTaskCompletion.Create(GetDetailAsync);
         }
 
-        public IGalleryModel Model { get; set; }
+        public INotifyTaskCompletion<IGalleryDetailModel> DetailModel { get; }
 
-        public void ShowGallery()
+        public IGalleryModel Model { get; }
+
+        private Task<IGalleryDetailModel> GetDetailAsync()
         {
-            Navigate<GalleryViewModel>();
+            return ServiceInstances.Instance[_serviceType].Detail(Model);
         }
     }
 }

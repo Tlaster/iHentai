@@ -16,7 +16,8 @@
                 <ResourceDictionary Source="/Styles/ImageEx.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:HumanizerConverter x:Name="HumanizerConverter" />
+            <converters:HumanizerConverter x:Key="HumanizerConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

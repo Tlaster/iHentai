@@ -23,7 +23,7 @@ namespace iHentai.Mvvm
                 cancellationToken.Register(() => vm.Close(default));
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
-            NavigationService.KnownViews.TryGetValue(typeof(ViewModel<TResult>), out var page);
+            if (!NavigationService.KnownViews.TryGetValue(typeof(ViewModel<TResult>), out var page)) return default;
             await NavigationService.Navigate(page, vm);
             try
             {
@@ -57,11 +57,7 @@ namespace iHentai.Mvvm
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        protected internal virtual void Init()
-        {
-        }
-
+        
         protected internal virtual void OnDestory()
         {
         }

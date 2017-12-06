@@ -1,22 +1,20 @@
 ﻿<mvvm:MvvmPage
     x:Class="iHentai.Pages.GalleryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:iHentai.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
     xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:selectors="using:iHentai.Selectors"
+    xmlns:viewModels="using:iHentai.ViewModels"
     xmlns:views="using:iHentai.Views"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:waterfall="using:WaterFallView"
-    xmlns:interfaces="using:iHentai.Apis.Core.Models.Interfaces"
-    xmlns:viewModels="using:iHentai.ViewModels"
-    xmlns:selectors="using:iHentai.Selectors"
-    xmlns:uwp="using:FontAwesome.UWP"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
@@ -49,12 +47,99 @@
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
+        <Grid x:Name="Header" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:DropShadowPanel VerticalAlignment="Top" 
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch"
+                                      ShadowOpacity="0.6"
+                                      BlurRadius="10"
+                                      Margin="16">
+                <Border Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Background="Transparent" VerticalAlignment="Stretch">
+                            <SymbolIcon Symbol="GlobalNavigationButton"/>
+                        </Button>
+                        <AutoSuggestBox Grid.Column="1" PlaceholderText="iHentai">
+                            <AutoSuggestBox.Style>
+                                <Style TargetType="AutoSuggestBox">
+                                    <Setter Property="VerticalAlignment" Value="Top" />
+                                    <Setter Property="IsTabStop" Value="False" />
+                                    <Setter Property="TextBoxStyle" >
+                                        <Setter.Value>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
+                                                <Setter Property="FontSize" Value="20"/>
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="AutoSuggestBox">
+                                                <Grid>
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="Orientation">
+                                                            <VisualState x:Name="Landscape"/>
+                                                            <VisualState x:Name="Portrait"/>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                    <TextBox x:Name="TextBox"
+                                                             FontSize="20"
+                    Style="{TemplateBinding TextBoxStyle}"
+                    PlaceholderText="{TemplateBinding PlaceholderText}"
+                    Header="{TemplateBinding Header}"
+                    Width="{TemplateBinding Width}"
+                                                             Padding="8"
+                                                             VerticalContentAlignment="Center"
+                                                             BorderThickness="0"
+                    ScrollViewer.BringIntoViewOnFocusChange="False"
+                    Canvas.ZIndex="0"
+                    Margin="0"
+                    DesiredCandidateWindowAlignment="BottomEdge"/>
+                                                    <Popup x:Name="SuggestionsPopup">
+                                                        <Border x:Name="SuggestionsContainer" BorderThickness="0">
+                                                            <Border.RenderTransform>
+                                                                <TranslateTransform x:Name="UpwardTransform"/>
+                                                            </Border.RenderTransform>
+                                                            <ListView
+                x:Name="SuggestionsList"
+                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
+                BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
+                DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                IsItemClickEnabled="True"
+                ItemTemplate="{TemplateBinding ItemTemplate}"
+                ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
+                Margin="{ThemeResource AutoSuggestListMargin}"
+                Padding="{ThemeResource AutoSuggestListPadding}">
+                                                                <ListView.ItemContainerTransitions>
+                                                                    <TransitionCollection />
+                                                                </ListView.ItemContainerTransitions>
+                                                            </ListView>
+                                                        </Border>
+                                                    </Popup>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
 
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="Header">
-            <Border Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" />
-            <Grid Padding="16">
-                <TextBlock Text="dsafdsafdsa" />
-            </Grid>
+                            </AutoSuggestBox.Style>
+                            <AutoSuggestBox.QueryIcon>
+                                <SymbolIcon Symbol="Find"/>
+                            </AutoSuggestBox.QueryIcon>
+                        </AutoSuggestBox>
+                        <Button Grid.Column="2" Background="Transparent" VerticalAlignment="Stretch">
+                            <SymbolIcon Symbol="Add"/>
+                        </Button>
+                    </Grid>
+                </Border>
+            </controls:DropShadowPanel>
         </Grid>
         <Canvas Background="Transparent"
                 Tapped="MoreInfoCanvas_OnTapped"

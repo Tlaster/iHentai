@@ -11,19 +11,23 @@ namespace iHentai.ViewModels
 {
     public class GalleryViewModel : ViewModel
     {
-        public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; set; } =
-            new IncrementalLoadingCollection<GalleryDataSource, IGalleryModel>(
-                new GalleryDataSource(ServiceInstances.Instance[ServiceTypes.NHentai]));
+        private readonly ServiceTypes _serviceType;
 
-        protected override void Init()
+        public GalleryViewModel() : this(ServiceTypes.NHentai)
         {
-            base.Init();
-            Source.RefreshAsync().FireAndForget();
+            
         }
 
+        public GalleryViewModel(ServiceTypes serviceType)
+        {
+            _serviceType = serviceType;
+            Source = new IncrementalLoadingCollection<GalleryDataSource, IGalleryModel>(new GalleryDataSource(ServiceInstances.Instance[serviceType]));
+        }
+        public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; } 
+        
         public void GoDetail(IGalleryModel model)
         {
-            Navigate<GalleryDetailViewModel>(model);
+            Navigate<GalleryDetailViewModel>(_serviceType, model);
         }
     }
 

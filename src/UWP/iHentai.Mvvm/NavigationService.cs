@@ -93,15 +93,15 @@ namespace iHentai.Mvvm
         public static Task<bool> NavigateViewModel(Type vmType, params object[] args)
         {
             var pInfo = vmType.GetTypeInfo();
-            var uwpPage = typeof(Page).GetTypeInfo();
+            var uwpPage = typeof(HentaiPage).GetTypeInfo();
             if (pInfo.IsSubclassOf(typeof(ViewModel)) && KnownViews.TryGetValue(vmType, out var pageInfo))
             {
                 var vm = Activator.CreateInstance(vmType, args) as ViewModel;
                 return Navigate(pageInfo, vm);
             }
-            if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(Page)))
+            if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(HentaiPage)))
                 return Navigate(vmType);
-            throw new ArgumentException("Page Type must be based on Xamarin.Forms.Page");
+            throw new ArgumentException("Page Type must be based on HentaiPage");
         }
 
         private static void RegisterFrameEvents()

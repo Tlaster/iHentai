@@ -1,5 +1,8 @@
 ﻿using System;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media.Animation;
+using iHentai.Helpers;
 using iHentai.Mvvm;
 using iHentai.ViewModels;
 
@@ -36,8 +39,8 @@ namespace iHentai.Pages
                 ThumbImage.Height = itemHeight;
             }
             ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")
-                ?.TryStart(ThumbImage, new[] {GalleryInfoContainer});
-            ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title")?.TryStart(TitleTextBlock);
+                ?.TryStart(ThumbImage);
+            //ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title")?.TryStart(TitleTextBlock);
         }
 
         protected override void OnClose()

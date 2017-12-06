@@ -1,5 +1,9 @@
-﻿using Windows.ApplicationModel.Core;
+﻿using System;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using iHentai.Helpers;
 using iHentai.Mvvm;
 using iHentai.ViewModels;
 
@@ -12,6 +16,8 @@ namespace iHentai.Pages
     /// </summary>
     public sealed partial class RootPage
     {
+        private UISettings _uiSettings;
+
         public RootPage()
         {
             InitializeComponent();
@@ -23,10 +29,17 @@ namespace iHentai.Pages
             // Register a handler for when the size of the overlaid caption control changes.
             // For example, when the app moves to a screen with a different DPI.
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-
+            ThemeHelper.AccentColorUpdated(TitleBar);
+            _uiSettings = new UISettings();
+            _uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
             // Register a handler for when the title bar visibility changes.
             // For example, when the title bar is invoked in full screen mode.
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+        }
+
+        private async void RootPage_ColorValuesChanged(UISettings sender, object args)
+        {
+            await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(TitleBar));
         }
 
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
