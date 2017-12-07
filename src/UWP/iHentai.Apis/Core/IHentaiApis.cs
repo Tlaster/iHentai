@@ -21,7 +21,7 @@ namespace iHentai.Apis.Core
         Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
             SearchOptionBase searchOption = null);
 
-        Task<(bool State, string Message)> Login(string userName, string password);
+        Task<bool> Login(string userName, string password);
 
         Task<IGalleryDetailModel> Detail(IGalleryModel model);
     }

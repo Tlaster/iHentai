@@ -54,7 +54,7 @@ namespace iHentai.Apis.NHentai
             return (res.NumPages, res.Gallery.WithoutShit());
         }
 
-        public Task<(bool State, string Message)> Login(string userName, string password)
+        public Task<bool> Login(string userName, string password)
         {
             throw new NotImplementedException();
         }

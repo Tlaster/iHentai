@@ -91,7 +91,7 @@ namespace iHentai.Apis.EHentai
             return (res.MaxPage, res.Gallery.WithoutShit());
         }
 
-        public async Task<(bool State, string Message)> Login(string userName, string password)
+        public async Task<bool> Login(string userName, string password)
         {
             Dictionary<string, string> cookie = null;
             using (var res = await "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1".EnableCookies()
@@ -112,16 +112,16 @@ namespace iHentai.Apis.EHentai
                     .ToDictionary(item => item.Key, item => item.Value);
             }
             if (!cookie.Any())
-                return (false, "Require more informations");
+                return false;
             using (var res = await "https://exhentai.org/".WithCookies(cookie)
                 .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
             {
                 if (res.Headers.Contains("ContentType") &&
                     res.Headers.GetValues("ContentType")?.FirstOrDefault() == "image/gif")
-                    return (false, "No access to exhentai.org");
+                    return false;
             }
             Cookie = cookie;
-            return (true, string.Empty);
+            return true;
         }
 
         public Task<IGalleryDetailModel> Detail(IGalleryModel model)
