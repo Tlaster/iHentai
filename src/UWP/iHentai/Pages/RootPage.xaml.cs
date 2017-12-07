@@ -25,7 +25,7 @@ namespace iHentai.Pages
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
             NavigationService.Frame = RootFrame;
-            NavigationService.NavigateViewModel<GalleryViewModel>();
+            NavigationService.NavigateViewModel<ServiceSelectionViewModel>();
             // Register a handler for when the size of the overlaid caption control changes.
             // For example, when the app moves to a screen with a different DPI.
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;

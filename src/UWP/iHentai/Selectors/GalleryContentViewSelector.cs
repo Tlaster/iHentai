@@ -13,6 +13,7 @@ namespace iHentai.Selectors
     public class GalleryContentViewSelector : DataTemplateSelector
     {
         private static readonly Dictionary<(Type ItemType, ContentTypes ContentType), TypeInfo> KnownViews;
+
         static GalleryContentViewSelector()
         {
             KnownViews = typeof(IGalleryContentView<>).GetTypeInfo().Assembly.DefinedTypes
@@ -25,7 +26,6 @@ namespace iHentai.Selectors
                     item => (ItemType: item.GenericType, item.ViewType.GetTypeInfo()
                         .GetCustomAttribute<ContentTypeAttribute>().ContentType), item => item.ViewType);
         }
-
 
         public ContentTypes ContentType { get; set; }
 

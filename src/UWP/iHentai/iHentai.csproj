@@ -152,9 +152,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\en-us\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="BackgroundTasks\BackgroundTask.cs" />
     <Compile Include="BackgroundTasks\NotifyTask.cs" />
@@ -173,6 +170,9 @@
     <Compile Include="Pages\GalleryDetailPage.xaml.cs">
       <DependentUpon>GalleryDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ServiceSelectionPage.xaml.cs">
+      <DependentUpon>ServiceSelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Selectors\GalleryContentViewSelector.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultLaunchActivationHandler.cs" />
@@ -185,6 +185,7 @@
     <Compile Include="ViewModels\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ServiceSelectionViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\FirstRunDialog.xaml.cs">
       <DependentUpon>FirstRunDialog.xaml</DependentUpon>
@@ -216,6 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Pages\GalleryDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ServiceSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,6 +312,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="iHentai_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-hans\Resources.resw" />
+    <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
