@@ -64,7 +64,7 @@ namespace WaterFallView
 		RegisterDependencyProperty(WinCon::StyleSelector^, _itemContainerStyleSelectorProperty, ItemContainerStyleSelectorProperty, ItemContainerStyleSelector);
 		RegisterDependencyProperty(DataTemplate^, _itemTemplateProperty, ItemTemplateProperty, ItemTemplate);
 		RegisterDependencyProperty(WinCon::DataTemplateSelector^, _itemTemplateSelectorProperty, ItemTemplateSelectorProperty, ItemTemplateSelector);
-		RegisterDependencyProperty(Platform::Object^, _itemSourceProperty, ItemSourceProperty, ItemSource);
+		RegisterDependencyProperty(Platform::Object^, _itemsSourceProperty, ItemsSourceProperty, ItemsSource);
 
 		RegisterDependencyProperty(Windows::UI::Xaml::Style^, _headerContainerStyleProperty, HeaderContainerStyleProperty, HeaderContainerStyle);
 		RegisterDependencyProperty(DataTemplate^, _headerTemplateProperty, HeaderTemplateProperty, HeaderTemplate);
@@ -110,7 +110,7 @@ namespace WaterFallView
 		virtual void OnItemTemplateChanged(DataTemplate^ newTemplate, DataTemplate^ oldTemplate);
 		virtual void OnItemTemplateSelectorChanged(WinCon::DataTemplateSelector^ newTemplateSelector, WinCon::DataTemplateSelector^ oldTemplateSelector);
 		virtual void OnItemsChanged(IObservableVector<Platform::Object^>^ source, IVectorChangedEventArgs^ e);
-		virtual void OnItemSourceChanged(Platform::Object^ newItems, Platform::Object^ oldItems);
+		virtual void OnItemsSourceChanged(Platform::Object^ newItems, Platform::Object^ oldItems);
 		virtual void OnSeletionChanged(IObservableVector<Platform::Object^>^ source, IVectorChangedEventArgs^ e);
 
 		virtual void OnHeaderContainerStyleChanged(Windows::UI::Xaml::Style^ newStyle, Windows::UI::Xaml::Style^ oldStyle);
@@ -143,7 +143,7 @@ namespace WaterFallView
 		void LoadMoreItems();
 
 	private:
-		static void OnItemSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
+		static void OnItemsSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		static void OnItemTemplateChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		static void OnItemTemplateSelectorChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		static void OnItemContainerStyleChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);

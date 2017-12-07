@@ -26,7 +26,7 @@
                                                            xmlns:hentaiBehaviors="using:iHentai.Behaviors" />
             </interactivity:Interaction.Behaviors>
             <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased"
-                                         x:Name="WaterfallLayout" ItemSource="{Binding Source}">
+                                         x:Name="WaterfallLayout" ItemsSource="{Binding Source}">
                 <waterfall:WaterfallFlowView.Resizer>
                     <views:GalleryItemResizer />
                 </waterfall:WaterfallFlowView.Resizer>

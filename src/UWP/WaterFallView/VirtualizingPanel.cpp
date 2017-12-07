@@ -7,7 +7,7 @@ using namespace concurrency;
 
 DependencyProperty^ VirtualizingPanel::_itemContainerStyleProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemContainerStyleSelectorProperty = nullptr;
-DependencyProperty^ VirtualizingPanel::_itemSourceProperty = nullptr;
+DependencyProperty^ VirtualizingPanel::_itemsSourceProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemTemplateProperty = nullptr;
 DependencyProperty^ VirtualizingPanel::_itemTemplateSelectorProperty = nullptr;
 
@@ -67,15 +67,15 @@ void VirtualizingPanel::RegisterDependencyProperties()
                 ref new PropertyChangedCallback(
                     &VirtualizingPanel::OnItemContainerStyleChangedStatic)));
     }
-    if (_itemSourceProperty == nullptr)
+    if (_itemsSourceProperty == nullptr)
     {
-        _itemSourceProperty = DependencyProperty::Register(
-            nameof(ItemSource),
+        _itemsSourceProperty = DependencyProperty::Register(
+            nameof(ItemsSource),
             typeof(Object),
             typeof(VirtualizingPanel),
             ref new PropertyMetadata(nullptr,
                 ref new PropertyChangedCallback(
-                    &VirtualizingPanel::OnItemSourceChangedStatic)));
+                    &VirtualizingPanel::OnItemsSourceChangedStatic)));
     }
     if (_itemTemplateProperty == nullptr)
     {
@@ -407,7 +407,7 @@ int VirtualizingPanel::GetIndexFormItem(Platform::Object^ item)
 	return index;
 }
 
-void VirtualizingPanel::OnItemSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
+void VirtualizingPanel::OnItemsSourceChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
 {
     auto panel = dynamic_cast<VirtualizingPanel^>(sender);
 
@@ -416,7 +416,7 @@ void VirtualizingPanel::OnItemSourceChangedStatic(DependencyObject^ sender, Wind
         return;
     }
 
-    panel->OnItemSourceChanged(e->NewValue, e->OldValue);
+    panel->OnItemsSourceChanged(e->NewValue, e->OldValue);
 }
 
 void VirtualizingPanel::OnItemTemplateChangedStatic(DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e)
@@ -571,7 +571,7 @@ void VirtualizingPanel::OnItemTemplateSelectorChanged(WinCon::DataTemplateSelect
     }
 }
 
-void VirtualizingPanel::OnItemSourceChanged(Object^ newItems, Object^ oldItems)
+void VirtualizingPanel::OnItemsSourceChanged(Object^ newItems, Object^ oldItems)
 {
     this->RecycleAllItem();
     _itemContainerMap->Clear();
