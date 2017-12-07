@@ -47,99 +47,62 @@
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
-        <Grid x:Name="Header" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <controls:DropShadowPanel VerticalAlignment="Top" 
+        <Grid x:Name="Header"
+              HorizontalAlignment="Stretch" VerticalAlignment="Top" MaxWidth="600">
+            <controls:DropShadowPanel 
                                       HorizontalAlignment="Stretch"
                                       HorizontalContentAlignment="Stretch"
                                       ShadowOpacity="0.6"
-                                      BlurRadius="10"
-                                      Margin="16">
-                <Border Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Background="Transparent" VerticalAlignment="Stretch">
-                            <SymbolIcon Symbol="GlobalNavigationButton"/>
-                        </Button>
-                        <AutoSuggestBox Grid.Column="1" PlaceholderText="iHentai">
-                            <AutoSuggestBox.Style>
-                                <Style TargetType="AutoSuggestBox">
-                                    <Setter Property="VerticalAlignment" Value="Top" />
-                                    <Setter Property="IsTabStop" Value="False" />
-                                    <Setter Property="TextBoxStyle" >
-                                        <Setter.Value>
-                                            <Style TargetType="TextBox" BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
-                                                <Setter Property="FontSize" Value="20"/>
-                                            </Style>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="AutoSuggestBox">
-                                                <Grid>
-                                                    <VisualStateManager.VisualStateGroups>
-                                                        <VisualStateGroup x:Name="Orientation">
-                                                            <VisualState x:Name="Landscape"/>
-                                                            <VisualState x:Name="Portrait"/>
-                                                        </VisualStateGroup>
-                                                    </VisualStateManager.VisualStateGroups>
-                                                    <TextBox x:Name="TextBox"
-                                                             FontSize="20"
-                    Style="{TemplateBinding TextBoxStyle}"
-                    PlaceholderText="{TemplateBinding PlaceholderText}"
-                    Header="{TemplateBinding Header}"
-                    Width="{TemplateBinding Width}"
-                                                             Padding="8"
-                                                             VerticalContentAlignment="Center"
-                                                             BorderThickness="0"
-                    ScrollViewer.BringIntoViewOnFocusChange="False"
-                    Canvas.ZIndex="0"
-                    Margin="0"
-                    DesiredCandidateWindowAlignment="BottomEdge"/>
-                                                    <Popup x:Name="SuggestionsPopup">
-                                                        <Border x:Name="SuggestionsContainer" BorderThickness="0">
-                                                            <Border.RenderTransform>
-                                                                <TranslateTransform x:Name="UpwardTransform"/>
-                                                            </Border.RenderTransform>
-                                                            <ListView
-                x:Name="SuggestionsList"
-                Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
-                BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}"
-                BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}"
-                DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                IsItemClickEnabled="True"
-                ItemTemplate="{TemplateBinding ItemTemplate}"
-                ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                MaxHeight="{ThemeResource AutoSuggestListMaxHeight}"
-                Margin="{ThemeResource AutoSuggestListMargin}"
-                Padding="{ThemeResource AutoSuggestListPadding}">
-                                                                <ListView.ItemContainerTransitions>
-                                                                    <TransitionCollection />
-                                                                </ListView.ItemContainerTransitions>
-                                                            </ListView>
-                                                        </Border>
-                                                    </Popup>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-
-                            </AutoSuggestBox.Style>
-                            <AutoSuggestBox.QueryIcon>
-                                <SymbolIcon Symbol="Find"/>
-                            </AutoSuggestBox.QueryIcon>
-                        </AutoSuggestBox>
-                        <Button Grid.Column="2" Background="Transparent" VerticalAlignment="Stretch">
-                            <SymbolIcon Symbol="Add"/>
-                        </Button>
-                    </Grid>
+                                      Margin="16"
+                                      BlurRadius="10">
+                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.66">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:Blur AutomaticallyStart="True"
+                                        Delay="0"
+                                        Value="10"
+                                        Duration="0" />
+                    </interactivity:Interaction.Behaviors>
                 </Border>
             </controls:DropShadowPanel>
+            <Grid Margin="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button Background="Transparent" VerticalAlignment="Stretch">
+                    <SymbolIcon Symbol="GlobalNavigationButton" />
+                </Button>
+                <AutoSuggestBox Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Background="Transparent" PlaceholderText="iHentai">
+                    <AutoSuggestBox.QueryIcon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1A3;" FontSize="20" />
+                    </AutoSuggestBox.QueryIcon>
+                </AutoSuggestBox>
+                <ToggleButton BorderThickness="0" Grid.Row="0" Grid.Column="2" x:Name="AdvSearchSwitch" Background="Transparent"
+                                      VerticalAlignment="Stretch">
+                    <SymbolIcon Symbol="Add" />
+                </ToggleButton>
+                <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Visibility="{Binding ElementName=AdvSearchSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ContentControl Content="{Binding Source.DataSource.SearchOption}">
+                        <ContentControl.ContentTemplateSelector>
+                            <selectors:GalleryContentViewSelector ContentType="Search"/>
+                        </ContentControl.ContentTemplateSelector>
+                    </ContentControl>
+
+                    <animations:Implicit.ShowAnimations>
+                        <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                        <animations:TranslationAnimation From="0, -20, 0" To="0" Duration="0:0:0.3" />
+                    </animations:Implicit.ShowAnimations>
+                    <animations:Implicit.HideAnimations>
+                        <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                        <animations:TranslationAnimation To="0, -20, 0" From="0" Duration="0:0:0.2" />
+                    </animations:Implicit.HideAnimations>
+                </Grid>
+            </Grid>
         </Grid>
         <Canvas Background="Transparent"
                 Tapped="MoreInfoCanvas_OnTapped"
@@ -147,7 +110,6 @@
                 Visibility="Collapsed"
                 Grid.RowSpan="2"
                 d:DataContext="{d:DesignInstance interfaces:IGalleryModel}">
-
             <Grid x:Name="MoreInfoContent"
                   extensions:VisualEx.NormalizedCenterPoint="0.5">
                 <Grid VerticalAlignment="Top">

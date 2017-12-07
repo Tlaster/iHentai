@@ -6,7 +6,8 @@ namespace iHentai.Apis.Core.Models.Interfaces
     {
         Info,
         DetailInfo,
-        Detail
+        Detail,
+        Search
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]

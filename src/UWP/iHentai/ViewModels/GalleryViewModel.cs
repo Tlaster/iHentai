@@ -21,9 +21,10 @@ namespace iHentai.ViewModels
         public GalleryViewModel(ServiceTypes serviceType)
         {
             _serviceType = serviceType;
-            Source = new IncrementalLoadingCollection<GalleryDataSource, IGalleryModel>(new GalleryDataSource(ServiceInstances.Instance[serviceType]));
+            Source = new GalleryDataSource(ServiceInstances.Instance[serviceType])
+                .ToList<GalleryDataSource, IGalleryModel>();
         }
-        public IncrementalLoadingCollection<GalleryDataSource, IGalleryModel> Source { get; } 
+        public AutoList<GalleryDataSource, IGalleryModel> Source { get; } 
         
         public void GoDetail(IGalleryModel model)
         {
@@ -37,7 +38,7 @@ namespace iHentai.ViewModels
         public GalleryDataSource(IHentaiApis apis, SearchOptionBase option = null)
         {
             Apis = apis;
-            SearchOption = option;
+            SearchOption = option ?? apis.GenerateSearchOptionBase;
         }
 
         public SearchOptionBase SearchOption { get; set; }
