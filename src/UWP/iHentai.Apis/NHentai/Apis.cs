@@ -20,7 +20,7 @@ namespace iHentai.Apis.NHentai
         public Dictionary<string, string> ImageRequestHeader { get; }
         public string Host { get; } = "nhentai.net";
         public IApiConfig ApiConfig { get; }
-        public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
+        public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
         public bool WebViewLoginHandler(string url, string cookie)
         {

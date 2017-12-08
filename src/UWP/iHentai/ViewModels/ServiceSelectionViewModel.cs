@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
+using iHentai.Apis.Core.Models;
 using iHentai.Mvvm;
 using PropertyChanged;
 
 namespace iHentai.ViewModels
 {
-    public class ServiceSelectionViewModel : ViewModel
+    public class ServiceSelectionViewModel : ViewModel<bool>
     {
-        public string[] Services { get; } = Enum.GetNames(typeof(ServiceTypes));
+        public List<ServiceSelectionBannerModel> Source { get; } = Enum.GetNames(typeof(ServiceTypes))
+            .Select(item => new ServiceSelectionBannerModel(item)).ToList();
 
-        public string SelectedService { get; set; }
-
+        public ServiceSelectionBannerModel SelectedService { get; set; }
+        
         [DependsOn(nameof(SelectedService))]
-        public ServiceTypes SelectedServiceType => Enum.Parse<ServiceTypes>(SelectedService);
-
-        [DependsOn(nameof(SelectedService))]
-        public IHentaiApis Api => ServiceInstances.Instance[SelectedServiceType];
+        public IHentaiApis Api => SelectedService == null ? null : ServiceInstances.Instance[SelectedService.ServiceType];
 
         public string UserName { get; set; }
 
@@ -28,11 +27,6 @@ namespace iHentai.ViewModels
         public void Login()
         {
             
-        }
-
-        public ServiceSelectionViewModel()
-        {
-            SelectedService = Services[0];
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace iHentai.Helpers
+namespace iHentai.Extensions
 {
     internal static class JsonExtension
     {

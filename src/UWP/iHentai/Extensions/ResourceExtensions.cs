@@ -1,6 +1,6 @@
 ﻿using Windows.ApplicationModel.Resources;
 
-namespace iHentai.Helpers
+namespace iHentai.Extensions
 {
     internal static class ResourceExtensions
     {

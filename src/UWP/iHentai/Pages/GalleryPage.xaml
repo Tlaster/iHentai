@@ -77,7 +77,7 @@
                 <Button Background="Transparent" VerticalAlignment="Stretch">
                     <SymbolIcon Symbol="GlobalNavigationButton" />
                 </Button>
-                <AutoSuggestBox Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Background="Transparent" PlaceholderText="iHentai">
+                <AutoSuggestBox QuerySubmitted="{x:Bind ViewModel.SearchSubmit}" Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Background="Transparent" PlaceholderText="{Binding SearchPlaceholder}">
                     <AutoSuggestBox.QueryIcon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1A3;" FontSize="20" />
                     </AutoSuggestBox.QueryIcon>

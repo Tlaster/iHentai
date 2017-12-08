@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 
-namespace iHentai.Helpers
+namespace iHentai.Extensions
 {
     public static class ScrollViewerExtensions
     {

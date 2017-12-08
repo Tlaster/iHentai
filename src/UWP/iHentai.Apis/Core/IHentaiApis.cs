@@ -15,7 +15,8 @@ namespace iHentai.Apis.Core
         Dictionary<string, string> ImageRequestHeader { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
-        SearchOptionBase GenerateSearchOptionBase { get; }
+        SearchOptionBase SearchOptionGenerator { get; }
+
         bool WebViewLoginHandler(string url, string cookie);
 
         Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,

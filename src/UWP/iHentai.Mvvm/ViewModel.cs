@@ -23,8 +23,8 @@ namespace iHentai.Mvvm
                 cancellationToken.Register(() => vm.Close(default));
             var tcs = new TaskCompletionSource<TResult>();
             vm.CloseCompletionSource = tcs;
-            if (!NavigationService.KnownViews.TryGetValue(typeof(ViewModel<TResult>), out var page)) return default;
-            await NavigationService.Navigate(page, vm);
+            if (!NavigationService.KnownViews.TryGetValue(typeof(T), out var page)) return default;
+            if (!await NavigationService.Navigate(page, vm)) return default;
             try
             {
                 return await tcs.Task;
@@ -64,6 +64,16 @@ namespace iHentai.Mvvm
 
         protected internal virtual void OnStart()
         {
+        }
+
+        protected internal virtual void OnUnloaded()
+        {
+            
+        }
+
+        protected internal virtual void OnLoaded()
+        {
+            
         }
     }
 

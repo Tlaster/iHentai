@@ -6,6 +6,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using iHentai.Activation;
 using iHentai.BackgroundTasks;
+using iHentai.Extensions;
 using iHentai.Helpers;
 
 namespace iHentai.Services

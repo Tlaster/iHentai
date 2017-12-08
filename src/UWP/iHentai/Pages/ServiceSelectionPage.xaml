@@ -7,14 +7,38 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:viewModels="using:iHentai.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:models="using:iHentai.Apis.Core.Models"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
 
     <Grid>
-        <ComboBox ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService, Mode=TwoWay}"/>
-        <StackPanel Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:Carousel ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
+            <controls:Carousel.ItemTemplate>
+                <DataTemplate x:DataType="models:ServiceSelectionBannerModel">
+                    <Image Source="{x:Bind Image}"/>
+                </DataTemplate>
+            </controls:Carousel.ItemTemplate>
+        </controls:Carousel>
+        <StackPanel Grid.Row="1" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
             <TextBox Header="User Name" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
             <PasswordBox Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
+
+            <animations:Implicit.ShowAnimations>
+                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
+            </animations:Implicit.HideAnimations>
+
         </StackPanel>
     </Grid>
 </mvvm:MvvmPage>

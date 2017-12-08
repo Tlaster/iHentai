@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryContentView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\ServiceSelectionBannerModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SearchOptionBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ServiceTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Apis.cs" />

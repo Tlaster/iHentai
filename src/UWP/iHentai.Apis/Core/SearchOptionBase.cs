@@ -14,6 +14,7 @@ namespace iHentai.Apis.Core
     public abstract class SearchOptionBase : AutoString
     {
         public abstract string Keyword { get; set; }
+
         protected override string Separator { get; } = "&";
 
         public SearchTypes SearchType { get; set; } = SearchTypes.Keyword;

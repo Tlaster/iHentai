@@ -78,6 +78,11 @@ namespace iHentai.Mvvm
             return Frame.Content?.GetType() != pageType && await Frame.NavigateAsync(pageType, parameter);
         }
 
+        public static void ClearBackStack()
+        {
+            Frame.ClearBackStack();
+        }
+
         public static Task<bool> Navigate<T>(object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : Page
         {

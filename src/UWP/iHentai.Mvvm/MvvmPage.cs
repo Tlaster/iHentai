@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Paging;
 
@@ -6,6 +8,22 @@ namespace iHentai.Mvvm
 {
     public abstract class MvvmPage : HentaiPage
     {
+        public MvvmPage()
+        {
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            ViewModel?.OnUnloaded();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            ViewModel?.OnLoaded();
+        }
+
         public ViewModel ViewModel { get; set; }
 
         protected override void OnNavigatedTo(HentaiNavigationEventArgs e)

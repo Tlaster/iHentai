@@ -9,6 +9,7 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
+using iHentai.Extensions;
 #if !UNIT_TEST
 using iHentai.Helpers;
 
@@ -24,6 +25,7 @@ namespace iHentai.Apis.EHentai
         public bool CanLogin { get; } = true;
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
+        public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
         public Dictionary<string, string> ImageRequestHeader => new Dictionary<string, string>
         {
@@ -34,34 +36,15 @@ namespace iHentai.Apis.EHentai
 
         public IApiConfig ApiConfig
         {
-#if UNIT_TEST
-            get;
-            set;
-#else
             get => "exhentai_config".Read(new Config());
             set => value.Save("exhentai_config");
-#endif
         }
-#if UNIT_TEST
-        = new Config();
-#endif
 
         public Dictionary<string, string> Cookie
         {
-#if UNIT_TEST
-            get;
-            set;
-#else
             get => "exhentai_user_info".Read(new Dictionary<string, string>());
             set => value.Save("exhentai_user_info");
-#endif
         }
-#if UNIT_TEST
-            = new Dictionary<string, string>();
-#endif
-
-
-        public SearchOptionBase GenerateSearchOptionBase => new SearchOption();
 
         public bool WebViewLoginHandler(string url, string cookie)
         {

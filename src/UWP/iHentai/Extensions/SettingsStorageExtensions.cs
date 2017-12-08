@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace iHentai.Helpers
+namespace iHentai.Extensions
 {
     // Use these extension methods to store and retrieve local and roaming app data
     // For more info regarding storing and retrieving app data see documentation at
@@ -44,13 +44,16 @@ namespace iHentai.Helpers
                 : defaultValue;
         }
 
-
+        public static bool HasValue(this string key)
+        {
+            return ApplicationData.Current.LocalSettings.Values.ContainsKey(key);
+        }
+        
         public static void Save<T>(this T obj, string key)
         {
             ApplicationData.Current.LocalSettings.Values[key] = obj.ToJson();
         }
-
-
+        
         public static T Read<T>(this (string Container, string Key) value, T defaultValue = default)
         {
             return ApplicationData.Current.LocalSettings

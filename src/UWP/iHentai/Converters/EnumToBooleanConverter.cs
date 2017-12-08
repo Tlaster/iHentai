@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
+using iHentai.Extensions;
 using iHentai.Helpers;
 
 namespace iHentai.Converters
