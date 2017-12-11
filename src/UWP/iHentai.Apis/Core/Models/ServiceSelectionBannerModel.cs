@@ -10,10 +10,11 @@ namespace iHentai.Apis.Core.Models
         public ServiceSelectionBannerModel(string name)
         {
             ServiceType = Enum.Parse<ServiceTypes>(name);
+             Image = $"ms-appx:///Assets/ApiBanners/{name}.png";
         }
 
         public ServiceTypes ServiceType { get; }
 
-        public ImageSource Image { get; set; }    
+        public string Image { get; }
     }
 }

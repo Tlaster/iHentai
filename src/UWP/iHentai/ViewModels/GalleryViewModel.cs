@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
@@ -18,7 +19,11 @@ namespace iHentai.ViewModels
         {
         }
 
-        public GalleryViewModel(ServiceTypes serviceType, SearchOptionBase option = null)
+        public GalleryViewModel(ServiceTypes serviceType) : this(serviceType, null)
+        {
+        }
+
+        public GalleryViewModel(ServiceTypes serviceType, SearchOptionBase option)
         {
             Init(serviceType, option);
         }
@@ -61,10 +66,14 @@ namespace iHentai.ViewModels
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new GalleryDataSource(ServiceInstances.Instance[serviceType], option)
-                .ToList<GalleryDataSource, IGalleryModel>();
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(source: new GalleryDataSource(ServiceInstances.Instance[serviceType], option), onError: OnError);
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
+        }
+
+        private void OnError(Exception obj)
+        {
+            
         }
     }
 

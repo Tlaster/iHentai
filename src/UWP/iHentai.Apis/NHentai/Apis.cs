@@ -7,13 +7,14 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
+using iHentai.Extensions;
 
 namespace iHentai.Apis.NHentai
 {
     public class Apis : IHentaiApis
     {
         public bool FouceLogin { get; } = false;
-        public bool HasLogin { get; } = true;
+        public bool HasLogin { get; } = false;
         public bool CanLogin { get; } = false;
         public bool CanLoginWithWebView { get; } = false;
         public string LoginWebViewUrl { get; }
@@ -33,7 +34,7 @@ namespace iHentai.Apis.NHentai
             SearchOptionBase searchOption = null)
         {
             var req = $"https://{Host}/".AppendPathSegment("api").AppendPathSegment("galleries");
-            if (searchOption == null)
+            if (searchOption == null || searchOption.Keyword.IsEmpty())
                 req.AppendPathSegment("all");
             else
                 switch (searchOption.SearchType)

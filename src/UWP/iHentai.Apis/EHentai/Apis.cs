@@ -89,7 +89,7 @@ namespace iHentai.Apis.EHentai
                 res.Headers.TryGetValues("Set-Cookie", out var cookies);
                 cookie = cookies
                     .Select(item =>
-                        (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Value: Regex.Matches(item,
+                        (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value,  Regex.Matches(item,
                             "([^=]*)=([^;]*);")[0].Groups[2].Value))
                     .Distinct(item => item.Key)
                     .ToDictionary(item => item.Key, item => item.Value);

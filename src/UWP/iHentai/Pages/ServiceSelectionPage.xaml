@@ -16,20 +16,47 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <controls:Carousel ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
+        <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
             <controls:Carousel.ItemTemplate>
                 <DataTemplate x:DataType="models:ServiceSelectionBannerModel">
-                    <Image Source="{x:Bind Image}"/>
+                    <StackPanel MaxWidth="300">
+                        <Image Source="{x:Bind Image}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{x:Bind ServiceType}"/>
+                    </StackPanel>
                 </DataTemplate>
             </controls:Carousel.ItemTemplate>
         </controls:Carousel>
-        <StackPanel Grid.Row="1" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
-            <TextBox Header="User Name" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
-            <PasswordBox Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
-
+        <StackPanel Grid.Row="1" MaxWidth="500" Visibility="{Binding Api.CanLogin, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBox Margin="8" Header="User Name" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
+            <PasswordBox Margin="8" Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
+            <Grid Visibility="{Binding LoginCommand.IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ProgressRing Margin="8" IsActive="{Binding LoginCommand.IsRunning}"/>
+                <TextBlock Margin="8" Grid.Column="1" Text="signing in…" />
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, -20, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Click="{x:Bind ViewModel.Cancel}" Margin="8" Content="Cancel" HorizontalAlignment="Stretch"/>
+                <Button Command="{Binding LoginCommand}" Margin="8" Content="Login" Grid.Column="1" HorizontalAlignment="Stretch"/>
+            </Grid>
             <animations:Implicit.ShowAnimations>
                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                 <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
@@ -38,7 +65,38 @@
                 <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
                 <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
             </animations:Implicit.HideAnimations>
-
+        </StackPanel>
+        <StackPanel Grid.Row="2" MaxWidth="500">
+            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Use Current Account" HorizontalAlignment="Stretch" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Button>
+            <Button Click="{x:Bind ViewModel.GoWebView}" Margin="8" Content="Login With Web" HorizontalAlignment="Stretch" Visibility="{Binding Api.CanLoginWithWebView, Converter={StaticResource BoolToVisibilityConverter}}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Button>
+            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Go!" HorizontalAlignment="Stretch" Visibility="{Binding Api.FouceLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Button>
         </StackPanel>
     </Grid>
 </mvvm:MvvmPage>

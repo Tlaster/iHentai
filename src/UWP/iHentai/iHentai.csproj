@@ -171,6 +171,9 @@
     <Compile Include="Pages\GalleryDetailPage.xaml.cs">
       <DependentUpon>GalleryDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LoginWebViewPage.xaml.cs">
+      <DependentUpon>LoginWebViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ServiceSelectionPage.xaml.cs">
       <DependentUpon>ServiceSelectionPage.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,7 @@
     <Compile Include="Services\WhatsNewDisplayService.cs" />
     <Compile Include="ViewModels\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\LoginWebViewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ServiceSelectionViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -218,6 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Pages\GalleryDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoginWebViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +309,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ApiBanners\EHentai.png" />
+    <Content Include="Assets\ApiBanners\NHentai.png" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
