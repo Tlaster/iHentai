@@ -66,7 +66,7 @@ namespace iHentai.ViewModels
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(source: new GalleryDataSource(ServiceInstances.Instance[serviceType], option), onError: OnError);
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(ServiceInstances.Instance[serviceType], option), onError: OnError);
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
         }

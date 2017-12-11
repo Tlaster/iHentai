@@ -31,8 +31,8 @@
             </controls:Carousel.ItemTemplate>
         </controls:Carousel>
         <StackPanel Grid.Row="1" MaxWidth="500" Visibility="{Binding Api.CanLogin, Converter={StaticResource BoolToVisibilityConverter}}">
-            <TextBox Margin="8" Header="User Name" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
-            <PasswordBox Margin="8" Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
+            <TextBox Margin="8" Header="User Name" IsEnabled="{Binding LoginCommand.IsNotRunning}" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
+            <PasswordBox Margin="8" Header="Password" IsEnabled="{Binding LoginCommand.IsNotRunning}" Password="{Binding Password, Mode=TwoWay}"/>
             <Grid Visibility="{Binding LoginCommand.IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -67,7 +67,7 @@
             </animations:Implicit.HideAnimations>
         </StackPanel>
         <StackPanel Grid.Row="2" MaxWidth="500">
-            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Use Current Account" HorizontalAlignment="Stretch" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Use Existing Account" HorizontalAlignment="Stretch" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}}">
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />

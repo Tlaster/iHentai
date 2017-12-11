@@ -9,6 +9,7 @@ namespace iHentai.Helpers
     public interface IAsyncCommand : ICommand
     {
         bool IsRunning { get; }
+        bool IsNotRunning { get; }
     }
 
     [AddINotifyPropertyChangedInterface]
@@ -24,6 +25,9 @@ namespace iHentai.Helpers
         }
 
         public bool IsRunning { get; private set; }
+        
+        [DependsOn(nameof(IsRunning))]
+        public bool IsNotRunning => !IsRunning;
 
         public event EventHandler CanExecuteChanged;
 
