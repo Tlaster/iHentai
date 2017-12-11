@@ -2,7 +2,8 @@
     x:Class="iHentai.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="using:iHentai.Converters">
+    xmlns:converters="using:iHentai.Converters"
+    xmlns:econverters="using:iHentai.Apis.EHentai.Converters">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -18,6 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <econverters:CategoryColorConverter x:Key="CategoryColorConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

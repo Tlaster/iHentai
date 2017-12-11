@@ -10,5 +10,9 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance models:GalleryModel}">
-    <Grid />
+    <Grid>
+        <Border Background="{Binding Category, Converter={StaticResource CategoryColorConverter}}">
+            <TextBlock Text="{Binding Category}"/>
+        </Border>
+    </Grid>
 </UserControl>

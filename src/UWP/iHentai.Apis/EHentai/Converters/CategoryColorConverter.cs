@@ -2,7 +2,10 @@
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 using iHentai.Apis.EHentai.Models;
+using Microsoft.Toolkit.Uwp.Helpers;
+using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
 
 namespace iHentai.Apis.EHentai.Converters
 {
@@ -47,7 +50,7 @@ namespace iHentai.Apis.EHentai.Converters
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return XamlBindingHelper.ConvertValue(typeof(Color), color);
+            return new SolidColorBrush(color.ToColor());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

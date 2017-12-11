@@ -26,7 +26,7 @@ namespace iHentai.Mvvm
                 .Select(item =>
                     item.IsClass &&
                     ReflectionHelper.ImplementsGenericDefinition(item, typeof(IMvvmView<>), out var res)
-                        ? new {ViewType = item, GenericType = res.GetGenericArguments()[0]}
+                        ? new {ViewType = item, GenericType = res.GetGenericArguments().FirstOrDefault()}
                         : null).Where(item => item != null)
                 .ToDictionary(item => item.GenericType, item => item.ViewType);
         }
@@ -71,8 +71,7 @@ namespace iHentai.Mvvm
             Frame.GoForwardAsync();
         }
 
-        public static async Task<bool> Navigate(Type pageType, object parameter = null,
-            NavigationTransitionInfo infoOverride = null)
+        public static async Task<bool> Navigate(Type pageType, object parameter = null)
         {
             // Don't open the same page multiple times
             return Frame.Content?.GetType() != pageType && await Frame.NavigateAsync(pageType, parameter);
@@ -83,10 +82,10 @@ namespace iHentai.Mvvm
             Frame.ClearBackStack();
         }
 
-        public static Task<bool> Navigate<T>(object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public static Task<bool> Navigate<T>(object parameter = null)
             where T : Page
         {
-            return Navigate(typeof(T), parameter, infoOverride);
+            return Navigate(typeof(T), parameter);
         }
 
         public static Task<bool> NavigateViewModel<T>(params object[] args)
