@@ -22,7 +22,7 @@ namespace iHentai.Apis.Core
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            var apis = ServiceInstances.Instance[request.RequestUri.Host];
+            var apis = HentaiServices.Instance[request.RequestUri.Host];
             if (apis?.RequestHeader != null)
             {
                 //Clear all cookie to avoid some annoying issues

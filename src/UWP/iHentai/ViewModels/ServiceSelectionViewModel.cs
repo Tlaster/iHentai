@@ -27,7 +27,7 @@ namespace iHentai.ViewModels
 
         [DependsOn(nameof(SelectedService))]
         public IHentaiApis Api =>
-            SelectedService == null ? null : ServiceInstances.Instance[SelectedService.ServiceType];
+            SelectedService == null ? null : HentaiServices.Instance[SelectedService.ServiceType];
 
         public string UserName { get; set; }
 

@@ -23,7 +23,7 @@ namespace iHentai.ViewModels
 
         private Task<IGalleryDetailModel> GetDetailAsync()
         {
-            return ServiceInstances.Instance[_serviceType].Detail(Model);
+            return HentaiServices.Instance[_serviceType].Detail(Model);
         }
     }
 }

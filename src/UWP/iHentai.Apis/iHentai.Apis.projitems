@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Common\IEnumerableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\FlurlExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\HentaiHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\HentaiServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IApiConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryContentView.cs" />
