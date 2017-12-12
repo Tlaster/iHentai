@@ -103,11 +103,11 @@ namespace iHentai.Apis.EHentai
             if (!cookie.Any())
                 return false;
             using (var res = await "https://exhentai.org/".WithCookies(cookie)
-                .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
+                .WithCookie("uconfig", ApiConfig.ToString()).WithClient(new FlurlClient()).GetAsync())
             {
                 if (res.Headers.Contains("ContentType") &&
                     res.Headers.GetValues("ContentType")?.FirstOrDefault() == "image/gif")
-                    return false;
+                    return false;//TODO:Check failed
             }
             Cookie = cookie;
             return true;
@@ -123,7 +123,9 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment("g")
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
-                .GetHtmlAsync<GalleryDetailModel>();//TODO: Still uconfig=ts_l will be ignore for the first time, considering corp the small image
+                .GetHtmlAsync<GalleryDetailModel>();
+            //TODO: Still uconfig=ts_l will be ignore for the first time, considering corp the small image
+            //TODO: Maybe cause by missing "s" cookie, empty "s=" not work as expected
         }
 
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
