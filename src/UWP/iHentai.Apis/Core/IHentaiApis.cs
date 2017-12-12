@@ -12,7 +12,7 @@ namespace iHentai.Apis.Core
         bool CanLoginWithWebView { get; }
         string LoginWebViewUrl { get; }
         Dictionary<string, string> Cookie { get; }
-        Dictionary<string, string> ImageRequestHeader { get; }
+        Dictionary<string, string> RequestHeader { get; }
         string Host { get; }
         IApiConfig ApiConfig { get; }
         SearchOptionBase SearchOptionGenerator { get; }

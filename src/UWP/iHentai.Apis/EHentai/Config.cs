@@ -91,7 +91,7 @@ namespace iHentai.Apis.EHentai
         public int DefaultCategories => Category.Sum(item => item.Value.Value);
 
         [EnumValue("fs", Separator = UConfigItemSeparator)]
-        public FavoritesSort FavoritesSort { get; set; } = FavoritesSort.FavoritedTime;
+        public FavoritesSort FavoritesSort { get; set; } = FavoritesSort.GalleryUpdateTime;
 
         [JsonIgnore]
         [IntValue("xns", Separator = UConfigItemSeparator)]

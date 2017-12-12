@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Converters\CategoryColorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\CategoryFlags.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\GalleryDetailModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\GalleryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\GalleryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Models\HtmlConverters\RatingConverter.cs" />

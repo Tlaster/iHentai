@@ -19,7 +19,6 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <econverters:CategoryColorConverter x:Key="CategoryColorConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

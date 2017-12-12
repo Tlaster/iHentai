@@ -6,13 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:iHentai.Apis.EHentai.Models"
+    xmlns:uwp="using:FontAwesome.UWP"
     mc:Ignorable="d"
+    DataContextChanged="GalleryInfoView_OnDataContextChanged"
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance models:GalleryModel}">
     <Grid>
-        <Border Background="{Binding Category, Converter={StaticResource CategoryColorConverter}}">
-            <TextBlock Text="{Binding Category}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Yellow"/>
+        </Grid.Resources>
+        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}"/>
+        <Border Grid.Row="1" x:Name="CategoryNameBorder" Padding="4" HorizontalAlignment="Left">
+            <TextBlock x:Name="CategoryName" FontSize="12"/>
         </Border>
+        <TextBlock Grid.Row="1" Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" HorizontalAlignment="Right" />
     </Grid>
 </UserControl>

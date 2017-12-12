@@ -9,13 +9,12 @@ using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
 
 namespace iHentai.Apis.EHentai.Converters
 {
-    public class CategoryColorConverter : IValueConverter
+    public static class CategoryFlagsExtensions
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        public static Color ToColor(this CategoryFlags flags)
         {
-            var category = (CategoryFlags) value;
             string color;
-            switch (category)
+            switch (flags)
             {
                 case CategoryFlags.Misc:
                     color = "#607D8B";
@@ -50,7 +49,16 @@ namespace iHentai.Apis.EHentai.Converters
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return new SolidColorBrush(color.ToColor());
+            return color.ToColor();
+        }
+    }
+
+    public class CategoryColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var category = (CategoryFlags) value;
+            return new SolidColorBrush(category.ToColor());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

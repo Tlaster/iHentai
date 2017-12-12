@@ -19,14 +19,14 @@ namespace iHentai.Apis.Core
 
         public SearchTypes SearchType { get; set; } = SearchTypes.Keyword;
 
-        public virtual IEnumerable<(string Key, string Value)> ToDictionary()
+        public virtual IEnumerable<KeyValuePair<string, string>> ToDictionary()
         {
             return GetType()
                 .GetProperties()
                 .Where(item =>
                     item.GetCustomAttributesData()
                         .Any(attr => typeof(IValueAttribute).IsAssignableFrom(attr.AttributeType)))
-                .Select(item => (item.GetAttr().Key, item.GetAttr().GetValue(item.GetValue(this))));
+                .Select(item => new KeyValuePair<string, string>(item.GetAttr().Key, item.GetAttr().GetValue(item.GetValue(this))));
         }
     }
 }

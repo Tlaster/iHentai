@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 using Flurl;
 using Flurl.Http;
 using iHentai.Apis.Core;
@@ -27,9 +31,9 @@ namespace iHentai.Apis.EHentai
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
-        public Dictionary<string, string> ImageRequestHeader => new Dictionary<string, string>
+        public Dictionary<string, string> RequestHeader => new Dictionary<string, string>
         {
-            {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new[] {"igneous="}))}
+            {"Cookie", string.Join(";", Cookie.Select(item => $"{item.Key}={item.Value}").Concat(new[] {"igneous=", $"uconfig={ApiConfig}"}))}
         };
 
         public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";
@@ -65,12 +69,13 @@ namespace iHentai.Apis.EHentai
         {
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
-                req = $"https://{Host}/{searchOption.Keyword}"
-                    .AppendPathSegment("tag");
+                req = $"https://{Host}/"
+                    .AppendPathSegment("tag")
+                    .AppendPathSegment(searchOption.Keyword);
             else
                 req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
-            var res = await req.SetQueryParam("page", page).WithCookies(Cookie)
-                .WithCookie("uconfig", ApiConfig.ToString()).GetHtmlAsync<GalleryListModel>();
+            var res = await req.SetQueryParam("page", page)
+                .GetHtmlAsync<GalleryListModel>();
             return (res.MaxPage, res.Gallery.WithoutShit());
         }
 
@@ -92,6 +97,7 @@ namespace iHentai.Apis.EHentai
                         (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value,  Regex.Matches(item,
                             "([^=]*)=([^;]*);")[0].Groups[2].Value))
                     .Distinct(item => item.Key)
+                    .Where(item => item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash")
                     .ToDictionary(item => item.Key, item => item.Value);
             }
             if (!cookie.Any())
@@ -107,9 +113,17 @@ namespace iHentai.Apis.EHentai
             return true;
         }
 
-        public Task<IGalleryDetailModel> Detail(IGalleryModel model)
+        public async Task<IGalleryDetailModel> Detail(IGalleryModel model)
         {
-            throw new NotImplementedException();
+            if (!(model is GalleryModel item))
+            {
+                throw new ArgumentException();
+            }
+            return await $"https://{Host}/"
+                .AppendPathSegment("g")
+                .AppendPathSegment(item.ID)
+                .AppendPathSegment(item.Token)
+                .GetHtmlAsync<GalleryDetailModel>();//TODO: Still uconfig=ts_l will be ignore for the first time, considering corp the small image
         }
 
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)

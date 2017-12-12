@@ -8,6 +8,7 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Flurl.Http;
 using iHentai.Activation;
 using iHentai.Apis.Core;
 using iHentai.Helpers;
@@ -86,6 +87,7 @@ namespace iHentai.Services
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: new HentaiHttpClient());
+            FlurlHttp.Configure(c => c.HttpClientFactory = new HentaiHttpClientFactory());
             await Task.CompletedTask;
         }
 

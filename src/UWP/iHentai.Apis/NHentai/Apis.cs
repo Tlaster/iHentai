@@ -18,7 +18,7 @@ namespace iHentai.Apis.NHentai
         public bool CanLogin { get; } = false;
         public bool CanLoginWithWebView { get; } = false;
         public string LoginWebViewUrl { get; }
-        public Dictionary<string, string> ImageRequestHeader { get; }
+        public Dictionary<string, string> RequestHeader { get; }
         public string Host { get; } = "nhentai.net";
         public IApiConfig ApiConfig { get; }
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
