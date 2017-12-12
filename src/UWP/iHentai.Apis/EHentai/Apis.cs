@@ -9,6 +9,7 @@ using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 using Flurl;
 using Flurl.Http;
+using Flurl.Http.Configuration;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
@@ -55,7 +56,7 @@ namespace iHentai.Apis.EHentai
             if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
             var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
             var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
-
+            //TODO:Check with "s=" cookie
             Cookie = new Dictionary<string, string>
             {
                 {"ipb_member_id", memberid},
@@ -82,32 +83,52 @@ namespace iHentai.Apis.EHentai
         public async Task<bool> Login(string userName, string password)
         {
             Dictionary<string, string> cookie = null;
-            using (var res = await "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1".EnableCookies()
-                .PostUrlEncodedAsync(new
+            using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
+            {
+                using (var res = await "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1".WithClient(loginClient).EnableCookies()
+                    .PostUrlEncodedAsync(new
+                    {
+                        UserName = userName,
+                        PassWord = password,
+                        x = 0,
+                        y = 0
+                    }))
                 {
-                    UserName = userName,
-                    PassWord = password,
-                    x = 0,
-                    y = 0
-                }))
-            {
-                res.Headers.TryGetValues("Set-Cookie", out var cookies);
-                cookie = cookies
-                    .Select(item =>
-                        (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value,  Regex.Matches(item,
-                            "([^=]*)=([^;]*);")[0].Groups[2].Value))
-                    .Distinct(item => item.Key)
-                    .Where(item => item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash")
-                    .ToDictionary(item => item.Key, item => item.Value);
+                    res.Headers.TryGetValues("Set-Cookie", out var cookies);
+                    cookie = cookies
+                        .Select(item =>
+                            (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Regex.Matches(item,
+                                "([^=]*)=([^;]*);")[0].Groups[2].Value))
+                        .Distinct(item => item.Key)
+                        .Where(item => item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash")
+                        .ToDictionary(item => item.Key, item => item.Value);
+                }
+                if (!cookie.Any())
+                    return false;
             }
-            if (!cookie.Any())
-                return false;
-            using (var res = await "https://exhentai.org/".WithCookies(cookie)
-                .WithCookie("uconfig", ApiConfig.ToString()).WithClient(new FlurlClient()).GetAsync())
+            using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
             {
-                if (res.Headers.Contains("ContentType") &&
-                    res.Headers.GetValues("ContentType")?.FirstOrDefault() == "image/gif")
-                    return false;//TODO:Check failed
+                using (var res = await "https://exhentai.org/uconfig.php".WithClient(loginClient).WithCookies(cookie)
+                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
+                {
+                    if (res.Headers.TryGetValues("Set-Cookie", out var cookies) &&
+                        cookies.Any(item => item.StartsWith("s=")))
+                    {
+                        cookie = cookies
+                            .Select(item =>
+                                (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Regex.Matches(item,
+                                    "([^=]*)=([^;]*);")[0].Groups[2].Value))
+                            .Distinct(item => item.Key)
+                            .Where(item => item.Key == "s")
+                            .ToDictionary(item => item.Key, item => item.Value)
+                            .Concat(cookie)
+                            .ToDictionary(item => item.Key, item => item.Value);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
             Cookie = cookie;
             return true;
@@ -124,8 +145,6 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
                 .GetHtmlAsync<GalleryDetailModel>();
-            //TODO: Still uconfig=ts_l will be ignore for the first time, considering corp the small image
-            //TODO: Maybe cause by missing "s" cookie, empty "s=" not work as expected
         }
 
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
