@@ -39,7 +39,7 @@ namespace iHentai.Pages
                 ThumbImage.Height = itemHeight;
             }
             ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_image")
-                ?.TryStart(ThumbImage);
+                ?.TryStart(ThumbImage, new[] {Header});
             //ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title")?.TryStart(TitleTextBlock);
         }
 

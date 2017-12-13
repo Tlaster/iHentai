@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\IHentaiApis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryContentView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\IGalleryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Models\Interfaces\ITagModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Models\ServiceSelectionBannerModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SearchOptionBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\ServiceTypes.cs" />
@@ -42,10 +43,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryDetailInfoView.xaml.cs">
       <DependentUpon>GalleryDetailInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryDetailView.xaml.cs">
+      <DependentUpon>GalleryDetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryInfoView.xaml.cs">
       <DependentUpon>GalleryInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Apis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NHentai\Converters\TagConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryImagesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryModel.cs" />
@@ -65,6 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryDetailInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)EHentai\Views\GalleryDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

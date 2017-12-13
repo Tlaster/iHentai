@@ -118,7 +118,7 @@ namespace iHentai.Apis.EHentai.Models
         }
     }
 
-    public class TagModel
+    public class TagModel : ITagModel
     {
         [HtmlItem(".tc")]
         public string Title { get; set; }

@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="iHentai.Apis.EHentai.Views.GalleryDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Apis.EHentai.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:iHentai.Controls"
+    xmlns:models="using:iHentai.Apis.EHentai.Models"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <controls:TagListView Margin="8" ItemsSource="{Binding Tags}">
+            <controls:TagListView.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Search"/>
+                    <MenuFlyoutItem Text="Show wiki"/>
+                </MenuFlyout>
+            </controls:TagListView.Flyout>
+        </controls:TagListView>
+    </StackPanel>
+</UserControl>
