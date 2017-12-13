@@ -27,5 +27,15 @@ namespace iHentai.Apis.EHentai.Views
         {
             this.InitializeComponent();
         }
+
+        private void Search_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ShowWiki_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

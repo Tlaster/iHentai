@@ -19,6 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

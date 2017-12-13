@@ -107,8 +107,14 @@
     <PackageReference Include="FontAwesome.UWP">
       <Version>4.7.0.9</Version>
     </PackageReference>
+    <PackageReference Include="Html2Markdown">
+      <Version>3.1.1.325</Version>
+    </PackageReference>
     <PackageReference Include="Html2Model">
       <Version>1.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.6.7</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.2.0</Version>
@@ -160,6 +166,7 @@
       <DependentUpon>TagListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\HtmlToMarkdownConverter.cs" />
     <Compile Include="Converters\HumanizerConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Extensions\StringExtension.cs" />

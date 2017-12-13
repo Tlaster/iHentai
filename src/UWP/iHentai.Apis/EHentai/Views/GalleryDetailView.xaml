@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:iHentai.Controls"
     xmlns:models="using:iHentai.Apis.EHentai.Models"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
     d:DesignHeight="300"
@@ -18,10 +19,44 @@
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags}">
             <controls:TagListView.Flyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="Search"/>
-                    <MenuFlyoutItem Text="Show wiki"/>
+                    <MenuFlyoutItem Text="Search" Click="Search_OnClick"/>
+                    <MenuFlyoutItem Text="Show wiki" Click="ShowWiki_OnClick"/>
                 </MenuFlyout>
             </controls:TagListView.Flyout>
         </controls:TagListView>
+        <toolkit:AdaptiveGridView ItemHeight="240" DesiredWidth="160" ItemsSource="{Binding Images}" SelectionMode="None" IsItemClickEnabled="True">
+            <toolkit:AdaptiveGridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <toolkit:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" Source="{Binding Link}"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Page}" HorizontalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </toolkit:AdaptiveGridView.ItemTemplate>
+        </toolkit:AdaptiveGridView>
+        <ItemsControl ItemsSource="{Binding Comments}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding UserName}" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Right" Text="{Binding CreatedAt, Converter={StaticResource HumanizerConverter}}"/>
+                        <toolkit:MarkdownTextBlock Grid.Row="1" Text="{Binding Content, Converter={StaticResource HtmlToMarkdownConverter}}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </StackPanel>
 </UserControl>

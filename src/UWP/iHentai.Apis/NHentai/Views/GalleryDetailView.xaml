@@ -18,6 +18,7 @@
     
     <StackPanel>
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags, Converter={StaticResource TagConverter}}"/>
+        
     </StackPanel>
     
 </UserControl>

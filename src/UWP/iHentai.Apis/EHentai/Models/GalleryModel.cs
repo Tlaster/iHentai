@@ -26,7 +26,7 @@ namespace iHentai.Apis.EHentai.Models
         public double Rating { get; set; }
 
         [HtmlItem(".it5 a", Attr = "href", RegexPattern = "/g/([^/]+)/([^-]+)/", RegexGroup = 1)]
-        public int ID { get; set; }
+        public long ID { get; set; }
 
         [HtmlItem(".it5 a", Attr = "href", RegexPattern = "/g/([^/]+)/([^-]+)/", RegexGroup = 2)]
         public string Token { get; set; }

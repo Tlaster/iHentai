@@ -1,20 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
-using Humanizer;
+using Html2Markdown;
 
 namespace iHentai.Converters
 {
-    public class HumanizerConverter : IValueConverter
+    public class HtmlToMarkdownConverter : IValueConverter
     {
+        private static readonly Converter _converter = new Converter();
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            switch (value)
-            {
-                case DateTime dateTime:
-                    return dateTime.ToOrdinalWords();
-                default:
-                    return null;
-            }
+            return _converter.Convert(value + "");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

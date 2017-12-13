@@ -11,7 +11,7 @@ namespace iHentai.Apis.NHentai.Models
         public DateTime UploadDate { get; set; }
 
         [JsonProperty("num_favorites")]
-        public int NumFavorites { get; set; }
+        public long NumFavorites { get; set; }
 
         [JsonProperty("media_id")]
         public string MediaId { get; set; }
@@ -29,7 +29,7 @@ namespace iHentai.Apis.NHentai.Models
         public TagModel[] Tags { get; set; }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("num_pages")]
         public int NumPages { get; set; }

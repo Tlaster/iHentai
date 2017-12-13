@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
@@ -33,12 +34,26 @@ namespace iHentai.Controls
 
         private void UIElement_OnRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
+            if (Flyout is MenuFlyout menu && menu.Items != null)
+            {
+                foreach (var item in menu.Items)
+                {
+                    item.DataContext = (sender as FrameworkElement)?.DataContext;
+                }
+            }
             Flyout?.ShowAt(e.OriginalSource as FrameworkElement);
             TagClick?.Invoke(this, new TagClickEventArgs((sender as FrameworkElement)?.DataContext, e.OriginalSource));
         }
 
         private void UIElement_OnHolding(object sender, HoldingRoutedEventArgs e)
         {
+            if (Flyout is MenuFlyout menu && menu.Items != null)
+            {
+                foreach (var item in menu.Items)
+                {
+                    item.DataContext = (sender as FrameworkElement)?.DataContext;
+                }
+            }
             Flyout?.ShowAt(e.OriginalSource as FrameworkElement);
             TagClick?.Invoke(this, new TagClickEventArgs((sender as FrameworkElement)?.DataContext, e.OriginalSource));
         }

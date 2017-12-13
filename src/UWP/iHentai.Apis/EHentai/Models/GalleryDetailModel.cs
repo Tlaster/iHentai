@@ -79,14 +79,23 @@ namespace iHentai.Apis.EHentai.Models
         [HtmlItem("#gd5 > p:nth-child(3) > a", RegexPattern = "Torrent Download \\( (.*) \\)", RegexGroup = 1)]
         public int TorrentCount { get; set; }
 
-        [HtmlMultiItems(".gdtl > a > img", Attr = "src")]
-        public string[] Images { get; set; }
+        [HtmlMultiItems(".gdtl")]
+        public ImageModel[] Images { get; set; }
 
         [HtmlItem(".ptt > tbody > tr > td:nth-last-child(2)")]
         public int MaxPage { get; set; }
 
         [HtmlMultiItems(".c1")]
         public CommentModel[] Comments { get; set; }
+    }
+
+    public class ImageModel
+    {
+        [HtmlItem("img", Attr = "src")]
+        public string Link { get; set; }
+
+        [HtmlItem("img", Attr = "alt")]
+        public int Page { get; set; }
     }
 
     public class CommentModel
