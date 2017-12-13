@@ -18,7 +18,7 @@ namespace iHentai.Apis.NHentai.Converters
             return Enumerable.Range(0, model.Images.Pages.Length).Select(item => new
             {
                 Link = $"https://t.nhentai.net/galleries/{model.MediaId}/{item}t.{(string.Equals(model.Images.Pages[item].Type, "j", StringComparison.OrdinalIgnoreCase) ? "jpg" : "png")}",
-                Page = item
+                Page = item + 1
             });
         }
 
