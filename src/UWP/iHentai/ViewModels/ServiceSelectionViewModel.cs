@@ -26,21 +26,23 @@ namespace iHentai.ViewModels
         public ServiceSelectionBannerModel SelectedService { get; set; }
 
         [DependsOn(nameof(SelectedService))]
-        public IHentaiApis Api =>
+        public IHentaiApi Api =>
             SelectedService == null ? null : HentaiServices.Instance[SelectedService.ServiceType];
+
+        [DependsOn(nameof(SelectedService))]
+        public bool CanLogin => Api is ILoginApi;
 
         public string UserName { get; set; }
 
         public string Password { get; set; }
-
         
         public IAsyncCommand LoginCommand { get; }
 
         private async Task Login()
         {
-            if (UserName.IsEmpty() || Password.IsEmpty())
+            if (UserName.IsEmpty() || Password.IsEmpty() || !(Api is ILoginApi login))
                 return;
-            if (await Api.Login(UserName, Password))
+            if (await login.Login(UserName, Password))
             {
                 OnSeccess();
             }

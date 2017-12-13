@@ -10,19 +10,19 @@ namespace iHentai.Apis.Core
     {
         private HentaiServices()
         {
-            KnownApis = typeof(IHentaiApis).GetTypeInfo().Assembly.DefinedTypes.Where(item =>
-                item.IsClass && item.ImplementedInterfaces.Contains(typeof(IHentaiApis)));
+            KnownApis = typeof(IHentaiApi).GetTypeInfo().Assembly.DefinedTypes.Where(item =>
+                item.IsClass && item.ImplementedInterfaces.Contains(typeof(IHentaiApi)));
         }
 
         public IEnumerable<TypeInfo> KnownApis { get; }
 
-        private ConcurrentDictionary<ServiceTypes, IHentaiApis> Services { get; } = new ConcurrentDictionary<ServiceTypes, IHentaiApis>();
+        private ConcurrentDictionary<ServiceTypes, IHentaiApi> Services { get; } = new ConcurrentDictionary<ServiceTypes, IHentaiApi>();
 
         public static HentaiServices Instance { get; } = new HentaiServices();
 
-        public IHentaiApis this[string host] => Services.FirstOrDefault(item => item.Value.Host == host).Value;
+        public IHentaiApi this[string host] => Services.FirstOrDefault(item => item.Value.Host == host).Value;
 
-        public IHentaiApis this[ServiceTypes type]
+        public IHentaiApi this[ServiceTypes type]
         {
             get
             {
@@ -30,7 +30,7 @@ namespace iHentai.Apis.Core
                     Services.TryAdd(type,
                         Activator.CreateInstance(
                             KnownApis.FirstOrDefault(item =>
-                                item.Namespace.Contains(Enum.GetName(typeof(ServiceTypes), type)))) as IHentaiApis);
+                                item.Namespace.Contains(Enum.GetName(typeof(ServiceTypes), type)))) as IHentaiApi);
                 return Services[type];
             }
         }

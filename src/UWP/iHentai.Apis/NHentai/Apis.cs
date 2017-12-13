@@ -11,25 +11,13 @@ using iHentai.Extensions;
 
 namespace iHentai.Apis.NHentai
 {
-    public class Apis : IHentaiApis
+    public class Apis : IHentaiApi
     {
-        public bool FouceLogin { get; } = false;
-        public bool HasLogin { get; } = false;
-        public bool CanLogin { get; } = false;
-        public bool CanLoginWithWebView { get; } = false;
-        public string LoginWebViewUrl { get; }
-        public Dictionary<string, string> RequestHeader { get; }
+
         public string Host { get; } = "nhentai.net";
-        public IApiConfig ApiConfig { get; }
+        
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
-
-        public bool WebViewLoginHandler(string url, string cookie)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Dictionary<string, string> Cookie => throw new NotImplementedException();
-
+        
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
             SearchOptionBase searchOption = null)
         {
@@ -53,11 +41,6 @@ namespace iHentai.Apis.NHentai
             var res = await req.SetQueryParam(nameof(page), page + 1)
                 .GetJsonAsync<GalleryListModel>();
             return (res.NumPages, res.Gallery.WithoutShit());
-        }
-
-        public Task<bool> Login(string userName, string password)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<IGalleryDetailModel> Detail(IGalleryModel model)

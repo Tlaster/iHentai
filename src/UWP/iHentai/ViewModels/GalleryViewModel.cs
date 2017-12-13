@@ -79,7 +79,7 @@ namespace iHentai.ViewModels
 
     public class GalleryDataSource : IIncrementalSource<IGalleryModel>
     {
-        public GalleryDataSource(IHentaiApis apis, SearchOptionBase option = null)
+        public GalleryDataSource(IHentaiApi apis, SearchOptionBase option = null)
         {
             Apis = apis;
             SearchOption = option ?? apis.SearchOptionGenerator;
@@ -87,7 +87,7 @@ namespace iHentai.ViewModels
 
         public SearchOptionBase SearchOption { get; set; }
 
-        public IHentaiApis Apis { get; set; }
+        public IHentaiApi Apis { get; set; }
 
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())

@@ -23,7 +23,7 @@ namespace iHentai.Apis.Core
             CancellationToken cancellationToken)
         {
             var apis = HentaiServices.Instance[request.RequestUri.Host];
-            if (apis?.RequestHeader != null)
+            if (apis is ICookieApi cookieApi && cookieApi.RequestHeader != null)
             {
                 //Clear all cookie to avoid some annoying issues
                 CookieContainer.GetCookies(request.RequestUri)
@@ -32,7 +32,7 @@ namespace iHentai.Apis.Core
                     .ForEach(c => c.Expired = true);
 
                 request.Headers.Clear();
-                foreach (var item in apis.RequestHeader)
+                foreach (var item in cookieApi.RequestHeader)
                     request.Headers.Add(item.Key, item.Value);
             }
             return base.SendAsync(request, cancellationToken);

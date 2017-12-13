@@ -48,7 +48,10 @@
                                                                      Delay="0:0:0.4" />
                                 </animations:Implicit.ShowAnimations>
                             </TextBlock>
-                            <ContentControl Margin="0,8" Content="{Binding DetailModel.Result}" HorizontalContentAlignment="Stretch">
+                            <ContentControl
+                                Visibility="{Binding DetailModel.IsSuccessfullyCompleted, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Margin="0,8" Content="{Binding DetailModel.Result}"
+                                HorizontalContentAlignment="Stretch">
                                 <ContentControl.ContentTemplateSelector>
                                     <selectors:GalleryContentViewSelector ContentType="DetailInfo" />
                                 </ContentControl.ContentTemplateSelector>

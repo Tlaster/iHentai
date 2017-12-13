@@ -22,12 +22,11 @@ using iHentai.Helpers;
 
 namespace iHentai.Apis.EHentai
 {
-    public class Apis : IHentaiApis
+    public class Apis : IHentaiApi, ILoginApi, ICookieApi, IConfigApi
     {
         public bool IsExhentaiMode { get; set; } = true;
         public bool FouceLogin { get; } = true;
         public bool HasLogin => Cookie?.Any() == true;
-        public bool CanLogin { get; } = true;
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
         public SearchOptionBase SearchOptionGenerator => new SearchOption();

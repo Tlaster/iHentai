@@ -5,12 +5,12 @@ namespace iHentai.ViewModels
 {
     public class LoginWebViewViewModel : ViewModel<bool>
     {
-        public LoginWebViewViewModel(IHentaiApis api)
+        public LoginWebViewViewModel(ILoginApi api)
         {
             Api = api;
         }
 
-        public IHentaiApis Api { get; }
+        public ILoginApi Api { get; }
 
         public void WebViewNavigated(string url, string cookie)
         {

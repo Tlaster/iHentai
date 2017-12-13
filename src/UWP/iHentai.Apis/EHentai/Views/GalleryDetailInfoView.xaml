@@ -5,9 +5,24 @@
     xmlns:local="using:iHentai.Apis.EHentai.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:iHentai.Apis.EHentai.Models"
+    DataContextChanged="GalleryDetailInfoView_OnDataContextChanged"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance models:GalleryDetailModel}">
 
-    <Grid />
+    <StackPanel>
+        <TextBlock 
+            TextWrapping="Wrap"
+            IsTextScaleFactorEnabled="True"
+            IsTextSelectionEnabled="True"
+            Text="{Binding TitleJp}"/>
+        <Border x:Name="CategoryNameBorder" Margin="0,4,0,0" Padding="4" HorizontalAlignment="Left">
+            <TextBlock x:Name="CategoryName" FontSize="12"/>
+        </Border>
+        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}"/>
+        <TextBlock Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" />
+    </StackPanel>
+    
 </UserControl>

@@ -30,9 +30,9 @@
                 </DataTemplate>
             </controls:Carousel.ItemTemplate>
         </controls:Carousel>
-        <StackPanel Grid.Row="1" MaxWidth="500" Visibility="{Binding Api.CanLogin, Converter={StaticResource BoolToVisibilityConverter}}">
-            <TextBox Margin="8" Header="User Name" IsEnabled="{Binding LoginCommand.IsNotRunning}" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
-            <PasswordBox Margin="8" Header="Password" IsEnabled="{Binding LoginCommand.IsNotRunning}" Password="{Binding Password, Mode=TwoWay}"/>
+        <StackPanel Grid.Row="1" MaxWidth="500" Visibility="{Binding CanLogin, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBox BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Margin="8" Header="User Name" IsEnabled="{Binding LoginCommand.IsNotRunning}" Text="{Binding UserName, Mode=TwoWay}" AcceptsReturn="False"/>
+            <PasswordBox BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Margin="8" Header="Password" IsEnabled="{Binding LoginCommand.IsNotRunning}" Password="{Binding Password, Mode=TwoWay}"/>
             <Grid Visibility="{Binding LoginCommand.IsRunning, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -54,7 +54,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Click="{x:Bind ViewModel.Cancel}" Margin="8" Content="Cancel" HorizontalAlignment="Stretch"/>
+                <Button Click="{x:Bind ViewModel.Cancel}" IsEnabled="{Binding LoginCommand.IsNotRunning}" Margin="8" Content="Cancel" HorizontalAlignment="Stretch"/>
                 <Button Command="{Binding LoginCommand}" Margin="8" Content="Login" Grid.Column="1" HorizontalAlignment="Stretch"/>
             </Grid>
             <animations:Implicit.ShowAnimations>
@@ -67,7 +67,7 @@
             </animations:Implicit.HideAnimations>
         </StackPanel>
         <StackPanel Grid.Row="2" MaxWidth="500">
-            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Use Existing Account" HorizontalAlignment="Stretch" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button Click="{x:Bind ViewModel.Skip}" IsEnabled="{Binding LoginCommand.IsNotRunning}" Margin="8" Content="Use Existing Account" HorizontalAlignment="Stretch" Visibility="{Binding Api.HasLogin, Converter={StaticResource BoolToVisibilityConverter}, FallbackValue=Collapsed}">
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
@@ -77,7 +77,7 @@
                     <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
                 </animations:Implicit.HideAnimations>
             </Button>
-            <Button Click="{x:Bind ViewModel.GoWebView}" Margin="8" Content="Login With Web" HorizontalAlignment="Stretch" Visibility="{Binding Api.CanLoginWithWebView, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button Click="{x:Bind ViewModel.GoWebView}" IsEnabled="{Binding LoginCommand.IsNotRunning}" Margin="8" Content="Login With Web" HorizontalAlignment="Stretch" Visibility="{Binding Api.CanLoginWithWebView, Converter={StaticResource BoolToVisibilityConverter}, FallbackValue=Collapsed}">
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
@@ -87,7 +87,7 @@
                     <animations:TranslationAnimation To="0, 20, 0" From="0" Duration="0:0:0.2" />
                 </animations:Implicit.HideAnimations>
             </Button>
-            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Go!" HorizontalAlignment="Stretch" Visibility="{Binding Api.FouceLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
+            <Button Click="{x:Bind ViewModel.Skip}" Margin="8" Content="Go!" HorizontalAlignment="Stretch" Visibility="{Binding Api.FouceLogin, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true, FallbackValue=Visible}">
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3" />
