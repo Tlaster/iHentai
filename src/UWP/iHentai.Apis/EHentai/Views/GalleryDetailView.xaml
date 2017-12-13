@@ -12,9 +12,7 @@
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <UserControl.Resources>
-    </UserControl.Resources>
-
+    
     <StackPanel>
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags}">
             <controls:TagListView.Flyout>
