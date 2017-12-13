@@ -165,6 +165,9 @@
     <Compile Include="Controls\TagListView.xaml.cs">
       <DependentUpon>TagListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ThumbListView.xaml.cs">
+      <DependentUpon>ThumbListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\HtmlToMarkdownConverter.cs" />
     <Compile Include="Converters\HumanizerConverter.cs" />
@@ -232,6 +235,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\TagListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ThumbListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

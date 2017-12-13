@@ -24,20 +24,7 @@
                 </MenuFlyout>
             </controls:TagListView.Flyout>
         </controls:TagListView>
-        <toolkit:AdaptiveGridView ItemHeight="240" DesiredWidth="160" ItemsSource="{Binding Images}" SelectionMode="None" IsItemClickEnabled="True">
-            <toolkit:AdaptiveGridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="8">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <toolkit:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" Source="{Binding Link}"/>
-                        <TextBlock Grid.Row="1" Text="{Binding Page}" HorizontalAlignment="Center"/>
-                    </Grid>
-                </DataTemplate>
-            </toolkit:AdaptiveGridView.ItemTemplate>
-        </toolkit:AdaptiveGridView>
+        <controls:ThumbListView ItemsSource="{Binding Images}"/>
         <ItemsControl ItemsSource="{Binding Comments}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

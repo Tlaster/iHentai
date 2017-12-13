@@ -7,14 +7,6 @@ using Microsoft.Toolkit.Uwp;
 
 namespace iHentai.Helpers
 {
-    public static class AutoList
-    {
-        public static AutoList<TSource, T> ToList<TSource, T>(this TSource source) where TSource : Microsoft.Toolkit.Collections.IIncrementalSource<T>
-        {
-            return new AutoList<TSource, T>(source);
-        }
-    }
-
     public class AutoList<TSource, T> : IncrementalLoadingCollection<TSource, T> where TSource : Microsoft.Toolkit.Collections.IIncrementalSource<T>
     {
 

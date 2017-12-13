@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Apis.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Converters\TagConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NHentai\Converters\ThumbListConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryImagesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NHentai\Models\GalleryModel.cs" />

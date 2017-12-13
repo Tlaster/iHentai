@@ -8,17 +8,18 @@
     xmlns:models="using:iHentai.Apis.NHentai.Models"
     xmlns:controls="using:iHentai.Controls"
     xmlns:converters="using:iHentai.Apis.NHentai.Converters"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance models:GalleryModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
         <converters:TagConverter x:Key="TagConverter"/>
+        <converters:ThumbListConverter x:Key="ThumbListConverter"/>
     </UserControl.Resources>
-    
+
     <StackPanel>
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags, Converter={StaticResource TagConverter}}"/>
-        
+        <controls:ThumbListView ItemsSource="{Binding Converter={StaticResource ThumbListConverter}}"/>
     </StackPanel>
-    
 </UserControl>
