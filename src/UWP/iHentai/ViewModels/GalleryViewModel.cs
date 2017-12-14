@@ -50,7 +50,8 @@ namespace iHentai.ViewModels
         protected override void OnStart()
         {
             base.OnStart();
-            NavigationService.ClearBackStack();
+            Frame.ClearBackStack();
+            //NavigationService.ClearBackStack();
         }
 
         //protected override async void OnStart()

@@ -11,6 +11,7 @@ namespace iHentai.Apis.Core
         bool CanLoginWithWebView { get; }
         string LoginWebViewUrl { get; }
         bool WebViewLoginHandler(string url, string cookie);
+        Task<bool> WebViewLoginFollowup();
         Task<bool> Login(string userName, string password);
     }
 

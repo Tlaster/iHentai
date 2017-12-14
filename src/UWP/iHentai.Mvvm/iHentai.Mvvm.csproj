@@ -115,7 +115,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="MvvmPage.cs" />
-    <Compile Include="NavigationService.cs" />
+    <Compile Include="IMvvmView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel.cs" />
     <EmbeddedResource Include="Properties\iHentai.Mvvm.rd.xml" />

@@ -64,6 +64,44 @@ namespace iHentai.Apis.EHentai
             return true;
         }
 
+        public async Task<bool> WebViewLoginFollowup()
+        {
+            if (!Cookie.ContainsKey("s"))
+            {
+                Cookie = await UpdateCookie(Cookie);
+            }
+            return true;
+        }
+
+        private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie)
+        {
+            using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
+            {
+                using (var res = await "https://exhentai.org/uconfig.php".WithClient(loginClient).WithCookies(cookie)
+                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
+                {
+                    if (res.Headers.TryGetValues("Set-Cookie", out var cookies) &&
+                        cookies.Any(item => item.StartsWith("s=")))
+                    {
+                        cookie = cookies
+                            .Select(item =>
+                                (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Regex.Matches(item,
+                                    "([^=]*)=([^;]*);")[0].Groups[2].Value))
+                            .Distinct(item => item.Key)
+                            .Where(item => item.Key == "s")
+                            .ToDictionary(item => item.Key, item => item.Value)
+                            .Concat(cookie)
+                            .ToDictionary(item => item.Key, item => item.Value);
+                    }
+                    else
+                    {
+                        throw new ArgumentException();
+                    }
+                }
+            }
+            return cookie;
+        }
+
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
             SearchOptionBase searchOption = null)
         {
@@ -105,30 +143,7 @@ namespace iHentai.Apis.EHentai
                 if (!cookie.Any())
                     return false;
             }
-            using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
-            {
-                using (var res = await "https://exhentai.org/uconfig.php".WithClient(loginClient).WithCookies(cookie)
-                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
-                {
-                    if (res.Headers.TryGetValues("Set-Cookie", out var cookies) &&
-                        cookies.Any(item => item.StartsWith("s=")))
-                    {
-                        cookie = cookies
-                            .Select(item =>
-                                (Key: Regex.Matches(item, "([^=]*)=([^;]*);")[0].Groups[1].Value, Regex.Matches(item,
-                                    "([^=]*)=([^;]*);")[0].Groups[2].Value))
-                            .Distinct(item => item.Key)
-                            .Where(item => item.Key == "s")
-                            .ToDictionary(item => item.Key, item => item.Value)
-                            .Concat(cookie)
-                            .ToDictionary(item => item.Key, item => item.Value);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
+            cookie = await UpdateCookie(cookie);
             Cookie = cookie;
             return true;
         }

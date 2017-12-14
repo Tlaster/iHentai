@@ -53,6 +53,7 @@ namespace iHentai.ViewModels
             if (await Navigate<LoginWebViewViewModel, bool>(args: Api))
             {
                 OnSeccess();
+                await (Api as ILoginApi).WebViewLoginFollowup();
             }
         }
 
@@ -63,8 +64,8 @@ namespace iHentai.ViewModels
 
         public void Skip()
         {
-            Navigate<GalleryViewModel>(args: SelectedService.ServiceType);
-            NavigationService.ClearBackStack();
+            Navigate<GalleryViewModel>(args: SelectedService.ServiceType);//TODO: Navigate might failed if without WebViewLoginFollowup
+            //Frame.ClearBackStack();
         }
 
         public void Cancel()

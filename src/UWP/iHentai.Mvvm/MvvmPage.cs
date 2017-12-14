@@ -8,6 +8,15 @@ namespace iHentai.Mvvm
 {
     public abstract class MvvmPage : HentaiPage
     {
+        protected override void SetFrame(HentaiFrame frame, string pageKey)
+        {
+            base.SetFrame(frame, pageKey);
+            if (ViewModel != null && ViewModel.Frame == null)
+            {
+                ViewModel.Frame = frame;
+            }
+        }
+
         public MvvmPage()
         {
             Loaded += OnLoaded;
@@ -30,6 +39,10 @@ namespace iHentai.Mvvm
         {
             base.OnNavigatedTo(e);
             ViewModel = e.Parameter as ViewModel;
+            if (ViewModel != null && ViewModel.Frame == null)
+            {
+                ViewModel.Frame = Frame;
+            }
             DataContext = ViewModel;
             switch (e.NavigationMode)
             {

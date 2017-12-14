@@ -106,7 +106,7 @@ namespace iHentai.Paging
 
         public bool UseBackKeyToNavigateInWebView { get; set; }
 
-        internal void SetFrame(HentaiFrame frame, string pageKey)
+        protected internal virtual void SetFrame(HentaiFrame frame, string pageKey)
         {
             Frame = frame;
             PageStateHandler.PageKey = pageKey;

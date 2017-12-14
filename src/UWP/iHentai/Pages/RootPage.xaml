@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <paging:HentaiFrame Grid.Row="1" x:Name="RootFrame">
+        <paging:HentaiFrame Grid.Row="1" Navigated="RootFrame_OnNavigated" x:Name="RootFrame">
             <paging:HentaiFrame.PageAnimation>
                 <animations:FadeAnimation />
             </paging:HentaiFrame.PageAnimation>

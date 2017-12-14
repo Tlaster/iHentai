@@ -46,9 +46,9 @@ namespace iHentai.Services
                     // Create a Frame to act as the navigation context and navigate to the first page
                     Window.Current.Content = _shell;
                     //NavigationService.NavigationFailed += (sender, e) => throw e.Exception;
-                    NavigationService.Navigated += Frame_Navigated;
-                    if (SystemNavigationManager.GetForCurrentView() != null)
-                        SystemNavigationManager.GetForCurrentView().BackRequested += ActivationService_BackRequested;
+                    //NavigationService.Navigated += Frame_Navigated;
+                    //if (SystemNavigationManager.GetForCurrentView() != null)
+                    //    SystemNavigationManager.GetForCurrentView().BackRequested += ActivationService_BackRequested;
                 }
             }
 
@@ -110,20 +110,20 @@ namespace iHentai.Services
             return args is IActivatedEventArgs;
         }
 
-        private void Frame_Navigated(object sender, HentaiNavigationEventArgs e)
-        {
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = NavigationService.CanGoBack
-                ? AppViewBackButtonVisibility.Visible
-                : AppViewBackButtonVisibility.Collapsed;
-        }
+        //private void Frame_Navigated(object sender, HentaiNavigationEventArgs e)
+        //{
+        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = NavigationService.CanGoBack
+        //        ? AppViewBackButtonVisibility.Visible
+        //        : AppViewBackButtonVisibility.Collapsed;
+        //}
 
-        private void ActivationService_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-                e.Handled = true;
-            }
-        }
+        //private void ActivationService_BackRequested(object sender, BackRequestedEventArgs e)
+        //{
+        //    //if (NavigationService.CanGoBack)
+        //    //{
+        //    //    NavigationService.GoBack();
+        //    //    e.Handled = true;
+        //    //}
+        //}
     }
 }

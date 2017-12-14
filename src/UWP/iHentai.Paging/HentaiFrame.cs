@@ -24,8 +24,6 @@ namespace iHentai.Paging
 
         public HentaiFrame()
         {
-            AutomaticBackButtonHandling = true;
-
             HorizontalContentAlignment = HorizontalAlignment.Stretch;
             VerticalContentAlignment = VerticalAlignment.Stretch;
 

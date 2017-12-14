@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -13,7 +15,16 @@ namespace iHentai.Paging.Animations
         {
             previousPage.Opacity = 1d;
             nextPage.Opacity = 0d;
-            await previousPage.Fade(0, Duration / 2).StartAsync();
+            try
+            {
+                await previousPage.Fade(0, Duration / 2).StartAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
+                throw;
+            }
         }
 
         public async Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
