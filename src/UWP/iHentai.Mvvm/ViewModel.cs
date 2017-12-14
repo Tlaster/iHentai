@@ -29,7 +29,7 @@ namespace iHentai.Mvvm
 
         protected internal HentaiFrame Frame { get; internal set; }
 
-        public static Dictionary<Type, TypeInfo> KnownViews { get; }
+        private static Dictionary<Type, TypeInfo> KnownViews { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

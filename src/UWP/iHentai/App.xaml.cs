@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using iHentai.Mvvm;
 using iHentai.Pages;
 using iHentai.Services;
 
 namespace iHentai
 {
-    public sealed partial class App : Application
+    public sealed partial class App : MvvmApplication
     {
         private readonly Lazy<ActivationService> _activationService;
 
