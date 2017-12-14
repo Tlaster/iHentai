@@ -4,7 +4,7 @@ using Humanizer;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Converters;
 using iHentai.Apis.EHentai.Models;
-using iHentai.Helpers;
+using iHentai.Basic.Helpers;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

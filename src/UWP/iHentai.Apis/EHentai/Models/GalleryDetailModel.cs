@@ -6,7 +6,7 @@ using AngleSharp.Dom;
 using Html2Model;
 using Html2Model.Attributes;
 using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Extensions;
+using iHentai.Basic.Extensions;
 
 namespace iHentai.Apis.EHentai.Models
 {

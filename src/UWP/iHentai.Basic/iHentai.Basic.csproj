@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{834BD393-52AF-43DB-879F-934F9CADF811}</ProjectGuid>
+    <ProjectGuid>{6E47AAEF-A369-4767-BA36-1E59C1E64F45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iHentai.Mvvm</RootNamespace>
-    <AssemblyName>iHentai.Mvvm</AssemblyName>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <RootNamespace>iHentai.Basic</RootNamespace>
+    <AssemblyName>iHentai.Basic</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
@@ -114,26 +114,23 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MvvmPage.cs" />
-    <Compile Include="IMvvmView.cs" />
+    <Compile Include="Extensions\JsonExtension.cs" />
+    <Compile Include="Extensions\ResourceExtensions.cs" />
+    <Compile Include="Extensions\SettingsStorageExtensions.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel.cs" />
-    <EmbeddedResource Include="Properties\iHentai.Mvvm.rd.xml" />
+    <EmbeddedResource Include="Properties\iHentai.Basic.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\iHentai.Basic\iHentai.Basic.csproj">
-      <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
-      <Name>iHentai.Basic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\iHentai.Paging\iHentai.Paging.csproj">
-      <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
-      <Name>iHentai.Paging</Name>
-    </ProjectReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>10.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

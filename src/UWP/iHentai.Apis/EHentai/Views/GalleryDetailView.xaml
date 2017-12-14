@@ -5,9 +5,9 @@
     xmlns:local="using:iHentai.Apis.EHentai.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:iHentai.Controls"
     xmlns:models="using:iHentai.Apis.EHentai.Models"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:iHentai.Apis.Core.Common.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
     d:DesignHeight="300"
@@ -45,3 +45,6 @@
         </ItemsControl>
     </StackPanel>
 </UserControl>
+
+
+

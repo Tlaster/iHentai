@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models;
+using iHentai.Basic.Extensions;
 using iHentai.Extensions;
 using iHentai.Helpers;
 using iHentai.Mvvm;

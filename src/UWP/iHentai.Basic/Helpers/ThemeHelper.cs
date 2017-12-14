@@ -2,9 +2,9 @@
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace iHentai.Helpers
+namespace iHentai.Basic.Helpers
 {
-    internal static class ThemeHelper
+    public static class ThemeHelper
     {
         public static void AccentColorUpdated(FrameworkElement elementWithText)
         {

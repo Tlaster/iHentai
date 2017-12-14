@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace iHentai.Extensions
+namespace iHentai.Basic.Extensions
 {
-    internal static class JsonExtension
+    public static class JsonExtension
     {
         public static string ToJson(this object obj)
         {

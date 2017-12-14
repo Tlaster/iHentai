@@ -11,7 +11,7 @@ namespace iHentai.Apis.Core.Models.Interfaces
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    internal sealed class ContentTypeAttribute : Attribute
+    public sealed class ContentTypeAttribute : Attribute
     {
         public ContentTypeAttribute(ContentTypes contentType)
         {

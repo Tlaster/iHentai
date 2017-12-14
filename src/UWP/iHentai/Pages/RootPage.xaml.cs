@@ -3,6 +3,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using iHentai.Basic.Helpers;
 using iHentai.Helpers;
 using iHentai.Mvvm;
 using iHentai.Paging;

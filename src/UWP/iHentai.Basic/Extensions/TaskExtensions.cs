@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace iHentai.Extensions
+namespace iHentai.Basic.Extensions
 {
     public static class TaskExtensions
     {

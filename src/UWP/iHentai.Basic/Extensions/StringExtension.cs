@@ -1,4 +1,4 @@
-﻿namespace iHentai.Extensions
+﻿namespace iHentai.Basic.Extensions
 {
     public static class StringExtension
     {

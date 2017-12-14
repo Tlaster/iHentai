@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{834BD393-52AF-43DB-879F-934F9CADF811}</ProjectGuid>
+    <ProjectGuid>{17ADF4D3-9B3E-4DEC-B2E2-2417CCC1FFE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iHentai.Mvvm</RootNamespace>
-    <AssemblyName>iHentai.Mvvm</AssemblyName>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <RootNamespace>iHentai.Apis</RootNamespace>
+    <AssemblyName>iHentai.Apis</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
@@ -114,25 +114,147 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MvvmPage.cs" />
-    <Compile Include="IMvvmView.cs" />
+    <Compile Include="Core\Common\Attributes\BoolValueAttribute.cs" />
+    <Compile Include="Core\Common\Attributes\EnumValueAttribute.cs" />
+    <Compile Include="Core\Common\Attributes\IntValueAttribute.cs" />
+    <Compile Include="Core\Common\Attributes\IValueAttribute.cs" />
+    <Compile Include="Core\Common\Attributes\StringValueAttribute.cs" />
+    <Compile Include="Core\Common\AutoString.cs" />
+    <Compile Include="Core\Common\Controls\TagListView.xaml.cs">
+      <DependentUpon>TagListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Common\Controls\ThumbListView.xaml.cs">
+      <DependentUpon>ThumbListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Common\IEnumerableExtension.cs" />
+    <Compile Include="Core\FlurlExtension.cs" />
+    <Compile Include="Core\HentaiHttpClient.cs" />
+    <Compile Include="Core\HentaiServices.cs" />
+    <Compile Include="Core\IApiConfig.cs" />
+    <Compile Include="Core\IHentaiApis.cs" />
+    <Compile Include="Core\Models\Interfaces\IGalleryContentView.cs" />
+    <Compile Include="Core\Models\Interfaces\IGalleryModel.cs" />
+    <Compile Include="Core\Models\Interfaces\ITagModel.cs" />
+    <Compile Include="Core\Models\ServiceSelectionBannerModel.cs" />
+    <Compile Include="Core\SearchOptionBase.cs" />
+    <Compile Include="Core\ServiceTypes.cs" />
+    <Compile Include="EHentai\Apis.cs" />
+    <Compile Include="EHentai\Config.cs" />
+    <Compile Include="EHentai\Converters\CategoryColorConverter.cs" />
+    <Compile Include="EHentai\Models\CategoryFlags.cs" />
+    <Compile Include="EHentai\Models\Entity.cs" />
+    <Compile Include="EHentai\Models\GalleryDetailModel.cs" />
+    <Compile Include="EHentai\Models\GalleryListModel.cs" />
+    <Compile Include="EHentai\Models\GalleryModel.cs" />
+    <Compile Include="EHentai\Models\HtmlConverters\RatingConverter.cs" />
+    <Compile Include="EHentai\Models\LanguageModel.cs" />
+    <Compile Include="EHentai\Models\TagNamespaceModel.cs" />
+    <Compile Include="EHentai\Models\UconfigCategoryModel.cs" />
+    <Compile Include="EHentai\SearchOption.cs" />
+    <Compile Include="EHentai\Views\GalleryDetailInfoView.xaml.cs">
+      <DependentUpon>GalleryDetailInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EHentai\Views\GalleryDetailView.xaml.cs">
+      <DependentUpon>GalleryDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EHentai\Views\GalleryInfoView.xaml.cs">
+      <DependentUpon>GalleryInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NHentai\Apis.cs" />
+    <Compile Include="NHentai\Converters\TagConverter.cs" />
+    <Compile Include="NHentai\Converters\ThumbListConverter.cs" />
+    <Compile Include="NHentai\Models\GalleryImagesModel.cs" />
+    <Compile Include="NHentai\Models\GalleryListModel.cs" />
+    <Compile Include="NHentai\Models\GalleryModel.cs" />
+    <Compile Include="NHentai\Models\ImageModel.cs" />
+    <Compile Include="NHentai\Models\TagModel.cs" />
+    <Compile Include="NHentai\Models\TitleModel.cs" />
+    <Compile Include="NHentai\SearchOption.cs" />
+    <Compile Include="NHentai\Views\GalleryDetailInfoView.xaml.cs">
+      <DependentUpon>GalleryDetailInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NHentai\Views\GalleryDetailView.xaml.cs">
+      <DependentUpon>GalleryDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NHentai\Views\GalleryInfoView.xaml.cs">
+      <DependentUpon>GalleryInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel.cs" />
-    <EmbeddedResource Include="Properties\iHentai.Mvvm.rd.xml" />
+    <EmbeddedResource Include="Properties\iHentai.Apis.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Flurl.Http">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="Html2Markdown">
+      <Version>3.1.1.325</Version>
+    </PackageReference>
+    <PackageReference Include="Html2Model">
+      <Version>1.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.6.7</Version>
+    </PackageReference>
+    <PackageReference Include="Humanizer.Core">
+      <Version>2.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Humanizer.Core.ja">
+      <Version>2.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Humanizer.Core.zh-Hans">
+      <Version>2.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Humanizer.Core.zh-Hant">
+      <Version>2.2.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>2.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Core\Common\Controls\TagListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Core\Common\Controls\ThumbListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EHentai\Views\GalleryDetailInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EHentai\Views\GalleryDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EHentai\Views\GalleryInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NHentai\Views\GalleryDetailInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NHentai\Views\GalleryDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NHentai\Views\GalleryInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\iHentai.Paging\iHentai.Paging.csproj">
-      <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
-      <Name>iHentai.Paging</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

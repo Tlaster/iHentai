@@ -7,7 +7,7 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
-using iHentai.Extensions;
+using iHentai.Basic.Extensions;
 
 namespace iHentai.Apis.NHentai
 {

@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Shared.Helpers;
+using iHentai.Basic.Helpers;
 
 namespace iHentai.Selectors
 {

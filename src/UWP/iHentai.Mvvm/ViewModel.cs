@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using iHentai.Basic.Helpers;
 using iHentai.Paging;
-using iHentai.Shared.Helpers;
 
 namespace iHentai.Mvvm
 {

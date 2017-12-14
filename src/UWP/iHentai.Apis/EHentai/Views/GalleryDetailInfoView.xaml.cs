@@ -8,7 +8,7 @@ using Humanizer;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Converters;
 using iHentai.Apis.EHentai.Models;
-using iHentai.Helpers;
+using iHentai.Basic.Helpers;
 
 namespace iHentai.Apis.EHentai.Views
 {

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Basic.Extensions;
 using iHentai.Extensions;
 using iHentai.Helpers;
 using iHentai.Mvvm;

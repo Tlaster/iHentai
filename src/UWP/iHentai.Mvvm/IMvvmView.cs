@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using iHentai.Paging;
-using iHentai.Shared.Helpers;
 
 namespace iHentai.Mvvm
 {

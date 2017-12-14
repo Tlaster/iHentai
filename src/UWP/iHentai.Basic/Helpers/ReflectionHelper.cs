@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace iHentai.Shared.Helpers
+namespace iHentai.Basic.Helpers
 {
-    internal static class ReflectionHelper
+    public static class ReflectionHelper
     {
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition,
             out Type implementingType)

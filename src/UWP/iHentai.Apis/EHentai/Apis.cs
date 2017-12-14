@@ -14,11 +14,7 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
-using iHentai.Extensions;
-#if !UNIT_TEST
-using iHentai.Helpers;
-
-#endif
+using iHentai.Basic.Extensions;
 
 namespace iHentai.Apis.EHentai
 {
@@ -55,7 +51,6 @@ namespace iHentai.Apis.EHentai
             if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
             var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
             var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
-            //TODO:Check with "s=" cookie
             Cookie = new Dictionary<string, string>
             {
                 {"ipb_member_id", memberid},

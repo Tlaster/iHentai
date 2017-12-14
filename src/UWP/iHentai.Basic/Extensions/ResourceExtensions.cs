@@ -1,8 +1,8 @@
 ﻿using Windows.ApplicationModel.Resources;
 
-namespace iHentai.Extensions
+namespace iHentai.Basic.Extensions
 {
-    internal static class ResourceExtensions
+    public static class ResourceExtensions
     {
         private static readonly ResourceLoader _resLoader = new ResourceLoader();
 
