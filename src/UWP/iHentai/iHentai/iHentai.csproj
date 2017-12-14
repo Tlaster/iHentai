@@ -308,6 +308,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Conet\Conet\Conet.csproj">
+      <Project>{152bb566-c7ff-47c7-aa15-eab367abecc6}</Project>
+      <Name>Conet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\iHentai.Apis\iHentai.Apis.csproj">
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>
       <Name>iHentai.Apis</Name>
