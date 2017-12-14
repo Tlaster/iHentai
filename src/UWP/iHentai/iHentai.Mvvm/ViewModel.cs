@@ -18,7 +18,7 @@ namespace iHentai.Mvvm
     {
         static ViewModel()
         {
-            KnownViews = Application.Current.GetType().GetTypeInfo().Assembly.DefinedTypes
+            KnownViews = ((Application.Current as MvvmApplication)?.MvvmViewAssemblies()?.SelectMany(item => item.DefinedTypes) ?? Application.Current.GetType().GetTypeInfo().Assembly.DefinedTypes)
                 .Select(item =>
                     item.IsClass &&
                     ReflectionHelper.ImplementsGenericDefinition(item, typeof(IMvvmView<>), out var res)

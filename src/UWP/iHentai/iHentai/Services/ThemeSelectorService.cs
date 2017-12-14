@@ -1,8 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using iHentai.Basic.Extensions;
-using iHentai.Extensions;
-using iHentai.Helpers;
 
 namespace iHentai.Services
 {

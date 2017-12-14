@@ -1,0 +1,36 @@
+﻿<UserControl
+    x:Class="iHentai.Core.Views.GalleryGridItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
+    ToolTipService.ToolTip="{Binding Title}"
+    xmlns:uwp="using:FontAwesome.UWP"
+    IsHoldingEnabled="True"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance model:IGalleryModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid Padding="16" x:Name="RootGrid">
+        <controls:DropShadowPanel x:Name="ShadowPanel" HorizontalContentAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch"
+                                  BlurRadius="30"
+                                  ShadowOpacity="0.6"
+                                  OffsetY="3"
+                                  extensions:VisualEx.Opacity="0"
+                                  Visibility="Collapsed">
+            <Border />
+        </controls:DropShadowPanel>
+        <Grid>
+            <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage"
+                              Source="{Binding Thumb}" />
+            <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

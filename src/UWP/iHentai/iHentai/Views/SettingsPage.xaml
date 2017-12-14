@@ -5,10 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
-    xmlns:helper="using:iHentai.Helpers"
     xmlns:xaml="using:Windows.UI.Xaml"
     xmlns:mvvm="using:iHentai.Mvvm"
-    xmlns:converters="using:iHentai.Converters"
+    xmlns:converters="using:iHentai.Basic.Converters"
     mc:Ignorable="d">
     <mvvm:MvvmPage.Resources>
         <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme" />

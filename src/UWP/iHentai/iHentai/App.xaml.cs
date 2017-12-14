@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
 using iHentai.Pages;
 using iHentai.Services;
+using iHentai.ViewModels;
 
 namespace iHentai
 {
@@ -42,6 +44,11 @@ namespace iHentai
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
         {
             await ActivationService.ActivateAsync(args);
+        }
+
+        public override IEnumerable<Assembly> MvvmViewAssemblies()
+        {
+            yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
         }
     }
 }

@@ -2,9 +2,9 @@
     x:Class="iHentai.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="using:iHentai.Converters"
     xmlns:econverters="using:iHentai.Apis.EHentai.Converters"
-    xmlns:mvvm="using:iHentai.Mvvm">
+    xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:converters="using:iHentai.Basic.Converters">
 
     <mvvm:MvvmApplication.Resources>
         <ResourceDictionary>
@@ -13,9 +13,9 @@
                 <ResourceDictionary Source="/Styles/_FontSizes.xaml" />
                 <ResourceDictionary Source="/Styles/_Thickness.xaml" />
 
+                <ResourceDictionary Source="ms-appx:///iHentai.Core/Styles/ImageEx.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/Page.xaml" />
-                <ResourceDictionary Source="/Styles/ImageEx.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />

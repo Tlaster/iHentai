@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Flurl.Http;
 using iHentai.Activation;
 using iHentai.Apis.Core;
-using iHentai.Helpers;
+using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Paging;
 using Microsoft.Toolkit.Uwp.UI;

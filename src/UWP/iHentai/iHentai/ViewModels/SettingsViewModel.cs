@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
-using iHentai.Helpers;
+using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
 
