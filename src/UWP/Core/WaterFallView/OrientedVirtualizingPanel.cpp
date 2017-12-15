@@ -113,15 +113,33 @@ Size OrientedVirtualizingPanel::MeasureOverride(Size availableSize)
         return Size(availableSize.Width, 0);
     }
 
-    if (_parentScrollView->ViewportHeight == 0)
-    {
-        return Size(availableSize.Width, 0);
-    }
-
     if (_layout == nullptr)
     {
         _layout = GetLayout(availableSize);
     }
+
+	if (HeaderContainer != nullptr)
+	{
+		OnHeaderMeasureOverride(availableSize);
+	}
+
+	if (FooterContainer != nullptr)
+	{
+		if (_lastRealizationItemIndex + 1 == Items->Size)
+		{
+			FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		}
+		else
+		{
+			FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		}
+		OnFooterMeasureOverride(availableSize);
+	}
+
+	if (_parentScrollView->ViewportHeight == 0)
+	{
+		return _layout->LayoutSize;
+	}
 
     _itemAvailableSize = GetItemAvailableSize(availableSize);
 
@@ -237,23 +255,7 @@ Size OrientedVirtualizingPanel::MeasureOverride(Size availableSize)
     _lastRealizationItemIndex = requestLastRealizationItemIndex;
     _itemAvailableSizeCache = _itemAvailableSize;
 
-    if (HeaderContainer != nullptr)
-    {
-        OnHeaderMeasureOverride(availableSize);
-    }
 
-    if (FooterContainer != nullptr)
-    {
-        if (_lastRealizationItemIndex + 1 == Items->Size)
-        {
-            FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Visible;
-        }
-        else
-        {
-            FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-        }
-        OnFooterMeasureOverride(availableSize);
-    }
 
     return _layout->LayoutSize;
 }
@@ -277,6 +279,16 @@ Size OrientedVirtualizingPanel::ArrangeOverride(Size finalSize)
         return finalSize;
     }
 
+	if (HeaderContainer != nullptr)
+	{
+		OnHeaderArrangeOverride(finalSize);
+	}
+
+	if (FooterContainer != nullptr)
+	{
+		OnFooterArrangeOverride(finalSize);
+	}
+	
     if (_firstRealizationItemIndex < 0 || _lastRealizationItemIndex < 0)
     {
         return finalSize;
@@ -287,16 +299,6 @@ Size OrientedVirtualizingPanel::ArrangeOverride(Size finalSize)
         auto rect = _layout->GetItemLayoutRect(i);
         auto container = GetContainerFormIndex(i);
         container->Arrange(rect);
-    }
-
-    if (HeaderContainer != nullptr)
-    {
-        OnHeaderArrangeOverride(finalSize);
-    }
-
-    if (FooterContainer != nullptr)
-    {
-        OnFooterArrangeOverride(finalSize);
     }
 
     return finalSize;
