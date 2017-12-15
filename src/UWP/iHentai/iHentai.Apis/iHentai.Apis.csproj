@@ -214,7 +214,7 @@
       <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

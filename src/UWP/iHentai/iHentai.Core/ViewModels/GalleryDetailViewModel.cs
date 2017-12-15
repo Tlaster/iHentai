@@ -3,6 +3,7 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Mvvm;
 using Nito.AsyncEx;
+using Nito.Mvvm;
 
 namespace iHentai.Core.ViewModels
 {
@@ -14,10 +15,10 @@ namespace iHentai.Core.ViewModels
         {
             Model = model;
             _serviceType = serviceType;
-            DetailModel = NotifyTaskCompletion.Create(GetDetailAsync);
+            DetailModel = NotifyTask.Create(GetDetailAsync);
         }
 
-        public INotifyTaskCompletion<IGalleryDetailModel> DetailModel { get; }
+        public NotifyTask<IGalleryDetailModel> DetailModel { get; }
 
         public IGalleryModel Model { get; }
 

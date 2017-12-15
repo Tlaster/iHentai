@@ -145,10 +145,13 @@
       <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Nito.AsyncEx">
-      <Version>4.0.1</Version>
+      <Version>5.0.0-pre-05</Version>
+    </PackageReference>
+    <PackageReference Include="Nito.Mvvm.Async">
+      <Version>1.0.0-pre-03</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>2.2.4</Version>
@@ -208,9 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

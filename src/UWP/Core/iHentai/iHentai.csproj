@@ -102,7 +102,7 @@
       <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <!-- Nuget package references -->
   </ItemGroup>
