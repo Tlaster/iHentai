@@ -228,7 +228,7 @@
       <Project>{152bb566-c7ff-47c7-aa15-eab367abecc6}</Project>
       <Name>Conet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iHentai.Apis\iHentai.Apis.csproj">
+    <ProjectReference Include="..\..\iHentai\iHentai.Apis\iHentai.Apis.csproj">
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>
       <Name>iHentai.Apis</Name>
     </ProjectReference>
@@ -236,7 +236,7 @@
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iHentai.Core\iHentai.Core.csproj">
+    <ProjectReference Include="..\..\iHentai\iHentai.Core\iHentai.Core.csproj">
       <Project>{4428c367-6d43-44d9-8c96-dde783019613}</Project>
       <Name>iHentai.Core</Name>
     </ProjectReference>

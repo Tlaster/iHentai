@@ -252,7 +252,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iHentai.Basic\iHentai.Basic.csproj">
+    <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
     </ProjectReference>

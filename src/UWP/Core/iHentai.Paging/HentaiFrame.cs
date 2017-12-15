@@ -117,7 +117,9 @@ namespace iHentai.Paging
 
         public bool Navigate(Type sourcePageType)
         {
+#pragma warning disable 4014
             NavigateAsync(sourcePageType);
+#pragma warning restore 4014
             return true;
         }
 

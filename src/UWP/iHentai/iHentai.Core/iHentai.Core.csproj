@@ -189,19 +189,19 @@
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>
       <Name>iHentai.Apis</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iHentai.Basic\iHentai.Basic.csproj">
+    <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iHentai.Mvvm\iHentai.Mvvm.csproj">
+    <ProjectReference Include="..\..\Core\iHentai.Mvvm\iHentai.Mvvm.csproj">
       <Project>{834bd393-52af-43db-879f-934f9cadf811}</Project>
       <Name>iHentai.Mvvm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\iHentai.Paging\iHentai.Paging.csproj">
+    <ProjectReference Include="..\..\Core\iHentai.Paging\iHentai.Paging.csproj">
       <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
       <Name>iHentai.Paging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WaterFallView\WaterFallView.vcxproj">
+    <ProjectReference Include="..\..\Core\WaterFallView\WaterFallView.vcxproj">
       <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
       <Name>WaterFallView</Name>
     </ProjectReference>
