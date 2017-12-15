@@ -34,4 +34,9 @@ namespace iHentai.Apis.Core
             SearchOptionBase searchOption = null);
         Task<IGalleryDetailModel> Detail(IGalleryModel model);
     }
+
+    public interface IWebApi
+    {
+        string GetWebLink(IGalleryModel model);
+    }
 }

@@ -51,6 +51,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Download" />
                                 <Button Content="Read" />
+                                <Button Content="Open in browser"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>

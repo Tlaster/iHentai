@@ -11,7 +11,7 @@ using iHentai.Basic.Extensions;
 
 namespace iHentai.Apis.NHentai
 {
-    public class Apis : IHentaiApi
+    public class Apis : IHentaiApi, IWebApi
     {
 
         public string Host { get; } = "nhentai.net";
@@ -46,6 +46,15 @@ namespace iHentai.Apis.NHentai
         public Task<IGalleryDetailModel> Detail(IGalleryModel model)
         {
             return Task.FromResult(model as IGalleryDetailModel);
+        }
+
+        public string GetWebLink(IGalleryModel model)
+        {
+            if (!(model is GalleryModel item))
+            {
+                return string.Empty;
+            }
+            return $"https://{Host}/".AppendPathSegment("g").AppendPathSegment(item.Id);
         }
     }
 }

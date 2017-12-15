@@ -13,7 +13,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:waterfall="using:WaterFallView"
     xmlns:behaviors1="using:iHentai.Basic.Behaviors"
-    xmlns:views1="using:iHentai.Core.Views"
+    xmlns:views="using:iHentai.Core.Views"
     xmlns:selectors="using:iHentai.Core.Selectors"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     SizeChanged="GalleryPage_OnSizeChanged"
@@ -28,7 +28,7 @@
             <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased"
                                          x:Name="WaterfallLayout" ItemsSource="{Binding Source}">
                 <waterfall:WaterfallFlowView.Resizer>
-                    <views1:GalleryItemResizer />
+                    <views:GalleryItemResizer />
                 </waterfall:WaterfallFlowView.Resizer>
                 <waterfall:WaterfallFlowView.Header>
                     <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
@@ -41,12 +41,13 @@
                 </waterfall:WaterfallFlowView.ItemContainerStyle>
                 <waterfall:WaterfallFlowView.ItemTemplate>
                     <DataTemplate>
-                        <views1:GalleryGridItem Tapped="UIElement_OnTapped"
+                        <views:GalleryGridItem Tapped="UIElement_OnTapped"
                                                MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
                     </DataTemplate>
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
+        <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding IsRefreshing}" Visibility="{Binding IsRefreshing, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <Grid x:Name="Header"
               HorizontalAlignment="Stretch" VerticalAlignment="Top" MaxWidth="600">
             <controls:DropShadowPanel 

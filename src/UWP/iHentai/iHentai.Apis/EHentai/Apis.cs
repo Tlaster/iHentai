@@ -18,7 +18,7 @@ using iHentai.Basic.Extensions;
 
 namespace iHentai.Apis.EHentai
 {
-    public class Apis : IHentaiApi, ILoginApi, ICookieApi, IConfigApi
+    public class Apis : IHentaiApi, ILoginApi, ICookieApi, IConfigApi, IWebApi
     {
         public bool IsExhentaiMode { get; set; } = true;
         public bool FouceLogin { get; } = true;
@@ -163,6 +163,18 @@ namespace iHentai.Apis.EHentai
                 {nameof(ipb_member_id), ipb_member_id},
                 {nameof(ipb_pass_hash), ipb_pass_hash}
             };
+        }
+
+        public string GetWebLink(IGalleryModel model)
+        {
+            if (!(model is GalleryModel item))
+            {
+                return string.Empty;
+            }
+            return $"https://{Host}/"
+                .AppendPathSegment("g")
+                .AppendPathSegment(item.ID)
+                .AppendPathSegment(item.Token);
         }
     }
 }

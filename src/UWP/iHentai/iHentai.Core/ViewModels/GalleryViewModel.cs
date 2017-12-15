@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
@@ -67,9 +68,24 @@ namespace iHentai.Core.ViewModels
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(HentaiServices.Instance[serviceType], option), onError: OnError);
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(HentaiServices.Instance[serviceType], option), onError: OnError, onStartLoading: OnStartLoading, onEndLoading: OnEndLoading);
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
+        }
+
+        public bool IsRefreshing { get; private set; }
+
+        private void OnEndLoading()
+        {
+            IsRefreshing = false;
+        }
+
+        private void OnStartLoading()
+        {
+            if (!Source.Any())
+            {
+                IsRefreshing = true;
+            }
         }
 
         private void OnError(Exception obj)
