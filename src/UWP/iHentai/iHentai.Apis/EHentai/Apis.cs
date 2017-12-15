@@ -22,7 +22,7 @@ namespace iHentai.Apis.EHentai
     {
         public bool IsExhentaiMode { get; set; } = true;
         public bool FouceLogin { get; } = true;
-        public bool HasLogin => Cookie?.Any() == true;
+        public bool HasLogin => Cookie?.All(item => item.Key == "s" || item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash") == true;
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
