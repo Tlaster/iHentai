@@ -350,8 +350,9 @@ Size WaterfallFlowLayout::GetHeaderAvailableSize()
 
 Size WaterfallFlowLayout::GetFooterAvailableSize()
 {
-    auto width = (Width - ((StackCount - 1) * Spacing)) / StackCount;
-    return Size((float)width, (float)((*std::max_element(_stacks->begin(), _stacks->end())) - (*std::min_element(_stacks->begin(), _stacks->end()))));
+	return Size((float)Width, INFINITY);
+    //auto width = (Width - ((StackCount - 1) * Spacing)) / StackCount;
+    //return Size((float)width, (float)((*std::max_element(_stacks->begin(), _stacks->end())) - (*std::min_element(_stacks->begin(), _stacks->end()))));
 }
 
 bool WaterfallFlowLayout::SetHeaderSize(Size size)
@@ -381,7 +382,10 @@ Rect WaterfallFlowLayout::GetHeaderLayoutRect()
 
 Rect WaterfallFlowLayout::GetFooterLayoutRect()
 {
-    auto width = (Width - ((StackCount - 1) * Spacing)) / StackCount;
-    int minStackIndex = (int)std::distance(_stacks->begin(), std::min_element(_stacks->begin(), _stacks->end()));
-    return Rect((float)(minStackIndex * (width + Spacing)), (float)(_stacks->at(minStackIndex) + Spacing + _headerSize.Height), _footerSize.Width, _footerSize.Height);
+	auto maxStackIndex = (int)std::distance(_stacks->begin(), std::max_element(_stacks->begin(), _stacks->end()));
+	return Rect(0.f, (float)(_stacks->at(maxStackIndex) + Spacing + _footerSize.Height), _footerSize.Width, _footerSize.Height);
+
+	//auto width = (Width - ((StackCount - 1) * Spacing)) / StackCount;
+ //   int minStackIndex = (int)std::distance(_stacks->begin(), std::min_element(_stacks->begin(), _stacks->end()));
+ //   return Rect((float)(minStackIndex * (width + Spacing)), (float)(_stacks->at(minStackIndex) + Spacing + _headerSize.Height), _footerSize.Width, _footerSize.Height);
 }

@@ -12,7 +12,7 @@ namespace WaterFallView
 	{
 	public:
 		virtual RegisterReadOnlyProperty(double, _width, Width);
-		virtual RegisterReadOnlyProperty(Size, Size((float)Width, (float)*std::max_element(_stacks->begin(), _stacks->end())), LayoutSize);
+		virtual RegisterReadOnlyProperty(Size, Size((float)Width, ((float)*std::max_element(_stacks->begin(), _stacks->end()) + _footerSize.Height + _headerSize.Height)), LayoutSize);
 		virtual RegisterReadOnlyProperty(int, (int)_units->size(), UnitCount);
 		RegisterReadOnlyProperty(double, _spacing, Spacing);
 		RegisterReadOnlyProperty(int, (int)_stacks->size(), StackCount);

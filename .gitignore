@@ -261,3 +261,6 @@ __pycache__/
 *.pyc
 /.vscode
 /src/UWP/WaterFallView/Generated Files
+/.idea
+Generated Files/
+

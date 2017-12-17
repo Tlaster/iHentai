@@ -125,14 +125,14 @@ Size OrientedVirtualizingPanel::MeasureOverride(Size availableSize)
 
 	if (FooterContainer != nullptr)
 	{
-		if (_lastRealizationItemIndex + 1 == Items->Size)
-		{
-			FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Visible;
-		}
-		else
-		{
-			FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-		}
+		//if (_lastRealizationItemIndex + 1 == Items->Size)
+		//{
+		//	FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		//}
+		//else
+		//{
+		//	FooterContainer->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		//}
 		OnFooterMeasureOverride(availableSize);
 	}
 
@@ -410,7 +410,7 @@ Size OrientedVirtualizingPanel::MeasureItem(Object^ item, Size oldSize)
 
 VisualWindow OrientedVirtualizingPanel::GetVisibleWindow(Point offset, Size viewportSize)
 {
-    return  VisualWindow{ max(offset.Y - viewportSize.Height, 0),viewportSize.Height * 3 };
+    return VisualWindow{ max(offset.Y - viewportSize.Height, 0),viewportSize.Height * 3 };
 }
 
 Size OrientedVirtualizingPanel::GetItemAvailableSize(Size availableSize)
@@ -463,7 +463,7 @@ void OrientedVirtualizingPanel::OnFooterMeasureOverride(Size availableSize)
 
     availableSize = Layout->GetFooterAvailableSize();
     FooterContainer->Measure(availableSize);
-    Layout->SetFooterSize(availableSize);
+    Layout->SetFooterSize(Size(availableSize.Width, FooterContainer->DesiredSize.Height));
 }
 void OrientedVirtualizingPanel::OnFooterArrangeOverride(Size finalSize)
 {

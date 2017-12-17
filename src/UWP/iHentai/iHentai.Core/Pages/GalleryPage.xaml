@@ -30,6 +30,9 @@
                 <waterfall:WaterfallFlowView.Resizer>
                     <views:GalleryItemResizer />
                 </waterfall:WaterfallFlowView.Resizer>
+                <waterfall:WaterfallFlowView.Footer>
+                    <ProgressRing Width="50" Height="50" IsActive="{Binding Source.IsLoading}" Visibility="{Binding Source.IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </waterfall:WaterfallFlowView.Footer>
                 <waterfall:WaterfallFlowView.Header>
                     <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
                 </waterfall:WaterfallFlowView.Header>
@@ -47,7 +50,6 @@
                 </waterfall:WaterfallFlowView.ItemTemplate>
             </waterfall:WaterfallFlowView>
         </ScrollViewer>
-        <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding IsRefreshing}" Visibility="{Binding IsRefreshing, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <Grid x:Name="Header"
               HorizontalAlignment="Stretch" VerticalAlignment="Top" MaxWidth="600">
             <controls:DropShadowPanel 
