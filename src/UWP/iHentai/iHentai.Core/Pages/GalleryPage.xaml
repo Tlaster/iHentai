@@ -21,132 +21,139 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
 
-    <Grid>
-        <ScrollViewer x:Name="ScrollViewer">
-            <interactivity:Interaction.Behaviors>
-                <behaviors1:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}" />
-            </interactivity:Interaction.Behaviors>
-            <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased"
+    <SplitView DisplayMode="Overlay" x:Name="RootSplitView">
+        <SplitView.Pane>
+            <Grid>
+                
+            </Grid>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid>
+                <ScrollViewer x:Name="ScrollViewer">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors1:QuickReturnHeaderBehavior HeaderElement="{Binding ElementName=Header}" />
+                    </interactivity:Interaction.Behaviors>
+                    <waterfall:WaterfallFlowView Spacing="0" IsRightTapSelectEnable="False" AdaptiveMode="MinBased"
                                          x:Name="WaterfallLayout" ItemsSource="{Binding Source}">
-                <waterfall:WaterfallFlowView.Resizer>
-                    <views:GalleryItemResizer />
-                </waterfall:WaterfallFlowView.Resizer>
-                <waterfall:WaterfallFlowView.Footer>
-                    <basic:AutoListStateView DataContext="{Binding Source}"/>
-                </waterfall:WaterfallFlowView.Footer>
-                <waterfall:WaterfallFlowView.Header>
-                    <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
-                </waterfall:WaterfallFlowView.Header>
-                <waterfall:WaterfallFlowView.ItemContainerStyle>
-                    <Style TargetType="ContentControl">
-                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </waterfall:WaterfallFlowView.ItemContainerStyle>
-                <waterfall:WaterfallFlowView.ItemTemplate>
-                    <DataTemplate>
-                        <views:GalleryGridItem Tapped="UIElement_OnTapped"
+                        <waterfall:WaterfallFlowView.Resizer>
+                            <views:GalleryItemResizer />
+                        </waterfall:WaterfallFlowView.Resizer>
+                        <waterfall:WaterfallFlowView.Footer>
+                            <basic:AutoListStateView DataContext="{Binding Source}"/>
+                        </waterfall:WaterfallFlowView.Footer>
+                        <waterfall:WaterfallFlowView.Header>
+                            <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
+                        </waterfall:WaterfallFlowView.Header>
+                        <waterfall:WaterfallFlowView.ItemContainerStyle>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </waterfall:WaterfallFlowView.ItemContainerStyle>
+                        <waterfall:WaterfallFlowView.ItemTemplate>
+                            <DataTemplate>
+                                <views:GalleryGridItem Tapped="UIElement_OnTapped"
                                                MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
-                    </DataTemplate>
-                </waterfall:WaterfallFlowView.ItemTemplate>
-            </waterfall:WaterfallFlowView>
-        </ScrollViewer>
-        <Grid x:Name="Header"
+                            </DataTemplate>
+                        </waterfall:WaterfallFlowView.ItemTemplate>
+                    </waterfall:WaterfallFlowView>
+                </ScrollViewer>
+                <Grid x:Name="Header"
               HorizontalAlignment="Stretch" VerticalAlignment="Top" MaxWidth="600">
-            <controls:DropShadowPanel 
+                    <controls:DropShadowPanel 
                                       HorizontalAlignment="Stretch"
                                       HorizontalContentAlignment="Stretch"
                                       ShadowOpacity="0.6"
                                       Margin="16"
                                       BlurRadius="10">
-                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.66">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:Blur AutomaticallyStart="True"
+                        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.66">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:Blur AutomaticallyStart="True"
                                         Delay="0"
                                         Value="10"
                                         Duration="0" />
-                    </interactivity:Interaction.Behaviors>
-                </Border>
-            </controls:DropShadowPanel>
-            <Grid Margin="16">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Button Background="Transparent" VerticalAlignment="Stretch">
-                    <SymbolIcon Symbol="GlobalNavigationButton" />
-                </Button>
-                <AutoSuggestBox QuerySubmitted="{x:Bind ViewModel.SearchSubmit}" Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Background="Transparent" PlaceholderText="{Binding SearchPlaceholder}">
-                    <AutoSuggestBox.QueryIcon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1A3;" FontSize="20" />
-                    </AutoSuggestBox.QueryIcon>
-                </AutoSuggestBox>
-                <ToggleButton BorderThickness="0" Grid.Row="0" Grid.Column="2" x:Name="AdvSearchSwitch" Background="Transparent"
+                            </interactivity:Interaction.Behaviors>
+                        </Border>
+                    </controls:DropShadowPanel>
+                    <Grid Margin="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ToggleButton IsChecked="{Binding ElementName=RootSplitView, Path=IsPaneOpen, Mode=TwoWay}" Background="Transparent" VerticalAlignment="Stretch">
+                            <SymbolIcon Symbol="GlobalNavigationButton" />
+                        </ToggleButton>
+                        <AutoSuggestBox QuerySubmitted="{x:Bind ViewModel.SearchSubmit}" Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Background="Transparent" PlaceholderText="{Binding SearchPlaceholder}">
+                            <AutoSuggestBox.QueryIcon>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1A3;" FontSize="20" />
+                            </AutoSuggestBox.QueryIcon>
+                        </AutoSuggestBox>
+                        <ToggleButton BorderThickness="0" Grid.Row="0" Grid.Column="2" x:Name="AdvSearchSwitch" Background="Transparent"
                                       VerticalAlignment="Stretch">
-                    <SymbolIcon Symbol="Add" />
-                </ToggleButton>
-                <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Visibility="{Binding ElementName=AdvSearchSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <ContentControl Content="{Binding Source.DataSource.SearchOption}">
-                        <ContentControl.ContentTemplateSelector>
-                            <selectors:GalleryContentViewSelector ContentType="Search"/>
-                        </ContentControl.ContentTemplateSelector>
-                    </ContentControl>
+                            <SymbolIcon Symbol="Add" />
+                        </ToggleButton>
+                        <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Visibility="{Binding ElementName=AdvSearchSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ContentControl Content="{Binding Source.DataSource.SearchOption}">
+                                <ContentControl.ContentTemplateSelector>
+                                    <selectors:GalleryContentViewSelector ContentType="Search"/>
+                                </ContentControl.ContentTemplateSelector>
+                            </ContentControl>
 
-                    <animations:Implicit.ShowAnimations>
-                        <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-                        <animations:TranslationAnimation From="0, -20, 0" To="0" Duration="0:0:0.3" />
-                    </animations:Implicit.ShowAnimations>
-                    <animations:Implicit.HideAnimations>
-                        <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-                        <animations:TranslationAnimation To="0, -20, 0" From="0" Duration="0:0:0.2" />
-                    </animations:Implicit.HideAnimations>
+                            <animations:Implicit.ShowAnimations>
+                                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                                <animations:TranslationAnimation From="0, -20, 0" To="0" Duration="0:0:0.3" />
+                            </animations:Implicit.ShowAnimations>
+                            <animations:Implicit.HideAnimations>
+                                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                                <animations:TranslationAnimation To="0, -20, 0" From="0" Duration="0:0:0.2" />
+                            </animations:Implicit.HideAnimations>
+                        </Grid>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Grid>
-        <Canvas Background="Transparent"
+                <Canvas Background="Transparent"
                 Tapped="MoreInfoCanvas_OnTapped"
                 x:Name="MoreInfoCanvas"
                 Visibility="Collapsed"
                 Grid.RowSpan="2"
                 d:DataContext="{d:DesignInstance interfaces:IGalleryModel}">
-            <Grid x:Name="MoreInfoContent"
+                    <Grid x:Name="MoreInfoContent"
                   extensions:VisualEx.NormalizedCenterPoint="0.5">
-                <Grid VerticalAlignment="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                        <Grid VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                    <controls:DropShadowPanel VerticalContentAlignment="Stretch"
+                            <controls:DropShadowPanel VerticalContentAlignment="Stretch"
                                               HorizontalContentAlignment="Stretch"
                                               ShadowOpacity="0.6"
                                               Color="Black"
                                               OffsetY="6"
                                               Grid.RowSpan="2"
                                               BlurRadius="60">
-                        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                 Opacity="0.66">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviors:Blur AutomaticallyStart="True"
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:Blur AutomaticallyStart="True"
                                                 Delay="0"
                                                 Value="10"
                                                 Duration="0" />
-                            </interactivity:Interaction.Behaviors>
-                        </Border>
-                    </controls:DropShadowPanel>
+                                    </interactivity:Interaction.Behaviors>
+                                </Border>
+                            </controls:DropShadowPanel>
 
-                    <Grid Grid.Row="0" Padding="10" x:Name="MoreInfoContentRoot">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Padding="10" x:Name="MoreInfoContentRoot">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
 
-                        <controls:ImageEx
+                                <controls:ImageEx
                             Style="{StaticResource ImageExNoTransition}"
                             IsCacheEnabled="True"
                             Tapped="MoreInfoImage_OnTapped"
@@ -154,55 +161,57 @@
                             Grid.Row="0"
                             Source="{Binding Thumb}" />
 
-                        <StackPanel Grid.Row="1" x:Name="MoreInfoText">
-                            <TextBlock Margin="0, 10"
+                                <StackPanel Grid.Row="1" x:Name="MoreInfoText">
+                                    <TextBlock Margin="0, 10"
                                        FontSize="14"
                                        TextWrapping="Wrap"
                                        FontWeight="SemiBold"
                                        Text="{Binding Title}"
                                        TextTrimming="CharacterEllipsis"
                                        x:Name="MoreInfoTitle" />
-                            <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
-                                <ContentControl.ContentTemplateSelector>
-                                    <selectors:GalleryContentViewSelector ContentType="Info" />
-                                </ContentControl.ContentTemplateSelector>
-                            </ContentControl>
-                            <animations:Implicit.ShowAnimations>
-                                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.2"
+                                    <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
+                                        <ContentControl.ContentTemplateSelector>
+                                            <selectors:GalleryContentViewSelector ContentType="Info" />
+                                        </ContentControl.ContentTemplateSelector>
+                                    </ContentControl>
+                                    <animations:Implicit.ShowAnimations>
+                                        <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.2"
                                                              SetInitialValueBeforeDelay="True" />
-                                <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
+                                        <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
                                                                  Delay="0:0:0.2" />
-                            </animations:Implicit.ShowAnimations>
-                        </StackPanel>
-                    </Grid>
+                                    </animations:Implicit.ShowAnimations>
+                                </StackPanel>
+                            </Grid>
 
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button HorizontalAlignment="Stretch" Content="Read" />
-                        <Button HorizontalAlignment="Stretch" Grid.Column="1" Content="Download" />
-                        <animations:Implicit.ShowAnimations>
-                            <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.4"
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button HorizontalAlignment="Stretch" Content="Read" />
+                                <Button HorizontalAlignment="Stretch" Grid.Column="1" Content="Download" />
+                                <animations:Implicit.ShowAnimations>
+                                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4" Delay="0:0:0.4"
                                                          SetInitialValueBeforeDelay="True" />
-                            <!--<animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
+                                    <!--<animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
                                                              Delay="0:0:0.4" />-->
+                                </animations:Implicit.ShowAnimations>
+                            </Grid>
+                        </Grid>
+
+
+                        <animations:Implicit.ShowAnimations>
+                            <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                            <!--<animations:ScaleAnimation From="0.5" To="1" Duration="0:0:0.3" />-->
                         </animations:Implicit.ShowAnimations>
+                        <animations:Implicit.HideAnimations>
+                            <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                            <!--<animations:ScaleAnimation To="0.5" From="1" Duration="0:0:0.2" />-->
+                        </animations:Implicit.HideAnimations>
                     </Grid>
-                </Grid>
 
-
-                <animations:Implicit.ShowAnimations>
-                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-                    <!--<animations:ScaleAnimation From="0.5" To="1" Duration="0:0:0.3" />-->
-                </animations:Implicit.ShowAnimations>
-                <animations:Implicit.HideAnimations>
-                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-                    <!--<animations:ScaleAnimation To="0.5" From="1" Duration="0:0:0.2" />-->
-                </animations:Implicit.HideAnimations>
+                </Canvas>
             </Grid>
-
-        </Canvas>
-    </Grid>
+        </SplitView.Content>
+    </SplitView>
 </mvvm:MvvmPage>
