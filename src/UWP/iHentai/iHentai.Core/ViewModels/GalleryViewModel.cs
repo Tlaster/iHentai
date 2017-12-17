@@ -52,45 +52,14 @@ namespace iHentai.Core.ViewModels
         {
             base.OnStart();
             Frame.ClearBackStack();
-            //NavigationService.ClearBackStack();
         }
-
-        //protected override async void OnStart()
-        //{
-        //    base.OnStart();
-        //    if (Source == null)
-        //        if ("default_hentai_service".HasValue() || await Navigate<ServiceSelectionViewModel, bool>())
-        //            Init("default_hentai_service".Read(ServiceTypes.NHentai));
-        //        else
-        //            Close();
-        //}
 
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(HentaiServices.Instance[serviceType], option), onError: OnError, onStartLoading: OnStartLoading, onEndLoading: OnEndLoading);
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(HentaiServices.Instance[serviceType], option));
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
-        }
-
-        public bool IsRefreshing { get; private set; }
-
-        private void OnEndLoading()
-        {
-            IsRefreshing = false;
-        }
-
-        private void OnStartLoading()
-        {
-            if (!Source.Any())
-            {
-                IsRefreshing = true;
-            }
-        }
-
-        private void OnError(Exception obj)
-        {
-            
         }
     }
 

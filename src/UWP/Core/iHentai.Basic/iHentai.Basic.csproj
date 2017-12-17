@@ -115,6 +115,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Behaviors\QuickReturnHeaderBehavior.cs" />
+    <Compile Include="Controls\AutoListStateView.xaml.cs">
+      <DependentUpon>AutoListStateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\HtmlToMarkdownConverter.cs" />
@@ -175,6 +178,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\AutoListStateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

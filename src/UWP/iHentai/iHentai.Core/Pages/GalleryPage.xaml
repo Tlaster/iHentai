@@ -16,6 +16,7 @@
     xmlns:views="using:iHentai.Core.Views"
     xmlns:selectors="using:iHentai.Core.Selectors"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
+    xmlns:basic="using:iHentai.Basic.Controls"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
@@ -31,7 +32,7 @@
                     <views:GalleryItemResizer />
                 </waterfall:WaterfallFlowView.Resizer>
                 <waterfall:WaterfallFlowView.Footer>
-                    <ProgressRing Width="50" Height="50" IsActive="{Binding Source.IsLoading}" Visibility="{Binding Source.IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <basic:AutoListStateView DataContext="{Binding Source}"/>
                 </waterfall:WaterfallFlowView.Footer>
                 <waterfall:WaterfallFlowView.Header>
                     <Grid Height="{Binding ElementName=Header, Path=ActualHeight}" />
