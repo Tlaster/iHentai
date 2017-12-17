@@ -132,7 +132,7 @@ namespace iHentai.Apis.EHentai.Models
         [HtmlItem(".tc")]
         public string Title { get; set; }
 
-        [HtmlMultiItems(".gt")]
+        [HtmlMultiItems("td > div > a")]
         public string[] Tags { get; set; }
     }
 }
