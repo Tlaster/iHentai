@@ -14,12 +14,12 @@ namespace iHentai.Apis.NHentai
 {
     public class Apis : IHentaiApi, IWebApi
     {
-
         public string Host { get; } = "nhentai.net";
-        
+
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
-        
-        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0, SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
+
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+            SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
             var req = $"https://{Host}/".AppendPathSegment("api").AppendPathSegment("galleries");
             if (searchOption == null || searchOption.Keyword.IsEmpty())
@@ -39,7 +39,7 @@ namespace iHentai.Apis.NHentai
                         throw new ArgumentOutOfRangeException();
                 }
             var res = await req.SetQueryParam(nameof(page), page + 1)
-                .GetJsonAsync<GalleryListModel>(cancellationToken: cancellationToken);
+                .GetJsonAsync<GalleryListModel>(cancellationToken);
             return (res.NumPages, res.Gallery.WithoutShit());
         }
 
@@ -51,9 +51,7 @@ namespace iHentai.Apis.NHentai
         public string GetWebLink(IGalleryModel model)
         {
             if (!(model is GalleryModel item))
-            {
                 return string.Empty;
-            }
             return $"https://{Host}/".AppendPathSegment("g").AppendPathSegment(item.Id);
         }
     }

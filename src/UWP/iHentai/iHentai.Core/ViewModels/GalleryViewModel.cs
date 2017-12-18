@@ -35,7 +35,7 @@ namespace iHentai.Core.ViewModels
 
         public void GoDetail(IGalleryModel model)
         {
-            Navigate<GalleryDetailViewModel>(_serviceType, model);
+            Navigate<GalleryDetailViewModel>(_serviceType, model).FireAndForget();
         }
 
         public void SearchSubmit()
