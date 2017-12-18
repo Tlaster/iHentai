@@ -41,11 +41,16 @@ namespace iHentai.Core.ViewModels
         public void SearchSubmit()
         {
             if (Source.DataSource.SearchOption.Keyword.IsEmpty())
-                return;
-
-            SearchPlaceholder = Source.DataSource.SearchOption.Keyword;
-            Source.DataSource.SearchOption.SearchType = SearchTypes.Keyword;
+            {
+                Source.DataSource.SearchOption = Source.DataSource.Apis.SearchOptionGenerator;
+            }
+            else
+            {
+                SearchPlaceholder = Source.DataSource.SearchOption.Keyword;
+                Source.DataSource.SearchOption.SearchType = SearchTypes.Keyword;
+            }
             Source.RefreshAsync().FireAndForget();
+
         }
 
         protected override void OnStart()
@@ -73,7 +78,7 @@ namespace iHentai.Core.ViewModels
 
         public SearchOptionBase SearchOption { get; set; }
 
-        public IHentaiApi Apis { get; set; }
+        public IHentaiApi Apis { get; }
 
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())
