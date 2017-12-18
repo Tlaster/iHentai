@@ -78,7 +78,7 @@ namespace iHentai.Core.ViewModels
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            return (await Apis.Gallery(pageIndex, SearchOption)).Gallery;
+            return (await Apis.Gallery(pageIndex, SearchOption, cancellationToken)).Gallery;
         }
     }
 }

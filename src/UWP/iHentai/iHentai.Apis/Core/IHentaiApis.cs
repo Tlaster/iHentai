@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core.Models.Interfaces;
 
@@ -11,8 +12,8 @@ namespace iHentai.Apis.Core
         bool CanLoginWithWebView { get; }
         string LoginWebViewUrl { get; }
         bool WebViewLoginHandler(string url, string cookie);
-        Task<bool> WebViewLoginFollowup();
-        Task<bool> Login(string userName, string password);
+        Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken = default);
+        Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default);
     }
 
     public interface ICookieApi
@@ -31,8 +32,8 @@ namespace iHentai.Apis.Core
         string Host { get; }
         SearchOptionBase SearchOptionGenerator { get; }
         Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
-            SearchOptionBase searchOption = null);
-        Task<IGalleryDetailModel> Detail(IGalleryModel model);
+            SearchOptionBase searchOption = null, CancellationToken cancellationToken = default);
+        Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default);
     }
 
     public interface IWebApi

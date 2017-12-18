@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Flurl;
 using Flurl.Http;
@@ -18,8 +19,7 @@ namespace iHentai.Apis.NHentai
         
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
         
-        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
-            SearchOptionBase searchOption = null)
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0, SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
             var req = $"https://{Host}/".AppendPathSegment("api").AppendPathSegment("galleries");
             if (searchOption == null || searchOption.Keyword.IsEmpty())
@@ -39,11 +39,11 @@ namespace iHentai.Apis.NHentai
                         throw new ArgumentOutOfRangeException();
                 }
             var res = await req.SetQueryParam(nameof(page), page + 1)
-                .GetJsonAsync<GalleryListModel>();
+                .GetJsonAsync<GalleryListModel>(cancellationToken: cancellationToken);
             return (res.NumPages, res.Gallery.WithoutShit());
         }
 
-        public Task<IGalleryDetailModel> Detail(IGalleryModel model)
+        public Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(model as IGalleryDetailModel);
         }

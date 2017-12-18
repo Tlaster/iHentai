@@ -59,21 +59,21 @@ namespace iHentai.Apis.EHentai
             return true;
         }
 
-        public async Task<bool> WebViewLoginFollowup()
+        public async Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken)
         {
             if (!Cookie.ContainsKey("s"))
             {
-                Cookie = await UpdateCookie(Cookie);
+                Cookie = await UpdateCookie(Cookie, cancellationToken);
             }
             return true;
         }
 
-        private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie)
+        private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie, CancellationToken cancellationToken = default)
         {
             using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
             {
                 using (var res = await "https://exhentai.org/uconfig.php".WithClient(loginClient).WithCookies(cookie)
-                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync())
+                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync(cancellationToken: cancellationToken))
                 {
                     if (res.Headers.TryGetValues("Set-Cookie", out var cookies) &&
                         cookies.Any(item => item.StartsWith("s=")))
@@ -97,8 +97,7 @@ namespace iHentai.Apis.EHentai
             return cookie;
         }
 
-        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
-            SearchOptionBase searchOption = null)
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0, SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
@@ -108,11 +107,11 @@ namespace iHentai.Apis.EHentai
             else
                 req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
             var res = await req.SetQueryParam("page", page)
-                .GetHtmlAsync<GalleryListModel>();
+                .GetHtmlAsync<GalleryListModel>(cancellationToken: cancellationToken);
             return (res.MaxPage, res.Gallery.WithoutShit());
         }
 
-        public async Task<bool> Login(string userName, string password)
+        public async Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default)
         {
             Dictionary<string, string> cookie = null;
             using (var loginClient = new FlurlClient { Settings = { HttpClientFactory = new DefaultHttpClientFactory() } })
@@ -124,7 +123,7 @@ namespace iHentai.Apis.EHentai
                         PassWord = password,
                         x = 0,
                         y = 0
-                    }))
+                    }, cancellationToken: cancellationToken))
                 {
                     res.Headers.TryGetValues("Set-Cookie", out var cookies);
                     cookie = cookies
@@ -138,12 +137,12 @@ namespace iHentai.Apis.EHentai
                 if (!cookie.Any())
                     return false;
             }
-            cookie = await UpdateCookie(cookie);
+            cookie = await UpdateCookie(cookie, cancellationToken);
             Cookie = cookie;
             return true;
         }
 
-        public async Task<IGalleryDetailModel> Detail(IGalleryModel model)
+        public async Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default)
         {
             if (!(model is GalleryModel item))
             {
@@ -153,7 +152,7 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment("g")
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
-                .GetHtmlAsync<GalleryDetailModel>();
+                .GetHtmlAsync<GalleryDetailModel>(cancellationToken: cancellationToken);
         }
 
         public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
