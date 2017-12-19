@@ -13,7 +13,7 @@ using iHentai.ViewModels;
 
 namespace iHentai
 {
-    public sealed partial class App : MvvmApplication, IApiApplication
+    public sealed partial class App : Application, IMvvmApplication, IApiApplication
     {
         private readonly Lazy<ActivationService> _activationService;
 
@@ -48,7 +48,7 @@ namespace iHentai
             await ActivationService.ActivateAsync(args);
         }
 
-        public override IEnumerable<Assembly> MvvmViewAssemblies()
+        public IEnumerable<Assembly> MvvmViewAssemblies()
         {
             yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
         }

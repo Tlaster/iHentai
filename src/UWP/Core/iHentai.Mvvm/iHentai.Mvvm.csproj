@@ -114,7 +114,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MvvmApplication.cs" />
+    <Compile Include="IMvvmApplication.cs" />
     <Compile Include="MvvmPage.cs" />
     <Compile Include="IMvvmView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

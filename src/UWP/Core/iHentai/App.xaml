@@ -1,4 +1,4 @@
-﻿<mvvm:MvvmApplication
+﻿<Application
     x:Class="iHentai.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,7 +6,7 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:converters="using:iHentai.Basic.Converters">
 
-    <mvvm:MvvmApplication.Resources>
+    <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/_Colors.xaml" />
@@ -22,5 +22,5 @@
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter"/>
         </ResourceDictionary>
-    </mvvm:MvvmApplication.Resources>
-</mvvm:MvvmApplication>
+    </Application.Resources>
+</Application>
