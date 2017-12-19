@@ -10,15 +10,15 @@
     d:DataContext="{d:DesignInstance models:GalleryModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <StackPanel>
-        <TextBlock 
+        <TextBlock
             TextWrapping="Wrap"
             IsTextScaleFactorEnabled="True"
             IsTextSelectionEnabled="True"
-            Text="{Binding TitleModel.Japanese}"/>
-        <TextBlock Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}"/>
-        
+            Text="{Binding TitleModel.Japanese}" />
+        <TextBlock Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}" />
+
     </StackPanel>
-    
+
 </UserControl>

@@ -11,7 +11,5 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance mastodon:LoginData}">
 
-    <Grid>
-
-    </Grid>
+    <Grid />
 </UserControl>

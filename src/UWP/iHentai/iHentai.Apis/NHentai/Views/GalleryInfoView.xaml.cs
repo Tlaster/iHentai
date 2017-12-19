@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Windows.UI.Xaml;
 using Humanizer;
-using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
 using iHentai.Services;
 

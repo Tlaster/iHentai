@@ -1,17 +1,15 @@
-﻿using iHentai.Basic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using iHentai.Basic.Helpers;
 
 namespace iHentai.Services
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class ContentTypeAttribute : Attribute
     {
         public ContentTypeAttribute(string key)
@@ -28,11 +26,12 @@ namespace iHentai.Services
 
         static ContentViewTemplateSelector()
         {
-            KnownViews = (Application.Current as IMultiContentApplication)?.GetContentViewAssemblies().SelectMany(x => x.DefinedTypes)
+            KnownViews = (Application.Current as IMultiContentApplication)?.GetContentViewAssemblies()
+                .SelectMany(x => x.DefinedTypes)
                 .Select(item =>
                     item.IsClass &&
                     ReflectionHelper.ImplementsGenericDefinition(item, typeof(IContentView<>), out var res)
-                        ? new { ViewType = item, GenericType = res.GetGenericArguments()[0] }
+                        ? new {ViewType = item, GenericType = res.GetGenericArguments()[0]}
                         : null).Where(item => item != null)
                 .ToDictionary(
                     item => (ItemType: item.GenericType, item.ViewType.GetTypeInfo()
@@ -47,13 +46,15 @@ namespace iHentai.Services
                 return new DataTemplate();
             var template =
                 $"<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><views:{type.Name} xmlns:views=\"using:{type.Namespace}\"/></DataTemplate>";
-            return (DataTemplate)XamlReader.Load(template);
+            return (DataTemplate) XamlReader.Load(template);
         }
     }
+
     public interface IMultiContentApplication
     {
         IEnumerable<Assembly> GetContentViewAssemblies();
     }
+
     public interface IContentView<T>
     {
     }

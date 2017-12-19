@@ -15,36 +15,36 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
+        <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}"
+                           SelectedItem="{Binding SelectedService,Mode=TwoWay}">
             <controls:Carousel.ItemTemplate>
                 <DataTemplate>
                     <StackPanel MaxWidth="300">
-                        <Image Source="{Binding Image}"/>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}"/>
+                        <Image Source="{Binding Image}" />
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}" />
                     </StackPanel>
                 </DataTemplate>
             </controls:Carousel.ItemTemplate>
         </controls:Carousel>
-        <ScrollViewer Grid.Row="1" >
+        <ScrollViewer Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ContentControl MaxWidth="500" Content="{Binding LoginData}" HorizontalContentAlignment="Stretch">
                     <ContentControl.ContentTemplateSelector>
-                        <services:ContentViewTemplateSelector/>
+                        <services:ContentViewTemplateSelector />
                     </ContentControl.ContentTemplateSelector>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1">
-                    <Button Content="Confirm"/>
+                    <Button Content="Confirm" />
                 </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>
 </mvvm:MvvmPage>
-

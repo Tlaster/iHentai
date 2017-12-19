@@ -9,6 +9,5 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:LoginWebViewViewModel}">
 
-    <WebView NavigationCompleted="WebView_OnNavigationCompleted" Source="{Binding Api.LoginWebViewUrl}"/>
+    <WebView NavigationCompleted="WebView_OnNavigationCompleted" Source="{Binding Api.LoginWebViewUrl}" />
 </mvvm:MvvmPage>
-

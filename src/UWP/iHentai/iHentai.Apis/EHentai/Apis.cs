@@ -22,12 +22,6 @@ namespace iHentai.Apis.EHentai
     {
         public bool IsExhentaiMode { get; set; } = true;
 
-        public IApiConfig ApiConfig
-        {
-            get => "exhentai_config".Read(new Config());
-            set => value.Save("exhentai_config");
-        }
-
         public Dictionary<string, string> RequestHeader => new Dictionary<string, string>
         {
             {
@@ -42,6 +36,12 @@ namespace iHentai.Apis.EHentai
         {
             get => "exhentai_user_info".Read(new Dictionary<string, string>());
             set => value.Save("exhentai_user_info");
+        }
+
+        public IApiConfig ApiConfig
+        {
+            get => "exhentai_config".Read(new Config());
+            set => value.Save("exhentai_config");
         }
 
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
@@ -145,6 +145,17 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment(item.Token);
         }
 
+        public bool CanHandle(HttpRequestMessage message)
+        {
+            return message.RequestUri.Host == Host;
+        }
+
+        public void Handle(ref HttpRequestMessage message)
+        {
+            foreach (var item in RequestHeader)
+                message.Headers.Add(item.Key, item.Value);
+        }
+
         private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie,
             CancellationToken cancellationToken = default)
         {
@@ -178,17 +189,6 @@ namespace iHentai.Apis.EHentai
                 {nameof(ipb_member_id), ipb_member_id},
                 {nameof(ipb_pass_hash), ipb_pass_hash}
             };
-        }
-
-        public bool CanHandle(HttpRequestMessage message)
-        {
-            return message.RequestUri.Host == Host;
-        }
-
-        public void Handle(ref HttpRequestMessage message)
-        {
-            foreach (var item in RequestHeader)
-                message.Headers.Add(item.Key, item.Value);
         }
     }
 }

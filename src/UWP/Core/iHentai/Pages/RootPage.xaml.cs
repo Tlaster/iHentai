@@ -6,11 +6,7 @@ using Windows.UI.Xaml;
 using Conet.Pages;
 using Conet.ViewModels;
 using iHentai.Basic.Helpers;
-using iHentai.Core.Pages;
-using iHentai.Core.ViewModels;
-using iHentai.Mvvm;
 using iHentai.Paging;
-using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,7 +17,7 @@ namespace iHentai.Pages
     /// </summary>
     public sealed partial class RootPage
     {
-        private UISettings _uiSettings;
+        private readonly UISettings _uiSettings;
 
         public RootPage()
         {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
@@ -51,7 +49,6 @@ namespace iHentai.Core.ViewModels
                 Source.DataSource.SearchOption.SearchType = SearchTypes.Keyword;
             }
             Source.RefreshAsync().FireAndForget();
-
         }
 
         protected override void OnStart()
@@ -63,7 +60,8 @@ namespace iHentai.Core.ViewModels
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(), option));
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(),
+                option));
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
         }

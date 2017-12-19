@@ -1,11 +1,8 @@
-﻿
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Humanizer;
-using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Converters;
 using iHentai.Apis.EHentai.Models;
 using iHentai.Basic.Helpers;
@@ -21,7 +18,8 @@ namespace iHentai.Apis.EHentai.Views
             InitializeComponent();
         }
 
-        private void GalleryDetailInfoView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        private void GalleryDetailInfoView_OnDataContextChanged(FrameworkElement sender,
+            DataContextChangedEventArgs args)
         {
             if (args.NewValue is GalleryDetailModel gallery)
             {

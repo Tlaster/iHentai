@@ -2,7 +2,6 @@
 
 namespace Conet.Apis.Weibo.Models
 {
-
     public class StatusList
     {
         [JsonProperty("statuses")]

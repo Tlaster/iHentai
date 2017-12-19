@@ -13,13 +13,14 @@
 
     <Grid Padding="8">
         <Grid Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}">
-            <TextBlock Text="Empty!"/>
+            <TextBlock Text="Empty!" />
         </Grid>
 
         <Grid Visibility="{Binding IsError, Converter={StaticResource BoolToVisibilityConverter}}">
-            <TextBlock Text="Error!"/>
+            <TextBlock Text="Error!" />
         </Grid>
 
-        <ProgressRing Width="50" Height="50" IsActive="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <ProgressRing Width="50" Height="50" IsActive="{Binding IsLoading}"
+                      Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" />
     </Grid>
 </UserControl>

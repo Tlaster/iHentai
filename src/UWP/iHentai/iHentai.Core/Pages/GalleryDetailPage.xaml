@@ -39,7 +39,7 @@
                                        IsTextScaleFactorEnabled="True"
                                        IsTextSelectionEnabled="True"
                                        Margin="0,8,0,0"
-                                       Style="{ThemeResource TitleTextBlockStyle}"/>
+                                       Style="{ThemeResource TitleTextBlockStyle}" />
                             <ContentControl
                                 Visibility="{Binding DetailModel.IsSuccessfullyCompleted, Converter={StaticResource BoolToVisibilityConverter}}"
                                 Margin="0,8" Content="{Binding DetailModel.Result}"
@@ -51,7 +51,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Download" />
                                 <Button Content="Read" />
-                                <Button Content="Open in browser"/>
+                                <Button Content="Open in browser" />
                             </StackPanel>
                         </StackPanel>
                     </Grid>

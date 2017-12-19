@@ -12,39 +12,38 @@
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <StackPanel>
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags}">
             <controls:TagListView.Flyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="Search" Click="Search_OnClick"/>
-                    <MenuFlyoutItem Text="Show wiki" Click="ShowWiki_OnClick"/>
+                    <MenuFlyoutItem Text="Search" Click="Search_OnClick" />
+                    <MenuFlyoutItem Text="Show wiki" Click="ShowWiki_OnClick" />
                 </MenuFlyout>
             </controls:TagListView.Flyout>
         </controls:TagListView>
-        <controls:ThumbListView ItemsSource="{Binding Images}"/>
+        <controls:ThumbListView ItemsSource="{Binding Images}" />
         <ItemsControl ItemsSource="{Binding Comments}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <ItemsStackPanel/>
+                    <ItemsStackPanel />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="8">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding UserName}" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Row="0" HorizontalAlignment="Right" Text="{Binding CreatedAt, Converter={StaticResource HumanizerConverter}}"/>
-                        <toolkit:MarkdownTextBlock Grid.Row="1" Text="{Binding Content, Converter={StaticResource HtmlToMarkdownConverter}}"/>
+                        <TextBlock Text="{Binding UserName}" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Right"
+                                   Text="{Binding CreatedAt, Converter={StaticResource HumanizerConverter}}" />
+                        <toolkit:MarkdownTextBlock Grid.Row="1"
+                                                   Text="{Binding Content, Converter={StaticResource HtmlToMarkdownConverter}}" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
 </UserControl>
-
-
-

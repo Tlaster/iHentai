@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
-using iHentai.Apis.Core.Models;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
@@ -19,7 +18,7 @@ namespace iHentai.Core.ViewModels
             LoginCommand = new RelayAsyncCommand(Login);
             SelectedService = Source.FirstOrDefault();
         }
-        
+
         public List<ServiceSelectionBannerModel<ServiceTypes>> Source { get; } = Enum.GetNames(typeof(ServiceTypes))
             .Select(item => new ServiceSelectionBannerModel<ServiceTypes>(item)).ToList();
 
@@ -35,7 +34,7 @@ namespace iHentai.Core.ViewModels
         public string UserName { get; set; }
 
         public string Password { get; set; }
-        
+
         public IAsyncCommand LoginCommand { get; }
 
         private async Task Login()
@@ -43,9 +42,7 @@ namespace iHentai.Core.ViewModels
             if (UserName.IsEmpty() || Password.IsEmpty() || !(Api is ILoginApi login))
                 return;
             if (await login.Login(UserName, Password))
-            {
                 OnSeccess();
-            }
         }
 
         public async void GoWebView()
@@ -64,7 +61,8 @@ namespace iHentai.Core.ViewModels
 
         public void Skip()
         {
-            Navigate<GalleryViewModel>(args: SelectedService.ServiceType);//TODO: Navigate might failed if without WebViewLoginFollowup
+            Navigate<GalleryViewModel>(args: SelectedService
+                .ServiceType); //TODO: Navigate might failed if without WebViewLoginFollowup
             //Frame.ClearBackStack();
         }
 

@@ -26,7 +26,8 @@ namespace iHentai.Apis.Core
                 .Where(item =>
                     item.GetCustomAttributesData()
                         .Any(attr => typeof(IValueAttribute).IsAssignableFrom(attr.AttributeType)))
-                .Select(item => new KeyValuePair<string, string>(item.GetAttr().Key, item.GetAttr().GetValue(item.GetValue(this))));
+                .Select(item =>
+                    new KeyValuePair<string, string>(item.GetAttr().Key, item.GetAttr().GetValue(item.GetValue(this))));
         }
     }
 }

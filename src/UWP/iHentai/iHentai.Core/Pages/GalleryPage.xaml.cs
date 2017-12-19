@@ -34,7 +34,7 @@ namespace iHentai.Core.Pages
             get => (GalleryViewModel) base.ViewModel;
             set => base.ViewModel = value;
         }
-        
+
         protected override void OnRestart()
         {
             base.OnRestart();

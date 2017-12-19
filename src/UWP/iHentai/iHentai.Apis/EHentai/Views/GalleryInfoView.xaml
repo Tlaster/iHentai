@@ -14,16 +14,17 @@
     d:DataContext="{d:DesignInstance models:GalleryModel}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
-            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Yellow"/>
+            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Yellow" />
         </Grid.Resources>
-        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}"/>
+        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}" />
         <Border Grid.Row="1" x:Name="CategoryNameBorder" Padding="4" HorizontalAlignment="Left">
-            <TextBlock x:Name="CategoryName" FontSize="12"/>
+            <TextBlock x:Name="CategoryName" FontSize="12" />
         </Border>
-        <TextBlock Grid.Row="1" Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" HorizontalAlignment="Right" />
+        <TextBlock Grid.Row="1" Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}"
+                   HorizontalAlignment="Right" />
     </Grid>
 </UserControl>

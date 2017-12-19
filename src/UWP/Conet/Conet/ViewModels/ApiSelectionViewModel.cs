@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Mvvm;
@@ -17,15 +15,16 @@ namespace Conet.ViewModels
         {
             SelectedService = Source.FirstOrDefault();
         }
+
         public List<ServiceSelectionBannerModel<ServiceTypes>> Source { get; } = Enum.GetNames(typeof(ServiceTypes))
             .Select(item => new ServiceSelectionBannerModel<ServiceTypes>(item)).ToList();
 
         public ServiceSelectionBannerModel<ServiceTypes> SelectedService { get; set; }
-        
+
         [DependsOn(nameof(SelectedService))]
         public IConetApi Api =>
             SelectedService?.ServiceType.Get<IConetApi>();
-        
+
         public ILoginData LoginData { get; private set; }
 
         public void OnSelectedServiceChanged()

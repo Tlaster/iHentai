@@ -1,5 +1,4 @@
-﻿using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Apis.NHentai.Models;
+﻿using iHentai.Apis.NHentai.Models;
 using iHentai.Services;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236

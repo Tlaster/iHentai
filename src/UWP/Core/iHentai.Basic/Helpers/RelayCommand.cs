@@ -24,7 +24,7 @@ namespace iHentai.Basic.Helpers
         }
 
         public bool IsRunning { get; private set; }
-        
+
         [DependsOn(nameof(IsRunning))]
         public bool IsNotRunning => !IsRunning;
 

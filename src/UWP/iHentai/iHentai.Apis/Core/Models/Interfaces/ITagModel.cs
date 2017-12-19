@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iHentai.Apis.Core.Models.Interfaces
+﻿namespace iHentai.Apis.Core.Models.Interfaces
 {
     public interface ITagModel
     {

@@ -8,13 +8,13 @@ using iHentai.Mvvm;
 namespace iHentai.Core.Pages
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class LoginWebViewPage : IMvvmView<LoginWebViewViewModel>
     {
         public LoginWebViewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public new LoginWebViewViewModel ViewModel
@@ -25,7 +25,7 @@ namespace iHentai.Core.Pages
 
         private async void WebView_OnNavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            var cookit = await sender.InvokeScriptAsync("eval", new[] { "document.cookie" });
+            var cookit = await sender.InvokeScriptAsync("eval", new[] {"document.cookie"});
             ViewModel.WebViewNavigated(args.Uri.ToString(), cookit);
         }
     }

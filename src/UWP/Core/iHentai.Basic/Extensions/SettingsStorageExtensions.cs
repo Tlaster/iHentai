@@ -48,12 +48,12 @@ namespace iHentai.Basic.Extensions
         {
             return ApplicationData.Current.LocalSettings.Values.ContainsKey(key);
         }
-        
+
         public static void Save<T>(this T obj, string key)
         {
             ApplicationData.Current.LocalSettings.Values[key] = obj.ToJson();
         }
-        
+
         public static T Read<T>(this (string Container, string Key) value, T defaultValue = default)
         {
             return ApplicationData.Current.LocalSettings

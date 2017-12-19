@@ -14,12 +14,12 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
-        <converters:TagConverter x:Key="TagConverter"/>
-        <converters:ThumbListConverter x:Key="ThumbListConverter"/>
+        <converters:TagConverter x:Key="TagConverter" />
+        <converters:ThumbListConverter x:Key="ThumbListConverter" />
     </UserControl.Resources>
 
     <StackPanel>
-        <controls:TagListView Margin="8" ItemsSource="{Binding Tags, Converter={StaticResource TagConverter}}"/>
-        <controls:ThumbListView ItemsSource="{Binding Converter={StaticResource ThumbListConverter}}"/>
+        <controls:TagListView Margin="8" ItemsSource="{Binding Tags, Converter={StaticResource TagConverter}}" />
+        <controls:ThumbListView ItemsSource="{Binding Converter={StaticResource ThumbListConverter}}" />
     </StackPanel>
 </UserControl>

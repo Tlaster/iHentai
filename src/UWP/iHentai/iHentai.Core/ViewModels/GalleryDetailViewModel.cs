@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
-using Nito.AsyncEx;
 using Nito.Mvvm;
 
 namespace iHentai.Core.ViewModels

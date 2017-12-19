@@ -8,8 +8,5 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     mc:Ignorable="d">
 
-    <Grid>
-
-    </Grid>
+    <Grid />
 </mvvm:MvvmPage>
-

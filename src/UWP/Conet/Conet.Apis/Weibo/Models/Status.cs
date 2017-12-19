@@ -9,13 +9,18 @@ namespace Conet.Apis.Weibo.Models
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            serializer.Serialize(writer, ((DateTime)value).ToString("ddd MMM dd HH:mm:ss K yyyy", CultureInfo.InvariantCulture));
+            serializer.Serialize(writer,
+                ((DateTime) value).ToString("ddd MMM dd HH:mm:ss K yyyy", CultureInfo.InvariantCulture));
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             var str = serializer.Deserialize<string>(reader);
-            return DateTime.TryParseExact(str, "ddd MMM dd HH:mm:ss K yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var res) ? res : DateTime.UtcNow;
+            return DateTime.TryParseExact(str, "ddd MMM dd HH:mm:ss K yyyy", CultureInfo.InvariantCulture,
+                DateTimeStyles.AdjustToUniversal, out var res)
+                ? res
+                : DateTime.UtcNow;
         }
 
         public override bool CanConvert(Type objectType)

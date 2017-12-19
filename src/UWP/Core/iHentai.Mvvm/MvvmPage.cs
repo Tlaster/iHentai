@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Paging;
@@ -8,19 +7,19 @@ namespace iHentai.Mvvm
 {
     public abstract class MvvmPage : HentaiPage
     {
-        protected override void SetFrame(HentaiFrame frame, string pageKey)
-        {
-            base.SetFrame(frame, pageKey);
-            if (ViewModel != null && ViewModel.Frame == null)
-            {
-                ViewModel.Frame = frame;
-            }
-        }
-
         public MvvmPage()
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
+        }
+
+        public ViewModel ViewModel { get; set; }
+
+        protected override void SetFrame(HentaiFrame frame, string pageKey)
+        {
+            base.SetFrame(frame, pageKey);
+            if (ViewModel != null && ViewModel.Frame == null)
+                ViewModel.Frame = frame;
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
@@ -33,16 +32,12 @@ namespace iHentai.Mvvm
             ViewModel?.OnLoaded();
         }
 
-        public ViewModel ViewModel { get; set; }
-
         protected override void OnNavigatedTo(HentaiNavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             ViewModel = e.Parameter as ViewModel;
             if (ViewModel != null && ViewModel.Frame == null)
-            {
                 ViewModel.Frame = Frame;
-            }
             DataContext = ViewModel;
             switch (e.NavigationMode)
             {

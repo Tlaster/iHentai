@@ -1,7 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Humanizer;
-using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Converters;
 using iHentai.Apis.EHentai.Models;
 using iHentai.Basic.Helpers;

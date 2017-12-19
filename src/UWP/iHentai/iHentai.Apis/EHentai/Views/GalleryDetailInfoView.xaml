@@ -13,16 +13,16 @@
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}">
 
     <StackPanel>
-        <TextBlock 
+        <TextBlock
             TextWrapping="Wrap"
             IsTextScaleFactorEnabled="True"
             IsTextSelectionEnabled="True"
-            Text="{Binding TitleJp}"/>
+            Text="{Binding TitleJp}" />
         <Border x:Name="CategoryNameBorder" Margin="0,4,0,0" Padding="4" HorizontalAlignment="Left">
-            <TextBlock x:Name="CategoryName" FontSize="12"/>
+            <TextBlock x:Name="CategoryName" FontSize="12" />
         </Border>
-        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}"/>
+        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}" />
         <TextBlock Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" />
     </StackPanel>
-    
+
 </UserControl>

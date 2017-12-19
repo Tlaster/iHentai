@@ -8,7 +8,9 @@ namespace iHentai.Basic.Helpers
     {
         public static void AccentColorUpdated(FrameworkElement elementWithText)
         {
-            elementWithText.RequestedTheme = CheckColorIsLight(new UISettings().GetColorValue(UIColorType.Accent)) ? ElementTheme.Light : ElementTheme.Dark;
+            elementWithText.RequestedTheme = CheckColorIsLight(new UISettings().GetColorValue(UIColorType.Accent))
+                ? ElementTheme.Light
+                : ElementTheme.Dark;
         }
 
         public static bool CheckColorIsLight(Color c)

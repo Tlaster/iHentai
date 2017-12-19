@@ -13,14 +13,14 @@
                 <ResourceDictionary Source="/Styles/_FontSizes.xaml" />
                 <ResourceDictionary Source="/Styles/_Thickness.xaml" />
 
-                <ResourceDictionary Source="ms-appx:///iHentai.Core/Styles/ImageEx.xaml"/>
+                <ResourceDictionary Source="ms-appx:///iHentai.Core/Styles/ImageEx.xaml" />
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/Page.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

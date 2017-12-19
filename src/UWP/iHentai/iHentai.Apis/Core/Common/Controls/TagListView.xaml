@@ -11,28 +11,30 @@
     d:DesignWidth="400">
     <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-            <ItemsStackPanel/>
+            <ItemsStackPanel />
         </ItemsPanelTemplate>
     </ItemsControl.ItemsPanel>
     <ItemsControl.ItemTemplate>
         <DataTemplate>
             <Grid Padding="0,4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Title}" Padding="4" Margin="4"/>
+                <TextBlock Text="{Binding Title}" Padding="4" Margin="4" />
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding Tags}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="system:String">
-                            <Border Padding="4" Margin="4" Holding="UIElement_OnHolding" RightTapped="UIElement_OnRightTapped" Background="{ThemeResource SystemControlAcrylicElementBrush}">
-                                <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind}"/>
+                            <Border Padding="4" Margin="4" Holding="UIElement_OnHolding"
+                                    RightTapped="UIElement_OnRightTapped"
+                                    Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                                <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind}" />
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
+                            <controls:WrapPanel />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>

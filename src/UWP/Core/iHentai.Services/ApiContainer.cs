@@ -14,7 +14,7 @@ namespace iHentai.Services
         IEnumerable<Assembly> GetApiAssemblies();
     }
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class ApiKeyAttribute : Attribute
     {
         public ApiKeyAttribute(string key)
@@ -52,8 +52,9 @@ namespace iHentai.Services
         }
 
         public Dictionary<string, TypeInfo> KnownApis { get; }
-        
-        public IApi this[Enum index] => Apis.GetOrAdd(Enum.GetName(index.GetType(), index), str => (IApi) Activator.CreateInstance(KnownApis[str]));
+
+        public IApi this[Enum index] => Apis.GetOrAdd(Enum.GetName(index.GetType(), index),
+            str => (IApi) Activator.CreateInstance(KnownApis[str]));
 
         public IApi this[string index] => Apis.GetOrAdd(index, str => (IApi) Activator.CreateInstance(KnownApis[str]));
 

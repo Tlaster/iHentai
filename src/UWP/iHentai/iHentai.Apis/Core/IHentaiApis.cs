@@ -33,8 +33,10 @@ namespace iHentai.Apis.Core
     {
         string Host { get; }
         SearchOptionBase SearchOptionGenerator { get; }
+
         Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default);
+
         Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default);
     }
 

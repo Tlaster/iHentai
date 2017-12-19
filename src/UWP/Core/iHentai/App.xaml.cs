@@ -10,7 +10,6 @@ using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
 using iHentai.Pages;
 using iHentai.Services;
-using iHentai.ViewModels;
 
 namespace iHentai
 {
@@ -27,6 +26,24 @@ namespace iHentai
         }
 
         private ActivationService ActivationService => _activationService.Value;
+
+        public IEnumerable<Assembly> GetApiAssemblies()
+        {
+            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            yield return typeof(IConetApi).GetTypeInfo().Assembly;
+        }
+
+        public IEnumerable<Assembly> GetContentViewAssemblies()
+        {
+            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            yield return typeof(IConetApi).GetTypeInfo().Assembly;
+        }
+
+        public IEnumerable<Assembly> MvvmViewAssemblies()
+        {
+            yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
+            yield return typeof(TimelineViewModel).GetTypeInfo().Assembly;
+        }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
@@ -47,24 +64,6 @@ namespace iHentai
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
         {
             await ActivationService.ActivateAsync(args);
-        }
-
-        public IEnumerable<Assembly> MvvmViewAssemblies()
-        {
-            yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
-            yield return typeof(TimelineViewModel).GetTypeInfo().Assembly;
-        }
-
-        public IEnumerable<Assembly> GetApiAssemblies()
-        {
-            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
-            yield return typeof(IConetApi).GetTypeInfo().Assembly;
-        }
-
-        public IEnumerable<Assembly> GetContentViewAssemblies()
-        {
-            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
-            yield return typeof(IConetApi).GetTypeInfo().Assembly;
         }
     }
 }

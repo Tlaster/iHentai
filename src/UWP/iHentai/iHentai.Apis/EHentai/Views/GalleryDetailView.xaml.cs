@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using iHentai.Apis.Core.Models.Interfaces;
+﻿using Windows.UI.Xaml;
 using iHentai.Apis.EHentai.Models;
 using iHentai.Services;
 
@@ -25,17 +11,15 @@ namespace iHentai.Apis.EHentai.Views
     {
         public GalleryDetailView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Search_OnClick(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private void ShowWiki_OnClick(object sender, RoutedEventArgs e)
         {
-            
         }
     }
 }

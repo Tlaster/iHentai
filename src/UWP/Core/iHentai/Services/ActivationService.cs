@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Flurl.Http;
 using iHentai.Activation;
-using iHentai.Apis.Core;
 using iHentai.Basic.Helpers;
-using iHentai.Mvvm;
 using iHentai.Paging;
 using Microsoft.Toolkit.Uwp.UI;
 
@@ -42,14 +39,7 @@ namespace iHentai.Services
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
                 if (Window.Current.Content == null)
-                {
-                    // Create a Frame to act as the navigation context and navigate to the first page
                     Window.Current.Content = _shell;
-                    //NavigationService.NavigationFailed += (sender, e) => throw e.Exception;
-                    //NavigationService.Navigated += Frame_Navigated;
-                    //if (SystemNavigationManager.GetForCurrentView() != null)
-                    //    SystemNavigationManager.GetForCurrentView().BackRequested += ActivationService_BackRequested;
-                }
             }
 
             var activationHandler = GetActivationHandlers()
