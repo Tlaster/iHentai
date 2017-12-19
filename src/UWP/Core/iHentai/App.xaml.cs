@@ -4,6 +4,7 @@ using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Conet.Apis.Core;
+using Conet.ViewModels;
 using iHentai.Apis.Core;
 using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
@@ -51,6 +52,7 @@ namespace iHentai
         public IEnumerable<Assembly> MvvmViewAssemblies()
         {
             yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
+            yield return typeof(TimelineViewModel).GetTypeInfo().Assembly;
         }
 
         public IEnumerable<Assembly> GetApiAssemblies()
