@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Conet.Apis.Sina.Models
+namespace Conet.Apis.Weibo.Models
 {
     public class User
     {

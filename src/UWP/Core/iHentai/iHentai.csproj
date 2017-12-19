@@ -224,6 +224,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Conet\Conet.Apis\Conet.Apis.csproj">
+      <Project>{ff200c31-7908-4dc4-b917-e20a415d20df}</Project>
+      <Name>Conet.Apis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Conet\Conet\Conet.csproj">
       <Project>{152bb566-c7ff-47c7-aa15-eab367abecc6}</Project>
       <Name>Conet</Name>
@@ -247,6 +251,10 @@
     <ProjectReference Include="..\iHentai.Paging\iHentai.Paging.csproj">
       <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
       <Name>iHentai.Paging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\iHentai.Services\iHentai.Services.csproj">
+      <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
+      <Name>iHentai.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\WaterFallView\WaterFallView.vcxproj">
       <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>

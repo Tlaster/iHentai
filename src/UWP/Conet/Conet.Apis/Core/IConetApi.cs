@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Conet.Apis.Core.Models.Interfaces;
+using iHentai.Services;
 
 namespace Conet.Apis.Core
 {
-    public interface IConetApi
+    public enum ServiceTypes
     {
-        Task<IEnumerable<IStatusModel>> GetStatus(long max_id = 0L, long since_id = 0L);
+        Mastodon,
+        Weibo,
+        Twitter
+    }
+
+    public interface IConetApi : IApi
+    {
+        Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0L, long since_id = 0L);
     }
 }

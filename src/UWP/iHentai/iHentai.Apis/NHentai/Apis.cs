@@ -9,9 +9,11 @@ using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.NHentai.Models;
 using iHentai.Basic.Extensions;
+using iHentai.Services;
 
 namespace iHentai.Apis.NHentai
 {
+    [ApiKey(nameof(ServiceTypes.NHentai))]
     public class Apis : IHentaiApi, IWebApi
     {
         public string Host { get; } = "nhentai.net";

@@ -8,6 +8,7 @@ using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
+using iHentai.Services;
 using Microsoft.Toolkit.Collections;
 
 namespace iHentai.Core.ViewModels
@@ -62,7 +63,7 @@ namespace iHentai.Core.ViewModels
         private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(HentaiServices.Instance[serviceType], option));
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(), option));
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
         }

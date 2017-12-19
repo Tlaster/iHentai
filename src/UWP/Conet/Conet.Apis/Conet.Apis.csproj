@@ -129,17 +129,17 @@
     <Compile Include="Mastodon\Models\Tag.cs" />
     <Compile Include="Mastodon\Models\Visibility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sina\Apis.cs" />
-    <Compile Include="Sina\Models\Ad.cs" />
-    <Compile Include="Sina\Models\Annotation.cs" />
-    <Compile Include="Sina\Models\CommentManageInfo.cs" />
-    <Compile Include="Sina\Models\ExtendInfo.cs" />
-    <Compile Include="Sina\Models\Insecurity.cs" />
-    <Compile Include="Sina\Models\PicUrl.cs" />
-    <Compile Include="Sina\Models\Status.cs" />
-    <Compile Include="Sina\Models\StatusList.cs" />
-    <Compile Include="Sina\Models\User.cs" />
-    <Compile Include="Sina\Models\Visible.cs" />
+    <Compile Include="Weibo\Apis.cs" />
+    <Compile Include="Weibo\Models\Ad.cs" />
+    <Compile Include="Weibo\Models\Annotation.cs" />
+    <Compile Include="Weibo\Models\CommentManageInfo.cs" />
+    <Compile Include="Weibo\Models\ExtendInfo.cs" />
+    <Compile Include="Weibo\Models\Insecurity.cs" />
+    <Compile Include="Weibo\Models\PicUrl.cs" />
+    <Compile Include="Weibo\Models\Status.cs" />
+    <Compile Include="Weibo\Models\StatusList.cs" />
+    <Compile Include="Weibo\Models\User.cs" />
+    <Compile Include="Weibo\Models\Visible.cs" />
     <Compile Include="Twitter\Models\StatusModel.cs" />
     <EmbeddedResource Include="Properties\Conet.Apis.rd.xml" />
   </ItemGroup>
@@ -150,6 +150,12 @@
     <PackageReference Include="refit">
       <Version>4.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
+      <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
+      <Name>iHentai.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

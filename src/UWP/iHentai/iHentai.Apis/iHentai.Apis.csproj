@@ -128,8 +128,6 @@
     </Compile>
     <Compile Include="Core\Common\IEnumerableExtension.cs" />
     <Compile Include="Core\FlurlExtension.cs" />
-    <Compile Include="Core\HentaiHttpClient.cs" />
-    <Compile Include="Core\HentaiServices.cs" />
     <Compile Include="Core\IApiConfig.cs" />
     <Compile Include="Core\IHentaiApis.cs" />
     <Compile Include="Core\Models\Interfaces\IGalleryContentView.cs" />
@@ -255,6 +253,10 @@
     <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
+      <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
+      <Name>iHentai.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

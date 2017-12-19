@@ -86,8 +86,8 @@ namespace iHentai.Services
         {
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
-            await ImageCache.Instance.InitializeAsync(httpMessageHandler: new HentaiHttpClient());
-            FlurlHttp.Configure(c => c.HttpClientFactory = new HentaiHttpClientFactory());
+            await ImageCache.Instance.InitializeAsync(httpMessageHandler: new ApiHttpClient());
+            FlurlHttp.Configure(c => c.HttpClientFactory = new ApiHttpClientFactory());
             await Task.CompletedTask;
         }
 

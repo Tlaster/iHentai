@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Conet.Apis.Core;
+using iHentai.Apis.Core;
 using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
 using iHentai.Pages;
@@ -11,7 +13,7 @@ using iHentai.ViewModels;
 
 namespace iHentai
 {
-    public sealed partial class App : MvvmApplication
+    public sealed partial class App : MvvmApplication, IApiApplication
     {
         private readonly Lazy<ActivationService> _activationService;
 
@@ -49,6 +51,12 @@ namespace iHentai
         public override IEnumerable<Assembly> MvvmViewAssemblies()
         {
             yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
+        }
+
+        public IEnumerable<Assembly> GetApiAssemblies()
+        {
+            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            yield return typeof(IConetApi).GetTypeInfo().Assembly;
         }
     }
 }

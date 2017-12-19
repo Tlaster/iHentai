@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Services;
 
 namespace iHentai.Apis.Core
 {
@@ -16,18 +17,19 @@ namespace iHentai.Apis.Core
         Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default);
     }
 
-    public interface ICookieApi
-    {
-        Dictionary<string, string> Cookie { get; }
-        Dictionary<string, string> RequestHeader { get; }
-    }
+    //public interface ICookieApi
+    //{
+    //    string Host { get; }
+    //    Dictionary<string, string> Cookie { get; }
+    //    Dictionary<string, string> RequestHeader { get; }
+    //}
 
     public interface IConfigApi
     {
         IApiConfig ApiConfig { get; }
     }
 
-    public interface IHentaiApi
+    public interface IHentaiApi : IApi
     {
         string Host { get; }
         SearchOptionBase SearchOptionGenerator { get; }

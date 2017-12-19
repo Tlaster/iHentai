@@ -3,7 +3,7 @@ using System.Globalization;
 using Conet.Apis.Core.Models.Interfaces;
 using Newtonsoft.Json;
 
-namespace Conet.Apis.Sina.Models
+namespace Conet.Apis.Weibo.Models
 {
     public class DatetimeConverter : JsonConverter
     {

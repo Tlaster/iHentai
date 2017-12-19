@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +13,12 @@ using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
 using iHentai.Basic.Extensions;
+using iHentai.Services;
 
 namespace iHentai.Apis.EHentai
 {
-    public class Apis : IHentaiApi, ILoginApi, ICookieApi, IConfigApi, IWebApi
+    [ApiKey(nameof(ServiceTypes.EHentai))]
+    public class Apis : IHentaiApi, ILoginApi, IConfigApi, IWebApi, IWithHttpHandler
     {
         public bool IsExhentaiMode { get; set; } = true;
 
@@ -175,6 +178,17 @@ namespace iHentai.Apis.EHentai
                 {nameof(ipb_member_id), ipb_member_id},
                 {nameof(ipb_pass_hash), ipb_pass_hash}
             };
+        }
+
+        public bool CanHandle(HttpRequestMessage message)
+        {
+            return message.RequestUri.Host == Host;
+        }
+
+        public void Handle(ref HttpRequestMessage message)
+        {
+            foreach (var item in RequestHeader)
+                message.Headers.Add(item.Key, item.Value);
         }
     }
 }

@@ -7,6 +7,7 @@ using iHentai.Apis.Core.Models;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
+using iHentai.Services;
 using PropertyChanged;
 
 namespace iHentai.Core.ViewModels
@@ -26,7 +27,7 @@ namespace iHentai.Core.ViewModels
 
         [DependsOn(nameof(SelectedService))]
         public IHentaiApi Api =>
-            SelectedService == null ? null : HentaiServices.Instance[SelectedService.ServiceType];
+            SelectedService?.ServiceType.Get<IHentaiApi>();
 
         [DependsOn(nameof(SelectedService))]
         public bool CanLogin => Api is ILoginApi;
