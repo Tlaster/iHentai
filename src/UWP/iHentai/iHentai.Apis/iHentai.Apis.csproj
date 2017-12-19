@@ -128,12 +128,9 @@
     </Compile>
     <Compile Include="Core\Common\IEnumerableExtension.cs" />
     <Compile Include="Core\FlurlExtension.cs" />
-    <Compile Include="Core\IApiConfig.cs" />
     <Compile Include="Core\IHentaiApis.cs" />
-    <Compile Include="Core\Models\Interfaces\IGalleryContentView.cs" />
     <Compile Include="Core\Models\Interfaces\IGalleryModel.cs" />
     <Compile Include="Core\Models\Interfaces\ITagModel.cs" />
-    <Compile Include="Core\Models\ServiceSelectionBannerModel.cs" />
     <Compile Include="Core\SearchOptionBase.cs" />
     <Compile Include="Core\ServiceTypes.cs" />
     <Compile Include="EHentai\Apis.cs" />

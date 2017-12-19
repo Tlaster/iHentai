@@ -8,13 +8,6 @@ using iHentai.Services;
 
 namespace Conet.Apis.Core
 {
-    public enum ServiceTypes
-    {
-        Mastodon,
-        Weibo,
-        Twitter
-    }
-
     public interface IConetApi : IApi
     {
         Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0L, long since_id = 0L);

@@ -9,6 +9,7 @@
     xmlns:models="using:iHentai.Apis.Core.Models"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
+    xmlns:services="using:iHentai.Services"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
 
@@ -21,10 +22,10 @@
 
         <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
             <controls:Carousel.ItemTemplate>
-                <DataTemplate x:DataType="models:ServiceSelectionBannerModel">
+                <DataTemplate>
                     <StackPanel MaxWidth="300">
-                        <Image Source="{x:Bind Image}"/>
-                        <TextBlock HorizontalAlignment="Center" Text="{x:Bind ServiceType}"/>
+                        <Image Source="{Binding Image}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}"/>
                     </StackPanel>
                 </DataTemplate>
             </controls:Carousel.ItemTemplate>

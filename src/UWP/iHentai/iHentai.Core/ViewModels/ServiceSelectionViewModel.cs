@@ -20,10 +20,10 @@ namespace iHentai.Core.ViewModels
             SelectedService = Source.FirstOrDefault();
         }
         
-        public List<ServiceSelectionBannerModel> Source { get; } = Enum.GetNames(typeof(ServiceTypes))
-            .Select(item => new ServiceSelectionBannerModel(item)).ToList();
+        public List<ServiceSelectionBannerModel<ServiceTypes>> Source { get; } = Enum.GetNames(typeof(ServiceTypes))
+            .Select(item => new ServiceSelectionBannerModel<ServiceTypes>(item)).ToList();
 
-        public ServiceSelectionBannerModel SelectedService { get; set; }
+        public ServiceSelectionBannerModel<ServiceTypes> SelectedService { get; set; }
 
         [DependsOn(nameof(SelectedService))]
         public IHentaiApi Api =>

@@ -14,9 +14,9 @@
     xmlns:waterfall="using:WaterFallView"
     xmlns:behaviors1="using:iHentai.Basic.Behaviors"
     xmlns:views="using:iHentai.Core.Views"
-    xmlns:selectors="using:iHentai.Core.Selectors"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:basic="using:iHentai.Basic.Controls"
+    xmlns:services="using:iHentai.Services"
     SizeChanged="GalleryPage_OnSizeChanged"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
@@ -100,7 +100,7 @@
                         <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Visibility="{Binding ElementName=AdvSearchSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ContentControl Content="{Binding Source.DataSource.SearchOption}">
                                 <ContentControl.ContentTemplateSelector>
-                                    <selectors:GalleryContentViewSelector ContentType="Search"/>
+                                    <services:ContentViewTemplateSelector/>
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
 
@@ -171,7 +171,7 @@
                                        x:Name="MoreInfoTitle" />
                                     <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
                                         <ContentControl.ContentTemplateSelector>
-                                            <selectors:GalleryContentViewSelector ContentType="Info" />
+                                            <services:ContentViewTemplateSelector ContentType="Info" />
                                         </ContentControl.ContentTemplateSelector>
                                     </ContentControl>
                                     <animations:Implicit.ShowAnimations>

@@ -1,0 +1,36 @@
+﻿<mvvm:MvvmPage
+    x:Class="Conet.Pages.ApiSelectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Conet.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:viewModels="using:Conet.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:ApiSelectionViewModel}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}" SelectedItem="{Binding SelectedService,Mode=TwoWay}">
+            <controls:Carousel.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel MaxWidth="300">
+                        <Image Source="{Binding Image}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </controls:Carousel.ItemTemplate>
+        </controls:Carousel>
+        <ScrollViewer Grid.Row="1">
+            
+        </ScrollViewer>
+    </Grid>
+</mvvm:MvvmPage>
+

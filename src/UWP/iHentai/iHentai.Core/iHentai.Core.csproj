@@ -127,7 +127,6 @@
       <DependentUpon>ServiceSelectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Selectors\GalleryContentViewSelector.cs" />
     <Compile Include="ViewModels\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\LoginWebViewViewModel.cs" />

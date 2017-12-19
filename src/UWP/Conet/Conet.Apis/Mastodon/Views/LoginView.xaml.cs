@@ -12,30 +12,19 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using iHentai.Apis.Core.Models.Interfaces;
-using iHentai.Apis.EHentai.Models;
+using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace iHentai.Apis.EHentai.Views
+namespace Conet.Apis.Mastodon.Views
 {
-    [ContentType("Detail")]
-    public sealed partial class GalleryDetailView : IContentView<GalleryDetailModel>
+    [ContentType("Login")]
+    public sealed partial class LoginView : IContentView<Apis>
     {
-        public GalleryDetailView()
+        public LoginView()
         {
             this.InitializeComponent();
-        }
-
-        private void Search_OnClick(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void ShowWiki_OnClick(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

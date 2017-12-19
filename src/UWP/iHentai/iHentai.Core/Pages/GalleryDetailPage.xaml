@@ -7,8 +7,8 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:selectors="using:iHentai.Core.Selectors"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
+    xmlns:services="using:iHentai.Services"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
 
@@ -45,7 +45,7 @@
                                 Margin="0,8" Content="{Binding DetailModel.Result}"
                                 HorizontalContentAlignment="Stretch">
                                 <ContentControl.ContentTemplateSelector>
-                                    <selectors:GalleryContentViewSelector ContentType="DetailInfo" />
+                                    <services:ContentViewTemplateSelector ContentType="DetailInfo" />
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -59,7 +59,7 @@
                         <ContentControl HorizontalContentAlignment="Stretch" Content="{Binding DetailModel.Result}"
                                         Visibility="{Binding DetailModel.IsSuccessfullyCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ContentControl.ContentTemplateSelector>
-                                <selectors:GalleryContentViewSelector ContentType="Detail" />
+                                <services:ContentViewTemplateSelector ContentType="Detail" />
                             </ContentControl.ContentTemplateSelector>
                             <animations:Implicit.ShowAnimations>
                                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4"

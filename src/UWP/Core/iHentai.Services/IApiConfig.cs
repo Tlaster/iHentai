@@ -1,4 +1,4 @@
-﻿namespace iHentai.Apis.Core
+﻿namespace iHentai.Services
 {
     public interface IApiConfig
     {

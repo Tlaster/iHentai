@@ -4,6 +4,7 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Common.Attributes;
 using iHentai.Apis.EHentai.Models;
+using iHentai.Services;
 using Newtonsoft.Json;
 
 namespace iHentai.Apis.EHentai

@@ -14,7 +14,7 @@ using iHentai.ViewModels;
 
 namespace iHentai
 {
-    public sealed partial class App : Application, IMvvmApplication, IApiApplication
+    public sealed partial class App : Application, IMvvmApplication, IApiApplication, IMultiContentApplication
     {
         private readonly Lazy<ActivationService> _activationService;
 
@@ -56,6 +56,12 @@ namespace iHentai
         }
 
         public IEnumerable<Assembly> GetApiAssemblies()
+        {
+            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            yield return typeof(IConetApi).GetTypeInfo().Assembly;
+        }
+
+        public IEnumerable<Assembly> GetContentViewAssemblies()
         {
             yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
             yield return typeof(IConetApi).GetTypeInfo().Assembly;

@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Core\IConetApi.cs" />
     <Compile Include="Core\Models\Interfaces\IStatusModel.cs" />
+    <Compile Include="Core\ServiceTypes.cs" />
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\Models\Account.cs" />
     <Compile Include="Mastodon\Models\Application.cs" />
@@ -128,6 +129,9 @@
     <Compile Include="Mastodon\Models\Status.cs" />
     <Compile Include="Mastodon\Models\Tag.cs" />
     <Compile Include="Mastodon\Models\Visibility.cs" />
+    <Compile Include="Mastodon\Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weibo\Apis.cs" />
     <Compile Include="Weibo\Models\Ad.cs" />
@@ -156,6 +160,16 @@
       <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
       <Name>iHentai.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Twitter\Views\" />
+    <Folder Include="Weibo\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Mastodon\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

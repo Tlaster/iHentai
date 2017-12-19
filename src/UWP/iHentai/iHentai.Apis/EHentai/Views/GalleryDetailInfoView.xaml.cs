@@ -9,11 +9,12 @@ using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Converters;
 using iHentai.Apis.EHentai.Models;
 using iHentai.Basic.Helpers;
+using iHentai.Services;
 
 namespace iHentai.Apis.EHentai.Views
 {
-    [ContentType(ContentTypes.DetailInfo)]
-    public sealed partial class GalleryDetailInfoView : IGalleryContentView<GalleryDetailModel>
+    [ContentType("DetailInfo")]
+    public sealed partial class GalleryDetailInfoView : IContentView<GalleryDetailModel>
     {
         public GalleryDetailInfoView()
         {
