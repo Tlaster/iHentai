@@ -9,6 +9,7 @@
     xmlns:viewModels="using:Conet.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:services="using:iHentai.Services"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ApiSelectionViewModel}">
 
@@ -28,8 +29,21 @@
                 </DataTemplate>
             </controls:Carousel.ItemTemplate>
         </controls:Carousel>
-        <ScrollViewer Grid.Row="1">
-            
+        <ScrollViewer Grid.Row="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ContentControl MaxWidth="500" Content="{Binding LoginData}" HorizontalContentAlignment="Stretch">
+                    <ContentControl.ContentTemplateSelector>
+                        <services:ContentViewTemplateSelector/>
+                    </ContentControl.ContentTemplateSelector>
+                </ContentControl>
+                <Grid MaxWidth="500" Grid.Row="1">
+                    <Button Content="Confirm"/>
+                </Grid>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </mvvm:MvvmPage>

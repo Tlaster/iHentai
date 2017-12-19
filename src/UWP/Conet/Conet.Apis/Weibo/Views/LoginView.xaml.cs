@@ -12,18 +12,22 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Conet.Apis.Mastodon.Views
+namespace Conet.Apis.Weibo.Views
 {
     public sealed partial class LoginView : IContentView<LoginData>
     {
         public LoginView()
         {
             this.InitializeComponent();
+        }
+
+        private void TextBox_Paste(object sender, TextControlPasteEventArgs e)
+        {
+
         }
     }
 }

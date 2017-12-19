@@ -12,6 +12,8 @@ namespace Conet.Apis.Mastodon
     [ApiKey(nameof(ServiceTypes.Mastodon))]
     public class Apis : IConetApi
     {
+        public ILoginData LoginDataGenerator => new LoginData();
+
         public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0L, long since_id = 0L)
         {
             throw new NotImplementedException();

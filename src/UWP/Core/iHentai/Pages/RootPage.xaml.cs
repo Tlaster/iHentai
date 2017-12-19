@@ -3,6 +3,8 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Conet.Pages;
+using Conet.ViewModels;
 using iHentai.Basic.Helpers;
 using iHentai.Core.Pages;
 using iHentai.Core.ViewModels;
@@ -27,7 +29,7 @@ namespace iHentai.Pages
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
-            RootFrame.NavigateAsync(typeof(ServiceSelectionPage), new ServiceSelectionViewModel());
+            RootFrame.NavigateAsync(typeof(ApiSelectionPage), new ApiSelectionViewModel());
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             ThemeHelper.AccentColorUpdated(TitleBar);
             _uiSettings = new UISettings();

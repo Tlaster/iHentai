@@ -201,7 +201,10 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\ApiBanners\EHentai.png" />
+    <Content Include="Assets\ApiBanners\Mastodon.png" />
     <Content Include="Assets\ApiBanners\NHentai.png" />
+    <Content Include="Assets\ApiBanners\Twitter.png" />
+    <Content Include="Assets\ApiBanners\Weibo.png" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
