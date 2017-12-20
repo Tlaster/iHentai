@@ -11,5 +11,7 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance mastodon:LoginData}">
 
-    <Grid />
+    <Grid>
+        <TextBox Text="{Binding Domain}" Header="Domain"/>
+    </Grid>
 </UserControl>

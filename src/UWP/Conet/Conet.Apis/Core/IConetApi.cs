@@ -9,5 +9,7 @@ namespace Conet.Apis.Core
     {
         ILoginData LoginDataGenerator { get; }
         Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0L, long since_id = 0L);
+        Task<(string Uri, string CallbackUri)> GetOAuth(ILoginData data);
+        Task<bool> OAuthResponseHandler(string response);
     }
 }

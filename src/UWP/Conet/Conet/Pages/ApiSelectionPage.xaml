@@ -42,7 +42,7 @@
                     </ContentControl.ContentTemplateSelector>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1">
-                    <Button Content="Confirm" />
+                    <Button Content="Confirm" HorizontalAlignment="Stretch" Margin="8"/>
                 </Grid>
             </Grid>
         </ScrollViewer>

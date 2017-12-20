@@ -16,5 +16,15 @@ namespace Conet.Apis.Weibo
         {
             throw new NotImplementedException();
         }
+
+        public Task<(string Uri, string CallbackUri)> GetOAuth(ILoginData data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> OAuthResponseHandler(string response)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
