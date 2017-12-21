@@ -83,6 +83,7 @@ namespace iHentai.Apis.EHentai
         public bool CanLoginWithWebView { get; } = true;
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
 
+
         public bool WebViewLoginHandler(string url, string cookie)
         {
             if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
@@ -127,9 +128,11 @@ namespace iHentai.Apis.EHentai
                         .Where(item => item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash")
                         .ToDictionary(item => item.Key, item => item.Value);
                 }
+
                 if (!cookie.Any())
                     return false;
             }
+
             cookie = await UpdateCookie(cookie, cancellationToken);
             Cookie = cookie;
             return true;
@@ -179,6 +182,7 @@ namespace iHentai.Apis.EHentai
                         throw new ArgumentException();
                 }
             }
+
             return cookie;
         }
 

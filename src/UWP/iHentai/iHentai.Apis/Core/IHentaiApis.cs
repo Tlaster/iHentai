@@ -16,19 +16,7 @@ namespace iHentai.Apis.Core
         Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken = default);
         Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default);
     }
-
-    //public interface ICookieApi
-    //{
-    //    string Host { get; }
-    //    Dictionary<string, string> Cookie { get; }
-    //    Dictionary<string, string> RequestHeader { get; }
-    //}
-
-    public interface IConfigApi
-    {
-        IApiConfig ApiConfig { get; }
-    }
-
+    
     public interface IHentaiApi : IApi
     {
         string Host { get; }
