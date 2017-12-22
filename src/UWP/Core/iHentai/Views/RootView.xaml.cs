@@ -1,38 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Conet.Pages;
-using Conet.ViewModels;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using iHentai.Basic.Helpers;
 using iHentai.Paging;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace iHentai.Pages
+namespace iHentai.Views
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class RootPage
+    public sealed partial class RootView
     {
         private readonly UISettings _uiSettings;
-
-        public RootPage()
+        public RootView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             TitleBar.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(TitleBar);
-            RootFrame.NavigateAsync(typeof(ApiSelectionPage), new ApiSelectionViewModel());
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
             ThemeHelper.AccentColorUpdated(TitleBar);
             _uiSettings = new UISettings();
             _uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
         }
-
         private async void RootPage_ColorValuesChanged(UISettings sender, object args)
         {
             await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(TitleBar));

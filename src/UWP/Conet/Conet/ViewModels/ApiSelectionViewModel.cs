@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
+using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
@@ -39,6 +40,10 @@ namespace Conet.ViewModels
             var result = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(oauth.Uri), new Uri(oauth.CallbackUri));
             if (result.ResponseStatus != WebAuthenticationStatus.Success) return;
             if (await Api.OAuthResponseHandler(result.ResponseData))
+            {
+                Navigate<TimelineViewModel>(SelectedService.ServiceType).FireAndForget();
+            }
+            else
             {
                 
             }

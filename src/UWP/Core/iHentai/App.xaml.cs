@@ -4,12 +4,13 @@ using System.Reflection;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Conet.Apis.Core;
+using Conet.Pages;
 using Conet.ViewModels;
 using iHentai.Apis.Core;
 using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
-using iHentai.Pages;
 using iHentai.Services;
+using iHentai.Views;
 
 namespace iHentai
 {
@@ -58,7 +59,7 @@ namespace iHentai
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(RootPage));
+            return new ActivationService(this, typeof(ApiSelectionPage), new RootView());
         }
 
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)

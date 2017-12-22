@@ -1,0 +1,43 @@
+﻿<Grid
+    x:Class="iHentai.Views.RootView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:paging="using:iHentai.Paging"
+    xmlns:animations="using:iHentai.Paging.Animations"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <paging:HentaiFrame Grid.Row="1" Navigated="RootFrame_OnNavigated" x:Name="RootFrame">
+        <paging:HentaiFrame.PageAnimation>
+            <animations:FadeAnimation />
+        </paging:HentaiFrame.PageAnimation>
+    </paging:HentaiFrame>
+    <Grid Grid.Row="0" x:Name="TitleBar"
+          Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
+            <ColumnDefinition />
+            <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="../Assets/Square44x44Logo.png" HorizontalAlignment="Left" x:Name="LogoImage"
+                   Width="20" Height="20" Margin="12,0" />
+            <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" x:Name="TitleTextBlock"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+        </Grid>
+    </Grid>
+</Grid>
