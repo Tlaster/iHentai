@@ -36,13 +36,13 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentControl MaxWidth="500" Content="{Binding LoginData}" HorizontalContentAlignment="Stretch">
+                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData}" HorizontalContentAlignment="Stretch">
                     <ContentControl.ContentTemplateSelector>
                         <services:ContentViewTemplateSelector />
                     </ContentControl.ContentTemplateSelector>
                 </ContentControl>
-                <Grid MaxWidth="500" Grid.Row="1">
-                    <Button Content="Confirm" HorizontalAlignment="Stretch" Margin="8"/>
+                <Grid MaxWidth="500" Grid.Row="1" Padding="8">
+                    <Button Content="Confirm" HorizontalAlignment="Stretch" Command="{Binding ConfirmCommand}"/>
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
+using iHentai.Mvvm;
 using iHentai.Paging;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -30,12 +31,14 @@ namespace iHentai.Views
     {
         private readonly UISettings _uiSettings;
         private readonly SplashScreen _splash;
+        private readonly Type _defaultNavItem;
         private Rect _splashImageRect;
 
-        public RootView(SplashScreen splashScreen)
+        public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
             this.InitializeComponent();
             _splash = splashScreen;
+            _defaultNavItem = defaultNavItem;
             if (_splash != null)
             {
                 _splashImageRect = _splash.ImageLocation;
@@ -62,22 +65,32 @@ namespace iHentai.Views
         private async void DismissExtendedSplash()
         {
             await Task.Delay(3000);
+
+            if (ReflectionHelper.ImplementsGenericDefinition(_defaultNavItem, typeof(IMvvmView<>), out var vmType))
+            {
+                RootFrame.NavigateAsync(_defaultNavItem, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault())).FireAndForget();
+            }
+            else
+            {
+                RootFrame.NavigateAsync(_defaultNavItem).FireAndForget();
+            }
+
             RootFrame
-                .Scale(1.25f, 1.25f, (float) (RootFrame.ActualWidth / 2f), (float) (RootFrame.ActualHeight / 2f), 0D)
+                .Scale(1.1f, 1.1f, (float) (RootFrame.ActualWidth / 2f), (float) (RootFrame.ActualHeight / 2f), 0D)
                 .StartAsync()
                 .FireAndForget();
             await ExtendedSplashImage.Scale(0.8f, 0.8f, (float) (ExtendedSplashImage.ActualWidth / 2f),
                 (float) (ExtendedSplashImage.ActualHeight / 2f), 250d).StartAsync();
             ExtendedSplashImage
-                .Scale(10f, 10f, (float) (ExtendedSplashImage.ActualWidth / 2f), (float) (ExtendedSplashImage.ActualHeight / 2f), 1000d, 0d, EasingType.Back)
+                .Scale(10f, 10f, (float) (ExtendedSplashImage.ActualWidth / 2f), (float) (ExtendedSplashImage.ActualHeight / 2f), 500d, 0d, EasingType.Back)
                 .StartAsync()
                 .FireAndForget();
             RootFrame
-                .Scale(1f, 1f, (float)(RootFrame.ActualWidth / 2f), (float)(RootFrame.ActualHeight / 2f), delay: 250d, easingType: EasingType.Quintic)
+                .Scale(1f, 1f, (float)(RootFrame.ActualWidth / 2f), (float)(RootFrame.ActualHeight / 2f), delay: 125d, easingType: EasingType.Quintic)
                 .StartAsync()
                 .FireAndForget();
             await ExtendedSplash
-                .Fade(delay: 250d)
+                .Fade(delay: 125d)
                 .StartAsync();
             ExtendedSplash.Visibility = Visibility.Collapsed;
         }

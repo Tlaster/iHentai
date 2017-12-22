@@ -36,11 +36,10 @@ namespace iHentai.Services
             {
                 // Initialize things like registering background task before the app is loaded
                 await InitializeAsync();
-
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
                 if (Window.Current.Content == null)
-                    Window.Current.Content = _shell ?? new RootView((activationArgs as IActivatedEventArgs)?.SplashScreen);
+                    Window.Current.Content = _shell ?? new RootView((activationArgs as IActivatedEventArgs)?.SplashScreen, _defaultNavItem);
             }
 
             var activationHandler = GetActivationHandlers()
@@ -51,9 +50,9 @@ namespace iHentai.Services
 
             if (IsInteractive(activationArgs))
             {
-                var defaultHandler = new DefaultLaunchActivationHandler(_defaultNavItem);
-                if (defaultHandler.CanHandle(activationArgs))
-                    await defaultHandler.HandleAsync(activationArgs);
+                //var defaultHandler = new DefaultLaunchActivationHandler(_defaultNavItem);
+                //if (defaultHandler.CanHandle(activationArgs))
+                //    await defaultHandler.HandleAsync(activationArgs);
 
                 // Ensure the current window is active
                 Window.Current.Activate();

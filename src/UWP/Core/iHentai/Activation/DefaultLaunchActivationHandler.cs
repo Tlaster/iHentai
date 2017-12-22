@@ -22,14 +22,6 @@ namespace iHentai.Activation
 
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
         {
-            if (ReflectionHelper.ImplementsGenericDefinition(_navElement, typeof(IMvvmView<>), out var vmType))
-            {
-                ((Window.Current.Content as RootView).FindName("RootFrame") as HentaiFrame)?.NavigateAsync(_navElement, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault()));
-            }
-            else
-            {
-                ((Window.Current.Content as RootView).FindName("RootFrame") as HentaiFrame)?.NavigateAsync(_navElement);
-            }
             await Task.CompletedTask;
         }
 
