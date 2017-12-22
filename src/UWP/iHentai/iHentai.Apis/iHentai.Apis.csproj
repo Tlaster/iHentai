@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Flurl.Http">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="FontAwesome.UWP">
       <Version>4.7.0.9</Version>
