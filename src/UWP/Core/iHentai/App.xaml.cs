@@ -59,7 +59,7 @@ namespace iHentai
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(ApiSelectionPage), new RootView());
+            return new ActivationService(this, typeof(ApiSelectionPage));
         }
 
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)

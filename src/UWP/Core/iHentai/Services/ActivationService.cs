@@ -11,6 +11,7 @@ using Flurl.Http;
 using iHentai.Activation;
 using iHentai.Basic.Helpers;
 using iHentai.Paging;
+using iHentai.Views;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Services
@@ -25,7 +26,7 @@ namespace iHentai.Services
         public ActivationService(App app, Type defaultNavItem, UIElement shell = null)
         {
             _app = app;
-            _shell = shell ?? new HentaiFrame();
+            _shell = shell;
             _defaultNavItem = defaultNavItem;
         }
 
@@ -39,7 +40,7 @@ namespace iHentai.Services
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
                 if (Window.Current.Content == null)
-                    Window.Current.Content = _shell;
+                    Window.Current.Content = _shell ?? new RootView((activationArgs as IActivatedEventArgs)?.SplashScreen);
             }
 
             var activationHandler = GetActivationHandlers()

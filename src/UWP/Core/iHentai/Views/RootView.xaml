@@ -40,4 +40,9 @@
                        Style="{StaticResource CaptionTextBlockStyle}" />
         </Grid>
     </Grid>
+    <Grid x:Name="ExtendedSplash" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0" Grid.RowSpan="2">
+        <Canvas>
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage" Source="ms-appx:///Assets/SplashScreen.png"/>
+        </Canvas>
+    </Grid>
 </Grid>
