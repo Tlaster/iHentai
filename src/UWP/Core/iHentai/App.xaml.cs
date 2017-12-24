@@ -7,6 +7,7 @@ using Conet.Apis.Core;
 using Conet.Pages;
 using Conet.ViewModels;
 using iHentai.Apis.Core;
+using iHentai.Core.Pages;
 using iHentai.Core.ViewModels;
 using iHentai.Mvvm;
 using iHentai.Services;
@@ -59,7 +60,7 @@ namespace iHentai
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(ApiSelectionPage));
+            return new ActivationService(this, typeof(ServiceSelectionPage));
         }
 
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)

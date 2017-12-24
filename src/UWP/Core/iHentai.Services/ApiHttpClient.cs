@@ -12,7 +12,7 @@ namespace iHentai.Services
     {
         public override HttpMessageHandler CreateMessageHandler()
         {
-            return new ApiHttpClient();
+            return Singleton<ApiHttpClient>.Instance;
         }
     }
 

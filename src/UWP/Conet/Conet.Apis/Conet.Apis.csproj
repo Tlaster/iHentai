@@ -143,6 +143,7 @@
     <Compile Include="Weibo\Models\Annotation.cs" />
     <Compile Include="Weibo\Models\CommentManageInfo.cs" />
     <Compile Include="Weibo\Models\ExtendInfo.cs" />
+    <Compile Include="Weibo\Models\FeatureType.cs" />
     <Compile Include="Weibo\Models\Insecurity.cs" />
     <Compile Include="Weibo\Models\PicUrl.cs" />
     <Compile Include="Weibo\Models\Status.cs" />
@@ -153,6 +154,8 @@
     <Compile Include="Weibo\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Weibo\IWeiboServices.cs" />
+    <Compile Include="Weibo\WeiboParameterFormatter.cs" />
     <EmbeddedResource Include="Properties\Conet.Apis.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
+      <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
+      <Name>iHentai.Basic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
       <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
       <Name>iHentai.Services</Name>

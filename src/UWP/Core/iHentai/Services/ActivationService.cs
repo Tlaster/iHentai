@@ -76,7 +76,7 @@ namespace iHentai.Services
         {
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
-            await ImageCache.Instance.InitializeAsync(httpMessageHandler: new ApiHttpClient());
+            await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
             FlurlHttp.Configure(c => c.HttpClientFactory = new ApiHttpClientFactory());
             await Task.CompletedTask;
         }
