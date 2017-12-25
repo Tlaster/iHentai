@@ -143,11 +143,11 @@
     <Compile Include="Weibo\Models\Annotation.cs" />
     <Compile Include="Weibo\Models\CommentManageInfo.cs" />
     <Compile Include="Weibo\Models\ExtendInfo.cs" />
-    <Compile Include="Weibo\Models\FeatureType.cs" />
     <Compile Include="Weibo\Models\Insecurity.cs" />
     <Compile Include="Weibo\Models\PicUrl.cs" />
     <Compile Include="Weibo\Models\Status.cs" />
     <Compile Include="Weibo\Models\StatusList.cs" />
+    <Compile Include="Weibo\Models\UnreadModel.cs" />
     <Compile Include="Weibo\Models\User.cs" />
     <Compile Include="Weibo\Models\Visible.cs" />
     <Compile Include="Twitter\Models\StatusModel.cs" />
@@ -159,6 +159,9 @@
     <EmbeddedResource Include="Properties\Conet.Apis.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Flurl.Http">
+      <Version>2.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>

@@ -42,10 +42,10 @@ namespace iHentai.Services
             if (Application.Current is IApiApplication application)
                 KnownApis = application
                     .GetApiAssemblies()
-                    .SelectMany(item => item.DefinedTypes
-                        .Where(x => x.IsClass && x.ImplementedInterfaces.Contains(typeof(IApi)) &&
-                                    x.GetCustomAttribute<ApiKeyAttribute>() != null)
-                        .Select(x => x))
+                    .SelectMany(item => item.DefinedTypes)
+                    .Where(x => x.IsClass && x.ImplementedInterfaces.Contains(typeof(IApi)) &&
+                                x.GetCustomAttribute<ApiKeyAttribute>() != null)
+                    .Select(x => x)
                     .ToDictionary(x => x.GetCustomAttribute<ApiKeyAttribute>().Key, x => x);
             else
                 throw new NotImplementedException();
@@ -53,8 +53,7 @@ namespace iHentai.Services
 
         public Dictionary<string, TypeInfo> KnownApis { get; }
 
-        public IApi this[Enum index] => Apis.GetOrAdd(Enum.GetName(index.GetType(), index),
-            str => (IApi) Activator.CreateInstance(KnownApis[str]));
+        public IApi this[Enum index] => this[Enum.GetName(index.GetType(), index)];
 
         public IApi this[string index] => Apis.GetOrAdd(index, str => (IApi) Activator.CreateInstance(KnownApis[str]));
 

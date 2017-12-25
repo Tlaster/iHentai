@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
+using Flurl;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Services;
@@ -21,14 +24,12 @@ namespace Conet.Apis.Weibo
 
         public Apis()
         {
-            _api = RestService.For<IWeiboServices>($"https://{Host}", new RefitSettings
+            _api = RestService.For<IWeiboServices>($"https://{Host}/2/", new RefitSettings
             {
                 HttpMessageHandlerFactory = () => Singleton<ApiHttpClient>.Instance,
                 UrlParameterFormatter = new WeiboParameterFormatter()
             });
         }
-        
-        
 
         public ILoginData LoginDataGenerator => new LoginData();
 
@@ -55,7 +56,6 @@ namespace Conet.Apis.Weibo
             return Task.FromResult(true);
         }
 
-
         private string GetOauthLoginPage(LoginData data)
             => $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={data.RedirectUri}&key_hash={data.AppSecret}{(string.IsNullOrEmpty(data.PackageName) ? "" : $"&packagename={data.PackageName}")}&display=mobile&scope={data.Scope}";
 
@@ -66,7 +66,10 @@ namespace Conet.Apis.Weibo
 
         public void Handle(ref HttpRequestMessage message)
         {
-
+            //if (_account != null && _account.Service == ServiceTypes.Weibo)
+            //{
+            //    message.RequestUri = new Uri($"{message.RequestUri}".SetQueryParam("access_token", _account.AccessToken).SetQueryParam("source", _account.CustomData["source"]));
+            //}
         }
     }
 }

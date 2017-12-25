@@ -18,6 +18,10 @@ namespace Conet.Apis.Weibo
                 return ((Enum)value).ToString("D");
             }
 
+            if (parameterInfo.ParameterType == typeof(bool))
+            {
+                return Convert.ToInt32(value).ToString();
+            }
             return value.ToString();
         }
     }

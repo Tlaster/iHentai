@@ -10,8 +10,10 @@ namespace Conet.Apis.Weibo
 {
     internal interface IWeiboServices
     {
-        [Get("statuses/home_timeline")]
-        Task<StatusList> HomeTimeline(int count = 20, int page = 1, long max_id = 0, long since_id = 0,
-            int base_app = 0, FeatureType feature = FeatureType.All, int trim_user = 0);
+        [Get("statuses/friends_timeline")]
+        Task<StatusList> HomeTimeline(int count = 20, long max_id = 0, long since_id = 0);
+
+        [Get("remind/unread_count")]
+        Task<UnreadModel> Notification(bool unread_message = true, bool with_comment_attitude = true);
     }
 }
