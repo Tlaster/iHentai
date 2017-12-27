@@ -10,14 +10,21 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="RootContainer" Grid.Row="1" />
-                        <Grid Grid.Row="0" Background="{TemplateBinding TabBackground}" x:Name="TabListBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                        x:Name="RootContainer" Grid.Row="2" />
+                        <ContentPresenter Content="{TemplateBinding Header}"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                          Grid.Row="1" />
+                        <Grid Grid.Row="0" Background="{TemplateBinding TabBackground}" x:Name="TabListBackground"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                         <Grid Grid.Row="0" x:Name="TabListRoot">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ListView Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                       ScrollViewer.HorizontalScrollMode="Enabled" CanReorderItems="True"
@@ -31,7 +38,7 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
-                                        <Setter Property="MinHeight" Value="0"/>
+                                        <Setter Property="MinHeight" Value="0" />
                                     </Style>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
@@ -41,7 +48,8 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Width="100" Style="{ThemeResource BodyTextBlockStyle}" x:Name="TitleTextBlock" VerticalAlignment="Center" />
+                                            <TextBlock Width="100" Style="{ThemeResource BodyTextBlockStyle}"
+                                                       x:Name="TitleTextBlock" VerticalAlignment="Center" />
                                             <Button Style="{ThemeResource TextBlockButtonStyle}" Grid.Column="1"
                                                     x:Name="CloseButton">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="12" />
@@ -50,7 +58,8 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <Button Grid.Column="1" VerticalAlignment="Stretch" x:Name="AddButton" HorizontalAlignment="Right" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                            <Button Grid.Column="1" VerticalAlignment="Stretch" x:Name="AddButton"
+                                    HorizontalAlignment="Right" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
                             </Button>
                         </Grid>

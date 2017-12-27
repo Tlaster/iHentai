@@ -36,7 +36,15 @@ namespace Tab
             nameof(AddCommand), typeof(ICommand), typeof(TabControl), new PropertyMetadata(default(ICommand)));
 
         public static readonly DependencyProperty TabBackgroundProperty = DependencyProperty.Register(
-            nameof(TabBackground), typeof(Brush), typeof(TabControl), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
+            nameof(TabBackground), typeof(Brush), typeof(TabControl),
+            new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
+
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+            nameof(Header), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(
+            nameof(HeaderTemplate), typeof(DataTemplate), typeof(TabControl),
+            new PropertyMetadata(default(DataTemplate)));
 
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
 
@@ -59,6 +67,18 @@ namespace Tab
         {
             get => (ICommand) GetValue(AddCommandProperty);
             set => SetValue(AddCommandProperty, value);
+        }
+
+        public DataTemplate HeaderTemplate
+        {
+            get => (DataTemplate) GetValue(HeaderTemplateProperty);
+            set => SetValue(HeaderTemplateProperty, value);
+        }
+
+        public object Header
+        {
+            get => GetValue(HeaderProperty);
+            set => SetValue(HeaderProperty, value);
         }
 
         public string TitlePath { get; set; }
@@ -85,6 +105,7 @@ namespace Tab
 
         public Grid TabListBackground { get; private set; }
 
+        public event EventHandler TabClosed;
         public event EventHandler AddRequest;
 
         private static void OnSelectedItemChanged(DependencyObject dependencyObject,
@@ -282,7 +303,9 @@ namespace Tab
         private void CloseTab(object item)
         {
             (ItemsSource as IList)?.Remove(item);
+            TabClosed?.Invoke(this, EventArgs.Empty);
         }
+
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {

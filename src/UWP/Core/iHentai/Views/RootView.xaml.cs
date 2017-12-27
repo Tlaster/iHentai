@@ -30,9 +30,7 @@ namespace iHentai.Views
 {
     public sealed partial class RootView
     {
-        //private readonly UISettings _uiSettings;
         private readonly SplashScreen _splash;
-        private readonly Type _defaultNavItem;
         private Rect _splashImageRect;
 
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
@@ -40,14 +38,12 @@ namespace iHentai.Views
             this.InitializeComponent();
             DataContext = new RootViewModel(defaultNavItem);
             _splash = splashScreen;
-            _defaultNavItem = defaultNavItem;
             if (_splash != null)
             {
                 _splashImageRect = _splash.ImageLocation;
                 _splash.Dismissed += SplashScreenOnDismissed;
                 PositionImage();
             }
-            //_uiSettings = new UISettings();
             Loaded += RootView_Loaded;
         }
 
@@ -57,31 +53,18 @@ namespace iHentai.Views
             tab.TabListRoot.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(tab.TabListBackground);
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            //ThemeHelper.AccentColorUpdated(tab.TabListRoot);
-            //_uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
         }
 
         private async void SplashScreenOnDismissed(SplashScreen sender, object args)
         {
             _splash.Dismissed -= SplashScreenOnDismissed;
-
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, DismissExtendedSplash);
         }
 
         private async void DismissExtendedSplash()
         {
             await Task.Delay(3000);
-
-            //if (ReflectionHelper.ImplementsGenericDefinition(_defaultNavItem, typeof(IMvvmView<>), out var vmType))
-            //{
-            //    RootFrame.NavigateAsync(_defaultNavItem, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault())).FireAndForget();
-            //}
-            //else
-            //{
-            //    RootFrame.NavigateAsync(_defaultNavItem).FireAndForget();
-            //}
-
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)
                 .StartAsync()
@@ -119,12 +102,7 @@ namespace iHentai.Views
             ExtendedSplashImage.Width = _splashImageRect.Width;
             //}
         }
-
-        //private async void RootPage_ColorValuesChanged(UISettings sender, object args)
-        //{
-        //    await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(tab.TabListRoot));
-        //}
-
+        
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
             UpdateTitleBarLayout(sender);
@@ -132,8 +110,6 @@ namespace iHentai.Views
 
         private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
         {
-            //LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
-            //RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
             tab.TabListRoot.Padding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0, coreTitleBar.SystemOverlayRightInset, 0);
             tab.TabListRoot.Height = coreTitleBar.Height;
         }
@@ -141,13 +117,7 @@ namespace iHentai.Views
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
             tab.TabListRoot.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+            tab.TabListBackground.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        //private void RootFrame_OnNavigated(object sender, HentaiNavigationEventArgs e)
-        //{
-        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
-        //        ? AppViewBackButtonVisibility.Visible
-        //        : AppViewBackButtonVisibility.Collapsed;
-        //}
     }
 }

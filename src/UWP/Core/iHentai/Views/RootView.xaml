@@ -26,8 +26,13 @@
                 </mvvm:MvvmFrame>
             </DataTemplate>
         </tab:TabControl.ItemsTemplate>
+        <tab:TabControl.Header>
+            <Grid Padding="8" Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+                <TextBlock Text="dsafdsafdsa"/>
+            </Grid>
+        </tab:TabControl.Header>
     </tab:TabControl>
-    <Grid x:Name="ExtendedSplash" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0"
+    <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0"
           Grid.RowSpan="2">
         <Canvas>
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage"
