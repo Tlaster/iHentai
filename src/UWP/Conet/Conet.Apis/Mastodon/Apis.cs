@@ -26,5 +26,7 @@ namespace Conet.Apis.Mastodon
         {
             throw new NotImplementedException();
         }
+
+        public AccountModel Account { get; set; }
     }
 }

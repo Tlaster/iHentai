@@ -56,6 +56,8 @@ namespace Conet.Apis.Weibo
             return Task.FromResult(true);
         }
 
+        public AccountModel Account { get; set; }
+
         private string GetOauthLoginPage(LoginData data)
             => $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={data.RedirectUri}&key_hash={data.AppSecret}{(string.IsNullOrEmpty(data.PackageName) ? "" : $"&packagename={data.PackageName}")}&display=mobile&scope={data.Scope}";
 
@@ -66,10 +68,10 @@ namespace Conet.Apis.Weibo
 
         public void Handle(ref HttpRequestMessage message)
         {
-            //if (_account != null && _account.Service == ServiceTypes.Weibo)
-            //{
-            //    message.RequestUri = new Uri($"{message.RequestUri}".SetQueryParam("access_token", _account.AccessToken).SetQueryParam("source", _account.CustomData["source"]));
-            //}
+            if (Account != null && Account.Service == ServiceTypes.Weibo)
+            {
+                message.RequestUri = new Uri($"{message.RequestUri}".SetQueryParam("access_token", Account.AccessToken).SetQueryParam("source", Account.CustomData["source"]));
+            }
         }
     }
 }

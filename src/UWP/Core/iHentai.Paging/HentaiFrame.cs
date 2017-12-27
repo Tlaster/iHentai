@@ -255,6 +255,15 @@ namespace iHentai.Paging
             return false;
         }
 
+        private static void OnSourcePageTypeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            (dependencyObject as HentaiFrame).OnSourcePageTypeChanged(e.NewValue as Type);
+        }
+
+        private void OnSourcePageTypeChanged(Type newValue)
+        {
+            Navigate(newValue);
+        }
 
         public void ClearBackStack()
         {
@@ -431,6 +440,15 @@ namespace iHentai.Paging
         {
             get => (TransitionCollection) GetValue(ContentTransitionsProperty);
             set => SetValue(ContentTransitionsProperty, value);
+        }
+
+        public static readonly DependencyProperty SourcePageTypeProperty = DependencyProperty.Register(
+            nameof(SourcePageType), typeof(Type), typeof(HentaiFrame), new PropertyMetadata(default(Type), OnSourcePageTypeChanged));
+        
+        public Type SourcePageType
+        {
+            get => (Type) GetValue(SourcePageTypeProperty);
+            set => SetValue(SourcePageTypeProperty, value);
         }
 
         #endregion

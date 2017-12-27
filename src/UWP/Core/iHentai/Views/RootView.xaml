@@ -7,12 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:iHentai.Paging"
     xmlns:animations="using:iHentai.Paging.Animations"
+    xmlns:viewModels="using:iHentai.ViewModels"
+    xmlns:tab="using:Tab"
+    xmlns:mvvm="using:iHentai.Mvvm"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid.RowDefinitions>
+    <!--<Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
     </Grid.RowDefinitions>
@@ -39,7 +42,18 @@
             <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" x:Name="TitleTextBlock"
                        Style="{StaticResource CaptionTextBlockStyle}" />
         </Grid>
-    </Grid>
+    </Grid>-->
+    <tab:TabControl x:Name="tab" AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title">
+        <tab:TabControl.ItemsTemplate>
+            <DataTemplate>
+                <mvvm:MvvmFrame TargetSourcePage="{Binding RootType}">
+                    <paging:HentaiFrame.PageAnimation>
+                        <animations:FadeAnimation />
+                    </paging:HentaiFrame.PageAnimation>
+                </mvvm:MvvmFrame>
+            </DataTemplate>
+        </tab:TabControl.ItemsTemplate>
+    </tab:TabControl>
     <Grid x:Name="ExtendedSplash" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0" Grid.RowSpan="2">
         <Canvas>
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage" Source="ms-appx:///Assets/SplashScreen.png"/>

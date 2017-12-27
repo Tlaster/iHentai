@@ -21,6 +21,7 @@ using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Paging;
+using iHentai.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -37,6 +38,7 @@ namespace iHentai.Views
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
             this.InitializeComponent();
+            DataContext = new RootViewModel(defaultNavItem);
             _splash = splashScreen;
             _defaultNavItem = defaultNavItem;
             if (_splash != null)
@@ -45,12 +47,17 @@ namespace iHentai.Views
                 _splash.Dismissed += SplashScreenOnDismissed;
                 PositionImage();
             }
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            TitleBar.Height = coreTitleBar.Height;
-            Window.Current.SetTitleBar(TitleBar);
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            ThemeHelper.AccentColorUpdated(TitleBar);
             _uiSettings = new UISettings();
+            Loaded += RootView_Loaded;
+        }
+
+        private void RootView_Loaded(object sender, RoutedEventArgs e)
+        {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            tab.TabRoot.Height = coreTitleBar.Height;
+            Window.Current.SetTitleBar(tab.TabRoot);
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            ThemeHelper.AccentColorUpdated(tab.TabRoot);
             _uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
         }
@@ -66,17 +73,17 @@ namespace iHentai.Views
         {
             await Task.Delay(3000);
 
-            if (ReflectionHelper.ImplementsGenericDefinition(_defaultNavItem, typeof(IMvvmView<>), out var vmType))
-            {
-                RootFrame.NavigateAsync(_defaultNavItem, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault())).FireAndForget();
-            }
-            else
-            {
-                RootFrame.NavigateAsync(_defaultNavItem).FireAndForget();
-            }
+            //if (ReflectionHelper.ImplementsGenericDefinition(_defaultNavItem, typeof(IMvvmView<>), out var vmType))
+            //{
+            //    RootFrame.NavigateAsync(_defaultNavItem, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault())).FireAndForget();
+            //}
+            //else
+            //{
+            //    RootFrame.NavigateAsync(_defaultNavItem).FireAndForget();
+            //}
 
-            RootFrame
-                .Scale(1.1f, 1.1f, (float) (RootFrame.ActualWidth / 2f), (float) (RootFrame.ActualHeight / 2f), 0D)
+            tab
+                .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)
                 .StartAsync()
                 .FireAndForget();
             await ExtendedSplashImage.Scale(0.8f, 0.8f, (float) (ExtendedSplashImage.ActualWidth / 2f),
@@ -85,8 +92,8 @@ namespace iHentai.Views
                 .Scale(10f, 10f, (float) (ExtendedSplashImage.ActualWidth / 2f), (float) (ExtendedSplashImage.ActualHeight / 2f), 500d, 0d, EasingType.Back)
                 .StartAsync()
                 .FireAndForget();
-            RootFrame
-                .Scale(1f, 1f, (float)(RootFrame.ActualWidth / 2f), (float)(RootFrame.ActualHeight / 2f), delay: 125d, easingType: EasingType.Quintic)
+            tab
+                .Scale(1f, 1f, (float)(tab.ActualWidth / 2f), (float)(tab.ActualHeight / 2f), delay: 125d, easingType: EasingType.Quintic)
                 .StartAsync()
                 .FireAndForget();
             await ExtendedSplash
@@ -115,7 +122,7 @@ namespace iHentai.Views
 
         private async void RootPage_ColorValuesChanged(UISettings sender, object args)
         {
-            await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(TitleBar));
+            await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(tab.TabRoot));
         }
 
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
@@ -125,21 +132,21 @@ namespace iHentai.Views
 
         private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
         {
-            LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
-            RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
-            TitleBar.Height = coreTitleBar.Height;
+            //LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
+            //RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
+            tab.TabRoot.Height = coreTitleBar.Height;
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            TitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+            tab.TabRoot.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void RootFrame_OnNavigated(object sender, HentaiNavigationEventArgs e)
-        {
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
-                ? AppViewBackButtonVisibility.Visible
-                : AppViewBackButtonVisibility.Collapsed;
-        }
+        //private void RootFrame_OnNavigated(object sender, HentaiNavigationEventArgs e)
+        //{
+        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
+        //        ? AppViewBackButtonVisibility.Visible
+        //        : AppViewBackButtonVisibility.Collapsed;
+        //}
     }
 }

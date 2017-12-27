@@ -26,5 +26,7 @@ namespace Conet.Apis.Twitter
         {
             throw new NotImplementedException();
         }
+
+        public AccountModel Account { get; set; }
     }
 }
