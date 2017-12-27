@@ -12,11 +12,13 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:RootViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" x:Name="tab"
-                    AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title">
+                    AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title"
+                    TabClosed="{x:Bind ViewModel.TabClosed}">
         <tab:TabControl.ItemsTemplate>
             <DataTemplate>
                 <mvvm:MvvmFrame TargetSourcePage="{Binding RootType}">

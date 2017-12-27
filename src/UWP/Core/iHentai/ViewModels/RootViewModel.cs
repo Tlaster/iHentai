@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using iHentai.Basic.Helpers;
 using PropertyChanged;
 
@@ -26,6 +27,14 @@ namespace iHentai.ViewModels
         {
             Source.Add(new TabViewModel(_rootType));
         });
+
+        public void TabClosed()
+        {
+            if (!Source.Any())
+            {
+                Application.Current.Exit();
+            }
+        }
     }
 
     public class TabViewModel

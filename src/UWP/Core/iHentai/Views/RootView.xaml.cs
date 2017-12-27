@@ -33,10 +33,13 @@ namespace iHentai.Views
         private readonly SplashScreen _splash;
         private Rect _splashImageRect;
 
+        public RootViewModel ViewModel { get; }
+
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
             this.InitializeComponent();
-            DataContext = new RootViewModel(defaultNavItem);
+            ViewModel = new RootViewModel(defaultNavItem);
+            DataContext = ViewModel;
             _splash = splashScreen;
             if (_splash != null)
             {
