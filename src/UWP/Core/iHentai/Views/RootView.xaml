@@ -15,35 +15,8 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <!--<Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <paging:HentaiFrame Grid.Row="1" Navigated="RootFrame_OnNavigated" x:Name="RootFrame">
-        <paging:HentaiFrame.PageAnimation>
-            <animations:FadeAnimation />
-        </paging:HentaiFrame.PageAnimation>
-    </paging:HentaiFrame>
-    <Grid Grid.Row="0" x:Name="TitleBar"
-          Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
-            <ColumnDefinition />
-            <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Image Source="../Assets/Square44x44Logo.png" HorizontalAlignment="Left" x:Name="LogoImage"
-                   Width="20" Height="20" Margin="12,0" />
-            <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" x:Name="TitleTextBlock"
-                       Style="{StaticResource CaptionTextBlockStyle}" />
-        </Grid>
-    </Grid>-->
-    <tab:TabControl x:Name="tab" AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title">
+    <tab:TabControl TabBackground="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" x:Name="tab"
+                    AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title">
         <tab:TabControl.ItemsTemplate>
             <DataTemplate>
                 <mvvm:MvvmFrame TargetSourcePage="{Binding RootType}">
@@ -54,9 +27,11 @@
             </DataTemplate>
         </tab:TabControl.ItemsTemplate>
     </tab:TabControl>
-    <Grid x:Name="ExtendedSplash" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0" Grid.RowSpan="2">
+    <Grid x:Name="ExtendedSplash" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0"
+          Grid.RowSpan="2">
         <Canvas>
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage" Source="ms-appx:///Assets/SplashScreen.png"/>
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage"
+                   Source="ms-appx:///Assets/SplashScreen.png" />
         </Canvas>
     </Grid>
 </Grid>

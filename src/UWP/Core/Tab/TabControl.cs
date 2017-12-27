@@ -5,12 +5,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Input;
 using Windows.Devices.Input;
+using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -33,6 +35,9 @@ namespace Tab
         public static readonly DependencyProperty AddCommandProperty = DependencyProperty.Register(
             nameof(AddCommand), typeof(ICommand), typeof(TabControl), new PropertyMetadata(default(ICommand)));
 
+        public static readonly DependencyProperty TabBackgroundProperty = DependencyProperty.Register(
+            nameof(TabBackground), typeof(Brush), typeof(TabControl), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
+
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
 
         private Button _addButton;
@@ -42,6 +47,12 @@ namespace Tab
         public TabControl()
         {
             DefaultStyleKey = typeof(TabControl);
+        }
+
+        public Brush TabBackground
+        {
+            get => (Brush) GetValue(TabBackgroundProperty);
+            set => SetValue(TabBackgroundProperty, value);
         }
 
         public ICommand AddCommand
@@ -70,7 +81,9 @@ namespace Tab
             set => SetValue(ItemsTemplateProperty, value);
         }
 
-        public Grid TabRoot { get; private set; }
+        public Grid TabListRoot { get; private set; }
+
+        public Grid TabListBackground { get; private set; }
 
         public event EventHandler AddRequest;
 
@@ -176,7 +189,8 @@ namespace Tab
         {
             base.OnApplyTemplate();
             _tabList = GetTemplateChild("TabList") as ListView;
-            TabRoot = GetTemplateChild("TabRoot") as Grid;
+            TabListRoot = GetTemplateChild("TabListRoot") as Grid;
+            TabListBackground = GetTemplateChild("TabListBackground") as Grid;
             _tabList.SetBinding(Selector.SelectedItemProperty, new Binding
             {
                 Source = this,

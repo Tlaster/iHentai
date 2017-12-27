@@ -30,7 +30,7 @@ namespace iHentai.Views
 {
     public sealed partial class RootView
     {
-        private readonly UISettings _uiSettings;
+        //private readonly UISettings _uiSettings;
         private readonly SplashScreen _splash;
         private readonly Type _defaultNavItem;
         private Rect _splashImageRect;
@@ -47,18 +47,18 @@ namespace iHentai.Views
                 _splash.Dismissed += SplashScreenOnDismissed;
                 PositionImage();
             }
-            _uiSettings = new UISettings();
+            //_uiSettings = new UISettings();
             Loaded += RootView_Loaded;
         }
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            tab.TabRoot.Height = coreTitleBar.Height;
-            Window.Current.SetTitleBar(tab.TabRoot);
+            tab.TabListRoot.Height = coreTitleBar.Height;
+            Window.Current.SetTitleBar(tab.TabListBackground);
             coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-            ThemeHelper.AccentColorUpdated(tab.TabRoot);
-            _uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
+            //ThemeHelper.AccentColorUpdated(tab.TabListRoot);
+            //_uiSettings.ColorValuesChanged += RootPage_ColorValuesChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
         }
 
@@ -120,10 +120,10 @@ namespace iHentai.Views
             //}
         }
 
-        private async void RootPage_ColorValuesChanged(UISettings sender, object args)
-        {
-            await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(tab.TabRoot));
-        }
+        //private async void RootPage_ColorValuesChanged(UISettings sender, object args)
+        //{
+        //    await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low, () => ThemeHelper.AccentColorUpdated(tab.TabListRoot));
+        //}
 
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
@@ -134,12 +134,13 @@ namespace iHentai.Views
         {
             //LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
             //RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
-            tab.TabRoot.Height = coreTitleBar.Height;
+            tab.TabListRoot.Padding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0, coreTitleBar.SystemOverlayRightInset, 0);
+            tab.TabListRoot.Height = coreTitleBar.Height;
         }
 
         private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            tab.TabRoot.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+            tab.TabListRoot.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         //private void RootFrame_OnNavigated(object sender, HentaiNavigationEventArgs e)
