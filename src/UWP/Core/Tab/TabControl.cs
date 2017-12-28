@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -50,6 +52,9 @@ namespace Tab
             nameof(Content), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
 
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
+
+        private readonly ConcurrentDictionary<object, RenderTargetBitmap>
+            _previews = new ConcurrentDictionary<object, RenderTargetBitmap>();
 
         private Button _addButton;
         private ListView _tabList;
@@ -119,12 +124,28 @@ namespace Tab
         private static void OnSelectedItemChanged(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
         {
-            (dependencyObject as TabControl)?.OnSelectedItemChanged(e.NewValue);
+            (dependencyObject as TabControl)?.OnSelectedItemChanged(e.NewValue, e.OldValue);
         }
 
-        private void OnSelectedItemChanged(object newValue)
+        private async void OnSelectedItemChanged(object newValue, object oldValue)
         {
-            Content = newValue != null ? _items[newValue] : null;
+            if (newValue == null || !_items.ContainsKey(newValue)) return;
+
+            if (oldValue != null)
+            {
+                if (_previews.TryGetValue(oldValue, out var value))
+                {
+                    await value.RenderAsync(Content as UIElement);
+                }
+                else
+                {
+                    var bitmap = new RenderTargetBitmap();
+                    await bitmap.RenderAsync(Content as UIElement);
+                    _previews.TryAdd(oldValue, bitmap);
+                }
+            }
+
+            Content = _items[newValue];
         }
 
         private static void OnItemsSourceChanged(DependencyObject dependencyObject,
@@ -237,7 +258,7 @@ namespace Tab
             _addButton = GetTemplateChild("AddButton") as Button;
             _addButton.Click += AddButton_Click;
             SelectedItem = _items.LastOrDefault().Key;
-            OnSelectedItemChanged(SelectedItem);
+            OnSelectedItemChanged(SelectedItem, null);
         }
 
         private void TabList_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -252,27 +273,40 @@ namespace Tab
         {
             if (item == null)
                 return;
+            if (!(ToolTipService.GetToolTip(container) is TabPreview toolTip))
+            {
+                toolTip = new TabPreview();
+                ToolTipService.SetToolTip(container, toolTip);
+                ToolTipService.SetPlacement(container, PlacementMode.Bottom);
+                ToolTipService.SetPlacementTarget(container, toolTip);
+            }
+
+            var prevText = toolTip.FindDescendant<TextBlock>();
             var text = container.FindDescendant<TextBlock>();
+            Binding binding;
             if (string.IsNullOrEmpty(TitlePath))
-                text?.SetBinding(TextBlock.TextProperty, new Binding
+                binding = new Binding
                 {
                     Source = item,
                     Mode = BindingMode.OneWay
-                });
+                };
             else if (TitlePath.StartsWith("self.", StringComparison.CurrentCultureIgnoreCase))
-                text?.SetBinding(TextBlock.TextProperty, new Binding
+                binding = new Binding
                 {
                     Source = _items[item],
                     Path = new PropertyPath(TitlePath.Substring("self.".Length)),
                     Mode = BindingMode.OneWay
-                });
+                };
             else
-                text?.SetBinding(TextBlock.TextProperty, new Binding
+                binding = new Binding
                 {
                     Source = item,
                     Path = new PropertyPath(TitlePath),
                     Mode = BindingMode.OneWay
-                });
+                };
+            text?.SetBinding(TextBlock.TextProperty, binding);
+            prevText.SetBinding(TextBlock.TextProperty, binding);
+            toolTip.DataContext = _items[item];
         }
 
         private void TabList_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
@@ -281,7 +315,39 @@ namespace Tab
             container.DataContext = args.Item;
             container.Loaded += ContainerItemLoaded;
             container.PointerReleased += Container_PointerReleased;
+            container.PointerEntered += ContainerOnPointerEntered;
             args.ItemContainer = container;
+        }
+
+        private void ContainerOnPointerEntered(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
+        {
+            var container = sender as ContentControl;
+            var item = container?.Content;
+            if (ToolTipService.GetToolTip(container) is TabPreview toolTip && item != null &&
+                _items.TryGetValue(item, out var element) && element is UIElement uiElement)
+                if (_previews.TryGetValue(item, out var preview))
+                {
+                    if (SelectedItem != item)
+                    {
+                        toolTip.FindDescendant<Image>().Source = preview;
+                    }
+                    else
+                    {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        preview.RenderAsync(uiElement);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        toolTip.FindDescendant<Image>().Source = preview;
+                    }
+                }
+                else
+                {
+                    var bitmap = new RenderTargetBitmap();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    bitmap.RenderAsync(uiElement);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    _previews.TryAdd(item, bitmap);
+                    toolTip.FindDescendant<Image>().Source = bitmap;
+                }
         }
 
         private void ContainerItemLoaded(object sender, RoutedEventArgs e)

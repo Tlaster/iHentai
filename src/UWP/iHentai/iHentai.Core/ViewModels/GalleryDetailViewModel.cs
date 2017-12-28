@@ -9,6 +9,8 @@ namespace iHentai.Core.ViewModels
 {
     public class GalleryDetailViewModel : ViewModel
     {
+        public string Title => $"{Model.Title} - {_serviceType}";
+
         private readonly ServiceTypes _serviceType;
 
         public GalleryDetailViewModel(ServiceTypes serviceType, IGalleryModel model)

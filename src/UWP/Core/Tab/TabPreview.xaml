@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="Tab.TabPreview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tab"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="150"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image x:Name="PreviewImage"
+               Height="150"
+               Width="150"/>
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" x:Name="TabTitle" />
+    </Grid>
+</UserControl>

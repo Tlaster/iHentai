@@ -9,6 +9,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:services="using:iHentai.Services"
+    Title="{Binding Title}"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
 

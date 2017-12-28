@@ -50,12 +50,12 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
+                                        <Grid Width="150">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Width="100" Style="{ThemeResource BodyTextBlockStyle}"
+                                            <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis" Style="{ThemeResource BodyTextBlockStyle}"
                                                        x:Name="TitleTextBlock" VerticalAlignment="Center" />
                                             <Button Style="{ThemeResource TextBlockButtonStyle}" Grid.Column="1"
                                                     x:Name="CloseButton">
