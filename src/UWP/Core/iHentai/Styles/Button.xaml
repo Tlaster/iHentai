@@ -4,4 +4,7 @@
     <Style BasedOn="{StaticResource ButtonRevealStyle}" TargetType="Button">
         <Setter Property="BorderThickness" Value="0" />
     </Style>
+    <Style x:Key="TextBlockButtonStyle" TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+        <Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+    </Style>
 </ResourceDictionary>

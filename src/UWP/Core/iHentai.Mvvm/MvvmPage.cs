@@ -7,10 +7,19 @@ namespace iHentai.Mvvm
 {
     public abstract class MvvmPage : HentaiPage
     {
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+            nameof(Title), typeof(string), typeof(MvvmPage), new PropertyMetadata(default(string)));
+
         public MvvmPage()
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
+        }
+
+        public string Title
+        {
+            get => (string) GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
         public ViewModel ViewModel { get; set; }
@@ -97,28 +106,23 @@ namespace iHentai.Mvvm
 
         protected virtual void OnStart()
         {
-            Debug.WriteLine($"{GetType().Name}: ${nameof(OnStart)}");
             ViewModel?.OnStart();
         }
 
         protected virtual void OnRestart()
         {
-            Debug.WriteLine($"{GetType().Name}: ${nameof(OnRestart)}");
         }
 
         protected virtual void OnPause()
         {
-            Debug.WriteLine($"{GetType().Name}: ${nameof(OnPause)}");
         }
 
         protected virtual void OnClose()
         {
-            Debug.WriteLine($"{GetType().Name}: ${nameof(OnClose)}");
         }
 
         protected virtual void OnDestory()
         {
-            Debug.WriteLine($"{GetType().Name}: ${nameof(OnDestory)}");
             ViewModel?.OnDestory();
         }
     }

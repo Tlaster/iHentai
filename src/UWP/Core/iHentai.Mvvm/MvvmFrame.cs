@@ -1,5 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
@@ -7,11 +10,13 @@ using iHentai.Paging;
 
 namespace iHentai.Mvvm
 {
-    public class MvvmFrame : HentaiFrame
+    public class MvvmFrame : HentaiFrame, INotifyPropertyChanged
     {
         public static readonly DependencyProperty TargetSourcePageProperty = DependencyProperty.Register(
             nameof(TargetSourcePage), typeof(Type), typeof(MvvmFrame),
             new PropertyMetadata(default(Type), OnTargetSourcePageChanged));
+
+        private long _token;
 
         public Type TargetSourcePage
         {
@@ -19,13 +24,16 @@ namespace iHentai.Mvvm
             set => SetValue(TargetSourcePageProperty, value);
         }
 
+        public string CurrentPageTitle => (CurrentPage as MvvmPage)?.Title;
+
+        public ICommand GoBackCommand => new RelayCommand(() => GoBackAsync());
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private static void OnTargetSourcePageChanged(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is Type type)
-            {
-                (dependencyObject as MvvmFrame)?.OnTargetSourcePageChanged(type);
-            }
+            if (e.NewValue is Type type) (dependencyObject as MvvmFrame)?.OnTargetSourcePageChanged(type);
         }
 
         private void OnTargetSourcePageChanged(Type newValue)
@@ -35,6 +43,32 @@ namespace iHentai.Mvvm
                     .FireAndForget();
             else
                 NavigateAsync(newValue).FireAndForget();
+        }
+
+        protected override void OnCurrentPageChanged(HentaiPage currentPage, HentaiPage newPage)
+        {
+            base.OnCurrentPageChanged(currentPage, newPage);
+            if (currentPage != null) currentPage.UnregisterPropertyChangedCallback(MvvmPage.TitleProperty, _token);
+
+            if (newPage != null)
+                _token = newPage.RegisterPropertyChangedCallback(MvvmPage.TitleProperty, OnPageTitleChanged);
+        }
+
+        private void OnPageTitleChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            OnPropertyChanged(nameof(CurrentPageTitle));
+        }
+
+        protected override void OnNavigated(object sender, HentaiNavigationEventArgs args)
+        {
+            base.OnNavigated(sender, args);
+            OnPropertyChanged(nameof(CanGoBack));
+            OnPropertyChanged(nameof(CurrentPageTitle));
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -18,6 +18,7 @@
     xmlns:basic="using:iHentai.Basic.Controls"
     xmlns:services="using:iHentai.Services"
     SizeChanged="GalleryPage_OnSizeChanged"
+    Title="{Binding Title}"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryViewModel}">
 

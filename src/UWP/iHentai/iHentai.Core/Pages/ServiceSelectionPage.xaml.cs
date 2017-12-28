@@ -13,6 +13,7 @@ namespace iHentai.Core.Pages
         public ServiceSelectionPage()
         {
             InitializeComponent();
+            Title = "iHentai";
         }
 
         public new ServiceSelectionViewModel ViewModel

@@ -47,8 +47,8 @@ namespace iHentai.Paging
         internal NavigationKeyHandler NavigationKeyHandler { get; }
 
 
-        public static HentaiPage Current => HentaiFrame.Current != null && HentaiFrame.Current.CurrentPage != null
-            ? HentaiFrame.Current.CurrentPage.Page
+        public static HentaiPage Current => HentaiFrame.Current != null && HentaiFrame.Current.CurrentPageModel != null
+            ? HentaiFrame.Current.CurrentPageModel.Page
             : null;
 
 

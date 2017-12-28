@@ -17,11 +17,13 @@
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" x:Name="tab"
-                    AddCommand="{Binding AddCommand}" ItemsSource="{Binding Source}" TitlePath="Title"
+                    AddRequest="{x:Bind ViewModel.AddTab}" ItemsSource="{Binding Source}"
+                    TitlePath="self.CurrentPageTitle"
                     TabClosed="{x:Bind ViewModel.TabClosed}">
         <tab:TabControl.ItemsTemplate>
             <DataTemplate>
-                <mvvm:MvvmFrame TargetSourcePage="{Binding RootType}">
+                <mvvm:MvvmFrame d:DataContext="{d:DesignInstance viewModels:TabViewModel}" x:Name="TabRootFrame"
+                                TargetSourcePage="{Binding RootType}">
                     <paging:HentaiFrame.PageAnimation>
                         <animations:FadeAnimation />
                     </paging:HentaiFrame.PageAnimation>
@@ -29,12 +31,20 @@
             </DataTemplate>
         </tab:TabControl.ItemsTemplate>
         <tab:TabControl.Header>
-            <Grid Padding="8" Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
-                <TextBlock Text="dsafdsafdsa"/>
+            <Grid Padding="8" DataContext="{Binding ElementName=tab, Path=Content}"
+                  d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
+                  Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
+                <StackPanel Orientation="Horizontal">
+                    <Button IsEnabled="{Binding CanGoBack}" Style="{ThemeResource TextBlockButtonStyle}"
+                            Command="{Binding GoBackCommand}">
+                        <SymbolIcon Symbol="Back" />
+                    </Button>
+                </StackPanel>
             </Grid>
         </tab:TabControl.Header>
     </tab:TabControl>
-    <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}" Grid.Row="0"
+    <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
+          Grid.Row="0"
           Grid.RowSpan="2">
         <Canvas>
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ExtendedSplashImage"

@@ -22,11 +22,11 @@ namespace iHentai.ViewModels
         }
 
         public ObservableCollection<TabViewModel> Source { get; } = new ObservableCollection<TabViewModel>();
-
-        public ICommand AddCommand => new RelayCommand(() =>
+        
+        public void AddTab()
         {
             Source.Add(new TabViewModel(_rootType));
-        });
+        }
 
         public void TabClosed()
         {
@@ -37,9 +37,9 @@ namespace iHentai.ViewModels
         }
     }
 
+    [AddINotifyPropertyChangedInterface]
     public class TabViewModel
     {
-        public string Title { get; set; } = "Title";
         public Type RootType { get; }
 
         public TabViewModel(Type rootType)

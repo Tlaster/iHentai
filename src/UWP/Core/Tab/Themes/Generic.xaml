@@ -13,8 +13,15 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ContentControl HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                        x:Name="RootContainer" Grid.Row="2" />
+                        <ContentPresenter HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                          Content="{TemplateBinding Content}"
+                                          Grid.Row="2" >
+                            <ContentPresenter.ContentTransitions>
+                                <TransitionCollection>
+                                    <PaneThemeTransition Edge="Top"/>
+                                </TransitionCollection>
+                            </ContentPresenter.ContentTransitions>
+                        </ContentPresenter>
                         <ContentPresenter Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
                                           HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"

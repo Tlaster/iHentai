@@ -46,10 +46,12 @@ namespace Tab
             nameof(HeaderTemplate), typeof(DataTemplate), typeof(TabControl),
             new PropertyMetadata(default(DataTemplate)));
 
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
+            nameof(Content), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
 
         private Button _addButton;
-        private ContentControl _rootContainer;
         private ListView _tabList;
 
         public TabControl()
@@ -89,6 +91,12 @@ namespace Tab
             set => SetValue(ItemsSourceProperty, value);
         }
 
+        public object Content
+        {
+            get => GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
+        }
+
         public object SelectedItem
         {
             get => GetValue(SelectedItemProperty);
@@ -116,7 +124,7 @@ namespace Tab
 
         private void OnSelectedItemChanged(object newValue)
         {
-            if (_rootContainer != null) _rootContainer.Content = newValue != null ? _items[newValue] : null;
+            Content = newValue != null ? _items[newValue] : null;
         }
 
         private static void OnItemsSourceChanged(DependencyObject dependencyObject,
@@ -226,7 +234,6 @@ namespace Tab
             });
             _tabList.ContainerContentChanging += TabList_ContainerContentChanging;
             _tabList.ChoosingItemContainer += TabList_ChoosingItemContainer;
-            _rootContainer = GetTemplateChild("RootContainer") as ContentControl;
             _addButton = GetTemplateChild("AddButton") as Button;
             _addButton.Click += AddButton_Click;
             SelectedItem = _items.LastOrDefault().Key;
@@ -243,11 +250,20 @@ namespace Tab
 
         private void UpdateContainer(ContentControl container, object item)
         {
+            if (item == null)
+                return;
             var text = container.FindDescendant<TextBlock>();
             if (string.IsNullOrEmpty(TitlePath))
                 text?.SetBinding(TextBlock.TextProperty, new Binding
                 {
                     Source = item,
+                    Mode = BindingMode.OneWay
+                });
+            else if (TitlePath.StartsWith("self.", StringComparison.CurrentCultureIgnoreCase))
+                text?.SetBinding(TextBlock.TextProperty, new Binding
+                {
+                    Source = _items[item],
+                    Path = new PropertyPath(TitlePath.Substring("self.".Length)),
                     Mode = BindingMode.OneWay
                 });
             else
@@ -305,7 +321,6 @@ namespace Tab
             (ItemsSource as IList)?.Remove(item);
             TabClosed?.Invoke(this, EventArgs.Empty);
         }
-
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {

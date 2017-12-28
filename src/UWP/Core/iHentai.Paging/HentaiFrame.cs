@@ -68,8 +68,9 @@ namespace iHentai.Paging
         internal HentaiPageModel PreviousPage => _pageStackManager.PreviousPage;
 
 
-        internal HentaiPageModel CurrentPage => _pageStackManager.CurrentPage;
+        internal HentaiPageModel CurrentPageModel => _pageStackManager.CurrentPage;
 
+        public HentaiPage CurrentPage => CurrentPageModel.Page;
 
         internal HentaiPageModel NextPage => _pageStackManager.NextPage;
 
@@ -95,9 +96,9 @@ namespace iHentai.Paging
                 if (ContentTransitions != null)
                     return null;
 
-                var currentPage = CurrentPage;
+                var currentPage = CurrentPageModel;
                 return currentPage?.Page?.PageAnimation != null
-                    ? CurrentPage.Page.PageAnimation
+                    ? CurrentPageModel.Page.PageAnimation
                     : PageAnimation;
             }
         }
@@ -134,7 +135,7 @@ namespace iHentai.Paging
         {
             return RunNavigationWithCheckAsync(async () =>
             {
-                if (await RaisePageOnNavigatingFromAsync(CurrentPage, null, NavigationMode.Forward))
+                if (await RaisePageOnNavigatingFromAsync(CurrentPageModel, null, NavigationMode.Forward))
                     return false;
 
                 await GoForwardOrBackAsync(NavigationMode.Forward);
@@ -170,9 +171,9 @@ namespace iHentai.Paging
             return RunNavigationWithCheckAsync(async () =>
             {
                 var nextPage = _pageStackManager.GetPageAt(newPageIndex);
-                var currentPage = CurrentPage;
+                var currentPage = CurrentPageModel;
 
-                if (await RaisePageOnNavigatingFromAsync(CurrentPage, currentPage, NavigationMode.Back))
+                if (await RaisePageOnNavigatingFromAsync(CurrentPageModel, currentPage, NavigationMode.Back))
                     return false;
 
                 await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.Back, currentPage, nextPage, newPageIndex);
@@ -201,7 +202,7 @@ namespace iHentai.Paging
         {
             return RunNavigationWithCheckAsync(async () =>
             {
-                if (await RaisePageOnNavigatingFromAsync(CurrentPage, PreviousPage, NavigationMode.Back))
+                if (await RaisePageOnNavigatingFromAsync(CurrentPageModel, PreviousPage, NavigationMode.Back))
                     return false;
 
                 await GoForwardOrBackAsync(NavigationMode.Back);
@@ -245,7 +246,7 @@ namespace iHentai.Paging
 
         internal async Task<bool> CopyToTopAndNavigateAsync(HentaiPageModel page)
         {
-            if (CurrentPage == page)
+            if (CurrentPageModel == page)
                 return true;
 
             if (_pageStackManager.Pages.Contains(page))
@@ -291,9 +292,9 @@ namespace iHentai.Paging
         {
             return RunNavigationWithCheckAsync(async () =>
             {
-                var currentPage = CurrentPage;
+                var currentPage = CurrentPageModel;
                 if (currentPage != null)
-                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, navigationMode))
+                    if (await RaisePageOnNavigatingFromAsync(CurrentPageModel, newPage, navigationMode))
                         return false;
 
                 _pageStackManager.ClearForwardStack();
@@ -326,7 +327,7 @@ namespace iHentai.Paging
         {
             if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
             {
-                var currentPage = CurrentPage;
+                var currentPage = CurrentPageModel;
                 var nextPageIndex =
                     _pageStackManager.CurrentIndex + (navigationMode == NavigationMode.Forward ? 1 : -1);
                 var nextPage = _pageStackManager.Pages[nextPageIndex];
@@ -396,9 +397,15 @@ namespace iHentai.Paging
                 RaisePageOnNavigatedFrom(currentPage, navigationMode);
 
             _pageStackManager.ChangeCurrentPage(newPage, nextPageIndex);
+            OnCurrentPageChanged(currentPage?.Page, newPage?.Page);
 
             RaisePageOnNavigatedTo(newPage, navigationMode);
             GoBackAsync();
+        }
+
+        protected virtual void OnCurrentPageChanged(HentaiPage currentPage, HentaiPage newPage)
+        {
+            
         }
 
         private void SwitchPagesIfSequential(PageInsertionMode insertionMode, HentaiPageModel currentPage,
@@ -416,7 +423,7 @@ namespace iHentai.Paging
 
         private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
         {
-            CurrentPage?.GetPage(this).OnVisibilityChanged(args);
+            CurrentPageModel?.GetPage(this).OnVisibilityChanged(args);
         }
 
         #region Dependency Properties

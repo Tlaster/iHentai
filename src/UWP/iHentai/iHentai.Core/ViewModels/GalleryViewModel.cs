@@ -15,6 +15,8 @@ namespace iHentai.Core.ViewModels
     {
         private ServiceTypes _serviceType;
 
+        public string Title => _serviceType.ToString();
+        
         public GalleryViewModel() : this(ServiceTypes.NHentai)
         {
         }
