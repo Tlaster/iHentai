@@ -53,7 +53,7 @@ namespace iHentai.Services
                 //var defaultHandler = new DefaultLaunchActivationHandler(_defaultNavItem);
                 //if (defaultHandler.CanHandle(activationArgs))
                 //    await defaultHandler.HandleAsync(activationArgs);
-
+                
                 // Ensure the current window is active
                 Window.Current.Activate();
 
@@ -70,6 +70,7 @@ namespace iHentai.Services
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = Colors.Gray;
         }
 
         private async Task InitializeAsync()

@@ -46,7 +46,7 @@ namespace iHentai.Services
                 return new DataTemplate();
             var template =
                 $"<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><views:{type.Name} xmlns:views=\"using:{type.Namespace}\"/></DataTemplate>";
-            return (DataTemplate) XamlReader.Load(template);
+            return XamlReader.Load(template) as DataTemplate;
         }
     }
 

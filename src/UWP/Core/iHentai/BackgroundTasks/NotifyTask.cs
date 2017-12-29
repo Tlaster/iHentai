@@ -17,7 +17,7 @@ namespace iHentai.BackgroundTasks
         {
             var taskName = GetType().Name;
 
-            if (!BackgroundTaskRegistration.AllTasks.Any(t => t.Value.Name == taskName))
+            if (BackgroundTaskRegistration.AllTasks.All(t => t.Value.Name != taskName))
             {
                 var builder = new BackgroundTaskBuilder
                 {
@@ -77,10 +77,7 @@ namespace iHentai.BackgroundTasks
             {
                 timer.Cancel();
 
-                if (_cancelRequested)
-                    Message = $"Background Task {_taskInstance.Task.Name} cancelled";
-                else
-                    Message = $"Background Task {_taskInstance.Task.Name} finished";
+                Message = _cancelRequested ? $"Background Task {_taskInstance.Task.Name} cancelled" : $"Background Task {_taskInstance.Task.Name} finished";
 
                 _deferral?.Complete();
             }

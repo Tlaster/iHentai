@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using Windows.Devices.Input;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -190,7 +191,9 @@ namespace Tab
                     if (e.NewItems != null && e.NewItems.Count > 0)
                     {
                         foreach (var item in e.NewItems) AddContent(item);
-                        SelectedItem = ItemsSource.Cast<object>().LastOrDefault();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
                     break;
@@ -199,16 +202,22 @@ namespace Tab
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldItems != null && e.OldItems.Count > 0)
                     {
-                        var shouldChangeSelectedItem = false;
+                        var nextSelectedItemIndex = -1;
                         foreach (var item in e.OldItems)
                         {
-                            shouldChangeSelectedItem = SelectedItem == item ||
-                                                       SelectedItem == item &&
-                                                       ItemsSource.Cast<object>().LastOrDefault() == item;
+                            if (SelectedItem == item)
+                            {
+                                nextSelectedItemIndex = e.OldStartingIndex;
+                            }
+
                             _items.Remove(item);
                         }
-
-                        if (shouldChangeSelectedItem) SelectedItem = ItemsSource.Cast<object>().LastOrDefault();
+                        if (nextSelectedItemIndex > -1)
+                        {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().ElementAtOrDefault(nextSelectedItemIndex) ?? ItemsSource.Cast<object>().LastOrDefault());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        }
                     }
 
                     break;
@@ -219,11 +228,15 @@ namespace Tab
                     if (e.NewItems != null && e.NewItems.Count > 0)
                     {
                         foreach (var item in e.NewItems) AddContent(item);
-                        SelectedItem = e.NewItems[0];
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = e.NewItems[0]);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
                     else
                     {
-                        SelectedItem = SelectedItem = ItemsSource.Cast<object>().LastOrDefault();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
                     break;
@@ -232,7 +245,9 @@ namespace Tab
                     if (sender is IEnumerable enumerable)
                     {
                         foreach (var item in enumerable) AddContent(item);
-                        SelectedItem = SelectedItem = ItemsSource.Cast<object>().LastOrDefault();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
                     break;

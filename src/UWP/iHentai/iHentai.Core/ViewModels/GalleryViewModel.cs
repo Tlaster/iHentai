@@ -15,13 +15,12 @@ namespace iHentai.Core.ViewModels
     {
         private ServiceTypes _serviceType;
 
-        public string Title => _serviceType.ToString();
-        
         public GalleryViewModel() : this(ServiceTypes.NHentai)
         {
         }
 
-        public GalleryViewModel(ServiceTypes serviceType) : this(serviceType, null)//DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
+        public GalleryViewModel(ServiceTypes serviceType) :
+            this(serviceType, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 
@@ -29,6 +28,8 @@ namespace iHentai.Core.ViewModels
         {
             Init(serviceType, option);
         }
+
+        public string Title => _serviceType.ToString();
 
         public AutoList<GalleryDataSource, IGalleryModel> Source { get; private set; }
 
@@ -50,6 +51,7 @@ namespace iHentai.Core.ViewModels
                 SearchPlaceholder = Source.DataSource.SearchOption.Keyword;
                 Source.DataSource.SearchOption.SearchType = SearchTypes.Keyword;
             }
+
             Source.RefreshAsync().FireAndForget();
         }
 
