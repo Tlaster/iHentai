@@ -8,7 +8,7 @@ namespace iHentai.Services
     {
         private const string SettingsKey = "RequestedTheme";
 
-        public static ElementTheme Theme { get; set; } = ElementTheme.Default;
+        public static ElementTheme Theme { get; private set; } = ElementTheme.Default;
 
         public static void Initialize()
         {
@@ -32,7 +32,6 @@ namespace iHentai.Services
         {
             var cacheTheme = ElementTheme.Default;
             var themeName = SettingsKey.Read<string>();
-
             if (!string.IsNullOrEmpty(themeName))
                 Enum.TryParse(themeName, out cacheTheme);
 

@@ -21,7 +21,7 @@ namespace iHentai.Core.ViewModels
         {
         }
 
-        public GalleryViewModel(ServiceTypes serviceType) : this(serviceType, null)
+        public GalleryViewModel(ServiceTypes serviceType) : this(serviceType, null)//DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 

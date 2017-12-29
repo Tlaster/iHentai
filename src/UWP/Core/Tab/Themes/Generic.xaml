@@ -30,10 +30,12 @@
                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                         <Grid Grid.Row="0" x:Name="TabListRoot">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ListView Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                            <ContentPresenter Content="{TemplateBinding TabHeader}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                            <ListView Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                       ScrollViewer.HorizontalScrollMode="Enabled" CanReorderItems="True"
                                       AllowDrop="True" CanDrag="True" CanDragItems="True" x:Name="TabList"
                                       SelectionMode="Single" IsItemClickEnabled="False"
@@ -50,7 +52,12 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Width="150">
+                                        <Grid Width="150" x:Name="TabItemRoot">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Placement="Bottom" PlacementTarget="{Binding ElementName=TabItemRoot}">
+                                                    <local:TabPreview/>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
@@ -65,7 +72,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <Button Grid.Column="1" VerticalAlignment="Stretch" x:Name="AddButton"
+                            <Button Grid.Column="2" VerticalAlignment="Stretch" x:Name="AddButton"
                                     HorizontalAlignment="Right" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
                             </Button>

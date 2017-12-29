@@ -61,9 +61,9 @@ namespace iHentai.Core.ViewModels
 
         public void Skip()
         {
-            Navigate<GalleryViewModel>(args: SelectedService
-                .ServiceType); //TODO: Navigate might failed if without WebViewLoginFollowup
-            //Frame.ClearBackStack();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            Navigate<GalleryViewModel>(args: SelectedService.ServiceType); //TODO: Navigate might failed if without WebViewLoginFollowup
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         public void Cancel()

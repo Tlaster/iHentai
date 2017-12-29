@@ -51,6 +51,9 @@ namespace Tab
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             nameof(Content), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
 
+        public static readonly DependencyProperty TabHeaderProperty = DependencyProperty.Register(
+            nameof(TabHeader), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
 
         private readonly ConcurrentDictionary<object, RenderTargetBitmap>
@@ -108,6 +111,12 @@ namespace Tab
             set => SetValue(SelectedItemProperty, value);
         }
 
+        public object TabHeader
+        {
+            get => GetValue(TabHeaderProperty);
+            set => SetValue(TabHeaderProperty, value);
+        }
+
         public DataTemplate ItemsTemplate
         {
             get => (DataTemplate) GetValue(ItemsTemplateProperty);
@@ -130,9 +139,7 @@ namespace Tab
         private async void OnSelectedItemChanged(object newValue, object oldValue)
         {
             if (newValue == null || !_items.ContainsKey(newValue)) return;
-
             if (oldValue != null)
-            {
                 if (_previews.TryGetValue(oldValue, out var value))
                 {
                     await value.RenderAsync(Content as UIElement);
@@ -143,7 +150,6 @@ namespace Tab
                     await bitmap.RenderAsync(Content as UIElement);
                     _previews.TryAdd(oldValue, bitmap);
                 }
-            }
 
             Content = _items[newValue];
         }
@@ -273,14 +279,8 @@ namespace Tab
         {
             if (item == null)
                 return;
-            if (!(ToolTipService.GetToolTip(container) is TabPreview toolTip))
-            {
-                toolTip = new TabPreview();
-                ToolTipService.SetToolTip(container, toolTip);
-                ToolTipService.SetPlacement(container, PlacementMode.Bottom);
-                ToolTipService.SetPlacementTarget(container, toolTip);
-            }
-
+            if (!((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)?.Content is TabPreview
+                toolTip)) return;
             var prevText = toolTip.FindDescendant<TextBlock>();
             var text = container.FindDescendant<TextBlock>();
             Binding binding;
@@ -323,7 +323,8 @@ namespace Tab
         {
             var container = sender as ContentControl;
             var item = container?.Content;
-            if (ToolTipService.GetToolTip(container) is TabPreview toolTip && item != null &&
+            if ((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)?.Content as TabPreview is
+                TabPreview toolTip && item != null &&
                 _items.TryGetValue(item, out var element) && element is UIElement uiElement)
                 if (_previews.TryGetValue(item, out var preview))
                 {

@@ -30,18 +30,14 @@
                 </mvvm:MvvmFrame>
             </DataTemplate>
         </tab:TabControl.ItemsTemplate>
-        <tab:TabControl.Header>
-            <Grid Padding="8" DataContext="{Binding ElementName=tab, Path=Content}"
-                  d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
-                  Background="{ThemeResource SystemControlChromeLowAcrylicWindowBrush}">
-                <StackPanel Orientation="Horizontal">
-                    <Button IsEnabled="{Binding CanGoBack}" Style="{ThemeResource TextBlockButtonStyle}"
-                            Command="{Binding GoBackCommand}">
-                        <SymbolIcon Symbol="Back" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </tab:TabControl.Header>
+        <tab:TabControl.TabHeader>
+            <Button DataContext="{Binding ElementName=tab, Path=Content}"
+                    d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
+                    IsEnabled="{Binding CanGoBack}" Style="{ThemeResource TextBlockButtonStyle}"
+                    Command="{Binding GoBackCommand}">
+                <SymbolIcon Symbol="Back" />
+            </Button>
+        </tab:TabControl.TabHeader>
     </tab:TabControl>
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"
