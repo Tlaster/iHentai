@@ -17,7 +17,7 @@
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}" x:Name="tab"
-                    AddRequest="{x:Bind ViewModel.AddTab}" ItemsSource="{Binding Source}"
+                    ItemsSource="{Binding Source}"
                     TitlePath="self.CurrentPageTitle"
                     TabClosed="{x:Bind ViewModel.TabClosed}">
         <tab:TabControl.ItemsTemplate>
@@ -31,13 +31,18 @@
             </DataTemplate>
         </tab:TabControl.ItemsTemplate>
         <tab:TabControl.TabHeader>
-            <Button DataContext="{Binding ElementName=tab, Path=Content}"
+            <Button VerticalAlignment="Stretch" DataContext="{Binding ElementName=tab, Path=Content}"
                     d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
-                    IsEnabled="{Binding CanGoBack}" Style="{ThemeResource TextBlockButtonStyle}"
-                    Command="{Binding GoBackCommand}">
-                <SymbolIcon Symbol="Back" />
+                    IsEnabled="{Binding CanGoBack}" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}"
+                    Command="{Binding GoBackCommand}" Width="48">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="12" />
             </Button>
         </tab:TabControl.TabHeader>
+        <tab:TabControl.TabFooter>
+            <Button VerticalAlignment="Stretch" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="{x:Bind ViewModel.AddTab}">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
+            </Button>
+        </tab:TabControl.TabFooter>
     </tab:TabControl>
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"

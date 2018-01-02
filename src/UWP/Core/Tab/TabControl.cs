@@ -4,7 +4,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Windows.Input;
 using Windows.Devices.Input;
 using Windows.UI;
 using Windows.UI.Core;
@@ -35,9 +34,6 @@ namespace Tab
             nameof(SelectedItem), typeof(object), typeof(TabControl),
             new PropertyMetadata(default(object), OnSelectedItemChanged));
 
-        public static readonly DependencyProperty AddCommandProperty = DependencyProperty.Register(
-            nameof(AddCommand), typeof(ICommand), typeof(TabControl), new PropertyMetadata(default(ICommand)));
-
         public static readonly DependencyProperty TabBackgroundProperty = DependencyProperty.Register(
             nameof(TabBackground), typeof(Brush), typeof(TabControl),
             new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
@@ -55,12 +51,14 @@ namespace Tab
         public static readonly DependencyProperty TabHeaderProperty = DependencyProperty.Register(
             nameof(TabHeader), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
 
+        public static readonly DependencyProperty TabFooterProperty = DependencyProperty.Register(
+            nameof(TabFooter), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+
         private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
 
         private readonly ConcurrentDictionary<object, RenderTargetBitmap>
             _previews = new ConcurrentDictionary<object, RenderTargetBitmap>();
 
-        private Button _addButton;
         private ListView _tabList;
 
         public TabControl()
@@ -72,12 +70,6 @@ namespace Tab
         {
             get => (Brush) GetValue(TabBackgroundProperty);
             set => SetValue(TabBackgroundProperty, value);
-        }
-
-        public ICommand AddCommand
-        {
-            get => (ICommand) GetValue(AddCommandProperty);
-            set => SetValue(AddCommandProperty, value);
         }
 
         public DataTemplate HeaderTemplate
@@ -124,12 +116,17 @@ namespace Tab
             set => SetValue(ItemsTemplateProperty, value);
         }
 
+        public object TabFooter
+        {
+            get => GetValue(TabFooterProperty);
+            set => SetValue(TabFooterProperty, value);
+        }
+
         public Grid TabListRoot { get; private set; }
 
         public Grid TabListBackground { get; private set; }
 
         public event EventHandler TabClosed;
-        public event EventHandler AddRequest;
 
         private static void OnSelectedItemChanged(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
@@ -192,7 +189,8 @@ namespace Tab
                     {
                         foreach (var item in e.NewItems) AddContent(item);
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
@@ -205,17 +203,18 @@ namespace Tab
                         var nextSelectedItemIndex = -1;
                         foreach (var item in e.OldItems)
                         {
-                            if (SelectedItem == item)
-                            {
-                                nextSelectedItemIndex = e.OldStartingIndex;
-                            }
+                            if (SelectedItem == item) nextSelectedItemIndex = e.OldStartingIndex;
 
                             _items.Remove(item);
                         }
+
                         if (nextSelectedItemIndex > -1)
                         {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().ElementAtOrDefault(nextSelectedItemIndex) ?? ItemsSource.Cast<object>().LastOrDefault());
+                            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                                () => SelectedItem =
+                                    ItemsSource.Cast<object>().ElementAtOrDefault(nextSelectedItemIndex) ??
+                                    ItemsSource.Cast<object>().LastOrDefault());
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         }
                     }
@@ -235,7 +234,8 @@ namespace Tab
                     else
                     {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
@@ -246,7 +246,8 @@ namespace Tab
                     {
                         foreach (var item in enumerable) AddContent(item);
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
+                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
@@ -276,8 +277,6 @@ namespace Tab
             });
             _tabList.ContainerContentChanging += TabList_ContainerContentChanging;
             _tabList.ChoosingItemContainer += TabList_ChoosingItemContainer;
-            _addButton = GetTemplateChild("AddButton") as Button;
-            _addButton.Click += AddButton_Click;
             SelectedItem = _items.LastOrDefault().Key;
             OnSelectedItemChanged(SelectedItem, null);
         }
@@ -402,12 +401,6 @@ namespace Tab
         {
             (ItemsSource as IList)?.Remove(item);
             TabClosed?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddRequest?.Invoke(this, EventArgs.Empty);
-            if (AddCommand != null && AddCommand.CanExecute(null)) AddCommand.Execute(null);
         }
     }
 }

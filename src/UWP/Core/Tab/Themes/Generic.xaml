@@ -72,10 +72,7 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <Button Grid.Column="2" VerticalAlignment="Stretch" x:Name="AddButton"
-                                    HorizontalAlignment="Right" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
-                            </Button>
+                            <ContentPresenter Grid.Column="2" Content="{TemplateBinding TabFooter}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
