@@ -101,6 +101,9 @@
     <PackageReference Include="Fody">
       <Version>2.3.15</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>2.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>
@@ -247,6 +250,10 @@
     <ProjectReference Include="..\..\iHentai\iHentai.Apis\iHentai.Apis.csproj">
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>
       <Name>iHentai.Apis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\iHentai\iHentai.Database\iHentai.Database.csproj">
+      <Project>{dbb34726-b622-4799-a122-40746e721bbd}</Project>
+      <Name>iHentai.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>

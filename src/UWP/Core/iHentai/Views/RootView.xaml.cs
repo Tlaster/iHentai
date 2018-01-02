@@ -23,10 +23,12 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
+using iHentai.Database;
 using iHentai.Mvvm;
 using iHentai.Paging;
 using iHentai.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using Microsoft.EntityFrameworkCore;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -35,15 +37,14 @@ namespace iHentai.Views
     public sealed partial class RootView
     {
         private readonly SplashScreen _splash;
+        private readonly Type _defaultNavItem;
         private Rect _splashImageRect;
-
-        public RootViewModel ViewModel { get; }
+        public RootViewModel ViewModel { get; private set; }
 
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
             this.InitializeComponent();
-            ViewModel = new RootViewModel(defaultNavItem);
-            DataContext = ViewModel;
+            _defaultNavItem = defaultNavItem;
             _splash = splashScreen;
             if (_splash != null)
             {
@@ -71,6 +72,12 @@ namespace iHentai.Views
 
         private async void DismissExtendedSplash()
         {
+            using (var context = new ApplicationDbContext())
+            {
+                await context.Database.MigrateAsync();
+            }
+            ViewModel = new RootViewModel(_defaultNavItem);
+            DataContext = ViewModel;
             await Task.Delay(3000);
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)

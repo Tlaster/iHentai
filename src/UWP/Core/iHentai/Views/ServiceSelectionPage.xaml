@@ -35,10 +35,15 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData}" HorizontalContentAlignment="Stretch">
+                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData, TargetNullValue=null}" HorizontalContentAlignment="Stretch">
                     <ContentControl.ContentTemplateSelector>
                         <services:ContentViewTemplateSelector />
                     </ContentControl.ContentTemplateSelector>
+                    <ContentControl.ContentTransitions>
+                        <TransitionCollection>
+                            <ContentThemeTransition/>
+                        </TransitionCollection>
+                    </ContentControl.ContentTransitions>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1" Padding="8">
                     <Button Content="Confirm" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
