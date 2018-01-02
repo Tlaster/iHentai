@@ -2,15 +2,15 @@
 
 namespace iHentai.Services
 {
-    public class ServiceSelectionBannerModel<T>
+    public class ServiceSelectionBannerModel
     {
         public ServiceSelectionBannerModel(string name)
         {
-            ServiceType = (T) Enum.Parse(typeof(T), name);
+            ServiceType = name;
             Image = $"ms-appx:///Assets/ApiBanners/{name}.png";
         }
 
-        public T ServiceType { get; }
+        public string ServiceType { get; }
 
         public string Image { get; }
     }

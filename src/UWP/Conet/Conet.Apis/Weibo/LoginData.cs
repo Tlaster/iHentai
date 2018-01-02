@@ -1,4 +1,5 @@
 ﻿using Conet.Apis.Core.Models.Interfaces;
+using iHentai.Services;
 
 namespace Conet.Apis.Weibo
 {

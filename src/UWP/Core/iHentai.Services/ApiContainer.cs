@@ -5,51 +5,34 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Windows.UI.Xaml;
-using iHentai.Basic.Helpers;
 
 namespace iHentai.Services
 {
-    public interface IApiApplication
-    {
-        IEnumerable<Assembly> GetApiAssemblies();
-    }
-
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class ApiKeyAttribute : Attribute
-    {
-        public ApiKeyAttribute(string key)
-        {
-            Key = key;
-        }
-
-        public string Key { get; }
-    }
-
-    public interface IApi
-    {
-    }
-
-    public interface IWithHttpHandler
-    {
-        bool CanHandle(HttpRequestMessage message);
-        void Handle(ref HttpRequestMessage message);
-    }
-
     public class ApiContainer
     {
         public ApiContainer()
         {
             if (Application.Current is IApiApplication application)
+            {
                 KnownApis = application
                     .GetApiAssemblies()
                     .SelectMany(item => item.DefinedTypes)
                     .Where(x => x.IsClass && x.ImplementedInterfaces.Contains(typeof(IApi)) &&
                                 x.GetCustomAttribute<ApiKeyAttribute>() != null)
-                    .Select(x => x)
                     .ToDictionary(x => x.GetCustomAttribute<ApiKeyAttribute>().Key, x => x);
+
+                ApiEntries = application.GetEntries().ToDictionary(x => x.ApiAssembly,
+                    x => x.ViewAssembly.DefinedTypes.FirstOrDefault(item =>
+                        item.GetCustomAttribute<StartupAttribute>() != null));
+            }
             else
+            {
                 throw new NotImplementedException();
+            }
         }
+
+        public Dictionary<Assembly, TypeInfo> ApiEntries { get; }
+
 
         public Dictionary<string, TypeInfo> KnownApis { get; }
 
@@ -59,6 +42,11 @@ namespace iHentai.Services
 
         public ConcurrentDictionary<string, IApi> Apis { get; } = new ConcurrentDictionary<string, IApi>();
 
+        public Type Navigation(string service)
+        {
+            return ApiEntries.TryGetValue(this[service].GetType().Assembly, out var value) ? value : null;
+        }
+
         public void HandleHttpMessage(ref HttpRequestMessage message)
         {
             var copy = message;
@@ -66,19 +54,6 @@ namespace iHentai.Services
                     item is IWithHttpHandler httpHandler &&
                     httpHandler.CanHandle(copy)) as IWithHttpHandler)?
                 .Handle(ref message);
-        }
-    }
-
-    public static class ApiExtensions
-    {
-        public static T Get<T>(this Enum @enum) where T : IApi
-        {
-            return (T) Singleton<ApiContainer>.Instance[@enum];
-        }
-
-        public static T Get<T>(this string value) where T : IApi
-        {
-            return (T) Singleton<ApiContainer>.Instance[value];
         }
     }
 }

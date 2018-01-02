@@ -5,8 +5,7 @@
     {
         IApiConfig ApiConfig { get; }
     }
-
-
+    
     public interface IApiConfig
     {
     }

@@ -18,6 +18,7 @@ namespace iHentai
     public sealed partial class App : Application, IMvvmApplication, IApiApplication, IMultiContentApplication
     {
         private readonly Lazy<ActivationService> _activationService;
+        private readonly bool _enabledHentaiMode = true;
 
         public App()
         {
@@ -30,19 +31,29 @@ namespace iHentai
 
         public IEnumerable<Assembly> GetApiAssemblies()
         {
-            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            if (_enabledHentaiMode)
+                yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
             yield return typeof(IConetApi).GetTypeInfo().Assembly;
+        }
+
+        public IEnumerable<(Assembly ApiAssembly, Assembly ViewAssembly)> GetEntries()
+        {
+            if (_enabledHentaiMode)
+                yield return (typeof(IHentaiApi).GetTypeInfo().Assembly, typeof(GalleryViewModel).GetTypeInfo().Assembly);
+            yield return (typeof(IConetApi).GetTypeInfo().Assembly, typeof(TimelineViewModel).GetTypeInfo().Assembly);
         }
 
         public IEnumerable<Assembly> GetContentViewAssemblies()
         {
-            yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
+            if (_enabledHentaiMode)
+                yield return typeof(IHentaiApi).GetTypeInfo().Assembly;
             yield return typeof(IConetApi).GetTypeInfo().Assembly;
         }
 
         public IEnumerable<Assembly> MvvmViewAssemblies()
         {
-            yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
+            if (_enabledHentaiMode)
+                yield return typeof(GalleryViewModel).GetTypeInfo().Assembly;
             yield return typeof(TimelineViewModel).GetTypeInfo().Assembly;
         }
 

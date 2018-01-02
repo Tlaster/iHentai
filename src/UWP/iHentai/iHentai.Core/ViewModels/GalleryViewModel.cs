@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Basic.Extensions;
@@ -11,20 +12,21 @@ using Microsoft.Toolkit.Collections;
 
 namespace iHentai.Core.ViewModels
 {
+    [Startup]
     public class GalleryViewModel : ViewModel
     {
-        private ServiceTypes _serviceType;
+        private string _serviceType;
 
-        public GalleryViewModel() : this(ServiceTypes.NHentai)
+        public GalleryViewModel() : this(nameof(iHentai.Apis.NHentai))
         {
         }
 
-        public GalleryViewModel(ServiceTypes serviceType) :
+        public GalleryViewModel(string serviceType) :
             this(serviceType, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 
-        public GalleryViewModel(ServiceTypes serviceType, SearchOptionBase option)
+        public GalleryViewModel(string serviceType, SearchOptionBase option)
         {
             Init(serviceType, option);
         }
@@ -33,7 +35,7 @@ namespace iHentai.Core.ViewModels
 
         public AutoList<GalleryDataSource, IGalleryModel> Source { get; private set; }
 
-        public string SearchPlaceholder { get; private set; } = "iHentai";
+        public string SearchPlaceholder { get; private set; } = Package.Current.DisplayName;
 
         public void GoDetail(IGalleryModel model)
         {
@@ -61,7 +63,7 @@ namespace iHentai.Core.ViewModels
             Frame.ClearBackStack();
         }
 
-        private void Init(ServiceTypes serviceType, SearchOptionBase option = null)
+        private void Init(string serviceType, SearchOptionBase option = null)
         {
             _serviceType = serviceType;
             Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(),

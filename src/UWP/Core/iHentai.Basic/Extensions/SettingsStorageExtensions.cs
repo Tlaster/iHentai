@@ -63,14 +63,12 @@ namespace iHentai.Basic.Extensions
                 : defaultValue;
         }
 
-
         public static void Save<T>(this T obj, string container, string key)
         {
             ApplicationData.Current.LocalSettings
                 .CreateContainer(container, ApplicationDataCreateDisposition.Always)
                 .Values[key] = obj.ToJson();
         }
-
 
         public static async Task<StorageFile> SaveFileAsync(this StorageFolder folder, byte[] content, string fileName,
             CreationCollisionOption options = CreationCollisionOption.ReplaceExisting)

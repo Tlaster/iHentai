@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml;
-using iHentai.Basic.Helpers;
 using PropertyChanged;
 
 namespace iHentai.ViewModels
@@ -15,6 +10,7 @@ namespace iHentai.ViewModels
     public class RootViewModel
     {
         private readonly Type _rootType;
+
         public RootViewModel(Type rootType)
         {
             _rootType = rootType;
@@ -22,7 +18,7 @@ namespace iHentai.ViewModels
         }
 
         public ObservableCollection<TabViewModel> Source { get; } = new ObservableCollection<TabViewModel>();
-        
+
         public void AddTab()
         {
             Source.Add(new TabViewModel(_rootType));
@@ -30,21 +26,18 @@ namespace iHentai.ViewModels
 
         public void TabClosed()
         {
-            if (!Source.Any())
-            {
-                Application.Current.Exit();
-            }
+            if (!Source.Any()) Application.Current.Exit();
         }
     }
 
     [AddINotifyPropertyChangedInterface]
     public class TabViewModel
     {
-        public Type RootType { get; }
-
         public TabViewModel(Type rootType)
         {
             RootType = rootType;
         }
+
+        public Type RootType { get; }
     }
 }

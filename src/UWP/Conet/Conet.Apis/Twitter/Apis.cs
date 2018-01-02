@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
@@ -7,10 +8,14 @@ using iHentai.Services;
 
 namespace Conet.Apis.Twitter
 {
-    [ApiKey(nameof(ServiceTypes.Twitter))]
+    [ApiKey(nameof(Twitter))]
     public class Apis : IConetApi
     {
         public ILoginData LoginDataGenerator => new LoginData();
+        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0, long since_id = 0)
         {
@@ -26,7 +31,6 @@ namespace Conet.Apis.Twitter
         {
             throw new NotImplementedException();
         }
-
-        public AccountModel Account { get; set; }
+        
     }
 }

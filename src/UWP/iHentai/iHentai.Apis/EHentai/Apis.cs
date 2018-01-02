@@ -17,8 +17,8 @@ using iHentai.Services;
 
 namespace iHentai.Apis.EHentai
 {
-    [ApiKey(nameof(ServiceTypes.EHentai))]
-    public class Apis : IHentaiApi, ILoginApi, IConfigApi, IWebApi, IWithHttpHandler
+    [ApiKey(nameof(EHentai))]
+    public class Apis : IHentaiApi, IConfigApi, IWebApi, IWithHttpHandler, ICanLogin
     {
         public bool IsExhentaiMode { get; set; } = true;
 
@@ -36,6 +36,20 @@ namespace iHentai.Apis.EHentai
         {
             get => "exhentai_user_info".Read(new Dictionary<string, string>());
             set => value.Save("exhentai_user_info");
+        }
+
+        public bool HasLogin =>
+            Cookie?.All(item => item.Key == "s" || item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash") == true;
+        
+        public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
+
+        public ILoginData LoginDataGenerator => new LoginData();
+
+        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+        {
+            if (!(data is LoginData loginData)) throw new ArgumentException();
+
+            return Login(loginData.UserName, loginData.Password, token);
         }
 
         public IApiConfig ApiConfig
@@ -75,14 +89,26 @@ namespace iHentai.Apis.EHentai
                 .GetHtmlAsync<GalleryDetailModel>(cancellationToken);
         }
 
-        public bool FouceLogin { get; } = true;
+        public string GetWebLink(IGalleryModel model)
+        {
+            if (!(model is GalleryModel item))
+                return string.Empty;
+            return $"https://{Host}/"
+                .AppendPathSegment("g")
+                .AppendPathSegment(item.ID)
+                .AppendPathSegment(item.Token);
+        }
 
-        public bool HasLogin =>
-            Cookie?.All(item => item.Key == "s" || item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash") == true;
+        public bool CanHandle(HttpRequestMessage message)
+        {
+            return message.RequestUri.Host == Host;
+        }
 
-        public bool CanLoginWithWebView { get; } = true;
-        public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
-
+        public void Handle(ref HttpRequestMessage message)
+        {
+            foreach (var item in RequestHeader)
+                message.Headers.Add(item.Key, item.Value);
+        }
 
         public bool WebViewLoginHandler(string url, string cookie)
         {
@@ -104,7 +130,7 @@ namespace iHentai.Apis.EHentai
             return true;
         }
 
-        public async Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default)
+        private async Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default)
         {
             Dictionary<string, string> cookie = null;
             using (var loginClient = new FlurlClient {Settings = {HttpClientFactory = new DefaultHttpClientFactory()}})
@@ -136,27 +162,6 @@ namespace iHentai.Apis.EHentai
             cookie = await UpdateCookie(cookie, cancellationToken);
             Cookie = cookie;
             return true;
-        }
-
-        public string GetWebLink(IGalleryModel model)
-        {
-            if (!(model is GalleryModel item))
-                return string.Empty;
-            return $"https://{Host}/"
-                .AppendPathSegment("g")
-                .AppendPathSegment(item.ID)
-                .AppendPathSegment(item.Token);
-        }
-
-        public bool CanHandle(HttpRequestMessage message)
-        {
-            return message.RequestUri.Host == Host;
-        }
-
-        public void Handle(ref HttpRequestMessage message)
-        {
-            foreach (var item in RequestHeader)
-                message.Headers.Add(item.Key, item.Value);
         }
 
         private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie,

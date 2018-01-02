@@ -6,20 +6,10 @@ using iHentai.Services;
 
 namespace iHentai.Apis.Core
 {
-    public interface ILoginApi
-    {
-        bool FouceLogin { get; }
-        bool HasLogin { get; }
-        bool CanLoginWithWebView { get; }
-        string LoginWebViewUrl { get; }
-        bool WebViewLoginHandler(string url, string cookie);
-        Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken = default);
-        Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default);
-    }
-    
     public interface IHentaiApi : IApi
     {
         string Host { get; }
+
         SearchOptionBase SearchOptionGenerator { get; }
 
         Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,

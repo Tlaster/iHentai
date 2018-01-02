@@ -1,24 +1,23 @@
 ﻿<mvvm:MvvmPage
-    x:Class="Conet.Pages.ApiSelectionPage"
+    x:Class="iHentai.Views.ServiceSelectionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Conet.Pages"
+    xmlns:local="using:iHentai.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
-    xmlns:viewModels="using:Conet.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:services="using:iHentai.Services"
+    xmlns:viewModels="using:iHentai.ViewModels"
+    Title="{Binding Title}"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModels:ApiSelectionViewModel}">
-
+    d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}"
                            SelectedItem="{Binding SelectedService,Mode=TwoWay}">
             <controls:Carousel.ItemTemplate>
@@ -42,9 +41,10 @@
                     </ContentControl.ContentTemplateSelector>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1" Padding="8">
-                    <Button Content="Confirm" HorizontalAlignment="Stretch" Command="{Binding ConfirmCommand}"/>
+                    <Button Content="Confirm" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
                 </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>
 </mvvm:MvvmPage>
+

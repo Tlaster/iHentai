@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
@@ -15,8 +16,8 @@ using Refit;
 
 namespace Conet.Apis.Weibo
 {
-    [ApiKey(nameof(ServiceTypes.Weibo))]
-    public class Apis : IConetApi, IWithHttpHandler
+    [ApiKey(nameof(Weibo))]
+    public class Apis : IConetApi
     {
         private readonly IWeiboServices _api;
 
@@ -32,6 +33,10 @@ namespace Conet.Apis.Weibo
         }
 
         public ILoginData LoginDataGenerator => new LoginData();
+        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0, long since_id = 0)
         {
@@ -55,23 +60,9 @@ namespace Conet.Apis.Weibo
             }
             return Task.FromResult(true);
         }
-
-        public AccountModel Account { get; set; }
+        
 
         private string GetOauthLoginPage(LoginData data)
             => $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={data.RedirectUri}&key_hash={data.AppSecret}{(string.IsNullOrEmpty(data.PackageName) ? "" : $"&packagename={data.PackageName}")}&display=mobile&scope={data.Scope}";
-
-        public bool CanHandle(HttpRequestMessage message)
-        {
-            return string.Equals(message.RequestUri.Host, Host, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        public void Handle(ref HttpRequestMessage message)
-        {
-            if (Account != null && Account.Service == ServiceTypes.Weibo)
-            {
-                message.RequestUri = new Uri($"{message.RequestUri}".SetQueryParam("access_token", Account.AccessToken).SetQueryParam("source", Account.CustomData["source"]));
-            }
-        }
     }
 }
