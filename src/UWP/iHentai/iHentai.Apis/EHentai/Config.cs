@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace iHentai.Apis.EHentai
 {
-    public class Config : AutoString, IApiConfig
+    public class Config : AutoString
     {
         private const string UConfigItemSeparator = "_";
 

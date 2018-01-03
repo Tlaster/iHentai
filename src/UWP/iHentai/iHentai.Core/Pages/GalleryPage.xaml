@@ -17,6 +17,7 @@
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:basic="using:iHentai.Basic.Controls"
     xmlns:services="using:iHentai.Services"
+    x:Name="Page"
     SizeChanged="GalleryPage_OnSizeChanged"
     Title="{Binding Title}"
     mc:Ignorable="d"
@@ -52,7 +53,7 @@
                         <waterfall:WaterfallFlowView.ItemTemplate>
                             <DataTemplate>
                                 <views:GalleryGridItem Tapped="UIElement_OnTapped"
-                                                       MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest" />
+                                                       MoreInfoRequest="GalleryGridItem_OnMoreInfoRequest"/>
                             </DataTemplate>
                         </waterfall:WaterfallFlowView.ItemTemplate>
                     </waterfall:WaterfallFlowView>

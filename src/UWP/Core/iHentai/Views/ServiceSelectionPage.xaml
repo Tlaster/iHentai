@@ -46,7 +46,7 @@
                     </ContentControl.ContentTransitions>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1" Padding="8">
-                    <Button Content="Confirm" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
+                    <Button Content="Go" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -25,7 +25,6 @@ namespace iHentai.Services
                 .Cast<Cookie>()
                 .ToList()
                 .ForEach(c => c.Expired = true);
-            Singleton<ApiContainer>.Instance.HandleHttpMessage(ref request);
             return base.SendAsync(request, cancellationToken);
         }
     }

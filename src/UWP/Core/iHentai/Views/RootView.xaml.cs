@@ -26,6 +26,7 @@ using iHentai.Basic.Helpers;
 using iHentai.Database;
 using iHentai.Mvvm;
 using iHentai.Paging;
+using iHentai.Services;
 using iHentai.ViewModels;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.EntityFrameworkCore;
@@ -76,8 +77,10 @@ namespace iHentai.Views
             {
                 await context.Database.MigrateAsync();
             }
+
             ViewModel = new RootViewModel(_defaultNavItem);
             DataContext = ViewModel;
+
             await Task.Delay(3000);
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)
@@ -97,6 +100,9 @@ namespace iHentai.Views
                 .Fade(delay: 125d)
                 .StartAsync();
             ExtendedSplash.Visibility = Visibility.Collapsed;
+
+            await WhatsNewDisplayService.ShowIfAppropriateAsync();
+            await FirstRunDisplayService.ShowIfAppropriateAsync();
         }
 
 

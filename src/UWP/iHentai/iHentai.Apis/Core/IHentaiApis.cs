@@ -12,10 +12,10 @@ namespace iHentai.Apis.Core
 
         SearchOptionBase SearchOptionGenerator { get; }
 
-        Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+        Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(IInstanceData data, int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default);
 
-        Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default);
+        Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model, CancellationToken cancellationToken = default);
     }
 
     public interface IWebApi

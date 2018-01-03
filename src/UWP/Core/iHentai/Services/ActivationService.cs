@@ -78,15 +78,13 @@ namespace iHentai.Services
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
-            FlurlHttp.Configure(c => c.HttpClientFactory = new ApiHttpClientFactory());
+            FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
             await Task.CompletedTask;
         }
 
         private async Task StartupAsync()
         {
             ThemeSelectorService.SetRequestedTheme();
-            await WhatsNewDisplayService.ShowIfAppropriateAsync();
-            await FirstRunDisplayService.ShowIfAppropriateAsync();
             await Task.CompletedTask;
         }
 

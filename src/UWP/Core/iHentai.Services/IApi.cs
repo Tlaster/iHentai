@@ -10,24 +10,21 @@ namespace iHentai.Services
 
     public interface ILoginData
     {
-
     }
 
     public interface ICanLogin
     {
         ILoginData LoginDataGenerator { get; }
 
-        Task<bool> Login(ILoginData data, CancellationToken token = default);
+        Task<IInstanceData> Login(ILoginData data, CancellationToken token = default);
     }
 
     public interface IInstanceData
     {
-
     }
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class StartupAttribute : Attribute
     {
-
     }
 }

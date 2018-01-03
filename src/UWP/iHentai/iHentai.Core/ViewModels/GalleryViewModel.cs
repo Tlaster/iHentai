@@ -15,31 +15,36 @@ namespace iHentai.Core.ViewModels
     [Startup]
     public class GalleryViewModel : ViewModel
     {
-        private string _serviceType;
+        private readonly IInstanceData _data;
+        private readonly string _serviceType;
 
-        public GalleryViewModel() : this(nameof(iHentai.Apis.NHentai))
+        public GalleryViewModel() : this(nameof(Apis.NHentai), null)
         {
         }
 
-        public GalleryViewModel(string serviceType) :
-            this(serviceType, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
+        public GalleryViewModel(string serviceType, IInstanceData data) :
+            this(serviceType, data, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 
-        public GalleryViewModel(string serviceType, SearchOptionBase option)
+        public GalleryViewModel(string serviceType, IInstanceData data, SearchOptionBase option)
         {
-            Init(serviceType, option);
+            _serviceType = serviceType;
+            _data = data;
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(), _data, option));
+            if (option != null && !option.Keyword.IsEmpty())
+                SearchPlaceholder = option.Keyword;
         }
 
-        public string Title => _serviceType.ToString();
+        public string Title => _serviceType;
 
-        public AutoList<GalleryDataSource, IGalleryModel> Source { get; private set; }
+        public AutoList<GalleryDataSource, IGalleryModel> Source { get; }
 
         public string SearchPlaceholder { get; private set; } = Package.Current.DisplayName;
 
         public void GoDetail(IGalleryModel model)
         {
-            Navigate<GalleryDetailViewModel>(_serviceType, model).FireAndForget();
+            Navigate<GalleryDetailViewModel>(_serviceType, model, _data).FireAndForget();
         }
 
         public void SearchSubmit()
@@ -62,22 +67,16 @@ namespace iHentai.Core.ViewModels
             base.OnStart();
             Frame.ClearBackStack();
         }
-
-        private void Init(string serviceType, SearchOptionBase option = null)
-        {
-            _serviceType = serviceType;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(),
-                option));
-            if (option != null && !option.Keyword.IsEmpty())
-                SearchPlaceholder = option.Keyword;
-        }
     }
 
     public class GalleryDataSource : IIncrementalSource<IGalleryModel>
     {
-        public GalleryDataSource(IHentaiApi apis, SearchOptionBase option = null)
+        private readonly IInstanceData _data;
+
+        public GalleryDataSource(IHentaiApi apis, IInstanceData data, SearchOptionBase option = null)
         {
             Apis = apis;
+            _data = data;
             SearchOption = option ?? apis.SearchOptionGenerator;
         }
 
@@ -88,7 +87,7 @@ namespace iHentai.Core.ViewModels
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            return (await Apis.Gallery(pageIndex, SearchOption, cancellationToken)).Gallery;
+            return (await Apis.Gallery(_data, pageIndex, SearchOption, cancellationToken)).Gallery;
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Conet.Apis.Mastodon
     public class Apis : IConetApi
     {
         public ILoginData LoginDataGenerator => new LoginData();
-        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+
+        public Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
         {
             throw new NotImplementedException();
         }

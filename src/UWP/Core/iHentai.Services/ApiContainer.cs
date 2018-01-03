@@ -33,7 +33,6 @@ namespace iHentai.Services
 
         public Dictionary<Assembly, TypeInfo> ApiEntries { get; }
 
-
         public Dictionary<string, TypeInfo> KnownApis { get; }
 
         public IApi this[Enum index] => this[Enum.GetName(index.GetType(), index)];
@@ -45,15 +44,6 @@ namespace iHentai.Services
         public Type Navigation(string service)
         {
             return ApiEntries.TryGetValue(this[service].GetType().Assembly, out var value) ? value : null;
-        }
-
-        public void HandleHttpMessage(ref HttpRequestMessage message)
-        {
-            var copy = message;
-            (Apis.Values?.FirstOrDefault(item =>
-                    item is IWithHttpHandler httpHandler &&
-                    httpHandler.CanHandle(copy)) as IWithHttpHandler)?
-                .Handle(ref message);
         }
     }
 }

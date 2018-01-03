@@ -20,7 +20,7 @@ namespace iHentai.Apis.NHentai
 
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
-        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(IInstanceData data, int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
             var req = $"https://{Host}/".AppendPathSegment("api").AppendPathSegment("galleries");
@@ -45,7 +45,8 @@ namespace iHentai.Apis.NHentai
             return (res.NumPages, res.Gallery.WithoutShit());
         }
 
-        public Task<IGalleryDetailModel> Detail(IGalleryModel model, CancellationToken cancellationToken = default)
+        public Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model,
+            CancellationToken cancellationToken = default)
         {
             return Task.FromResult(model as IGalleryDetailModel);
         }

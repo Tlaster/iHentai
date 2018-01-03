@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,59 +11,33 @@ using iHentai.Apis.Core;
 using iHentai.Apis.Core.Common;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Apis.EHentai.Models;
-using iHentai.Basic.Extensions;
 using iHentai.Services;
 
 namespace iHentai.Apis.EHentai
 {
     [ApiKey(nameof(EHentai))]
-    public class Apis : IHentaiApi, IConfigApi, IWebApi, IWithHttpHandler, ICanLogin
+    public class Apis : IHentaiApi, IWebApi, ICanLogin
     {
         public bool IsExhentaiMode { get; set; } = true;
-
-        public Dictionary<string, string> RequestHeader => new Dictionary<string, string>
-        {
-            {
-                "Cookie",
-                string.Join(";",
-                    Cookie.Select(item => $"{item.Key}={item.Value}")
-                        .Concat(new[] {"igneous=", $"uconfig={ApiConfig}"}))
-            }
-        };
-
-        public Dictionary<string, string> Cookie
-        {
-            get => "exhentai_user_info".Read(new Dictionary<string, string>());
-            set => value.Save("exhentai_user_info");
-        }
-
-        public bool HasLogin =>
-            Cookie?.All(item => item.Key == "s" || item.Key == "ipb_member_id" || item.Key == "ipb_pass_hash") == true;
         
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
 
         public ILoginData LoginDataGenerator => new LoginData();
 
-        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+        public Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
         {
             if (!(data is LoginData loginData)) throw new ArgumentException();
-
             return Login(loginData.UserName, loginData.Password, token);
         }
-
-        public IApiConfig ApiConfig
-        {
-            get => "exhentai_config".Read(new Config());
-            set => value.Save("exhentai_config");
-        }
-
+        
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
         public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";
 
-        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(int page = 0,
+        public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(IInstanceData data, int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
+            if (!(data is InstanceData instanceData)) throw new ArgumentException();
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
                 req = $"https://{Host}/"
@@ -73,19 +46,31 @@ namespace iHentai.Apis.EHentai
             else
                 req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
             var res = await req.SetQueryParam("page", page)
+                .WithHeader("Cookie", string.Join(";",
+                    instanceData.Cookies.Select(item => $"{item.Key}={item.Value}")
+                        .Concat(new[] { "igneous=", $"uconfig={instanceData.ApiConfig}" })))
+                //.WithCookies(instanceData.Cookies)
+                //.WithCookie("uconfig", instanceData.ApiConfig.ToString())
+                //.WithCookie("igneous", string.Empty)
                 .GetHtmlAsync<GalleryListModel>(cancellationToken);
             return (res.MaxPage, res.Gallery.WithoutShit());
         }
 
-        public async Task<IGalleryDetailModel> Detail(IGalleryModel model,
+        public async Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model,
             CancellationToken cancellationToken = default)
         {
-            if (!(model is GalleryModel item))
+            if (!(model is GalleryModel item) || !(data is InstanceData instanceData))
                 throw new ArgumentException();
             return await $"https://{Host}/"
                 .AppendPathSegment("g")
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
+                .WithHeader("Cookie", string.Join(";",
+                    instanceData.Cookies.Select(x => $"{x.Key}={x.Value}")
+                        .Concat(new[] { "igneous=", $"uconfig={instanceData.ApiConfig}" })))
+                //.WithCookies(instanceData.Cookies)
+                //.WithCookie("uconfig", instanceData.ApiConfig.ToString())
+                //.WithCookie("igneous", string.Empty)
                 .GetHtmlAsync<GalleryDetailModel>(cancellationToken);
         }
 
@@ -99,38 +84,28 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment(item.Token);
         }
 
-        public bool CanHandle(HttpRequestMessage message)
-        {
-            return message.RequestUri.Host == Host;
-        }
+        //public bool WebViewLoginHandler(string url, string cookie)
+        //{
+        //    if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
+        //    var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
+        //    var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
+        //    Cookie = new Dictionary<string, string>
+        //    {
+        //        {"ipb_member_id", memberid},
+        //        {"ipb_pass_hash", passHash}
+        //    };
+        //    return true;
+        //}
 
-        public void Handle(ref HttpRequestMessage message)
-        {
-            foreach (var item in RequestHeader)
-                message.Headers.Add(item.Key, item.Value);
-        }
+        //public async Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken)
+        //{
+        //    if (!Cookie.ContainsKey("s"))
+        //        Cookie = await UpdateCookie(Cookie, cancellationToken);
+        //    return true;
+        //}
 
-        public bool WebViewLoginHandler(string url, string cookie)
-        {
-            if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
-            var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
-            var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
-            Cookie = new Dictionary<string, string>
-            {
-                {"ipb_member_id", memberid},
-                {"ipb_pass_hash", passHash}
-            };
-            return true;
-        }
-
-        public async Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken)
-        {
-            if (!Cookie.ContainsKey("s"))
-                Cookie = await UpdateCookie(Cookie, cancellationToken);
-            return true;
-        }
-
-        private async Task<bool> Login(string userName, string password, CancellationToken cancellationToken = default)
+        private async Task<IInstanceData> Login(string userName, string password,
+            CancellationToken cancellationToken = default)
         {
             Dictionary<string, string> cookie = null;
             using (var loginClient = new FlurlClient {Settings = {HttpClientFactory = new DefaultHttpClientFactory()}})
@@ -155,13 +130,14 @@ namespace iHentai.Apis.EHentai
                         .ToDictionary(item => item.Key, item => item.Value);
                 }
 
-                if (!cookie.Any())
-                    return false;
+                if (!cookie.Any()) throw new KeyNotFoundException();
             }
 
             cookie = await UpdateCookie(cookie, cancellationToken);
-            Cookie = cookie;
-            return true;
+            return new InstanceData
+            {
+                Cookies = cookie
+            };
         }
 
         private async Task<Dictionary<string, string>> UpdateCookie(Dictionary<string, string> cookie,
@@ -170,7 +146,7 @@ namespace iHentai.Apis.EHentai
             using (var loginClient = new FlurlClient {Settings = {HttpClientFactory = new DefaultHttpClientFactory()}})
             {
                 using (var res = await "https://exhentai.org/uconfig.php".WithClient(loginClient).WithCookies(cookie)
-                    .WithCookie("uconfig", ApiConfig.ToString()).GetAsync(cancellationToken))
+                    .WithCookie("uconfig", string.Empty).GetAsync(cancellationToken))
                 {
                     if (res.Headers.TryGetValues("Set-Cookie", out var cookies) &&
                         cookies.Any(item => item.StartsWith("s=")))
@@ -189,15 +165,6 @@ namespace iHentai.Apis.EHentai
             }
 
             return cookie;
-        }
-
-        public void LoginWithMenberId(string ipb_member_id, string ipb_pass_hash)
-        {
-            Cookie = new Dictionary<string, string>
-            {
-                {nameof(ipb_member_id), ipb_member_id},
-                {nameof(ipb_pass_hash), ipb_pass_hash}
-            };
         }
     }
 }

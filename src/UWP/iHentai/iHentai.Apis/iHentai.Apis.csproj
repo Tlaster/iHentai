@@ -141,6 +141,7 @@
     <Compile Include="EHentai\Models\GalleryListModel.cs" />
     <Compile Include="EHentai\Models\GalleryModel.cs" />
     <Compile Include="EHentai\Models\HtmlConverters\RatingConverter.cs" />
+    <Compile Include="EHentai\Models\InstanceData.cs" />
     <Compile Include="EHentai\Models\LanguageModel.cs" />
     <Compile Include="EHentai\Models\LoginData.cs" />
     <Compile Include="EHentai\Models\TagNamespaceModel.cs" />

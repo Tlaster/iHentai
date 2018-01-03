@@ -13,6 +13,6 @@
 
     <StackPanel>
         <TextBox Header="User Name" Text="{Binding UserName,Mode=TwoWay}" AcceptsReturn="False"/>
-        <PasswordBox Header="Password" Padding="{Binding Password, Mode=TwoWay}"/>
+        <PasswordBox Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
     </StackPanel>
 </UserControl>

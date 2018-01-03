@@ -19,7 +19,6 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-
     <Style x:Key="AutoSuggestBoxTextBoxStyle" TargetType="TextBox"
            BasedOn="{StaticResource AutoSuggestBoxTextBoxStyle}">
         <Setter Property="FontSize" Value="20" />

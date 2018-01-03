@@ -48,7 +48,7 @@ namespace iHentai.Mvvm
         protected override void OnCurrentPageChanged(HentaiPage currentPage, HentaiPage newPage)
         {
             base.OnCurrentPageChanged(currentPage, newPage);
-            if (currentPage != null) currentPage.UnregisterPropertyChangedCallback(MvvmPage.TitleProperty, _token);
+            currentPage?.UnregisterPropertyChangedCallback(MvvmPage.TitleProperty, _token);
 
             if (newPage != null)
                 _token = newPage.RegisterPropertyChangedCallback(MvvmPage.TitleProperty, OnPageTitleChanged);

@@ -9,16 +9,18 @@ namespace iHentai.Core.ViewModels
 {
     public class GalleryDetailViewModel : ViewModel
     {
-        public string Title => $"{Model.Title} - {_serviceType}";
-
+        private readonly IInstanceData _data;
         private readonly string _serviceType;
 
-        public GalleryDetailViewModel(string serviceType, IGalleryModel model)
+        public GalleryDetailViewModel(string serviceType, IGalleryModel model, IInstanceData data)
         {
             Model = model;
+            _data = data;
             _serviceType = serviceType;
             DetailModel = NotifyTask.Create(GetDetailAsync);
         }
+
+        public string Title => $"{Model.Title} - {_serviceType}";
 
         public NotifyTask<IGalleryDetailModel> DetailModel { get; }
 
@@ -26,7 +28,7 @@ namespace iHentai.Core.ViewModels
 
         private Task<IGalleryDetailModel> GetDetailAsync()
         {
-            return _serviceType.Get<IHentaiApi>().Detail(Model);
+            return _serviceType.Get<IHentaiApi>().Detail(_data, Model);
         }
     }
 }

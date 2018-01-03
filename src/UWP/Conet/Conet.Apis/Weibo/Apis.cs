@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
-using Flurl;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Services;
@@ -21,8 +17,6 @@ namespace Conet.Apis.Weibo
     {
         private readonly IWeiboServices _api;
 
-        public string Host { get; } = "api.weibo.cn";
-
         public Apis()
         {
             _api = RestService.For<IWeiboServices>($"https://{Host}/2/", new RefitSettings
@@ -32,8 +26,11 @@ namespace Conet.Apis.Weibo
             });
         }
 
+        public string Host { get; } = "api.weibo.cn";
+
         public ILoginData LoginDataGenerator => new LoginData();
-        public Task<bool> Login(ILoginData data, CancellationToken token = default)
+
+        public Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
         {
             throw new NotImplementedException();
         }
@@ -54,15 +51,17 @@ namespace Conet.Apis.Weibo
         {
             var regex = Regex.Match(response, "access_token=(.*)\\&remind_in=([0-9]*)");
             var token = regex.Groups[1].Value;
-            if (token.IsEmpty())
-            {
-                throw new UnauthorizedAccessException();
-            }
+            if (token.IsEmpty()) throw new UnauthorizedAccessException();
             return Task.FromResult(true);
         }
-        
 
         private string GetOauthLoginPage(LoginData data)
-            => $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={data.RedirectUri}&key_hash={data.AppSecret}{(string.IsNullOrEmpty(data.PackageName) ? "" : $"&packagename={data.PackageName}")}&display=mobile&scope={data.Scope}";
+        {
+            return $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={
+                    data.RedirectUri
+                }&key_hash={data.AppSecret}{
+                    (string.IsNullOrEmpty(data.PackageName) ? "" : $"&packagename={data.PackageName}")
+                }&display=mobile&scope={data.Scope}";
+        }
     }
 }

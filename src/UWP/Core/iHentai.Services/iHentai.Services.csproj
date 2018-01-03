@@ -120,9 +120,7 @@
     <Compile Include="ApiKeyAttribute.cs" />
     <Compile Include="IApi.cs" />
     <Compile Include="IApiApplication.cs" />
-    <Compile Include="IApiConfig.cs" />
     <Compile Include="IContentView.cs" />
-    <Compile Include="IWithHttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceSelectionBannerModel.cs" />
     <EmbeddedResource Include="Properties\iHentai.Services.rd.xml" />

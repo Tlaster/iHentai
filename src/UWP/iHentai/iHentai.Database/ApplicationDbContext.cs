@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using iHentai.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace iHentai.Database
