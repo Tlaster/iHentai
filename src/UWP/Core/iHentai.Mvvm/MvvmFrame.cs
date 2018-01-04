@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Windows.UI.Xaml;
@@ -38,9 +39,12 @@ namespace iHentai.Mvvm
 
         private void OnTargetSourcePageChanged(Type newValue)
         {
+            var info = newValue.GetTypeInfo();
             if (ReflectionHelper.ImplementsGenericDefinition(newValue, typeof(IMvvmView<>), out var vmType))
                 NavigateAsync(newValue, Activator.CreateInstance(vmType.GetGenericArguments().FirstOrDefault()))
                     .FireAndForget();
+            else if (info.IsSubclassOf(typeof(ViewModel)) && ViewModel.KnownViews.TryGetValue(vmType, out var pageInfo))
+                NavigateAsync(pageInfo, Activator.CreateInstance(vmType)).FireAndForget();
             else
                 NavigateAsync(newValue).FireAndForget();
         }

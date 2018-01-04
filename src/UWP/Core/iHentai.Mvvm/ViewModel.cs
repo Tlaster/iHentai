@@ -32,7 +32,7 @@ namespace iHentai.Mvvm
 
         protected internal HentaiFrame Frame { get; internal set; }
 
-        private static Dictionary<Type, TypeInfo> KnownViews { get; }
+        internal static Dictionary<Type, TypeInfo> KnownViews { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -104,10 +104,12 @@ namespace iHentai.Mvvm
         {
         }
 
+        [Obsolete]
         protected internal virtual void OnUnloaded()
         {
         }
 
+        [Obsolete]
         protected internal virtual void OnLoaded()
         {
         }

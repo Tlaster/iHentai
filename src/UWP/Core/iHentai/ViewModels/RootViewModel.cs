@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
+using iHentai.Mvvm;
 using PropertyChanged;
 
 namespace iHentai.ViewModels

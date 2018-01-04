@@ -1,35 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
 using iHentai.Basic.Extensions;
-using iHentai.Basic.Helpers;
 using iHentai.Database;
 using iHentai.Mvvm;
-using iHentai.Paging;
 using iHentai.Services;
 using iHentai.ViewModels;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -37,14 +20,13 @@ namespace iHentai.Views
 {
     public sealed partial class RootView
     {
-        private readonly SplashScreen _splash;
         private readonly Type _defaultNavItem;
+        private readonly SplashScreen _splash;
         private Rect _splashImageRect;
-        public RootViewModel ViewModel { get; private set; }
 
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _defaultNavItem = defaultNavItem;
             _splash = splashScreen;
             if (_splash != null)
@@ -53,7 +35,16 @@ namespace iHentai.Views
                 _splash.Dismissed += SplashScreenOnDismissed;
                 PositionImage();
             }
+
             Loaded += RootView_Loaded;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
+
+        public RootViewModel ViewModel { get; private set; }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs backRequestedEventArgs)
+        {
+            if (tab.Content is MvvmFrame frame && frame.CanGoBack) frame.GoBackAsync();
         }
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
@@ -68,7 +59,8 @@ namespace iHentai.Views
         private async void SplashScreenOnDismissed(SplashScreen sender, object args)
         {
             _splash.Dismissed -= SplashScreenOnDismissed;
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, DismissExtendedSplash);
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                DismissExtendedSplash);
         }
 
         private async void DismissExtendedSplash()
@@ -89,11 +81,13 @@ namespace iHentai.Views
             await ExtendedSplashImage.Scale(0.8f, 0.8f, (float) (ExtendedSplashImage.ActualWidth / 2f),
                 (float) (ExtendedSplashImage.ActualHeight / 2f), 250d).StartAsync();
             ExtendedSplashImage
-                .Scale(10f, 10f, (float) (ExtendedSplashImage.ActualWidth / 2f), (float) (ExtendedSplashImage.ActualHeight / 2f), 500d, 0d, EasingType.Back)
+                .Scale(10f, 10f, (float) (ExtendedSplashImage.ActualWidth / 2f),
+                    (float) (ExtendedSplashImage.ActualHeight / 2f), 500d, 0d, EasingType.Back)
                 .StartAsync()
                 .FireAndForget();
             tab
-                .Scale(1f, 1f, (float)(tab.ActualWidth / 2f), (float)(tab.ActualHeight / 2f), delay: 125d, easingType: EasingType.Quintic)
+                .Scale(1f, 1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), delay: 125d,
+                    easingType: EasingType.Quintic)
                 .StartAsync()
                 .FireAndForget();
             await ExtendedSplash
@@ -108,7 +102,6 @@ namespace iHentai.Views
 
         private void PositionImage()
         {
-
             ExtendedSplashImage.SetValue(Canvas.LeftProperty, _splashImageRect.Left);
             ExtendedSplashImage.SetValue(Canvas.TopProperty, _splashImageRect.Top);
             //if (StaticResource.IsPhone)
@@ -122,7 +115,7 @@ namespace iHentai.Views
             ExtendedSplashImage.Width = _splashImageRect.Width;
             //}
         }
-        
+
         private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
             UpdateTitleBarLayout(sender);
@@ -130,7 +123,8 @@ namespace iHentai.Views
 
         private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
         {
-            tab.TabListRoot.Padding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0, coreTitleBar.SystemOverlayRightInset, 0);
+            tab.TabListRoot.Padding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0,
+                coreTitleBar.SystemOverlayRightInset, 0);
             tab.TabListRoot.Height = coreTitleBar.Height;
         }
 
