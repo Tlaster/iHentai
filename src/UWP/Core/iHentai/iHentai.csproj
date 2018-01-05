@@ -252,7 +252,7 @@
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>
       <Name>iHentai.Apis</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\iHentai\iHentai.Database\iHentai.Database.csproj">
+    <ProjectReference Include="..\iHentai.Database\iHentai.Database.csproj">
       <Project>{dbb34726-b622-4799-a122-40746e721bbd}</Project>
       <Name>iHentai.Database</Name>
     </ProjectReference>

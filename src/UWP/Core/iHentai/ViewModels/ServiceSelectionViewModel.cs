@@ -54,16 +54,22 @@ namespace iHentai.ViewModels
 
         private void Go(string service, IInstanceData data)
         {
-            using (var context = new ApplicationDbContext())
+            if (data != null)
             {
-                context.Instances.Add(new InstanceModel
+                using (var context = new ApplicationDbContext())
                 {
-                    Service = service,
-                    Data = data?.ToJson() ?? string.Empty,
-                });
-                context.SaveChanges();
+                    context.Instances.Add(new InstanceModel
+                    {
+                        Service = service,
+                        Data = data.ToJson(),
+                    });
+                    context.SaveChanges();
+                }
             }
-            Navigate(Singleton<ApiContainer>.Instance.Navigation(service), service, data).FireAndForget();
+
+            var guid = Guid.NewGuid();
+            Singleton<ApiContainer>.Instance[guid] = data;
+            Navigate(Singleton<ApiContainer>.Instance.Navigation(service), service, guid).FireAndForget();
         }
     }
 }

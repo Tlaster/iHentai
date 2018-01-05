@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
 using Nito.Mvvm;
@@ -9,10 +11,10 @@ namespace iHentai.Core.ViewModels
 {
     public class GalleryDetailViewModel : ViewModel
     {
-        private readonly IInstanceData _data;
+        private readonly Guid _data;
         private readonly string _serviceType;
 
-        public GalleryDetailViewModel(string serviceType, IGalleryModel model, IInstanceData data)
+        public GalleryDetailViewModel(string serviceType, IGalleryModel model, Guid data)
         {
             Model = model;
             _data = data;
@@ -28,7 +30,7 @@ namespace iHentai.Core.ViewModels
 
         private Task<IGalleryDetailModel> GetDetailAsync()
         {
-            return _serviceType.Get<IHentaiApi>().Detail(_data, Model);
+            return _serviceType.Get<IHentaiApi>().Detail(Singleton<ApiContainer>.Instance[_data], Model);
         }
     }
 }

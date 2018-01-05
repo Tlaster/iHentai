@@ -84,6 +84,7 @@ namespace iHentai.Core.Pages
             var container = galleryGridItem.FindAscendant<VirtualizingViewItem>();
             if (container == null || ffimage == null)
                 return;
+            
             MoreInfoContent.Tag = ffimage;
             MoreInfoContent.DataContext = e;
             MoreInfoImage.Width = ffimage.ActualWidth * 1.2;

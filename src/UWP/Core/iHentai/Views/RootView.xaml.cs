@@ -42,9 +42,13 @@ namespace iHentai.Views
 
         public RootViewModel ViewModel { get; private set; }
 
-        private void OnBackRequested(object sender, BackRequestedEventArgs backRequestedEventArgs)
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (tab.Content is MvvmFrame frame && frame.CanGoBack) frame.GoBackAsync();
+            if (tab.Content is MvvmFrame frame && frame.CanGoBack)
+            {
+                frame.GoBackAsync();
+                e.Handled = true;
+            }
         }
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
@@ -98,7 +102,6 @@ namespace iHentai.Views
             await WhatsNewDisplayService.ShowIfAppropriateAsync();
             await FirstRunDisplayService.ShowIfAppropriateAsync();
         }
-
 
         private void PositionImage()
         {

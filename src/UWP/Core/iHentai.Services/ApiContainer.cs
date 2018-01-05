@@ -30,13 +30,19 @@ namespace iHentai.Services
                 throw new NotImplementedException();
             }
         }
+        
+        public ConcurrentDictionary<Guid, IInstanceData> InstanceDatas { get; } = new ConcurrentDictionary<Guid, IInstanceData>();
 
         public Dictionary<Assembly, TypeInfo> ApiEntries { get; }
 
         public Dictionary<string, TypeInfo> KnownApis { get; }
 
-        public IApi this[Enum index] => this[Enum.GetName(index.GetType(), index)];
-
+        public IInstanceData this[Guid index]
+        {
+            get => InstanceDatas.TryGetValue(index, out var value) ? value : null;
+            set => InstanceDatas.TryAdd(index, value);
+        }
+        
         public IApi this[string index] => Apis.GetOrAdd(index, str => (IApi) Activator.CreateInstance(KnownApis[str]));
 
         public ConcurrentDictionary<string, IApi> Apis { get; } = new ConcurrentDictionary<string, IApi>();

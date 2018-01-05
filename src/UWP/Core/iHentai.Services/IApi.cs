@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +9,11 @@ namespace iHentai.Services
     {
     }
 
+    public interface IHttpHandler
+    {
+        bool Handle(ref HttpRequestMessage message);
+    }
+    
     public interface ILoginData
     {
     }

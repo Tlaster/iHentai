@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,12 +47,6 @@ namespace iHentai.Apis.EHentai
             else
                 req = $"https://{Host}/".SetQueryParams(searchOption?.ToDictionary());
             var res = await req.SetQueryParam("page", page)
-                .WithHeader("Cookie", string.Join(";",
-                    instanceData.Cookies.Select(item => $"{item.Key}={item.Value}")
-                        .Concat(new[] { "igneous=", $"uconfig={instanceData.ApiConfig}" })))
-                //.WithCookies(instanceData.Cookies)
-                //.WithCookie("uconfig", instanceData.ApiConfig.ToString())
-                //.WithCookie("igneous", string.Empty)
                 .GetHtmlAsync<GalleryListModel>(cancellationToken);
             return (res.MaxPage, res.Gallery.WithoutShit());
         }
@@ -65,12 +60,6 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment("g")
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
-                .WithHeader("Cookie", string.Join(";",
-                    instanceData.Cookies.Select(x => $"{x.Key}={x.Value}")
-                        .Concat(new[] { "igneous=", $"uconfig={instanceData.ApiConfig}" })))
-                //.WithCookies(instanceData.Cookies)
-                //.WithCookie("uconfig", instanceData.ApiConfig.ToString())
-                //.WithCookie("igneous", string.Empty)
                 .GetHtmlAsync<GalleryDetailModel>(cancellationToken);
         }
 

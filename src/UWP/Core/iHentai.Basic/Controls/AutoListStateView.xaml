@@ -8,9 +8,7 @@
     xmlns:helpers="using:iHentai.Basic.Helpers"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance helpers:AutoList}">
-
+    d:DesignWidth="400">
     <Grid Padding="8">
         <Grid Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBlock Text="Empty!" />

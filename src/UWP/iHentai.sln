@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Services", "Core\iH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tab", "Core\Tab\Tab.csproj", "{E3EBF198-C932-4913-999A-6AAC3CC36202}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Database", "iHentai\iHentai.Database\iHentai.Database.csproj", "{DBB34726-B622-4799-A122-40746E721BBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Database", "Core\iHentai.Database\iHentai.Database.csproj", "{DBB34726-B622-4799-A122-40746E721BBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -15,19 +17,19 @@ namespace iHentai.Core.ViewModels
     [Startup]
     public class GalleryViewModel : ViewModel
     {
-        private readonly IInstanceData _data;
         private readonly string _serviceType;
+        private readonly Guid _data;
 
-        public GalleryViewModel() : this(nameof(Apis.NHentai), null)
+        public GalleryViewModel() : this(nameof(Apis.NHentai), Guid.NewGuid())
         {
         }
 
-        public GalleryViewModel(string serviceType, IInstanceData data) :
+        public GalleryViewModel(string serviceType, Guid data) :
             this(serviceType, data, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 
-        public GalleryViewModel(string serviceType, IInstanceData data, SearchOptionBase option)
+        public GalleryViewModel(string serviceType, Guid data, SearchOptionBase option)
         {
             _serviceType = serviceType;
             _data = data;
@@ -71,9 +73,9 @@ namespace iHentai.Core.ViewModels
 
     public class GalleryDataSource : IIncrementalSource<IGalleryModel>
     {
-        private readonly IInstanceData _data;
+        private readonly Guid _data;
 
-        public GalleryDataSource(IHentaiApi apis, IInstanceData data, SearchOptionBase option = null)
+        public GalleryDataSource(IHentaiApi apis, Guid data, SearchOptionBase option = null)
         {
             Apis = apis;
             _data = data;
@@ -87,7 +89,7 @@ namespace iHentai.Core.ViewModels
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            return (await Apis.Gallery(_data, pageIndex, SearchOption, cancellationToken)).Gallery;
+            return (await Apis.Gallery(Singleton<ApiContainer>.Instance[_data], pageIndex, SearchOption, cancellationToken)).Gallery;
         }
     }
 }
