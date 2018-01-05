@@ -9,6 +9,9 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:services="using:iHentai.Services"
     xmlns:viewModels="using:iHentai.ViewModels"
+    xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Animations.Effects"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     Title="{Binding Title}"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
@@ -45,11 +48,29 @@
                         </TransitionCollection>
                     </ContentControl.ContentTransitions>
                 </ContentControl>
-                <Grid MaxWidth="500" Grid.Row="1" Padding="8">
-                    <Button Content="Go" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
+                <Grid MaxWidth="500" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Button Margin="8" Content="Using existing account" Click="{x:Bind ViewModel.ConfirmWithExistingAccount}" Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Stretch"/>
+                    <Button Margin="8" Grid.Row="1" Content="Go" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
                 </Grid>
             </Grid>
         </ScrollViewer>
+        <controls:Loading HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Opacity="0.8" Grid.Row="0" Grid.RowSpan="2" IsLoading="{Binding IsLoading}" >
+            <Grid>
+                <Border Background="{ThemeResource DefaultTextForegroundThemeBrush}" Opacity="0.66" >
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:Blur AutomaticallyStart="True"
+                                        Delay="0"
+                                        Value="10"
+                                        Duration="0" />
+                    </interactivity:Interaction.Behaviors>
+                </Border>
+                <ProgressRing IsActive="{Binding IsLoading}" Width="50" Height="50"/>
+            </Grid>
+        </controls:Loading>
     </Grid>
 </mvvm:MvvmPage>
 

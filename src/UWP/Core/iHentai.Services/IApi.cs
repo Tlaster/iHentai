@@ -23,6 +23,13 @@ namespace iHentai.Services
         ILoginData LoginDataGenerator { get; }
 
         Task<IInstanceData> Login(ILoginData data, CancellationToken token = default);
+
+        Type InstanceDataType { get; }
+    }
+
+    public interface ISingletonLogin : ICanLogin
+    {
+
     }
 
     public interface IInstanceData

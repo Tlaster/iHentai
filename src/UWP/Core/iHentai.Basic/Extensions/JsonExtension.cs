@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace iHentai.Basic.Extensions
 {
@@ -12,6 +13,11 @@ namespace iHentai.Basic.Extensions
         public static object JsonToObject(this string value)
         {
             return JsonConvert.DeserializeObject(value);
+        }
+
+        public static object JsonToObject(this string value, Type type)
+        {
+            return JsonConvert.DeserializeObject(value, type);
         }
 
         public static T JsonTo<T>(this string value)

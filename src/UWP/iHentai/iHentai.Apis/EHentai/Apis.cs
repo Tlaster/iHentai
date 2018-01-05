@@ -17,7 +17,7 @@ using iHentai.Services;
 namespace iHentai.Apis.EHentai
 {
     [ApiKey(nameof(EHentai))]
-    public class Apis : IHentaiApi, IWebApi, ICanLogin
+    public class Apis : IHentaiApi, IWebApi, ISingletonLogin
     {
         public bool IsExhentaiMode { get; set; } = true;
         
@@ -30,7 +30,9 @@ namespace iHentai.Apis.EHentai
             if (!(data is LoginData loginData)) throw new ArgumentException();
             return Login(loginData.UserName, loginData.Password, token);
         }
-        
+
+        public Type InstanceDataType => typeof(InstanceData);
+
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
         public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";

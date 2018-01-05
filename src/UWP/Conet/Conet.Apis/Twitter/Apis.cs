@@ -18,6 +18,8 @@ namespace Conet.Apis.Twitter
             throw new NotImplementedException();
         }
 
+        public Type InstanceDataType { get; }
+
         public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0, long since_id = 0)
         {
             throw new NotImplementedException();
