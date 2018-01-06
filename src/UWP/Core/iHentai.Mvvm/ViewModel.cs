@@ -72,10 +72,14 @@ namespace iHentai.Mvvm
                 var vm = Activator.CreateInstance(vmType, args) as ViewModel;
                 await Frame.NavigateAsync(pageInfo, vm);
             }
-
-            if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(HentaiPage)))
+            else if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(HentaiPage)))
+            {
                 await Frame.NavigateAsync(vmType);
-            throw new ArgumentException("Page Type must be based on HentaiPage");
+            }
+            else
+            {
+                throw new ArgumentException("Page Type must be based on HentaiPage");
+            }
         }
 
         protected IAsyncOperation<bool> RunOnUiThread(Action action)

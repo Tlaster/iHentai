@@ -86,6 +86,11 @@ namespace iHentai.ViewModels
             IsLoading = false;
         }
 
+        public void GoSettings()
+        {
+            Navigate<SettingsViewModel>().FireAndForget();
+        }
+
         private void Go(string service, IInstanceData data)
         {
             if (data != null)

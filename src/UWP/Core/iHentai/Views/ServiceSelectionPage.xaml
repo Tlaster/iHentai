@@ -58,6 +58,16 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
+        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <SymbolIcon Symbol="Setting" Margin="4"/>
+                <TextBlock Grid.Column="1" Text="Settings" Margin="4" />
+            </Grid>
+        </Button>
         <controls:Loading HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Opacity="0.8" Grid.Row="0" Grid.RowSpan="2" IsLoading="{Binding IsLoading}" >
             <Grid>
                 <Border Background="{ThemeResource DefaultTextForegroundThemeBrush}" Opacity="0.66" >

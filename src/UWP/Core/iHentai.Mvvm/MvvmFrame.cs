@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
@@ -25,7 +26,7 @@ namespace iHentai.Mvvm
             set => SetValue(TargetSourcePageProperty, value);
         }
 
-        public string CurrentPageTitle => (CurrentPage as MvvmPage)?.Title;
+        public string CurrentPageTitle => (CurrentPage as MvvmPage)?.Title ?? Package.Current.DisplayName;
 
         public ICommand GoBackCommand => new RelayCommand(() => GoBackAsync());
 

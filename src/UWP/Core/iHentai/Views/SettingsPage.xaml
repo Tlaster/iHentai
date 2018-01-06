@@ -4,16 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Style="{StaticResource PageStyle}"
     xmlns:xaml="using:Windows.UI.Xaml"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:converters="using:iHentai.Basic.Converters"
-    mc:Ignorable="d">
+    xmlns:viewModels="using:iHentai.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <mvvm:MvvmPage.Resources>
         <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme" />
     </mvvm:MvvmPage.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Grid Margin="{StaticResource MediumLeftRightMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48" />
@@ -36,28 +37,28 @@
 
                     <StackPanel Margin="{StaticResource EightTopMargin}">
                         <RadioButton
-                            Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                            Command="{Binding SwitchThemeCommand}"
                             x:Uid="Settings_Theme_Light"
                             GroupName="AppTheme"
-                            IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=TwoWay}">
+                            IsChecked="{Binding ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=TwoWay}">
                             <RadioButton.CommandParameter>
                                 <xaml:ElementTheme>Light</xaml:ElementTheme>
                             </RadioButton.CommandParameter>
                         </RadioButton>
                         <RadioButton
-                            Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                            Command="{Binding SwitchThemeCommand}"
                             x:Uid="Settings_Theme_Dark"
                             GroupName="AppTheme"
-                            IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=TwoWay}">
+                            IsChecked="{Binding ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=TwoWay}">
                             <RadioButton.CommandParameter>
                                 <xaml:ElementTheme>Dark</xaml:ElementTheme>
                             </RadioButton.CommandParameter>
                         </RadioButton>
                         <RadioButton
-                            Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                            Command="{Binding SwitchThemeCommand}"
                             x:Uid="Settings_Theme_Default"
                             GroupName="AppTheme"
-                            IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=TwoWay}">
+                            IsChecked="{Binding ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=TwoWay}">
                             <RadioButton.CommandParameter>
                                 <xaml:ElementTheme>Default</xaml:ElementTheme>
                             </RadioButton.CommandParameter>
@@ -68,10 +69,12 @@
                 <TextBlock
                     x:Uid="Settings_About"
                     Style="{StaticResource SubtitleTextBlockStyle}" />
+                
+                <ToggleSwitch Header="Hentai Mode" IsOn="{Binding EnableHentaiMode, Mode=TwoWay}"/>
 
                 <StackPanel Margin="{StaticResource EightTopMargin}">
                     <TextBlock
-                        Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />
+                        Text="{Binding VersionDescription, Mode=OneWay}" />
                     <TextBlock
                         x:Uid="Settings_AboutDescription"
                         Margin="{StaticResource EightTopMargin}" />
