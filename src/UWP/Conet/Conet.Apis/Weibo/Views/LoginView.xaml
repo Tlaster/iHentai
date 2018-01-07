@@ -12,10 +12,10 @@
     d:DataContext="{d:DesignInstance weibo:LoginData}">
 
     <StackPanel>
-        <TextBox x:Name="AppID_TB" Paste="TextBox_Paste" Header="App ID" />
-        <TextBox x:Name="AppSecret_TB" Paste="TextBox_Paste" Header="App Secret" />
-        <TextBox x:Name="RedirectUri_TB" Paste="TextBox_Paste" Header="Redirect Uri" />
-        <TextBox x:Name="Scope_TB" Paste="TextBox_Paste" Header="Scope" />
-        <TextBox x:Name="PackageName_TB" Paste="TextBox_Paste" Header="Package Name" />
+        <TextBox Text="{Binding AppID, Mode=TwoWay}" x:Name="AppID_TB" Paste="TextBox_Paste" Header="App ID" />
+        <TextBox Text="{Binding AppSecret, Mode=TwoWay}" x:Name="AppSecret_TB" Paste="TextBox_Paste" Header="App Secret" />
+        <TextBox Text="{Binding RedirectUri, Mode=TwoWay}" x:Name="RedirectUri_TB" Paste="TextBox_Paste" Header="Redirect Uri" />
+        <TextBox Text="{Binding Scope, Mode=TwoWay}" x:Name="Scope_TB" Paste="TextBox_Paste" Header="Scope" />
+        <TextBox Text="{Binding PackageName, Mode=TwoWay}" x:Name="PackageName_TB" Paste="TextBox_Paste" Header="Package Name" />
     </StackPanel>
 </UserControl>

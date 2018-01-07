@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using iHentai.Basic.Helpers;
 
 namespace iHentai.Services
 {
@@ -34,6 +35,14 @@ namespace iHentai.Services
 
     public interface IInstanceData
     {
+    }
+
+    public static class InstanceDataExtensions
+    {
+        public static T Get<T>(this Guid data) where T : class, IInstanceData
+        {
+            return Singleton<ApiContainer>.Instance[data] as T;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]

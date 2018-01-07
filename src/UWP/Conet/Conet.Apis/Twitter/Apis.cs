@@ -20,7 +20,9 @@ namespace Conet.Apis.Twitter
 
         public Type InstanceDataType { get; }
 
-        public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0, long since_id = 0)
+        public Task<(long Cursor, IEnumerable<IStatusModel> Data)> HomeTimeline(IInstanceData data, int count = 20,
+            long max_id = 0L,
+            long since_id = 0L)
         {
             throw new NotImplementedException();
         }

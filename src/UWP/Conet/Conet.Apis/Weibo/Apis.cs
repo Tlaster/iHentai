@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
-using iHentai.Basic.Extensions;
+using Flurl;
 using iHentai.Basic.Helpers;
 using iHentai.Services;
 using Refit;
@@ -30,31 +31,38 @@ namespace Conet.Apis.Weibo
 
         public ILoginData LoginDataGenerator => new LoginData();
 
-        public Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
+        public Type InstanceDataType => typeof(InstanceData);
+
+        public async Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            if (!(data is LoginData loginData)) throw new ArgumentException();
+            var uri = new Uri(GetOauthLoginPage(loginData));
+            var callbackUri = new Uri(loginData.RedirectUri);
+            var result =
+                await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, uri, callbackUri);
+            if (result.ResponseStatus == WebAuthenticationStatus.Success)
+            {
+                var uid = long.Parse(Regex.Match(result.ResponseData, "uid=([^\\&]*)").Groups[1].Value);
+                var accessToken = Regex.Match(result.ResponseData, "access_token=([^\\&]*)").Groups[1].Value;
+                return new InstanceData
+                {
+                    AccessToken = accessToken,
+                    Uid = uid,
+                    Source = loginData.AppID
+                };
+            }
+
+            throw new TaskCanceledException();
         }
-
-        public Type InstanceDataType { get; }
-
-        public Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0, long since_id = 0)
+        
+        public async Task<(long Cursor, IEnumerable<IStatusModel> Data)> HomeTimeline(IInstanceData data,
+            int count = 20, long max_id = 0L,
+            long since_id = 0L)
         {
-            throw new NotImplementedException();
-        }
+            if (!(data is InstanceData instanceData)) throw new ArgumentException();
 
-        public Task<(string Uri, string CallbackUri)> GetOAuth(ILoginData data)
-        {
-            if (!(data is LoginData loginData))
-                throw new ArgumentException();
-            return Task.FromResult((GetOauthLoginPage(loginData), loginData.RedirectUri));
-        }
-
-        public Task<bool> OAuthResponseHandler(string response)
-        {
-            var regex = Regex.Match(response, "access_token=(.*)\\&remind_in=([0-9]*)");
-            var token = regex.Groups[1].Value;
-            if (token.IsEmpty()) throw new UnauthorizedAccessException();
-            return Task.FromResult(true);
+            var res = await _api.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
+            return (res.NextCursor, res.Statuses);
         }
 
         private string GetOauthLoginPage(LoginData data)

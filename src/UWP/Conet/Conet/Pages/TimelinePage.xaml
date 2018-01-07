@@ -6,7 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
-    mc:Ignorable="d">
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:viewModels="using:Conet.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:TimelineViewModel}">
 
-    <Grid />
+    <Grid>
+        <controls:PullToRefreshListView ItemsSource="{Binding Source}">
+            <controls:PullToRefreshListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Text}"/>
+                    </Grid>
+                </DataTemplate>
+            </controls:PullToRefreshListView.ItemTemplate>
+        </controls:PullToRefreshListView>
+    </Grid>
 </mvvm:MvvmPage>

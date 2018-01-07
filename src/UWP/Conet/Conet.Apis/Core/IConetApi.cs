@@ -7,6 +7,6 @@ namespace Conet.Apis.Core
 {
     public interface IConetApi : IApi, ICanLogin
     {
-        Task<IEnumerable<IStatusModel>> HomeTimeline(long max_id = 0L, long since_id = 0L);
+        Task<(long Cursor, IEnumerable<IStatusModel> Data)> HomeTimeline(IInstanceData data, int count = 20, long max_id = 0L, long since_id = 0L);
     }
 }

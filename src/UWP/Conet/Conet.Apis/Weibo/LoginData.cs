@@ -1,5 +1,6 @@
 ﻿using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
+using PropertyChanged;
 
 namespace Conet.Apis.Weibo
 {

@@ -114,6 +114,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
     <Compile Include="Core\Models\Interfaces\IStatusModel.cs" />
     <Compile Include="Mastodon\Apis.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Twitter\Apis.cs" />
     <Compile Include="Twitter\LoginData.cs" />
     <Compile Include="Weibo\Apis.cs" />
+    <Compile Include="Weibo\InstanceData.cs" />
     <Compile Include="Weibo\LoginData.cs" />
     <Compile Include="Weibo\Models\Ad.cs" />
     <Compile Include="Weibo\Models\Annotation.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Weibo\Models\PicUrl.cs" />
     <Compile Include="Weibo\Models\Status.cs" />
     <Compile Include="Weibo\Models\StatusList.cs" />
+    <Compile Include="Weibo\Models\UidModel.cs" />
     <Compile Include="Weibo\Models\UnreadModel.cs" />
     <Compile Include="Weibo\Models\User.cs" />
     <Compile Include="Weibo\Models\Visible.cs" />
