@@ -137,13 +137,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fody">
-      <Version>2.3.15</Version>
+      <Version>2.3.17</Version>
     </PackageReference>
     <PackageReference Include="Html2Markdown">
       <Version>3.1.1.325</Version>
     </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.6.10</Version>
+      <Version>1.6.11</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.2.0</Version>
