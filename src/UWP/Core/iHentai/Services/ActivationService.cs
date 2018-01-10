@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using FFImageLoading.Config;
+using FFImageLoading.Helpers;
+using FFImageLoading.Views;
 using Flurl.Http;
+using Humanizer;
 using iHentai.Activation;
 using iHentai.Basic.Helpers;
 using iHentai.Paging;
@@ -54,7 +60,7 @@ namespace iHentai.Services
                 //var defaultHandler = new DefaultLaunchActivationHandler(_defaultNavItem);
                 //if (defaultHandler.CanHandle(activationArgs))
                 //    await defaultHandler.HandleAsync(activationArgs);
-                
+
                 // Ensure the current window is active
                 Window.Current.Activate();
 
@@ -79,8 +85,20 @@ namespace iHentai.Services
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
+            FFImageLoading.ImageService.Instance.Initialize(new Configuration
+            {
+                HttpClient = new HttpClient(Singleton<ApiHttpClient>.Instance),
+                HttpHeadersTimeout = 10,
+                HttpReadTimeout = 30,
+                AnimateGifs = true,
+                FadeAnimationEnabled = true,
+                FadeAnimationForCachedImages = false,
+                MaxMemoryCacheSize = Convert.ToInt32(20.Megabytes().Bytes),
+                ExecuteCallbacksOnUIThread = true,
+                ClearMemoryCacheOnOutOfMemory = true,
+                SchedulerMaxParallelTasks = Math.Max(2, (int)(Environment.ProcessorCount * 2d))
+            });
             FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
-            await Task.CompletedTask;
         }
 
         private async Task StartupAsync()

@@ -9,6 +9,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:services="using:iHentai.Services"
+    xmlns:ffImageLoading="using:FFImageLoading"
     Title="{Binding Title}"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:GalleryDetailViewModel}">
@@ -27,10 +28,10 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <controls:ImageEx
+                        <ffImageLoading:FFImage
+                            FadeAnimationEnabled="False"
+                            TransformPlaceholders="False"
                             Margin="16"
-                            Style="{StaticResource ImageExNoTransition}"
-                            IsCacheEnabled="True"
                             MaxHeight="300"
                             MaxWidth="300"
                             x:Name="ThumbImage"

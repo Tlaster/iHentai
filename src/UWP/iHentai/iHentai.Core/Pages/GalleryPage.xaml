@@ -17,6 +17,7 @@
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:basic="using:iHentai.Basic.Controls"
     xmlns:services="using:iHentai.Services"
+    xmlns:ffImageLoading="using:FFImageLoading"
     x:Name="Page"
     SizeChanged="GalleryPage_OnSizeChanged"
     Title="{Binding Title}"
@@ -159,9 +160,9 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <controls:ImageEx
-                                    Style="{StaticResource ImageExNoTransition}"
-                                    IsCacheEnabled="True"
+                                <ffImageLoading:FFImage
+                                    TransformPlaceholders="False"
+                                    FadeAnimationEnabled="False"
                                     Tapped="MoreInfoImage_OnTapped"
                                     x:Name="MoreInfoImage"
                                     Grid.Row="0"

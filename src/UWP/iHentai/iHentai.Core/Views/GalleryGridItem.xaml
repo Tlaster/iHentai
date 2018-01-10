@@ -9,6 +9,7 @@
     xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
     ToolTipService.ToolTip="{Binding Title}"
     xmlns:uwp="using:FontAwesome.UWP"
+    xmlns:ffImageLoading="using:FFImageLoading"
     IsHoldingEnabled="True"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance model:IGalleryModel}"
@@ -26,8 +27,7 @@
             <Border />
         </controls:DropShadowPanel>
         <Grid>
-            <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage"
-                              Source="{Binding Thumb}" />
+            <ffImageLoading:FFImage Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}" />
             <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
             </Button>
