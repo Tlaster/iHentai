@@ -9,6 +9,7 @@ using Conet.Apis.Core.Models.Interfaces;
 using Flurl;
 using iHentai.Basic.Helpers;
 using iHentai.Services;
+using Newtonsoft.Json.Linq;
 using Refit;
 
 namespace Conet.Apis.Weibo
@@ -55,14 +56,15 @@ namespace Conet.Apis.Weibo
             throw new TaskCanceledException();
         }
         
-        public async Task<(long Cursor, IEnumerable<IStatusModel> Data)> HomeTimeline(IInstanceData data,
+        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data,
             int count = 20, long max_id = 0L,
             long since_id = 0L)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
 
             var res = await _api.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
-            return (res.NextCursor, res.Statuses);
+            var a= (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
+            return a;
         }
 
         private string GetOauthLoginPage(LoginData data)

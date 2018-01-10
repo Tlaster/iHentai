@@ -10,6 +10,7 @@ using iHentai.Mvvm;
 using iHentai.Services;
 using Microsoft.Toolkit.Collections;
 using Microsoft.Toolkit.Uwp;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.ViewModels
 {
@@ -23,13 +24,13 @@ namespace Conet.ViewModels
         {
             _data = data;
             _serviceType = serviceType;
-            Source = new AutoList<TimelineDataSource, IStatusModel>(new TimelineDataSource(_data, _serviceType));
+            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, _serviceType));
         }
 
-        public AutoList<TimelineDataSource, IStatusModel> Source { get; }
+        public AutoList<TimelineDataSource, JToken> Source { get; }
     }
 
-    public class TimelineDataSource : ConetDataSource<IStatusModel>
+    public class TimelineDataSource : ConetDataSource<JToken>
     {
         private readonly string _serviceType;
         private readonly Guid _data;
@@ -40,7 +41,7 @@ namespace Conet.ViewModels
             _serviceType = serviceType;
         }
 
-        protected override Task<(long Curser, IEnumerable<IStatusModel> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken)
+        protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken)
         {
             return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser, 0);
         }

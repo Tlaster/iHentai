@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Conet.Apis.Core;
 using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon
 {
@@ -20,7 +21,7 @@ namespace Conet.Apis.Mastodon
 
         public Type InstanceDataType { get; }
 
-        public Task<(long Cursor, IEnumerable<IStatusModel> Data)> HomeTimeline(IInstanceData data, int count = 20,
+        public Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20,
             long max_id = 0L,
             long since_id = 0L)
         {

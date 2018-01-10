@@ -8,6 +8,7 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:Conet.ViewModels"
+    xmlns:j="using:Conet.Apis.Core"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:TimelineViewModel}">
 
@@ -16,7 +17,7 @@
             <controls:PullToRefreshListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding Text}"/>
+                        <TextBlock Text="{Binding text}" />
                     </Grid>
                 </DataTemplate>
             </controls:PullToRefreshListView.ItemTemplate>

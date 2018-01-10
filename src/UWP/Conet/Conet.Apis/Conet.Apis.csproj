@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
+    <Compile Include="Core\Json.cs" />
     <Compile Include="Core\Models\Interfaces\IStatusModel.cs" />
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
