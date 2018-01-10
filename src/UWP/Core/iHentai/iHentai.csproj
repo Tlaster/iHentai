@@ -100,13 +100,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Fody">
-      <Version>2.3.17</Version>
+      <Version>2.3.18</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
       <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.5</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>2.1.1</Version>
