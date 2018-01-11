@@ -178,7 +178,7 @@
                                                x:Name="MoreInfoTitle" />
                                     <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
                                         <ContentControl.ContentTemplateSelector>
-                                            <services:ContentViewTemplateSelector ContentType="Info" />
+                                            <services:ContentViewTemplateSelector ContentKey="Info" />
                                         </ContentControl.ContentTemplateSelector>
                                     </ContentControl>
                                     <animations:Implicit.ShowAnimations>

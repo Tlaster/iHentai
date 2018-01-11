@@ -192,7 +192,7 @@
       <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
       <Name>iHentai.Paging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\WaterFallView\WaterFallView.vcxproj">
+    <ProjectReference Include="..\..\Core\Controls\WaterFallView\WaterFallView.vcxproj">
       <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
       <Name>WaterFallView</Name>
     </ProjectReference>

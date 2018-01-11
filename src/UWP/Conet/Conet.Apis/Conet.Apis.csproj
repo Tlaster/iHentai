@@ -116,7 +116,6 @@
   <ItemGroup>
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
-    <Compile Include="Core\Json.cs" />
     <Compile Include="Core\Models\Interfaces\IStatusModel.cs" />
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
@@ -165,6 +164,9 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Weibo\IWeiboServices.cs" />
+    <Compile Include="Weibo\Views\StatusView.xaml.cs">
+      <DependentUpon>StatusView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Weibo\WeiboParameterFormatter.cs" />
     <EmbeddedResource Include="Properties\Conet.Apis.rd.xml" />
   </ItemGroup>
@@ -198,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Weibo\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Weibo\Views\StatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

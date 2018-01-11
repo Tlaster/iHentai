@@ -1,5 +1,6 @@
 ﻿using Conet.ViewModels;
 using iHentai.Mvvm;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

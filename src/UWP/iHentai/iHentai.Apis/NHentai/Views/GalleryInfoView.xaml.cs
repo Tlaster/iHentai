@@ -8,7 +8,7 @@ using iHentai.Services;
 
 namespace iHentai.Apis.NHentai.Views
 {
-    [ContentType("Info")]
+    [ContentKey("Info")]
     public sealed partial class GalleryInfoView : IContentView<GalleryModel>
     {
         public GalleryInfoView()

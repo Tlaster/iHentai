@@ -5,7 +5,7 @@ using iHentai.Services;
 
 namespace iHentai.Apis.NHentai.Views
 {
-    [ContentType("Detail")]
+    [ContentKey("Detail")]
     public sealed partial class GalleryDetailView : IContentView<GalleryModel>
     {
         public GalleryDetailView()

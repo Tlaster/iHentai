@@ -61,10 +61,8 @@ namespace Conet.Apis.Weibo
             long since_id = 0L)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-
             var res = await _api.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
-            var a= (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
-            return a;
+            return (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
         }
 
         private string GetOauthLoginPage(LoginData data)

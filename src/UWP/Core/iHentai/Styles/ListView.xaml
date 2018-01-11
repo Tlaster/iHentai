@@ -1,0 +1,44 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="ListView">
+        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="IsItemClickEnabled" Value="True"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <ListViewItemPresenter
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    SelectionCheckMarkVisualEnabled="True"
+                                    CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                    CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                    DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                                    DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                                    FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+                                    FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                                    PointerOverBackground="Transparent"
+                                    PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+                                    SelectedBackground="Transparent"
+                                    SelectedForeground="Transparent"
+                                    SelectedPointerOverBackground="Transparent"
+                                    PressedBackground="Transparent"
+                                    SelectedPressedBackground="Transparent"
+                                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    ContentMargin="{TemplateBinding Padding}"
+                                    CheckMode="Inline" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

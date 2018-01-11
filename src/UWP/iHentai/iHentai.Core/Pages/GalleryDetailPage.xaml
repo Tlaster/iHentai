@@ -47,7 +47,7 @@
                                 Margin="0,8" Content="{Binding DetailModel.Result}"
                                 HorizontalContentAlignment="Stretch">
                                 <ContentControl.ContentTemplateSelector>
-                                    <services:ContentViewTemplateSelector ContentType="DetailInfo" />
+                                    <services:ContentViewTemplateSelector ContentKey="DetailInfo" />
                                 </ContentControl.ContentTemplateSelector>
                             </ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -61,7 +61,7 @@
                         <ContentControl HorizontalContentAlignment="Stretch" Content="{Binding DetailModel.Result}"
                                         Visibility="{Binding DetailModel.IsSuccessfullyCompleted, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ContentControl.ContentTemplateSelector>
-                                <services:ContentViewTemplateSelector ContentType="Detail" />
+                                <services:ContentViewTemplateSelector ContentKey="Detail" />
                             </ContentControl.ContentTemplateSelector>
                             <animations:Implicit.ShowAnimations>
                                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.4"

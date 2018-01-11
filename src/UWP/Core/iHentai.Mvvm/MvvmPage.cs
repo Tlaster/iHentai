@@ -1,11 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Paging;
 
 namespace iHentai.Mvvm
 {
-    public abstract class MvvmPage : HentaiPage
+    public abstract class MvvmPage : HentaiPage, INotifyPropertyChanged
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             nameof(Title), typeof(string), typeof(MvvmPage), new PropertyMetadata(default(string)));
@@ -48,6 +50,7 @@ namespace iHentai.Mvvm
             if (ViewModel != null && ViewModel.Frame == null)
                 ViewModel.Frame = Frame;
             DataContext = ViewModel;
+            OnPropertyChanged(nameof(ViewModel));
             switch (e.NavigationMode)
             {
                 case NavigationMode.New:
@@ -124,6 +127,13 @@ namespace iHentai.Mvvm
         protected virtual void OnDestory()
         {
             ViewModel?.OnDestory();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

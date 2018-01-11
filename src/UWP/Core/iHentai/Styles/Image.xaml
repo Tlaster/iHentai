@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ffImageLoading="using:FFImageLoading">
+    <Style TargetType="ffImageLoading:FFImage">
+        <!--<Setter Property="DownsampleToViewSize" Value="True"/>
+        <Setter Property="DownsampleMode" Value="High"/>
+        <Setter Property="DownsampleUseDipUnits" Value="True"/>-->
+    </Style>
+</ResourceDictionary>

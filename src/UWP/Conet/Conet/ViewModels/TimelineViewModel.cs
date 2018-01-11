@@ -17,17 +17,24 @@ namespace Conet.ViewModels
     [Startup]
     public class TimelineViewModel : ViewModel
     {
-        private readonly string _serviceType;
         private readonly Guid _data;
 
         public TimelineViewModel(string serviceType, Guid data)
         {
             _data = data;
-            _serviceType = serviceType;
-            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, _serviceType));
+            ServiceType = serviceType;
+            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, ServiceType));
         }
 
         public AutoList<TimelineDataSource, JToken> Source { get; }
+
+        public string ServiceType { get; }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            Frame.ClearBackStack();
+        }
     }
 
     public class TimelineDataSource : ConetDataSource<JToken>

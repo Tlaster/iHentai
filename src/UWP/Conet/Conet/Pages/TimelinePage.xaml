@@ -8,19 +8,16 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewModels="using:Conet.ViewModels"
-    xmlns:j="using:Conet.Apis.Core"
+    xmlns:services="using:iHentai.Services"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:TimelineViewModel}">
 
     <Grid>
-        <controls:PullToRefreshListView ItemsSource="{Binding Source}">
-            <controls:PullToRefreshListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding text}" />
-                    </Grid>
-                </DataTemplate>
-            </controls:PullToRefreshListView.ItemTemplate>
+        <controls:PullToRefreshListView IsPullToRefreshWithMouseEnabled="True"
+                                        ItemsSource="{Binding Source}" RefreshCommand="{Binding Source.RefreshCommand}">
+            <controls:PullToRefreshListView.ItemTemplateSelector>
+                <services:ContentViewTemplateSelector ContentKey="{x:Bind ViewModel.ServiceType, Mode=OneWay}" />
+            </controls:PullToRefreshListView.ItemTemplateSelector>
         </controls:PullToRefreshListView>
     </Grid>
 </mvvm:MvvmPage>

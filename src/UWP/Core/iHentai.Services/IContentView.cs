@@ -10,9 +10,9 @@ using iHentai.Basic.Helpers;
 namespace iHentai.Services
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class ContentTypeAttribute : Attribute
+    public sealed class ContentKeyAttribute : Attribute
     {
-        public ContentTypeAttribute(string key)
+        public ContentKeyAttribute(string key)
         {
             Key = key;
         }
@@ -35,14 +35,14 @@ namespace iHentai.Services
                         : null).Where(item => item != null)
                 .ToDictionary(
                     item => (ItemType: item.GenericType, item.ViewType.GetTypeInfo()
-                        .GetCustomAttribute<ContentTypeAttribute>()?.Key), item => item.ViewType);
+                        .GetCustomAttribute<ContentKeyAttribute>()?.Key), item => item.ViewType);
         }
 
-        public string ContentType { get; set; }
+        public string ContentKey { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if (item == null || !KnownViews.TryGetValue((item.GetType(), ContentType), out var type))
+            if (item == null || !KnownViews.TryGetValue((item.GetType(), ContentKey), out var type))
                 return new DataTemplate();
             var template =
                 $"<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><views:{type.Name} xmlns:views=\"using:{type.Namespace}\"/></DataTemplate>";
