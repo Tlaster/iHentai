@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
-using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;

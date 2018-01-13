@@ -1,5 +1,4 @@
-﻿using Conet.Apis.Core.Models.Interfaces;
-using iHentai.Services;
+﻿using iHentai.Services;
 
 namespace Conet.Apis.Mastodon
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 

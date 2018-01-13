@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
-using Conet.Apis.Core.Models.Interfaces;
 using Flurl;
 using iHentai.Basic.Helpers;
 using iHentai.Services;

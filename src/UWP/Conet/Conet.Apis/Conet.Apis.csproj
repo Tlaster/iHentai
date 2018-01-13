@@ -116,28 +116,8 @@
   <ItemGroup>
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
-    <Compile Include="Core\Models\Interfaces\IStatusModel.cs" />
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
-    <Compile Include="Mastodon\Models\Account.cs" />
-    <Compile Include="Mastodon\Models\Application.cs" />
-    <Compile Include="Mastodon\Models\AppRegistration.cs" />
-    <Compile Include="Mastodon\Models\Attachment.cs" />
-    <Compile Include="Mastodon\Models\Auth.cs" />
-    <Compile Include="Mastodon\Models\Card.cs" />
-    <Compile Include="Mastodon\Models\Context.cs" />
-    <Compile Include="Mastodon\Models\Error.cs" />
-    <Compile Include="Mastodon\Models\Instance.cs" />
-    <Compile Include="Mastodon\Models\MastodonList.cs" />
-    <Compile Include="Mastodon\Models\Mention.cs" />
-    <Compile Include="Mastodon\Models\Notification.cs" />
-    <Compile Include="Mastodon\Models\Relationship.cs" />
-    <Compile Include="Mastodon\Models\Report.cs" />
-    <Compile Include="Mastodon\Models\Results.cs" />
-    <Compile Include="Mastodon\Models\Scope.cs" />
-    <Compile Include="Mastodon\Models\Status.cs" />
-    <Compile Include="Mastodon\Models\Tag.cs" />
-    <Compile Include="Mastodon\Models\Visibility.cs" />
     <Compile Include="Mastodon\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -147,19 +127,6 @@
     <Compile Include="Weibo\Apis.cs" />
     <Compile Include="Weibo\InstanceData.cs" />
     <Compile Include="Weibo\LoginData.cs" />
-    <Compile Include="Weibo\Models\Ad.cs" />
-    <Compile Include="Weibo\Models\Annotation.cs" />
-    <Compile Include="Weibo\Models\CommentManageInfo.cs" />
-    <Compile Include="Weibo\Models\ExtendInfo.cs" />
-    <Compile Include="Weibo\Models\Insecurity.cs" />
-    <Compile Include="Weibo\Models\PicUrl.cs" />
-    <Compile Include="Weibo\Models\Status.cs" />
-    <Compile Include="Weibo\Models\StatusList.cs" />
-    <Compile Include="Weibo\Models\UidModel.cs" />
-    <Compile Include="Weibo\Models\UnreadModel.cs" />
-    <Compile Include="Weibo\Models\User.cs" />
-    <Compile Include="Weibo\Models\Visible.cs" />
-    <Compile Include="Twitter\Models\StatusModel.cs" />
     <Compile Include="Weibo\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -192,7 +159,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\Models\Interfaces\" />
+    <Folder Include="Mastodon\Models\" />
+    <Folder Include="Twitter\Models\" />
     <Folder Include="Twitter\Views\" />
+    <Folder Include="Weibo\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Mastodon\Views\LoginView.xaml">

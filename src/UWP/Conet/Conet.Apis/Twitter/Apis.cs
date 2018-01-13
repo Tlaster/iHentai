@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Conet.Apis.Core;
-using Conet.Apis.Core.Models.Interfaces;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 
