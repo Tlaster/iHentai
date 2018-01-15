@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Devices.Input;
 using Windows.UI;
@@ -20,44 +19,56 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Tab
 {
+    internal sealed class TabModel
+    {
+        public TabModel(object dataContext, object view)
+        {
+            DataContext = dataContext;
+            View = view;
+        }
+
+        public object DataContext { get; }
+        public object View { get; }
+    }
+
     public sealed class TabControl : Control
     {
         public static readonly DependencyProperty ItemsTemplateProperty = DependencyProperty.Register(
             nameof(ItemsTemplate), typeof(DataTemplate), typeof(TabControl),
             new PropertyMetadata(default(DataTemplate)));
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
-            nameof(ItemsSource), typeof(IEnumerable), typeof(TabControl),
-            new PropertyMetadata(default(IEnumerable), OnItemsSourceChanged));
-
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
             nameof(SelectedItem), typeof(object), typeof(TabControl),
-            new PropertyMetadata(default(object), OnSelectedItemChanged));
+            new PropertyMetadata(default, OnSelectedItemChanged));
 
         public static readonly DependencyProperty TabBackgroundProperty = DependencyProperty.Register(
             nameof(TabBackground), typeof(Brush), typeof(TabControl),
             new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
 
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
-            nameof(Header), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+            nameof(Header), typeof(object), typeof(TabControl), new PropertyMetadata(default));
 
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(
             nameof(HeaderTemplate), typeof(DataTemplate), typeof(TabControl),
             new PropertyMetadata(default(DataTemplate)));
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
-            nameof(Content), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+            nameof(Content), typeof(object), typeof(TabControl), new PropertyMetadata(default));
 
         public static readonly DependencyProperty TabHeaderProperty = DependencyProperty.Register(
-            nameof(TabHeader), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+            nameof(TabHeader), typeof(object), typeof(TabControl), new PropertyMetadata(default));
 
-        public static readonly DependencyProperty TabFooterProperty = DependencyProperty.Register(
-            nameof(TabFooter), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+        //public static readonly DependencyProperty TabFooterProperty = DependencyProperty.Register(
+        //    nameof(TabFooter), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
 
-        private readonly Dictionary<object, object> _items = new Dictionary<object, object>();
+        public static readonly DependencyProperty DefaultContentParamProperty = DependencyProperty.Register(
+            nameof(DefaultContentParam), typeof(object), typeof(TabControl),
+            new PropertyMetadata(default, OnDefaultContentParamChanged));
 
         private readonly ConcurrentDictionary<object, RenderTargetBitmap>
             _previews = new ConcurrentDictionary<object, RenderTargetBitmap>();
+
+        private Button _addButton;
 
         private ListView _tabList;
 
@@ -65,6 +76,15 @@ namespace Tab
         {
             DefaultStyleKey = typeof(TabControl);
         }
+
+        public object DefaultContentParam
+        {
+            get => GetValue(DefaultContentParamProperty);
+            set => SetValue(DefaultContentParamProperty, value);
+        }
+
+        private ObservableCollection<TabModel> ItemsSource { get; } =
+            new ObservableCollection<TabModel>();
 
         public Brush TabBackground
         {
@@ -85,12 +105,6 @@ namespace Tab
         }
 
         public string TitlePath { get; set; }
-
-        public IEnumerable ItemsSource
-        {
-            get => (IEnumerable) GetValue(ItemsSourceProperty);
-            set => SetValue(ItemsSourceProperty, value);
-        }
 
         public object Content
         {
@@ -116,17 +130,30 @@ namespace Tab
             set => SetValue(ItemsTemplateProperty, value);
         }
 
-        public object TabFooter
-        {
-            get => GetValue(TabFooterProperty);
-            set => SetValue(TabFooterProperty, value);
-        }
+        //public object TabFooter
+        //{
+        //    get => GetValue(TabFooterProperty);
+        //    set => SetValue(TabFooterProperty, value);
+        //}
 
         public Grid TabListRoot { get; private set; }
 
         public Grid TabListBackground { get; private set; }
 
-        public event EventHandler TabClosed;
+        public ContentPresenter TabContentPresenter { get; set; }
+
+        private static void OnDefaultContentParamChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs e)
+        {
+            (dependencyObject as TabControl)?.OnDefaultContentParamChanged(e.NewValue);
+        }
+
+        private void OnDefaultContentParamChanged(object newValue)
+        {
+            Add();
+        }
+
+        public event EventHandler<TabCloseEventArgs> TabClosed;
 
         private static void OnSelectedItemChanged(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs e)
@@ -136,7 +163,7 @@ namespace Tab
 
         private async void OnSelectedItemChanged(object newValue, object oldValue)
         {
-            if (newValue == null || !_items.ContainsKey(newValue)) return;
+            if (newValue == null || ItemsSource.All(item => item != newValue)) return;
             if (oldValue != null)
                 if (_previews.TryGetValue(oldValue, out var value))
                 {
@@ -149,112 +176,17 @@ namespace Tab
                     _previews.TryAdd(oldValue, bitmap);
                 }
 
-            Content = _items[newValue];
+            Content = ItemsSource.FirstOrDefault(item => item == newValue)?.View;
         }
 
-        private static void OnItemsSourceChanged(DependencyObject dependencyObject,
-            DependencyPropertyChangedEventArgs e)
-        {
-            (dependencyObject as TabControl)?.ItemsSourceChanged(e.NewValue as IEnumerable, e.OldValue as IEnumerable);
-        }
-
-        private void ItemsSourceChanged(IEnumerable newValue, IEnumerable oldValue)
-        {
-            _items.Clear();
-            SelectedItem = null;
-            if (oldValue is INotifyCollectionChanged oldCollection)
-                oldCollection.CollectionChanged -= OnItemsSourceCollectionChanged;
-            if (newValue is INotifyCollectionChanged newCollection)
-                newCollection.CollectionChanged += OnItemsSourceCollectionChanged;
-            if (newValue != null)
-            {
-                foreach (var item in newValue) AddContent(item);
-                SelectedItem = _items.LastOrDefault().Key;
-            }
-        }
-
-        private void AddContent(object item)
+        private void Add()
         {
             var content = ItemsTemplate.LoadContent();
-            if (content is FrameworkElement frameworkElement) frameworkElement.DataContext = item;
-            _items.Add(item, content);
-        }
-
-        private void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems != null && e.NewItems.Count > 0)
-                    {
-                        foreach (var item in e.NewItems) AddContent(item);
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    }
-
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems != null && e.OldItems.Count > 0)
-                    {
-                        var nextSelectedItemIndex = -1;
-                        foreach (var item in e.OldItems)
-                        {
-                            if (SelectedItem == item) nextSelectedItemIndex = e.OldStartingIndex;
-
-                            _items.Remove(item);
-                        }
-
-                        if (nextSelectedItemIndex > -1)
-                        {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                                () => SelectedItem =
-                                    ItemsSource.Cast<object>().ElementAtOrDefault(nextSelectedItemIndex) ??
-                                    ItemsSource.Cast<object>().LastOrDefault());
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        }
-                    }
-
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    if (e.OldItems != null && e.OldItems.Count > 0)
-                        foreach (var item in e.OldItems)
-                            _items.Remove(item);
-                    if (e.NewItems != null && e.NewItems.Count > 0)
-                    {
-                        foreach (var item in e.NewItems) AddContent(item);
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = e.NewItems[0]);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    }
-                    else
-                    {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    }
-
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    _items.Clear();
-                    if (sender is IEnumerable enumerable)
-                    {
-                        foreach (var item in enumerable) AddContent(item);
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                            () => SelectedItem = ItemsSource.Cast<object>().LastOrDefault());
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            if (content is FrameworkElement frameworkElement) frameworkElement.DataContext = DefaultContentParam;
+            ItemsSource.Add(new TabModel(DefaultContentParam, content));
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
         }
 
         protected override void OnApplyTemplate()
@@ -263,22 +195,29 @@ namespace Tab
             _tabList = GetTemplateChild("TabList") as ListView;
             TabListRoot = GetTemplateChild("TabListRoot") as Grid;
             TabListBackground = GetTemplateChild("TabListBackground") as Grid;
+            TabContentPresenter = GetTemplateChild("ContentPresenter") as ContentPresenter;
+            _addButton = GetTemplateChild("AddButton") as Button;
+            _addButton.Click += AddButtonOnClick;
             _tabList.SetBinding(Selector.SelectedItemProperty, new Binding
             {
                 Source = this,
                 Path = new PropertyPath(nameof(SelectedItem)),
                 Mode = BindingMode.TwoWay
             });
-            _tabList.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
-            {
-                Source = this,
-                Path = new PropertyPath(nameof(ItemsSource)),
-                Mode = BindingMode.OneWay
-            });
+            //_tabList.SetBinding(ItemsControl.ItemsSourceProperty, new Binding
+            //{
+            //    Source = this,
+            //    Path = new PropertyPath(nameof(ItemsSource)),
+            //    Mode = BindingMode.OneWay
+            //});
+            _tabList.ItemsSource = ItemsSource;
             _tabList.ContainerContentChanging += TabList_ContainerContentChanging;
             _tabList.ChoosingItemContainer += TabList_ChoosingItemContainer;
-            SelectedItem = _items.LastOrDefault().Key;
-            OnSelectedItemChanged(SelectedItem, null);
+        }
+
+        private void AddButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            Add();
         }
 
         private void TabList_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -307,7 +246,7 @@ namespace Tab
             else if (TitlePath.StartsWith("self.", StringComparison.CurrentCultureIgnoreCase))
                 binding = new Binding
                 {
-                    Source = _items[item],
+                    Source = ItemsSource.FirstOrDefault(x => x == item)?.View,
                     Path = new PropertyPath(TitlePath.Substring("self.".Length)),
                     Mode = BindingMode.OneWay
                 };
@@ -320,7 +259,7 @@ namespace Tab
                 };
             text?.SetBinding(TextBlock.TextProperty, binding);
             prevText.SetBinding(TextBlock.TextProperty, binding);
-            toolTip.DataContext = _items[item];
+            toolTip.DataContext = ItemsSource.FirstOrDefault(x => x.DataContext == item)?.View;
         }
 
         private void TabList_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
@@ -337,9 +276,9 @@ namespace Tab
         {
             var container = sender as ContentControl;
             var item = container?.Content;
-            if ((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)?.Content as TabPreview is
-                TabPreview toolTip && item != null &&
-                _items.TryGetValue(item, out var element) && element is UIElement uiElement)
+            if ((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)
+                ?.Content is TabPreview toolTip && item != null &&
+                ItemsSource.FirstOrDefault(x => x == item)?.View is UIElement uiElement)
                 if (_previews.TryGetValue(item, out var preview))
                 {
                     if (SelectedItem != item)
@@ -399,8 +338,27 @@ namespace Tab
 
         private void CloseTab(object item)
         {
+            var index = (ItemsSource as IList).IndexOf(item);
+            if (SelectedItem == item)
+            {
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () => SelectedItem = ItemsSource.ElementAtOrDefault(index) ?? ItemsSource.LastOrDefault());
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            }
+
             (ItemsSource as IList)?.Remove(item);
-            TabClosed?.Invoke(this, EventArgs.Empty);
+            TabClosed?.Invoke(this, new TabCloseEventArgs(ItemsSource.Count));
         }
+    }
+
+    public class TabCloseEventArgs : EventArgs
+    {
+        public TabCloseEventArgs(int tabCount)
+        {
+            TabCount = tabCount;
+        }
+
+        public int TabCount { get; }
     }
 }

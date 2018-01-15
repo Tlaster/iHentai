@@ -15,10 +15,11 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                           Content="{TemplateBinding Content}"
-                                          Grid.Row="2" >
+                                          Grid.Row="2"
+                                          x:Name="ContentPresenter">
                             <ContentPresenter.ContentTransitions>
                                 <TransitionCollection>
-                                    <PaneThemeTransition Edge="Top"/>
+                                    <PaneThemeTransition Edge="Top" />
                                 </TransitionCollection>
                             </ContentPresenter.ContentTransitions>
                         </ContentPresenter>
@@ -34,7 +35,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter Content="{TemplateBinding TabHeader}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                            <ContentPresenter Content="{TemplateBinding TabHeader}"
+                                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                             <ListView Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                       ScrollViewer.HorizontalScrollMode="Enabled" CanReorderItems="True"
                                       AllowDrop="True" CanDrag="True" CanDragItems="True" x:Name="TabList"
@@ -54,15 +56,17 @@
                                     <DataTemplate>
                                         <Grid Width="150" x:Name="TabItemRoot">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Placement="Bottom" PlacementTarget="{Binding ElementName=TabItemRoot}">
-                                                    <local:TabPreview/>
+                                                <ToolTip Placement="Bottom"
+                                                         PlacementTarget="{Binding ElementName=TabItemRoot}">
+                                                    <local:TabPreview />
                                                 </ToolTip>
                                             </ToolTipService.ToolTip>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis" Style="{ThemeResource BodyTextBlockStyle}"
+                                            <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis"
+                                                       Style="{ThemeResource BodyTextBlockStyle}"
                                                        x:Name="TitleTextBlock" VerticalAlignment="Center" />
                                             <Button Style="{ThemeResource TextBlockButtonStyle}" Grid.Column="1"
                                                     x:Name="CloseButton">
@@ -72,7 +76,11 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <ContentPresenter Grid.Column="2" Content="{TemplateBinding TabFooter}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                            <Button VerticalAlignment="Stretch" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Grid.Column="2" x:Name="AddButton">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
+                            </Button>
+                            <!--<ContentPresenter Grid.Column="2" Content="{TemplateBinding TabFooter}"
+                                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />-->
                         </Grid>
                     </Grid>
                 </ControlTemplate>

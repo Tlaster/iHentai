@@ -7,6 +7,7 @@ using iHentai.Services;
 
 namespace Conet.Apis.Weibo
 {
+    [Equals]
     public class InstanceData : IInstanceData
     {
         public string AccessToken { get; set; }

@@ -21,5 +21,15 @@ namespace iHentai.Apis.EHentai.Models
                     .Concat(new[] {"igneous=", $"uconfig={ApiConfig}"})));
             return true;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is InstanceData instanceData && Cookies.Count == instanceData.Cookies.Count && !Cookies.Except(instanceData.Cookies).Any();
+        }
+
+        public override int GetHashCode()
+        {
+            return Cookies?.GetHashCode() ?? base.GetHashCode();
+        }
     }
 }

@@ -93,7 +93,8 @@ namespace iHentai.ViewModels
 
         private void Go(string service, IInstanceData data)
         {
-            if (data != null)
+            if (data != null && !Singleton<ApiContainer>.Instance.Contains(data))
+            {
                 using (var context = new ApplicationDbContext())
                 {
                     var instance = context.Instances.FirstOrDefault(item => item.Service == service);
@@ -113,9 +114,19 @@ namespace iHentai.ViewModels
 
                     context.SaveChanges();
                 }
+            }
 
-            var guid = Guid.NewGuid();
-            Singleton<ApiContainer>.Instance[guid] = data;
+            Guid guid;
+            if (Singleton<ApiContainer>.Instance.Contains(data))
+            {
+                guid = Singleton<ApiContainer>.Instance.GetGuid(data);
+            }
+            else
+            {
+                guid = Guid.NewGuid();
+                Singleton<ApiContainer>.Instance[guid] = data;
+            }
+
             Navigate(Singleton<ApiContainer>.Instance.Navigation(service), service, guid).FireAndForget();
         }
     }

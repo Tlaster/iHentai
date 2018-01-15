@@ -77,7 +77,7 @@ namespace iHentai.Views
             ViewModel = new RootViewModel(_defaultNavItem);
             DataContext = ViewModel;
 
-            await Task.Delay(3000);
+            await Task.Delay(1000);
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)
                 .StartAsync()

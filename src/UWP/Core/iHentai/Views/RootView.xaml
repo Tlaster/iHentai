@@ -17,13 +17,13 @@
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" x:Name="tab"
-                    ItemsSource="{Binding Source}"
                     TitlePath="self.CurrentPageTitle"
+                    DefaultContentParam="{Binding RootType}"
                     TabClosed="{x:Bind ViewModel.TabClosed}">
         <tab:TabControl.ItemsTemplate>
             <DataTemplate>
-                <mvvm:MvvmFrame d:DataContext="{d:DesignInstance viewModels:TabViewModel}" x:Name="TabRootFrame"
-                                TargetSourcePage="{Binding RootType}">
+                <mvvm:MvvmFrame x:Name="TabRootFrame"
+                                TargetSourcePage="{Binding}">
                     <paging:HentaiFrame.PageAnimation>
                         <animations:FadeAnimation />
                     </paging:HentaiFrame.PageAnimation>
@@ -38,11 +38,6 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="12" />
             </Button>
         </tab:TabControl.TabHeader>
-        <tab:TabControl.TabFooter>
-            <Button VerticalAlignment="Stretch" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="{x:Bind ViewModel.AddTab}">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
-            </Button>
-        </tab:TabControl.TabFooter>
     </tab:TabControl>
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"

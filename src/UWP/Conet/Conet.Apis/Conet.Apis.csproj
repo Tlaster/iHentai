@@ -138,8 +138,14 @@
     <EmbeddedResource Include="Properties\Conet.Apis.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Equals.Fody">
+      <Version>1.8.2</Version>
+    </PackageReference>
     <PackageReference Include="Flurl.Http">
       <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>2.3.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
@@ -178,6 +184,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using Windows.UI.Xaml;
 
@@ -30,8 +29,10 @@ namespace iHentai.Services
                 throw new NotImplementedException();
             }
         }
-        
-        public ConcurrentDictionary<Guid, IInstanceData> InstanceDatas { get; } = new ConcurrentDictionary<Guid, IInstanceData>();
+
+        //might cause leak
+        public ConcurrentDictionary<Guid, IInstanceData> InstanceDatas { get; } =
+            new ConcurrentDictionary<Guid, IInstanceData>();
 
         public Dictionary<Assembly, TypeInfo> ApiEntries { get; }
 
@@ -40,12 +41,22 @@ namespace iHentai.Services
         public IInstanceData this[Guid index]
         {
             get => InstanceDatas.TryGetValue(index, out var value) ? value : null;
-            set => InstanceDatas.TryAdd(index, value);
+            set => InstanceDatas.AddOrUpdate(index, value, (guid, data) => value);
         }
-        
+
         public IApi this[string index] => Apis.GetOrAdd(index, str => (IApi) Activator.CreateInstance(KnownApis[str]));
 
         public ConcurrentDictionary<string, IApi> Apis { get; } = new ConcurrentDictionary<string, IApi>();
+
+        public bool Contains(IInstanceData data)
+        {
+            return data != null && InstanceDatas.Any(item => Equals(item.Value, data));
+        }
+
+        public Guid GetGuid(IInstanceData data)
+        {
+            return InstanceDatas.FirstOrDefault(item => Equals(item.Value, data)).Key;
+        }
 
         public Type Navigation(string service)
         {
