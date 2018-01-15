@@ -130,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fody">
-      <Version>2.3.19</Version>
+      <Version>2.3.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
@@ -145,7 +145,7 @@
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
-      <Version>2.2.4</Version>
+      <Version>2.2.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
