@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using FFImageLoading.Config;
@@ -63,21 +64,10 @@ namespace iHentai.Services
 
                 // Ensure the current window is active
                 Window.Current.Activate();
-
-                ExtendAcrylicIntoTitleBar();
-
+                
                 // Tasks after activation
                 await StartupAsync();
             }
-        }
-
-        private void ExtendAcrylicIntoTitleBar()
-        {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = Colors.Gray;
         }
 
         private async Task InitializeAsync()
@@ -96,7 +86,8 @@ namespace iHentai.Services
                 MaxMemoryCacheSize = Convert.ToInt32(20.Megabytes().Bytes),
                 ExecuteCallbacksOnUIThread = true,
                 ClearMemoryCacheOnOutOfMemory = true,
-                SchedulerMaxParallelTasks = Math.Max(2, (int)(Environment.ProcessorCount * 2d))
+                SchedulerMaxParallelTasks = Math.Max(2, (int)(Environment.ProcessorCount * 2d)),
+                MainThreadDispatcher = new HentaiThreadDispatcher()
             });
             FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
         }
@@ -118,4 +109,73 @@ namespace iHentai.Services
             return args is IActivatedEventArgs;
         }
     }
+
+    public class HentaiThreadDispatcher : IMainThreadDispatcher
+    {
+        //private volatile CoreDispatcher _dispatcher;
+
+        public async void Post(Action action)
+        {
+            if (action == null)
+                return;
+
+            var _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;//RunAsync(CoreDispatcherPriority.Normal, () => action());
+            if (_dispatcher == null)
+            {
+                _dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            }
+
+            // already in UI thread:
+            if (_dispatcher.HasThreadAccess)
+            {
+                action();
+            }
+            // not in UI thread, ensuring UI thread:
+            else
+            {
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action());
+                //await CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => action());
+            }
+        }
+
+        public Task PostAsync(Action action)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            Post(() =>
+            {
+                try
+                {
+                    action?.Invoke();
+                    tcs.SetResult(true);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return tcs.Task;
+        }
+
+        public Task PostAsync(Func<Task> action)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            Post(async () =>
+            {
+                try
+                {
+                    await action?.Invoke();
+                    tcs.SetResult(true);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return tcs.Task;
+        }
+    }
+
+
 }
