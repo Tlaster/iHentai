@@ -13,8 +13,7 @@
     d:DataContext="{d:DesignInstance viewModels:TimelineViewModel}">
 
     <Grid>
-        <controls:PullToRefreshListView IsPullToRefreshWithMouseEnabled="True"
-                                        ItemsSource="{Binding Source}" RefreshCommand="{Binding Source.RefreshCommand}">
+        <controls:PullToRefreshListView ItemsSource="{Binding Source}" RefreshCommand="{Binding Source.RefreshCommand}">
             <controls:PullToRefreshListView.ItemTemplateSelector>
                 <services:ContentViewTemplateSelector ContentKey="{x:Bind ViewModel.ServiceType, Mode=OneWay}" />
             </controls:PullToRefreshListView.ItemTemplateSelector>

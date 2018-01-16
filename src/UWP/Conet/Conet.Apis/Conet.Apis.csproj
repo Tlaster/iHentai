@@ -127,6 +127,7 @@
     <Compile Include="Weibo\Apis.cs" />
     <Compile Include="Weibo\InstanceData.cs" />
     <Compile Include="Weibo\LoginData.cs" />
+    <Compile Include="Weibo\Views\Converters\WeiboContentConverter.cs" />
     <Compile Include="Weibo\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>

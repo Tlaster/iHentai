@@ -29,7 +29,7 @@
         <Grid>
             <ffImageLoading:FFImage Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}" />
             <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <uwp:FontAwesome Foreground="White" Icon="InfoCircle" />
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;" Foreground="White" />
             </Button>
         </Grid>
     </Grid>
