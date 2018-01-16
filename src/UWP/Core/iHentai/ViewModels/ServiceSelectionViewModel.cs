@@ -53,12 +53,16 @@ namespace iHentai.ViewModels
 
         public ILoginData LoginData { get; set; }
 
-        public List<string> Datas { get; private set; }
+        public List<IInstanceData> Datas { get; private set; }
 
         private void OnSelectedServiceChanged()
         {
             LoginData = SelectedService?.ServiceType?.Get<ICanLogin>()?.LoginDataGenerator;
-            Datas = Instances.TryGetValue(SelectedService?.ServiceType, out var value) ? value : null;
+            Datas = Instances.TryGetValue(SelectedService?.ServiceType, out var value)
+                ? value.Select(item =>
+                    item.JsonToObject(SelectedService?.ServiceType?.Get<ICanLogin>()
+                        ?.InstanceDataType) as IInstanceData).ToList()
+                : null;
         }
 
         public async void Confirm()
@@ -80,7 +84,10 @@ namespace iHentai.ViewModels
             using (var context = new ApplicationDbContext())
             {
                 var instance = context.Instances.FirstOrDefault(item => item.Service == SelectedService.ServiceType);
-                if (instance != null) Go(instance.Service, instance.Data.JsonToObject(instance.Service?.Get<ICanLogin>()?.InstanceDataType) as IInstanceData);
+                if (instance != null)
+                    Go(instance.Service,
+                        instance.Data.JsonToObject(instance.Service?.Get<ICanLogin>()?.InstanceDataType) as
+                            IInstanceData);
             }
 
             IsLoading = false;
@@ -94,7 +101,6 @@ namespace iHentai.ViewModels
         private void Go(string service, IInstanceData data)
         {
             if (data != null && !Singleton<ApiContainer>.Instance.Contains(data))
-            {
                 using (var context = new ApplicationDbContext())
                 {
                     var instance = context.Instances.FirstOrDefault(item => item.Service == service);
@@ -103,7 +109,9 @@ namespace iHentai.ViewModels
                         instance.Data = data.ToJson();
                         context.Instances.Update(instance);
                     }
-                    else
+                    else if (context.Instances.Local.All(item =>
+                        item.Service == service &&
+                        !Equals(item.Data.JsonToObject(service.Get<ICanLogin>().InstanceDataType), data)))
                     {
                         context.Instances.Add(new InstanceModel
                         {
@@ -114,18 +122,12 @@ namespace iHentai.ViewModels
 
                     context.SaveChanges();
                 }
-            }
 
-            Guid guid;
+            var guid = Guid.NewGuid();
             if (Singleton<ApiContainer>.Instance.Contains(data))
-            {
                 guid = Singleton<ApiContainer>.Instance.GetGuid(data);
-            }
             else
-            {
-                guid = Guid.NewGuid();
                 Singleton<ApiContainer>.Instance[guid] = data;
-            }
 
             Navigate(Singleton<ApiContainer>.Instance.Navigation(service), service, guid).FireAndForget();
         }

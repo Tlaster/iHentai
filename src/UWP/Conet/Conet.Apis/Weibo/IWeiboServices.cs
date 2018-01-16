@@ -15,5 +15,8 @@ namespace Conet.Apis.Weibo
 
         [Get("/remind/unread_count")]
         Task<JObject> Notification(string access_token, string source, bool unread_message = true, bool with_comment_attitude = true);
+
+        [Get("/users/show")]
+        Task<JObject> User(string access_token, long uid);
     }
 }

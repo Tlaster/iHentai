@@ -27,6 +27,11 @@ namespace Conet.Apis.Twitter
             throw new NotImplementedException();
         }
 
+        public Task<JToken> User(IInstanceData data, long uid)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<(string Uri, string CallbackUri)> GetOAuth(ILoginData data)
         {
             throw new NotImplementedException();

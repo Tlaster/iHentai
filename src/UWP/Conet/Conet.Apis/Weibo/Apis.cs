@@ -64,6 +64,12 @@ namespace Conet.Apis.Weibo
             return (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
         }
 
+        public async Task<JToken> User(IInstanceData data, long uid)
+        {
+            if (!(data is InstanceData instanceData)) throw new ArgumentException();
+            return await _api.User(instanceData.AccessToken, uid);
+        }
+
         private string GetOauthLoginPage(LoginData data)
         {
             return $@"https://open.weibo.cn/oauth2/authorize?client_id={data.AppID}&response_type=token&redirect_uri={
