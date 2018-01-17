@@ -12,17 +12,24 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}">
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TextBlock
             TextWrapping="Wrap"
             IsTextScaleFactorEnabled="True"
             IsTextSelectionEnabled="True"
             Text="{Binding TitleJp}" />
-        <Border x:Name="CategoryNameBorder" Margin="0,4,0,0" Padding="4" HorizontalAlignment="Left">
+        <Border Grid.Row="1" x:Name="CategoryNameBorder" Margin="0,4,0,0" Padding="4" HorizontalAlignment="Left">
             <TextBlock x:Name="CategoryName" FontSize="12" />
         </Border>
-        <RatingControl HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}" />
-        <TextBlock Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" />
-    </StackPanel>
+        <RatingControl Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" Value="{Binding Rating}" />
+        <TextBlock Grid.Row="3" Text="{Binding PublishAt, Converter={StaticResource HumanizerConverter}}" />
+    </Grid>
 
 </UserControl>

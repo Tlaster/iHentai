@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
-using FFImageLoading;
 using iHentai.Apis.Core.Models.Interfaces;
 using iHentai.Core.ViewModels;
 using iHentai.Core.Views;
@@ -81,7 +80,7 @@ namespace iHentai.Core.Pages
         private void GalleryGridItem_OnMoreInfoRequest(object sender, IGalleryModel e)
         {
             var galleryGridItem = (GalleryGridItem) sender;
-            var ffimage = galleryGridItem.FindDescendant<FFImage>();
+            var ffimage = galleryGridItem.FindDescendant<ImageEx>();
             var container = galleryGridItem.FindAscendant<VirtualizingViewItem>();
             if (container == null || ffimage == null)
                 return;
@@ -138,7 +137,7 @@ namespace iHentai.Core.Pages
 
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
-            _tappedItem = (sender as GalleryGridItem).FindDescendant<FFImage>();
+            _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
             ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
         }

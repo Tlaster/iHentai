@@ -169,12 +169,6 @@
     <PackageReference Include="PropertyChanged.Fody">
       <Version>2.2.5</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading">
-      <Version>2.3.4</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading.Transformations">
-      <Version>2.3.4</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls\WaterFallView\WaterFallView.vcxproj">

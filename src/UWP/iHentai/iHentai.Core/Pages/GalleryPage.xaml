@@ -17,7 +17,6 @@
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:basic="using:iHentai.Basic.Controls"
     xmlns:services="using:iHentai.Services"
-    xmlns:ffImageLoading="using:FFImageLoading"
     x:Name="Page"
     SizeChanged="GalleryPage_OnSizeChanged"
     Title="{Binding Title}"
@@ -160,15 +159,17 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <ffImageLoading:FFImage
-                                    TransformPlaceholders="False"
-                                    FadeAnimationEnabled="False"
+                                <controls:ImageEx
                                     Tapped="MoreInfoImage_OnTapped"
                                     x:Name="MoreInfoImage"
                                     Grid.Row="0"
                                     Source="{Binding Thumb}" />
 
-                                <StackPanel Grid.Row="1" x:Name="MoreInfoText">
+                                <Grid Grid.Row="1" x:Name="MoreInfoText">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
                                     <TextBlock Margin="0, 10"
                                                FontSize="14"
                                                TextWrapping="Wrap"
@@ -176,7 +177,7 @@
                                                Text="{Binding Title}"
                                                TextTrimming="CharacterEllipsis"
                                                x:Name="MoreInfoTitle" />
-                                    <ContentControl Content="{Binding}" HorizontalContentAlignment="Stretch">
+                                    <ContentControl Grid.Row="1" Content="{Binding}" HorizontalContentAlignment="Stretch">
                                         <ContentControl.ContentTemplateSelector>
                                             <services:ContentViewTemplateSelector ContentKey="Info" />
                                         </ContentControl.ContentTemplateSelector>
@@ -187,7 +188,7 @@
                                         <animations:TranslationAnimation From="0, 20, 0" To="0" Duration="0:0:0.3"
                                                                          Delay="0:0:0.2" />
                                     </animations:Implicit.ShowAnimations>
-                                </StackPanel>
+                                </Grid>
                             </Grid>
 
                             <Grid Grid.Row="1">

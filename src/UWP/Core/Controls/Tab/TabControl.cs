@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Input;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,6 +33,11 @@ namespace Tab
 
         public object DataContext { get; }
         public object View { get; }
+    }
+
+    public interface IWindowGenerator
+    {
+        UIElement GetNewWindowElement();
     }
 
     public sealed class TabControl : Control
@@ -76,6 +85,8 @@ namespace Tab
         {
             DefaultStyleKey = typeof(TabControl);
         }
+
+        public IWindowGenerator WindowGenerator { get; set; }
 
         public object DefaultContentParam
         {
@@ -150,7 +161,10 @@ namespace Tab
 
         private void OnDefaultContentParamChanged(object newValue)
         {
-            Add();
+            if (!ItemsSource.Any())
+            {
+                Add();
+            }
         }
 
         public event EventHandler<TabCloseEventArgs> TabClosed;
@@ -189,6 +203,14 @@ namespace Tab
 #pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
         }
 
+        private void Add(TabModel data)
+        {
+            ItemsSource.Add(data);
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+        }
+
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -213,6 +235,39 @@ namespace Tab
             _tabList.ItemsSource = ItemsSource;
             _tabList.ContainerContentChanging += TabList_ContainerContentChanging;
             _tabList.ChoosingItemContainer += TabList_ChoosingItemContainer;
+            _tabList.DragItemsCompleted += TabListOnDragItemsCompleted;
+        }
+
+        private async void TabListOnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs e)
+        {
+            var res = e.Items.ToList();
+            //if (ItemsSource.Count == 1 && !CoreApplication.GetCurrentView().IsMain)
+            //{
+            //    await ApplicationViewSwitcher.SwitchAsync(((App)Application.Current).Views[0].ViewId, this.ViewId, ApplicationViewSwitchingOptions.ConsolidateViews);
+            //}
+            if (e.DropResult == DataPackageOperation.None && WindowGenerator != null)
+            {
+                int newViewId = 0;
+                await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    var content = WindowGenerator.GetNewWindowElement();
+                    var tab = content.FindDescendant<TabControl>();
+                    Window.Current.Content = content;
+                    Window.Current.Activate();
+                    newViewId = ApplicationView.GetForCurrentView().Id;
+                    //if (tab != null)
+                    //{
+                    //    tab.ItemsSource.Clear();
+                    //    tab.Add(res.FirstOrDefault() as TabModel);
+                    //}
+                });
+                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                if (viewShown)
+                {
+                    CloseTab(res.FirstOrDefault());
+                }
+
+            }
         }
 
         private void AddButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
@@ -259,7 +314,7 @@ namespace Tab
                 };
             text?.SetBinding(TextBlock.TextProperty, binding);
             prevText.SetBinding(TextBlock.TextProperty, binding);
-            toolTip.DataContext = ItemsSource.FirstOrDefault(x => x.DataContext == item)?.View;
+            toolTip.DataContext = ItemsSource.FirstOrDefault(x => x == item)?.View;
         }
 
         private void TabList_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
@@ -271,7 +326,7 @@ namespace Tab
             container.PointerEntered += ContainerOnPointerEntered;
             args.ItemContainer = container;
         }
-
+        
         private void ContainerOnPointerEntered(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
             var container = sender as ContentControl;

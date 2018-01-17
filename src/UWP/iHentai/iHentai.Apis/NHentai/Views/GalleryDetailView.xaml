@@ -18,8 +18,12 @@
         <converters:ThumbListConverter x:Key="ThumbListConverter" />
     </UserControl.Resources>
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <controls:TagListView Margin="8" ItemsSource="{Binding Tags, Converter={StaticResource TagConverter}}" />
-        <controls:ThumbListView ItemsSource="{Binding Converter={StaticResource ThumbListConverter}}" />
-    </StackPanel>
+        <controls:ThumbListView Grid.Row="1" ItemsSource="{Binding Converter={StaticResource ThumbListConverter}}" />
+    </Grid>
 </UserControl>

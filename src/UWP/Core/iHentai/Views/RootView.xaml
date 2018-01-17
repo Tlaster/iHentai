@@ -18,8 +18,10 @@
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" x:Name="tab"
                     TitlePath="self.CurrentPageTitle"
-                    DefaultContentParam="{Binding RootType}"
-                    TabClosed="{x:Bind ViewModel.TabClosed}">
+                    DefaultContentParam="{x:Bind DefaultNavItem}">
+        <tab:TabControl.WindowGenerator>
+            <local:WindowGenerator DefaultNavItem="{x:Bind DefaultNavItem}"/>
+        </tab:TabControl.WindowGenerator>
         <tab:TabControl.ItemsTemplate>
             <DataTemplate>
                 <mvvm:MvvmFrame x:Name="TabRootFrame"

@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Basic.Extensions;
@@ -13,21 +15,31 @@ using iHentai.Services;
 using iHentai.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using Tab;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace iHentai.Views
 {
+    public class WindowGenerator : IWindowGenerator
+    {
+        public Type DefaultNavItem { get; set; }
+
+        public UIElement GetNewWindowElement()
+        {
+            return new RootView(null, DefaultNavItem);
+        }
+    }
+
     public sealed partial class RootView
     {
-        private readonly Type _defaultNavItem;
         private readonly SplashScreen _splash;
         private Rect _splashImageRect;
 
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
         {
             InitializeComponent();
-            _defaultNavItem = defaultNavItem;
+            DefaultNavItem = defaultNavItem;
             _splash = splashScreen;
             if (_splash != null)
             {
@@ -35,12 +47,25 @@ namespace iHentai.Views
                 _splash.Dismissed += SplashScreenOnDismissed;
                 PositionImage();
             }
+            else
+            {
+                ExtendedSplash.Visibility = Visibility.Collapsed;
+            }
 
+            ExtendAcrylicIntoTitleBar();
             Loaded += RootView_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
+        private void ExtendAcrylicIntoTitleBar()
+        {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = Colors.Gray;
+        }
 
-        public RootViewModel ViewModel { get; private set; }
+        public Type DefaultNavItem { get; }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
@@ -73,10 +98,7 @@ namespace iHentai.Views
             {
                 await context.Database.MigrateAsync();
             }
-
-            ViewModel = new RootViewModel(_defaultNavItem);
-            DataContext = ViewModel;
-
+            
             await Task.Delay(1000);
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)

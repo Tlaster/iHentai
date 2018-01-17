@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using FFImageLoading.Config;
-using FFImageLoading.Helpers;
-using FFImageLoading.Views;
 using Flurl.Http;
 using Humanizer;
 using iHentai.Activation;
@@ -63,21 +61,10 @@ namespace iHentai.Services
 
                 // Ensure the current window is active
                 Window.Current.Activate();
-
-                ExtendAcrylicIntoTitleBar();
-
+                
                 // Tasks after activation
                 await StartupAsync();
             }
-        }
-
-        private void ExtendAcrylicIntoTitleBar()
-        {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = Colors.Gray;
         }
 
         private async Task InitializeAsync()
@@ -85,19 +72,6 @@ namespace iHentai.Services
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
-            FFImageLoading.ImageService.Instance.Initialize(new Configuration
-            {
-                HttpClient = new HttpClient(Singleton<ApiHttpClient>.Instance),
-                HttpHeadersTimeout = 10,
-                HttpReadTimeout = 30,
-                AnimateGifs = true,
-                FadeAnimationEnabled = true,
-                FadeAnimationForCachedImages = false,
-                MaxMemoryCacheSize = Convert.ToInt32(20.Megabytes().Bytes),
-                ExecuteCallbacksOnUIThread = true,
-                ClearMemoryCacheOnOutOfMemory = true,
-                SchedulerMaxParallelTasks = Math.Max(2, (int)(Environment.ProcessorCount * 2d))
-            });
             FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
         }
 
