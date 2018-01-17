@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:ffImageLoading="using:FFImageLoading"
     mc:Ignorable="d"
     ItemHeight="240"
     DesiredWidth="160"
@@ -20,7 +19,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ffImageLoading:FFImage Stretch="UniformToFill" Source="{Binding Link}" />
+                <controls:ImageEx Stretch="UniformToFill" Source="{Binding Link}" />
                 <TextBlock Grid.Row="1" Text="{Binding Page}" HorizontalAlignment="Center" />
             </Grid>
         </DataTemplate>

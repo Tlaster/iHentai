@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:Carousel ItemDepth="400" ItemsSource="{Binding Source}"
+        <controls:Carousel EasingFunction="{x:Null}" ItemDepth="400" ItemsSource="{Binding Source}"
                            SelectedItem="{Binding SelectedService,Mode=TwoWay}">
             <controls:Carousel.ItemTemplate>
                 <DataTemplate>

@@ -11,8 +11,12 @@
     d:DesignWidth="400"
     d:DataContext="{d:DesignInstance models:LoginData}">
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TextBox Header="User Name" Text="{Binding UserName,Mode=TwoWay}" AcceptsReturn="False"/>
-        <PasswordBox Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
-    </StackPanel>
+        <PasswordBox Grid.Row="1" Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
+    </Grid>
 </UserControl>

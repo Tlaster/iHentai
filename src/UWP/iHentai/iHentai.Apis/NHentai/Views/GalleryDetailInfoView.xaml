@@ -11,14 +11,18 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TextBlock
             TextWrapping="Wrap"
             IsTextScaleFactorEnabled="True"
             IsTextSelectionEnabled="True"
             Text="{Binding TitleModel.Japanese}" />
-        <TextBlock Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}" />
+        <TextBlock Grid.Row="1" Text="{Binding UploadDate, Converter={StaticResource HumanizerConverter}}" />
 
-    </StackPanel>
+    </Grid>
 
 </UserControl>
