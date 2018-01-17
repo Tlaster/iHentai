@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:iHentai.Apis.EHentai.Models"
-    xmlns:uwp="using:FontAwesome.UWP"
     mc:Ignorable="d"
     DataContextChanged="GalleryInfoView_OnDataContextChanged"
     d:DesignHeight="300"

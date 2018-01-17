@@ -8,7 +8,6 @@
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
     ToolTipService.ToolTip="{Binding Title}"
-    xmlns:uwp="using:FontAwesome.UWP"
     IsHoldingEnabled="True"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance model:IGalleryModel}"

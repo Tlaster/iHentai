@@ -185,9 +185,6 @@
     <PackageReference Include="Flurl.Http">
       <Version>2.1.1</Version>
     </PackageReference>
-    <PackageReference Include="FontAwesome.UWP">
-      <Version>4.7.0.9</Version>
-    </PackageReference>
     <PackageReference Include="Html2Markdown">
       <Version>3.1.1.325</Version>
     </PackageReference>
