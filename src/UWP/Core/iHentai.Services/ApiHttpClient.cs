@@ -49,10 +49,10 @@ namespace iHentai.Services
             return _memoryCache.ContainsKey(base64) || await _cacheFolder.FileExistsAsync(base64);
         }
 
-        public void Put(string key, byte[] data)
+        public void Put(string key, byte[] data, TimeSpan maxAge)
         {
             var base64 = key.Base64();
-            _memoryCache.AddOrUpdate(base64, new CacheModel<byte[]>(DateTime.UtcNow, data), (s, model) =>
+            _memoryCache.AddOrUpdate(base64, new CacheModel<byte[]>(DateTime.UtcNow, data, maxAge), (s, model) =>
             {
                 model.Data = data;
                 model.LastUsed = DateTime.UtcNow;
@@ -60,7 +60,7 @@ namespace iHentai.Services
             });
         }
 
-        public async Task<byte[]> Get(string key)
+        public async Task<byte[]> Get(string key, TimeSpan maxAge)
         {
             var base64 = key.Base64();
             if (_memoryCache.ContainsKey(base64) && _memoryCache.TryGetValue(base64, out var value))
@@ -71,7 +71,7 @@ namespace iHentai.Services
 
             var file = await _cacheFolder.GetFileAsync(base64);
             var bytes = await file.ReadBytesAsync();
-            _memoryCache.TryAdd(base64, new CacheModel<byte[]>(DateTime.UtcNow, bytes));
+            _memoryCache.TryAdd(base64, new CacheModel<byte[]>(DateTime.UtcNow, bytes, maxAge));
             return bytes;
         }
 
@@ -99,9 +99,9 @@ namespace iHentai.Services
 
         public class CacheModel<T>
         {
-            public CacheModel(DateTime lastUsed, T data) : this(lastUsed, data, TimeSpan.FromMinutes(30))
-            {
-            }
+            //public CacheModel(DateTime lastUsed, T data) : this(lastUsed, data, TimeSpan.FromMinutes(30))
+            //{
+            //}
 
             public CacheModel(DateTime lastUsed, T data, TimeSpan maxAge)
             {
@@ -126,7 +126,7 @@ namespace iHentai.Services
 
     public class ApiHttpClient : HttpClientHandler
     {
-        public const string FouceCookie = nameof(FouceCookie);
+        private const int DefaultCacheAge = 10;
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
@@ -138,19 +138,28 @@ namespace iHentai.Services
             Singleton<ApiContainer>.Instance.InstanceDatas.Values.FirstOrDefault(item =>
                 item is IHttpHandler handler && handler.Handle(ref request));
             var key = request.RequestUri.ToString();
-            if (request.Headers.Contains(FouceCookie) && bool.Parse(request.Headers.GetValues(FouceCookie).FirstOrDefault()))
+            if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache)
+            {
                 if (await Singleton<CacheManager>.Instance.Contains(key))
+                {
+                    var age = request.Headers.CacheControl.MaxAge ?? TimeSpan.FromMinutes(DefaultCacheAge);
                     return new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new ByteArrayContent(await Singleton<CacheManager>.Instance.Get(key)),
+                        Content = new ByteArrayContent(await Singleton<CacheManager>.Instance.Get(key, age)),
                         RequestMessage = request,
                         Version = request.Version
                     };
+                }
+            }
             try
             {
                 var result = await base.SendAsync(request, cancellationToken);
-                var bytes = await result.Content.ReadAsByteArrayAsync();
-                Singleton<CacheManager>.Instance.Put(key, bytes);
+                if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache)
+                {
+                    var age = request.Headers.CacheControl.MaxAge ?? TimeSpan.FromMinutes(DefaultCacheAge);
+                    var bytes = await result.Content.ReadAsByteArrayAsync();
+                    Singleton<CacheManager>.Instance.Put(key, bytes, age);
+                }
                 return result;
             }
             catch (Exception e) when (e is HttpRequestException || e is WebException || e is WebSocketException)
@@ -158,7 +167,7 @@ namespace iHentai.Services
                 if (await Singleton<CacheManager>.Instance.Contains(key))
                     return new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new ByteArrayContent(await Singleton<CacheManager>.Instance.Get(key)),
+                        Content = new ByteArrayContent(await Singleton<CacheManager>.Instance.Get(key, TimeSpan.FromMinutes(DefaultCacheAge))),
                         RequestMessage = request,
                         Version = request.Version
                     };

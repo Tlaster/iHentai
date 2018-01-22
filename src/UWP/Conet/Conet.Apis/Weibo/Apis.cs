@@ -75,7 +75,7 @@ namespace Conet.Apis.Weibo
         public async Task<JToken> User(IInstanceData data, long uid)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-            return await _apiv2.User(instanceData.AccessToken, instanceData.Source, uid, true);
+            return await _apiv2.User(instanceData.AccessToken, instanceData.Source, uid);
         }
 
         private string GetOauthLoginPage(LoginData data)

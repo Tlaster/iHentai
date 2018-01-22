@@ -21,6 +21,7 @@ namespace Conet.Apis.Weibo
     internal interface IWeiboServicesV2
     {
         [Get("/users/show.json")]
-        Task<JObject> User(string access_token, string source, long uid, [Header(ApiHttpClient.FouceCookie)] bool fouceCache = false);
+        [Headers("Cache-Control: public, max-age=600")]
+        Task<JObject> User(string access_token, string source, long uid);
     }
 }
