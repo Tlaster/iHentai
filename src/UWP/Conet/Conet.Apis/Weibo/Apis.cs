@@ -17,15 +17,23 @@ namespace Conet.Apis.Weibo
     public class Apis : IConetApi
     {
         private readonly IWeiboServices _api;
+        private readonly IWeiboServicesV2 _apiv2;
 
         public Apis()
         {
-            _api = RestService.For<IWeiboServices>($"https://{Host}/2/", new RefitSettings
+            _api = RestService.For<IWeiboServices>($"https://{Host}/2", new RefitSettings
+            {
+                HttpMessageHandlerFactory = () => Singleton<ApiHttpClient>.Instance,
+                UrlParameterFormatter = new WeiboParameterFormatter()
+            });
+            _apiv2 = RestService.For<IWeiboServicesV2>($"https://{HostV2}/2", new RefitSettings
             {
                 HttpMessageHandlerFactory = () => Singleton<ApiHttpClient>.Instance,
                 UrlParameterFormatter = new WeiboParameterFormatter()
             });
         }
+
+        public string HostV2 { get; } = "api.weibo.com";
 
         public string Host { get; } = "api.weibo.cn";
 
@@ -67,7 +75,7 @@ namespace Conet.Apis.Weibo
         public async Task<JToken> User(IInstanceData data, long uid)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-            return await _api.User(instanceData.AccessToken, uid);
+            return await _apiv2.User(instanceData.AccessToken, instanceData.Source, uid, true);
         }
 
         private string GetOauthLoginPage(LoginData data)

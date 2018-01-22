@@ -11,6 +11,7 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using FluentScheduler;
 using Flurl.Http;
 using Humanizer;
 using iHentai.Activation;
@@ -73,6 +74,7 @@ namespace iHentai.Services
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
             FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
+            JobManager.Initialize(Singleton<JobRegistry>.Instance);
         }
 
         private async Task StartupAsync()

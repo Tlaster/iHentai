@@ -128,6 +128,9 @@
     <Compile Include="Weibo\InstanceData.cs" />
     <Compile Include="Weibo\LoginData.cs" />
     <Compile Include="Weibo\Views\Converters\WeiboContentConverter.cs" />
+    <Compile Include="Weibo\Views\InstanceView.xaml.cs">
+      <DependentUpon>InstanceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Weibo\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Mastodon\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Weibo\Views\InstanceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

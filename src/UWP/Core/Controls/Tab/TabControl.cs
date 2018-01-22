@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
@@ -161,10 +160,7 @@ namespace Tab
 
         private void OnDefaultContentParamChanged(object newValue)
         {
-            if (!ItemsSource.Any())
-            {
-                Add();
-            }
+            if (!ItemsSource.Any()) Add();
         }
 
         public event EventHandler<TabCloseEventArgs> TabClosed;
@@ -240,6 +236,7 @@ namespace Tab
 
         private async void TabListOnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs e)
         {
+            return;
             var res = e.Items.ToList();
             //if (ItemsSource.Count == 1 && !CoreApplication.GetCurrentView().IsMain)
             //{
@@ -247,7 +244,7 @@ namespace Tab
             //}
             if (e.DropResult == DataPackageOperation.None && WindowGenerator != null)
             {
-                int newViewId = 0;
+                var newViewId = 0;
                 await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     var content = WindowGenerator.GetNewWindowElement();
@@ -261,12 +258,8 @@ namespace Tab
                     //    tab.Add(res.FirstOrDefault() as TabModel);
                     //}
                 });
-                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-                if (viewShown)
-                {
-                    CloseTab(res.FirstOrDefault());
-                }
-
+                var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                if (viewShown) CloseTab(res.FirstOrDefault());
             }
         }
 
@@ -326,7 +319,7 @@ namespace Tab
             container.PointerEntered += ContainerOnPointerEntered;
             args.ItemContainer = container;
         }
-        
+
         private void ContainerOnPointerEntered(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
         {
             var container = sender as ContentControl;

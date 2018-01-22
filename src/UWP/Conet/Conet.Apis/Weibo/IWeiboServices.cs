@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iHentai.Services;
 using Newtonsoft.Json.Linq;
 using Refit;
 
@@ -15,8 +16,11 @@ namespace Conet.Apis.Weibo
 
         [Get("/remind/unread_count")]
         Task<JObject> Notification(string access_token, string source, bool unread_message = true, bool with_comment_attitude = true);
+    }
 
-        [Get("/users/show")]
-        Task<JObject> User(string access_token, long uid);
+    internal interface IWeiboServicesV2
+    {
+        [Get("/users/show.json")]
+        Task<JObject> User(string access_token, string source, long uid, [Header(ApiHttpClient.FouceCookie)] bool fouceCache = false);
     }
 }

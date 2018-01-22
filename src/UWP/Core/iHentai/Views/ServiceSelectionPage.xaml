@@ -53,6 +53,11 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+                    <GridView ItemsSource="{Binding Datas}">
+                        <GridView.ItemTemplateSelector>
+                            <services:ContentViewTemplateSelector/>
+                        </GridView.ItemTemplateSelector>
+                    </GridView>
                     <Button Margin="8" Content="Using existing account" Click="{x:Bind ViewModel.ConfirmWithExistingAccount}" Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Stretch"/>
                     <Button Margin="8" Grid.Row="1" Content="Go" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
                 </Grid>
