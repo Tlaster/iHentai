@@ -87,12 +87,11 @@ namespace iHentai.Services
             }));
         }
 
-        private async Task CleanDisk()
+        public async Task CleanDisk()
         {
             var files = await _cacheFolder.GetFilesAsync();
             foreach (var file in files)
             {
-                var propes = await file.GetBasicPropertiesAsync();
                 if (file.DateCreated > DateTimeOffset.Now - TimeSpan.FromDays(1)) await file.DeleteAsync();
             }
         }
