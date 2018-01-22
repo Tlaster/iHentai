@@ -192,7 +192,7 @@
       <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.6.13</Version>
+      <Version>1.6.15</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.2.0</Version>
