@@ -68,7 +68,7 @@ namespace Conet.Apis.Weibo
             long since_id = 0L)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-            var res = await _api.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
+            var res = await _apiv2.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
             return (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
         }
 

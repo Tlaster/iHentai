@@ -3,7 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls">
 
+    <Style TargetType="controls:ImageEx">
+        <Setter Property="IsCacheEnabled" Value="True"/>
+    </Style>
+
     <Style TargetType="controls:ImageEx" x:Key="ImageExNoTransition">
+        <Setter Property="IsCacheEnabled" Value="True"/>
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
         <Setter Property="Template">

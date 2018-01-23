@@ -13,9 +13,16 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     Title="{Binding Title}"
+    x:Name="Root"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
-    
+
+    <mvvm:MvvmPage.Resources>
+        <MenuFlyout x:Name="InstanceDataFlayout">
+            <MenuFlyoutItem Text="Remove" />
+        </MenuFlyout>
+    </mvvm:MvvmPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -38,44 +45,68 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData, TargetNullValue=null}" HorizontalContentAlignment="Stretch">
+                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData, TargetNullValue=null}"
+                                HorizontalContentAlignment="Stretch">
                     <ContentControl.ContentTemplateSelector>
                         <services:ContentViewTemplateSelector />
                     </ContentControl.ContentTemplateSelector>
                     <ContentControl.ContentTransitions>
                         <TransitionCollection>
-                            <ContentThemeTransition/>
+                            <ContentThemeTransition />
                         </TransitionCollection>
                     </ContentControl.ContentTransitions>
                 </ContentControl>
                 <Grid MaxWidth="500" Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <GridView ItemsSource="{Binding Datas}">
-                        <GridView.ItemTemplateSelector>
+                    <GridView ItemsSource="{Binding Datas}" IsItemClickEnabled="True" SelectionMode="None"
+                              ItemClick="{x:Bind ViewModel.InstanceDataClicked}">
+                        <!--<GridView.ItemTemplateSelector>
                             <services:ContentViewTemplateSelector/>
-                        </GridView.ItemTemplateSelector>
+                        </GridView.ItemTemplateSelector>-->
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding Value}" DataContext="{Binding}" x:Name="InstanceDataContentRoot">
+                                    <ContentControl.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem
+                                                DataContext="{Binding ElementName=InstanceDataContentRoot, Path=DataContext}"
+                                                Text="Remove" Click="MenuFlyoutItem_OnClick" />
+                                        </MenuFlyout>
+                                    </ContentControl.ContextFlyout>
+                                    <ContentControl.ContentTemplateSelector>
+                                        <services:ContentViewTemplateSelector />
+                                    </ContentControl.ContentTemplateSelector>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
                     </GridView>
-                    <Button Margin="8" Content="Using existing account" Click="{x:Bind ViewModel.ConfirmWithExistingAccount}" Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Stretch"/>
-                    <Button Margin="8" Grid.Row="1" Content="Go" HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Confirm}"/>
+                    <Button Margin="8" Content="Using existing account"
+                            Click="{x:Bind ViewModel.ConfirmWithExistingAccount}"
+                            Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}"
+                            HorizontalAlignment="Stretch" />
+                    <Button Margin="8" Grid.Row="1" Content="Go" HorizontalAlignment="Stretch"
+                            Click="{x:Bind ViewModel.Confirm}" />
                 </Grid>
             </Grid>
         </ScrollViewer>
-        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1">
+        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <SymbolIcon Symbol="Setting" Margin="4"/>
+                <SymbolIcon Symbol="Setting" Margin="4" />
                 <TextBlock Grid.Column="1" Text="Settings" Margin="4" />
             </Grid>
         </Button>
-        <controls:Loading HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Opacity="0.8" Grid.Row="0" Grid.RowSpan="2" IsLoading="{Binding IsLoading}" >
+        <controls:Loading HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Opacity="0.8"
+                          Grid.Row="0" Grid.RowSpan="2" IsLoading="{Binding IsLoading}">
             <Grid>
-                <Border Background="{ThemeResource DefaultTextForegroundThemeBrush}" Opacity="0.66" >
+                <Border Background="{ThemeResource DefaultTextForegroundThemeBrush}" Opacity="0.66">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:Blur AutomaticallyStart="True"
                                         Delay="0"
@@ -83,9 +114,8 @@
                                         Duration="0" />
                     </interactivity:Interaction.Behaviors>
                 </Border>
-                <ProgressRing IsActive="{Binding IsLoading}" Width="50" Height="50"/>
+                <ProgressRing IsActive="{Binding IsLoading}" Width="50" Height="50" />
             </Grid>
         </controls:Loading>
     </Grid>
 </mvvm:MvvmPage>
-

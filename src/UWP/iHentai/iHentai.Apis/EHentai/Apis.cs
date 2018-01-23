@@ -62,6 +62,7 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment("g")
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token)
+                .WithHeader("Cache-Control", "public, max-age=600")
                 .GetHtmlAsync<GalleryDetailModel>(cancellationToken);
         }
 

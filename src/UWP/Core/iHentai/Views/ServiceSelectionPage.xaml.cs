@@ -1,4 +1,5 @@
-﻿using iHentai.Mvvm;
+﻿using Windows.UI.Xaml;
+using iHentai.Mvvm;
 using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -19,6 +20,11 @@ namespace iHentai.Views
         {
             get => (ServiceSelectionViewModel) base.ViewModel;
             set => base.ViewModel = value;
+        }
+
+        private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RemoveInstanceDataCommand?.Execute((sender as FrameworkElement).DataContext);
         }
     }
 }

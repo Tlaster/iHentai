@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using Windows.ApplicationModel;
+using Windows.UI.Xaml.Controls;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Database;
@@ -18,16 +21,22 @@ namespace iHentai.ViewModels
         {
             using (var context = new ApplicationDbContext())
             {
-                Instances = context.Instances.GroupBy(item => item.Service, item => item.Data)
-                    .ToDictionary(item => item.Key, item => item.ToList());
+                GetInstances(context);
             }
 
             SelectedService = Source.FirstOrDefault();
         }
 
-        public bool IsLoading { get; set; }
+        private void GetInstances(ApplicationDbContext context)
+        {
+            Instances = context.Instances.ToList().GroupBy(item => item.Service, item => (item.Data, item.Key))
+                .ToDictionary(item => item.Key, item => item.ToList());
+        }
 
-        public Dictionary<string, List<string>> Instances { get; }
+        public Dictionary<string, List<(string Data, int Key)>> Instances { get; set; }
+
+        public bool IsLoading { get; set; }
+        
 
         public List<ServiceSelectionBannerModel> Source { get; } =
             Singleton<ApiContainer>.Instance.KnownApis.Keys.Select(
@@ -47,21 +56,32 @@ namespace iHentai.ViewModels
             }
         }
 
+        public ICommand RemoveInstanceDataCommand => new RelayCommand<KeyValuePair<int, IInstanceData>>(item =>
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                context.Instances.Remove(context.Instances.Find(item.Key));
+                context.SaveChanges();
+                GetInstances(context);
+                OnSelectedServiceChanged();
+            }
+        });
+
         public ServiceSelectionBannerModel SelectedService { get; set; }
 
         public string Title { get; } = Package.Current.DisplayName;
 
         public ILoginData LoginData { get; set; }
 
-        public List<IInstanceData> Datas { get; private set; }
+        public Dictionary<int, IInstanceData> Datas { get; private set; }
 
         private void OnSelectedServiceChanged()
         {
             LoginData = SelectedService?.ServiceType?.Get<ICanLogin>()?.LoginDataGenerator;
             Datas = Instances.TryGetValue(SelectedService?.ServiceType, out var value)
-                ? value.Select(item =>
-                    item.JsonToObject(SelectedService?.ServiceType?.Get<ICanLogin>()
-                        ?.InstanceDataType) as IInstanceData).ToList()
+                ? value.ToDictionary(item => item.Key, item =>
+                    item.Data.JsonToObject(SelectedService?.ServiceType?.Get<ICanLogin>()
+                        ?.InstanceDataType) as IInstanceData)
                 : null;
         }
 
@@ -74,6 +94,11 @@ namespace iHentai.ViewModels
             if (api is ICanLogin canLogin) data = await canLogin.Login(LoginData);
             Go(service, data);
             IsLoading = false;
+        }
+
+        public void InstanceDataClicked(object sender, ItemClickEventArgs e)
+        {
+            Go(SelectedService?.ServiceType, ((KeyValuePair<int, IInstanceData>)e.ClickedItem).Value);
         }
 
         public void ConfirmWithExistingAccount()
