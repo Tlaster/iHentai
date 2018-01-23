@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,9 @@ namespace Conet.Apis.Core
 
             var data = await GetDataAsync(Curser, pageSize, cancellationToken);
             Curser = data.Curser;
-            return data.Data;
+            return data.Data as IEnumerable<T>;
         }
 
-        protected abstract Task<(long Curser, IEnumerable<T> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken);
+        protected abstract Task<(long Curser, IEnumerable Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken);
     }
 }

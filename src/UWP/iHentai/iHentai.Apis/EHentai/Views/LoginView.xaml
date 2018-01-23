@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Header="User Name" Text="{Binding UserName,Mode=TwoWay}" AcceptsReturn="False"/>
-        <PasswordBox Grid.Row="1" Header="Password" Password="{Binding Password, Mode=TwoWay}"/>
+        <TextBox Header="User Name" Text="{Binding UserName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="False"/>
+        <PasswordBox Grid.Row="1" Header="Password" Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

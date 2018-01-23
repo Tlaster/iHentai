@@ -16,8 +16,10 @@ using Flurl.Http;
 using Humanizer;
 using iHentai.Activation;
 using iHentai.Basic.Helpers;
+using iHentai.Database;
 using iHentai.Paging;
 using iHentai.Views;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Services
@@ -70,6 +72,11 @@ namespace iHentai.Services
 
         private async Task InitializeAsync()
         {
+            using (var context = new ApplicationDbContext())
+            {
+                await context.Database.MigrateAsync();
+            }
+
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);

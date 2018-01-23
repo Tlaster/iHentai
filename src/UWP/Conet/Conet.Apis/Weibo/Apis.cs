@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -63,7 +64,7 @@ namespace Conet.Apis.Weibo
             throw new TaskCanceledException();
         }
         
-        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data,
+        public async Task<(long Cursor, IEnumerable Data)> HomeTimeline(IInstanceData data,
             int count = 20, long max_id = 0L,
             long since_id = 0L)
         {
@@ -72,7 +73,7 @@ namespace Conet.Apis.Weibo
             return (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
         }
 
-        public async Task<JToken> User(IInstanceData data, long uid)
+        public async Task<object> User(IInstanceData data, long uid)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
             return await _apiv2.User(instanceData.AccessToken, instanceData.Source, uid);

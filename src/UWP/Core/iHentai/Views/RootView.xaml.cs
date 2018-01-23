@@ -94,11 +94,6 @@ namespace iHentai.Views
 
         private async void DismissExtendedSplash()
         {
-            using (var context = new ApplicationDbContext())
-            {
-                await context.Database.MigrateAsync();
-            }
-            
             await Task.Delay(1000);
             tab
                 .Scale(1.1f, 1.1f, (float) (tab.ActualWidth / 2f), (float) (tab.ActualHeight / 2f), 0D)

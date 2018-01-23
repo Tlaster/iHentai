@@ -117,9 +117,65 @@
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
     <Compile Include="Mastodon\Apis.cs" />
+    <Compile Include="Mastodon\Api\Accounts.cs" />
+    <Compile Include="Mastodon\Api\Accounts.static.cs" />
+    <Compile Include="Mastodon\Api\Apps.cs" />
+    <Compile Include="Mastodon\Api\Apps.static.cs" />
+    <Compile Include="Mastodon\Api\Base.cs" />
+    <Compile Include="Mastodon\Api\Blocks.cs" />
+    <Compile Include="Mastodon\Api\Blocks.static.cs" />
+    <Compile Include="Mastodon\Api\Constants.cs" />
+    <Compile Include="Mastodon\Api\Favourites.cs" />
+    <Compile Include="Mastodon\Api\Favourites.static.cs" />
+    <Compile Include="Mastodon\Api\FollowRequests.cs" />
+    <Compile Include="Mastodon\Api\FollowRequests.static.cs" />
+    <Compile Include="Mastodon\Api\Follows.cs" />
+    <Compile Include="Mastodon\Api\Follows.static.cs" />
+    <Compile Include="Mastodon\Api\Instances.cs" />
+    <Compile Include="Mastodon\Api\Media.cs" />
+    <Compile Include="Mastodon\Api\Media.static.cs" />
+    <Compile Include="Mastodon\Api\Mutes.cs" />
+    <Compile Include="Mastodon\Api\Mutes.static.cs" />
+    <Compile Include="Mastodon\Api\Notifications.cs" />
+    <Compile Include="Mastodon\Api\Notifications.static.cs" />
+    <Compile Include="Mastodon\Api\OAuth.cs" />
+    <Compile Include="Mastodon\Api\OAuth.static.cs" />
+    <Compile Include="Mastodon\Api\Reports.cs" />
+    <Compile Include="Mastodon\Api\Reports.static.cs" />
+    <Compile Include="Mastodon\Api\Search.cs" />
+    <Compile Include="Mastodon\Api\Search.static.cs" />
+    <Compile Include="Mastodon\Api\Statuses.cs" />
+    <Compile Include="Mastodon\Api\Statuses.static.cs" />
+    <Compile Include="Mastodon\Api\Timelines.cs" />
+    <Compile Include="Mastodon\Api\Timelines.static.cs" />
+    <Compile Include="Mastodon\Common\HttpHelper.cs" />
+    <Compile Include="Mastodon\Common\MastodonException.cs" />
+    <Compile Include="Mastodon\InstanceData.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
+    <Compile Include="Mastodon\Model\AccountModel.cs" />
+    <Compile Include="Mastodon\Model\ApplicationModel.cs" />
+    <Compile Include="Mastodon\Model\Apps\OAuthModel.cs" />
+    <Compile Include="Mastodon\Model\ArrayModel.cs" />
+    <Compile Include="Mastodon\Model\AttachmentModel.cs" />
+    <Compile Include="Mastodon\Model\CardModel.cs" />
+    <Compile Include="Mastodon\Model\ContextModel.cs" />
+    <Compile Include="Mastodon\Model\InstanceModel.cs" />
+    <Compile Include="Mastodon\Model\MentionModel.cs" />
+    <Compile Include="Mastodon\Model\NotificationModel.cs" />
+    <Compile Include="Mastodon\Model\OAuth\TokenModel.cs" />
+    <Compile Include="Mastodon\Model\RelationshipModel.cs" />
+    <Compile Include="Mastodon\Model\ReportModel.cs" />
+    <Compile Include="Mastodon\Model\ResultsModel.cs" />
+    <Compile Include="Mastodon\Model\StatusModel.cs" />
+    <Compile Include="Mastodon\Model\TagModel.cs" />
+    <Compile Include="Mastodon\Views\InstanceView.xaml.cs">
+      <DependentUpon>InstanceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mastodon\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mastodon\Views\StatusView.xaml.cs">
+      <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Twitter\Apis.cs" />
@@ -176,7 +232,15 @@
     <Folder Include="Weibo\Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Mastodon\Views\InstanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Mastodon\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mastodon\Views\StatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

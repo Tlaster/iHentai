@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,14 +21,14 @@ namespace Conet.Apis.Twitter
 
         public Type InstanceDataType { get; }
 
-        public Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20,
+        public Task<(long Cursor, IEnumerable Data)> HomeTimeline(IInstanceData data, int count = 20,
             long max_id = 0L,
             long since_id = 0L)
         {
             throw new NotImplementedException();
         }
 
-        public Task<JToken> User(IInstanceData data, long uid)
+        public Task<object> User(IInstanceData data, long uid)
         {
             throw new NotImplementedException();
         }

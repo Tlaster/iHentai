@@ -1,17 +1,20 @@
 ﻿<UserControl
-    x:Class="Conet.Apis.Mastodon.Views.LoginView"
+    x:Class="Conet.Apis.Mastodon.Views.InstanceView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Conet.Apis.Mastodon.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mastodon="using:Conet.Apis.Mastodon"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
+    DataContextChanged="InstanceView_OnDataContextChanged"
+    d:DataContext="{d:DesignInstance mastodon:InstanceData}"
     d:DesignHeight="300"
-    d:DesignWidth="400"
-    d:DataContext="{d:DesignInstance mastodon:LoginData}">
+    d:DesignWidth="400">
 
     <Grid>
-        <TextBox Text="{Binding Domain,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Domain"/>
+        <controls:ImageEx x:Name="UserImage" CornerRadius="25" Width="50" Height="50"/>
+        <ProgressRing x:Name="ProgressRing" Width="50" Height="50" IsActive="True"/>
     </Grid>
 </UserControl>

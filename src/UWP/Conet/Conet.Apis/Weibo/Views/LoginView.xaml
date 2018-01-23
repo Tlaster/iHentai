@@ -20,10 +20,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Text="{Binding AppID, Mode=TwoWay}" x:Name="AppID_TB" Paste="TextBox_Paste" Header="App ID" />
-        <TextBox Grid.Row="1" Text="{Binding AppSecret, Mode=TwoWay}" x:Name="AppSecret_TB" Paste="TextBox_Paste" Header="App Secret" />
-        <TextBox Grid.Row="2" Text="{Binding RedirectUri, Mode=TwoWay}" x:Name="RedirectUri_TB" Paste="TextBox_Paste" Header="Redirect Uri" />
-        <TextBox Grid.Row="3" Text="{Binding Scope, Mode=TwoWay}" x:Name="Scope_TB" Paste="TextBox_Paste" Header="Scope" />
-        <TextBox Grid.Row="4" Text="{Binding PackageName, Mode=TwoWay}" x:Name="PackageName_TB" Paste="TextBox_Paste" Header="Package Name" />
+        <TextBox Text="{Binding AppID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="AppID_TB" Paste="TextBox_Paste" Header="App ID" />
+        <TextBox Grid.Row="1" Text="{Binding AppSecret, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="AppSecret_TB" Paste="TextBox_Paste" Header="App Secret" />
+        <TextBox Grid.Row="2" Text="{Binding RedirectUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="RedirectUri_TB" Paste="TextBox_Paste" Header="Redirect Uri" />
+        <TextBox Grid.Row="3" Text="{Binding Scope, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Scope_TB" Paste="TextBox_Paste" Header="Scope" />
+        <TextBox Grid.Row="4" Text="{Binding PackageName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="PackageName_TB" Paste="TextBox_Paste" Header="Package Name" />
     </Grid>
 </UserControl>

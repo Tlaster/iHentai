@@ -21,23 +21,17 @@ namespace iHentai.ViewModels
         {
             using (var context = new ApplicationDbContext())
             {
-                GetInstances(context);
+                Instances = context.Instances.ToList().GroupBy(item => item.Service, item => (item.Data, item.Key))
+                    .ToDictionary(item => item.Key, item => item.ToList());
             }
 
             SelectedService = Source.FirstOrDefault();
-        }
-
-        private void GetInstances(ApplicationDbContext context)
-        {
-            Instances = context.Instances.ToList().GroupBy(item => item.Service, item => (item.Data, item.Key))
-                .ToDictionary(item => item.Key, item => item.ToList());
         }
 
         public Dictionary<string, List<(string Data, int Key)>> Instances { get; set; }
 
         public bool IsLoading { get; set; }
         
-
         public List<ServiceSelectionBannerModel> Source { get; } =
             Singleton<ApiContainer>.Instance.KnownApis.Keys.Select(
                 item => new ServiceSelectionBannerModel(item)).ToList();
@@ -62,7 +56,8 @@ namespace iHentai.ViewModels
             {
                 context.Instances.Remove(context.Instances.Find(item.Key));
                 context.SaveChanges();
-                GetInstances(context);
+                Instances = context.Instances.ToList().GroupBy(x => x.Service, x => (x.Data, item.Key))
+                    .ToDictionary(x => x.Key, x => x.ToList());
                 OnSelectedServiceChanged();
             }
         });
@@ -94,6 +89,7 @@ namespace iHentai.ViewModels
             if (api is ICanLogin canLogin) data = await canLogin.Login(LoginData);
             Go(service, data);
             IsLoading = false;
+            
         }
 
         public void InstanceDataClicked(object sender, ItemClickEventArgs e)

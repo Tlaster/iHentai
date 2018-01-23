@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -47,7 +48,8 @@ namespace Conet.ViewModels
             _serviceType = serviceType;
         }
 
-        protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken)
+        protected override Task<(long Curser, IEnumerable Data)> GetDataAsync(long curser, int pageSize,
+            CancellationToken cancellationToken)
         {
             return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser, 0);
         }
