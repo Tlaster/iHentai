@@ -14,13 +14,14 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Conet.Apis.Mastodon.Model;
 using iHentai.Services;
+using Newtonsoft.Json.Linq;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
 namespace Conet.Apis.Mastodon.Views
 {
     [ContentKey(nameof(Mastodon))]
-    public sealed partial class StatusView : IContentView<StatusModel>
+    public sealed partial class StatusView : IContentView<JObject>
     {
         public StatusView()
         {

@@ -152,22 +152,9 @@
     <Compile Include="Mastodon\Common\MastodonException.cs" />
     <Compile Include="Mastodon\InstanceData.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
-    <Compile Include="Mastodon\Model\AccountModel.cs" />
-    <Compile Include="Mastodon\Model\ApplicationModel.cs" />
     <Compile Include="Mastodon\Model\Apps\OAuthModel.cs" />
     <Compile Include="Mastodon\Model\ArrayModel.cs" />
-    <Compile Include="Mastodon\Model\AttachmentModel.cs" />
-    <Compile Include="Mastodon\Model\CardModel.cs" />
-    <Compile Include="Mastodon\Model\ContextModel.cs" />
-    <Compile Include="Mastodon\Model\InstanceModel.cs" />
-    <Compile Include="Mastodon\Model\MentionModel.cs" />
-    <Compile Include="Mastodon\Model\NotificationModel.cs" />
     <Compile Include="Mastodon\Model\OAuth\TokenModel.cs" />
-    <Compile Include="Mastodon\Model\RelationshipModel.cs" />
-    <Compile Include="Mastodon\Model\ReportModel.cs" />
-    <Compile Include="Mastodon\Model\ResultsModel.cs" />
-    <Compile Include="Mastodon\Model\StatusModel.cs" />
-    <Compile Include="Mastodon\Model\TagModel.cs" />
     <Compile Include="Mastodon\Views\InstanceView.xaml.cs">
       <DependentUpon>InstanceView.xaml</DependentUpon>
     </Compile>

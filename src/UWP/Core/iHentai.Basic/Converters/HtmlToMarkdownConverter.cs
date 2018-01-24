@@ -15,7 +15,15 @@ namespace iHentai.Basic.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return Converter.Convert(value + "");
+            try
+            {
+                return Converter.Convert(value + "");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return value + "";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

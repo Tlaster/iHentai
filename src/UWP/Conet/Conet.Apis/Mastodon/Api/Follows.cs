@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api
 {
@@ -11,7 +12,7 @@ namespace Conet.Apis.Mastodon.Api
         /// </summary>
         /// <param name="uri">username@domain of the person you want to follow</param>
         /// <returns>Returns the local representation of the followed account, as an <see cref="AccountModel"/></returns>
-        public async Task<AccountModel> Following(string uri)
+        public async Task<JToken> Following(string uri)
         {
             return await Following(Domain, AccessToken, uri);
         }

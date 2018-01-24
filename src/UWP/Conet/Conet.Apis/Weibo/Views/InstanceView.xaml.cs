@@ -19,7 +19,7 @@ namespace Conet.Apis.Weibo.Views
         private void InstanceView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             if (!(args.NewValue is InstanceData data)) return;
-            nameof(Weibo).Get<Apis>().User(data, data.Uid).ContinueWith(async t =>
+            nameof(Weibo).Get<Apis>().User(data, data.Uid.ToString()).ContinueWith(async t =>
             {
                 if (t.Result == null || t.Exception != null) return;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,

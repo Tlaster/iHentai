@@ -64,19 +64,18 @@ namespace Conet.Apis.Weibo
             throw new TaskCanceledException();
         }
         
-        public async Task<(long Cursor, IEnumerable Data)> HomeTimeline(IInstanceData data,
-            int count = 20, long max_id = 0L,
-            long since_id = 0L)
+        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data,
+            int count = 20, long cursor = 0L)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-            var res = await _apiv2.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, max_id, since_id);
+            var res = await _apiv2.HomeTimeline(instanceData.AccessToken, instanceData.Source, count, cursor);
             return (res.Value<long>("next_cursor"), res.Value<JArray>("statuses"));
         }
 
-        public async Task<object> User(IInstanceData data, long uid)
+        public async Task<JToken> User(IInstanceData data, string uid)
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
-            return await _apiv2.User(instanceData.AccessToken, instanceData.Source, uid);
+            return await _apiv2.User(instanceData.AccessToken, instanceData.Source, Convert.ToInt64(uid));
         }
 
         private string GetOauthLoginPage(LoginData data)

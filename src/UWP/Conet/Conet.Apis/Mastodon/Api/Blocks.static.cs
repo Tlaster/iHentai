@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Common;
 using Conet.Apis.Mastodon.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api
 {
@@ -14,9 +15,9 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="max_id"></param>
         /// <param name="since_id"></param>
         /// <returns>Returns an array of <see cref="AccountModel"/> blocked by the authenticated user</returns>
-        public static async Task<ArrayModel<AccountModel>> Fetching(string domain, string token, int max_id = 0, int since_id = 0)
+        public static async Task<ArrayModel<JToken>> Fetching(string domain, string token, int max_id = 0, int since_id = 0)
         {
-            return await HttpHelper.GetArrayAsync<AccountModel>($"{HttpHelper.HTTPS}{domain}{Constants.BlocksFetching}", token, max_id, since_id);
+            return await HttpHelper.GetArrayAsync<JToken>($"{HttpHelper.HTTPS}{domain}{Constants.BlocksFetching}", token, max_id, since_id);
         }
     }
 }

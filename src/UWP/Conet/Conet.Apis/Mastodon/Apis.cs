@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -8,6 +9,7 @@ using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
 using Conet.Apis.Mastodon.Api;
 using iHentai.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon
 {
@@ -38,22 +40,20 @@ namespace Conet.Apis.Mastodon
             var tokenModel = await OAuth.GetAccessTokenByCode(domain, auth.ClientId, auth.ClientSecret,
                 auth.RedirectUri, code, Apps.SCOPE_READ, Apps.SCOPE_WRITE, Apps.SCOPE_FOLLOW);
             var account = await Accounts.VerifyCredentials(domain, tokenModel.AccessToken);
-            return new InstanceData(tokenModel, domain, account.Id);
+            return new InstanceData(tokenModel.AccessToken, domain, account.Value<string>("id"));
         }
 
         public Type InstanceDataType { get; } = typeof(InstanceData);
 
-        public async Task<(long Cursor, IEnumerable Data)> HomeTimeline(IInstanceData data, int count = 20,
-            long max_id = 0L,
-            long since_id = 0L)
+        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20, long cursor = 0L)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();
 
-            var res = await Timelines.Home(model.Domain, model.AccessToken, max_id, since_id);
+            var res = await Timelines.Home(model.Domain, model.AccessToken, cursor, 0);
             return (res.MaxId, res.Result);
         }
 
-        public async Task<object> User(IInstanceData data, long uid)
+        public async Task<JToken> User(IInstanceData data, string uid)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();
 

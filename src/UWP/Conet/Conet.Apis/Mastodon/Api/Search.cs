@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api
 {
@@ -14,8 +15,8 @@ namespace Conet.Apis.Mastodon.Api
         /// </summary>
         /// <param name="q">The search query</param>
         /// <param name="resolve">Whether to resolve non-local accounts</param>
-        /// <returns>Returns <see cref="ResultsModel"/>. If <see cref="q"/> is a URL, Mastodon will attempt to fetch the provided account or status. Otherwise, it will do a local account and hashtag search</returns>
-        public async Task<ResultsModel> Searching(string q, bool resolve = false)
+        /// <returns>Returns <see cref="JToken"/>. If <see cref="q"/> is a URL, Mastodon will attempt to fetch the provided account or status. Otherwise, it will do a local account and hashtag search</returns>
+        public async Task<JToken> Searching(string q, bool resolve = false)
         {
             return await Searching(Domain, q, resolve);
         }

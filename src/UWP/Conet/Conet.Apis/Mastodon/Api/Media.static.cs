@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Common;
 using Conet.Apis.Mastodon.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api
 {
@@ -15,9 +16,9 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="file">Media to be uploaded</param>
         /// <returns>Returns an <see cref="AttachmentModel"/> that can be used when creating a status</returns>
-        public static async Task<AttachmentModel> Uploading(string domain, string token, byte[] file)
+        public static async Task<JToken> Uploading(string domain, string token, byte[] file)
         {
-            return await HttpHelper.PostAsync<AttachmentModel, StreamContent>($"{HttpHelper.HTTPS}{domain}{Constants.MediaUploading}", token, new []
+            return await HttpHelper.PostAsync<JToken, StreamContent>($"{HttpHelper.HTTPS}{domain}{Constants.MediaUploading}", token, new []
             {
                 (nameof(file), new StreamContent(new MemoryStream(file)))
             });

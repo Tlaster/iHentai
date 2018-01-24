@@ -48,10 +48,10 @@ namespace Conet.ViewModels
             _serviceType = serviceType;
         }
 
-        protected override Task<(long Curser, IEnumerable Data)> GetDataAsync(long curser, int pageSize,
+        protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
             CancellationToken cancellationToken)
         {
-            return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser, 0);
+            return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser);
         }
     }
 }

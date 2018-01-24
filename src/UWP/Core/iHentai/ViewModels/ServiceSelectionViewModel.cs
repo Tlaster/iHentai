@@ -87,7 +87,7 @@ namespace iHentai.ViewModels
             var api = service.Get<IApi>();
             IInstanceData data = null;
             if (api is ICanLogin canLogin) data = await canLogin.Login(LoginData);
-            Go(service, data);
+            CheckAndGo(service, data);
             IsLoading = false;
             
         }
@@ -106,7 +106,7 @@ namespace iHentai.ViewModels
             {
                 var instance = context.Instances.FirstOrDefault(item => item.Service == SelectedService.ServiceType);
                 if (instance != null)
-                    Go(instance.Service,
+                    CheckAndGo(instance.Service,
                         instance.Data.JsonToObject(instance.Service?.Get<ICanLogin>()?.InstanceDataType) as
                             IInstanceData);
             }
@@ -119,7 +119,7 @@ namespace iHentai.ViewModels
             Navigate<SettingsViewModel>().FireAndForget();
         }
 
-        private void Go(string service, IInstanceData data)
+        private void CheckAndGo(string service, IInstanceData data)
         {
             if (data != null && !Singleton<ApiContainer>.Instance.Contains(data))
                 using (var context = new ApplicationDbContext())
@@ -144,6 +144,11 @@ namespace iHentai.ViewModels
                     context.SaveChanges();
                 }
 
+            Go(service, data);
+        }
+
+        private void Go(string service, IInstanceData data)
+        {
             var guid = Guid.NewGuid();
             if (Singleton<ApiContainer>.Instance.Contains(data))
                 guid = Singleton<ApiContainer>.Instance.GetGuid(data);

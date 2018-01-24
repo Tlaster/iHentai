@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Markup;
 using Microsoft.Toolkit.Collections;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Core
 {
@@ -23,9 +24,9 @@ namespace Conet.Apis.Core
 
             var data = await GetDataAsync(Curser, pageSize, cancellationToken);
             Curser = data.Curser;
-            return data.Data as IEnumerable<T>;
+            return data.Data;
         }
 
-        protected abstract Task<(long Curser, IEnumerable Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken);
+        protected abstract Task<(long Curser, IEnumerable<T> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken);
     }
 }

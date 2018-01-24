@@ -2,6 +2,11 @@
 {
     internal sealed class Constants
     {
+        public const string StatusVisibilityPublic = "public";
+        public const string StatusVisibilityUnlisted = "unlisted";
+        public const string StatusVisibilityPrivate = "private";
+        public const string StatusVisibilityDirect = "direct";
+
         private const string Version = "/api/v1";
 
         public const string AccountsFetching = Version + "/accounts/{0}";

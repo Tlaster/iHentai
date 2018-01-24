@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Model;
+using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api
 {
@@ -15,7 +16,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="max_id"></param>
         /// <param name="since_id"></param>
         /// <returns>Returns a list of <see cref="NotificationModel"/> for the authenticated user</returns>
-        public async Task<ArrayModel<NotificationModel>> Fetching(int max_id = 0, int since_id = 0)
+        public async Task<ArrayModel<JToken>> Fetching(int max_id = 0, int since_id = 0)
         {
             return await Fetching(Domain, AccessToken, max_id, since_id);
         }
@@ -25,7 +26,7 @@ namespace Conet.Apis.Mastodon.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns the <see cref="NotificationModel"/>.</returns>
-        public async Task<NotificationModel> GetSingle(int id)
+        public async Task<JToken> GetSingle(int id)
         {
             return await GetSingle(Domain, AccessToken, id);
         }

@@ -22,7 +22,7 @@ namespace Conet.Apis.Mastodon.Common
 
         private static bool CheckForValue<T>((string Key, T Value) kvp)
         {
-            return !string.IsNullOrEmpty(kvp.Value.ToString()) && (!int.TryParse(kvp.Value.ToString(), out int intValue) || intValue > 0) && (!bool.TryParse(kvp.Value.ToString(), out bool boolValue) || boolValue);
+            return !string.IsNullOrEmpty(kvp.Value.ToString()) && (!int.TryParse(kvp.Value.ToString(), out var intValue) || intValue > 0) && (!bool.TryParse(kvp.Value.ToString(), out var boolValue) || boolValue);
         }
 
         public static IEnumerable<(string, T)> ArrayEncode<T>(string paramName, params T[] values)
@@ -62,11 +62,11 @@ namespace Conet.Apis.Mastodon.Common
             using (var client = GetHttpClient(token))
             using (var res = await client.GetAsync(UrlEncode(url, param)))
             {
-                if (res.Headers.TryGetValues("Link", out IEnumerable<string> values))
+                if (res.Headers.TryGetValues("Link", out var values))
                 {
                     var links = values.FirstOrDefault().Split(',').Select(s => Regex.Match(s, "<.*(max_id|since_id)=([0-9]*)(.*)>; rel=\"(.*)\"").Groups).ToList();
-                    int.TryParse(links.FirstOrDefault(m => m[1].Value == "max_id")?[2]?.Value, out int maxId);
-                    int.TryParse(links.FirstOrDefault(m => m[1].Value == "since_id")?[2]?.Value, out int sinceId);
+                    long.TryParse(links.FirstOrDefault(m => m[1].Value == "max_id")?[2]?.Value, out var maxId);
+                    long.TryParse(links.FirstOrDefault(m => m[1].Value == "since_id")?[2]?.Value, out var sinceId);
                     return new ArrayModel<T>
                     {
                         MaxId = maxId,
@@ -154,7 +154,7 @@ namespace Conet.Apis.Mastodon.Common
             try
             {
                 var jobj = JsonConvert.DeserializeObject<JObject>(json);
-                if (jobj.TryGetValue("error", out JToken token))
+                if (jobj.TryGetValue("error", out var token))
                 {
                     throw new MastodonException(token.Value<string>());
                 }

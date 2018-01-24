@@ -16,7 +16,7 @@ namespace iHentai.Services
                 KnownApis = application
                     .GetApiAssemblies()
                     .SelectMany(item => item.DefinedTypes)
-                    .Where(x => x.IsClass && x.ImplementedInterfaces.Contains(typeof(IApi)) &&
+                    .Where(x => x.IsClass && !x.IsAbstract && x.ImplementedInterfaces.Contains(typeof(IApi)) &&
                                 x.GetCustomAttribute<ApiKeyAttribute>() != null)
                     .ToDictionary(x => x.GetCustomAttribute<ApiKeyAttribute>().Key, x => x);
 

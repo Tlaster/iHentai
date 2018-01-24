@@ -5,11 +5,11 @@
     xmlns:local="using:Conet.Apis.Mastodon.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Conet.Apis.Mastodon.Model"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:Conet.Apis.Weibo.Views.Converters"
+    xmlns:linq="using:Newtonsoft.Json.Linq"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance model:StatusModel}"
+    d:DataContext="{d:DesignInstance linq:JToken}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:ImageEx CornerRadius="25" Source="{Binding Account.Avatar}" Width="50" Height="50"/>
-        <controls:MarkdownTextBlock  x:Name="WeiboContent" Grid.Row="1" Text="{Binding Content, Converter={StaticResource HtmlToMarkdownConverter}}" TextWrapping="WrapWholeWords" />
+        <controls:ImageEx CornerRadius="25" Source="{Binding [account][avatar]}" Width="50" Height="50"/>
+        <controls:MarkdownTextBlock  x:Name="WeiboContent" Grid.Row="1" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}" TextWrapping="WrapWholeWords" />
     </Grid>
 </UserControl>
