@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai", "Core\iHentai\iHentai.csproj", "{BFA72AE1-0CB0-4991-A23C-4A3AD836CCF4}"
 EndProject
@@ -34,6 +34,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Database", "Core\iHentai.Database\iHentai.Database.csproj", "{DBB34726-B622-4799-A122-40746E721BBD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{511C8A45-B500-4809-849B-AF0C87D5E284}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Html2Markdown", "Core\Html2Markdown\Html2Markdown.csproj", "{63A2BA58-D11C-4843-B584-8E4526BB7774}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -241,6 +243,22 @@ Global
 		{DBB34726-B622-4799-A122-40746E721BBD}.Release|x64.Build.0 = Release|Any CPU
 		{DBB34726-B622-4799-A122-40746E721BBD}.Release|x86.ActiveCfg = Release|Any CPU
 		{DBB34726-B622-4799-A122-40746E721BBD}.Release|x86.Build.0 = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|ARM.Build.0 = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|x64.Build.0 = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Debug|x86.Build.0 = Debug|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|ARM.ActiveCfg = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|ARM.Build.0 = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|x64.ActiveCfg = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|x64.Build.0 = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|x86.ActiveCfg = Release|Any CPU
+		{63A2BA58-D11C-4843-B584-8E4526BB7774}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -259,6 +277,7 @@ Global
 		{E3EBF198-C932-4913-999A-6AAC3CC36202} = {511C8A45-B500-4809-849B-AF0C87D5E284}
 		{DBB34726-B622-4799-A122-40746E721BBD} = {A90A407A-F395-498E-8D5F-39BB3F3B0112}
 		{511C8A45-B500-4809-849B-AF0C87D5E284} = {A90A407A-F395-498E-8D5F-39BB3F3B0112}
+		{63A2BA58-D11C-4843-B584-8E4526BB7774} = {A90A407A-F395-498E-8D5F-39BB3F3B0112}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9FF5A33A-8317-437F-A5C7-857B68932D93}

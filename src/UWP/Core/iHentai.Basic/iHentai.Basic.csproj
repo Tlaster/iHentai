@@ -143,9 +143,6 @@
     <PackageReference Include="Fody">
       <Version>2.3.22</Version>
     </PackageReference>
-    <PackageReference Include="Html2Markdown">
-      <Version>3.1.1.325</Version>
-    </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
       <Version>1.6.15</Version>
     </PackageReference>
@@ -178,6 +175,10 @@
     <ProjectReference Include="..\Controls\WaterFallView\WaterFallView.vcxproj">
       <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
       <Name>WaterFallView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Html2Markdown\Html2Markdown.csproj">
+      <Project>{63a2ba58-d11c-4843-b584-8e4526bb7774}</Project>
+      <Name>Html2Markdown</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
