@@ -22,17 +22,10 @@ namespace iHentai.Basic.Converters
                 ? isInverted
                 : !isInverted;
             if (targetType == typeof(bool))
-            {
                 return result;
-            } 
-            else if (targetType == typeof(Visibility))
-            {
+            if (targetType == typeof(Visibility))
                 return result ? Visibility.Visible : Visibility.Collapsed;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

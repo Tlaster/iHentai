@@ -1,14 +1,13 @@
 ﻿using Windows.ApplicationModel.Resources;
+using iHentai.Basic.Helpers;
 
 namespace iHentai.Basic.Extensions
 {
     public static class ResourceExtensions
     {
-        private static readonly ResourceLoader _resLoader = new ResourceLoader();
-
         public static string GetLocalized(this string resourceKey)
         {
-            return _resLoader.GetString(resourceKey);
+            return Singleton<ResourceLoader>.Instance.GetString(resourceKey);
         }
     }
 }
