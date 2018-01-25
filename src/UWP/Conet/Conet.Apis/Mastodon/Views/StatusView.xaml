@@ -23,7 +23,7 @@
     </UserControl.Resources>
 
 
-    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}">
+    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}" d:DataContext="{d:DesignInstance linq:JObject}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -37,12 +37,12 @@
                 </StackPanel>
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{Binding [created_at], Converter={StaticResource HumanizerConverter}, ConverterParameter=DateTime}"/>
             </Grid>
-            <TextBlock IsTextSelectionEnabled="True" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter}}" Text="{Binding [spoiler_text]}"/>
-            <controls:Expander Header="ShowMore" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter}}">
+            <TextBlock IsTextSelectionEnabled="True" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}" Text="{Binding [spoiler_text]}"/>
+            <controls:Expander Header="ShowMore" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}">
                 <controls:MarkdownTextBlock HorizontalAlignment="Left" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
             </controls:Expander>
-            <controls:MarkdownTextBlock Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter},ConverterParameter=true}" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
-            <Grid Padding="0,8,0,0" MaxWidth="720" Visibility="{Binding [media_attachments],Converter={StaticResource NullOrEmptyToVisibilityConverter}}">
+            <controls:MarkdownTextBlock Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter},ConverterParameter=true}" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
+            <Grid Padding="0,8,0,0" MaxWidth="720" Visibility="{Binding [media_attachments],Converter={StaticResource NullOrEmptyConverter}}">
                 <controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None" StretchContentForSingleRow="True" ItemsSource="{Binding [media_attachments]}">
                     <controls:AdaptiveGridView.ItemTemplate>
                         <DataTemplate>

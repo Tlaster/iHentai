@@ -25,7 +25,7 @@
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter" />
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
-            <converters:NullOrEmptyToVisibilityConverter x:Name="NullOrEmptyToVisibilityConverter"/>
+            <converters:NullOrEmptyConverter x:Name="NullOrEmptyConverter"/>
 
         </ResourceDictionary>
     </Application.Resources>

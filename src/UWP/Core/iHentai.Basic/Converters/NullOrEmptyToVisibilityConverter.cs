@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace iHentai.Basic.Converters
 {
-    public class NullOrEmptyToVisibilityConverter : IValueConverter
+    public class NullOrEmptyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -21,7 +21,18 @@ namespace iHentai.Basic.Converters
                          value is JToken token && !(value is JArray) && token.Value<string>().IsEmpty()
                 ? isInverted
                 : !isInverted;
-            return result ? Visibility.Visible : Visibility.Collapsed;
+            if (targetType == typeof(bool))
+            {
+                return result;
+            } 
+            else if (targetType == typeof(Visibility))
+            {
+                return result ? Visibility.Visible : Visibility.Collapsed;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

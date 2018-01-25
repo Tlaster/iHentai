@@ -59,15 +59,5 @@ namespace Conet.Apis.Mastodon
 
             return await Accounts.Fetching(model.Domain, uid, model.AccessToken);
         }
-
-        public Task<(string Uri, string CallbackUri)> GetOAuth(ILoginData data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> OAuthResponseHandler(string response)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
