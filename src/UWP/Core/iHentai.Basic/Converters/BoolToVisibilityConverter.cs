@@ -13,7 +13,7 @@ namespace iHentai.Basic.Converters
             if (parameter is string)
                 bool.TryParse(parameter.ToString(), out isInverted);
 
-            var boolValue = (bool) value;
+            bool.TryParse(value + "", out var boolValue);
 
             boolValue = isInverted ? !boolValue : boolValue;
 

@@ -19,10 +19,13 @@
                 <ResourceDictionary Source="/Styles/Button.xaml" />
                 <ResourceDictionary Source="/Styles/Image.xaml" />
                 <ResourceDictionary Source="/Styles/ListView.xaml" />
+                <ResourceDictionary Source="/Styles/Expander.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:HumanizerConverter x:Key="HumanizerConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter" />
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+            <converters:NullOrEmptyToVisibilityConverter x:Name="NullOrEmptyToVisibilityConverter"/>
 
         </ResourceDictionary>
     </Application.Resources>

@@ -7,4 +7,6 @@
     <Style x:Key="TextBlockButtonStyle" TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
         <Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
     </Style>
+
+
 </ResourceDictionary>

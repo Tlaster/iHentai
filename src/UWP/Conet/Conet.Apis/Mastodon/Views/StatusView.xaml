@@ -8,17 +8,81 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:Conet.Apis.Weibo.Views.Converters"
     xmlns:linq="using:Newtonsoft.Json.Linq"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:system="using:System"
+    xmlns:interop="using:Windows.UI.Xaml.Interop"
+    xmlns:converters1="using:iHentai.Basic.Converters"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance linq:JToken}"
+    d:DataContext="{d:DesignInstance linq:JObject}"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <local:StatusDataContextConverter x:Key="StatusDataContextConverter" ReblogPath="reblog"/>
+    </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <controls:ImageEx CornerRadius="25" Source="{Binding [account][avatar]}" Width="50" Height="50"/>
-        <controls:MarkdownTextBlock  x:Name="WeiboContent" Grid.Row="1" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}" TextWrapping="WrapWholeWords" />
+
+    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <controls:ImageEx IsCacheEnabled="True" CornerRadius="25" Width="50" Height="50" Source="{Binding [account][avatar]}" Margin="0,0,8,0" VerticalAlignment="Top"/>
+        <StackPanel Grid.Column="1">
+            <Grid>
+                <StackPanel DataContext="{Binding [account]}" Orientation="Horizontal">
+                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" Text="{Binding [display_name]}" />
+                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{Binding [acct],Converter={StaticResource StringFormatConverter},ConverterParameter='@{0}'}"/>
+                </StackPanel>
+                <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{Binding [created_at], Converter={StaticResource HumanizerConverter}, ConverterParameter=DateTime}"/>
+            </Grid>
+            <TextBlock IsTextSelectionEnabled="True" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter}}" Text="{Binding [spoiler_text]}"/>
+            <controls:Expander Header="ShowMore" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter}}">
+                <controls:MarkdownTextBlock HorizontalAlignment="Left" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
+            </controls:Expander>
+            <controls:MarkdownTextBlock Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyToVisibilityConverter},ConverterParameter=true}" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
+            <Grid Padding="0,8,0,0" MaxWidth="720" Visibility="{Binding [media_attachments],Converter={StaticResource NullOrEmptyToVisibilityConverter}}">
+                <controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None" StretchContentForSingleRow="True" ItemsSource="{Binding [media_attachments]}">
+                    <controls:AdaptiveGridView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:ImageEx MaxHeight="300" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding [preview_url]}"/>
+                        </DataTemplate>
+                    </controls:AdaptiveGridView.ItemTemplate>
+                </controls:AdaptiveGridView>
+                <!--<controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None" StretchContentForSingleRow="True" ItemsSource="{Binding [media_attachments]}">
+                    <controls:AdaptiveGridView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:ImageEx MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding [preview_url]}"/>
+                        </DataTemplate>
+                    </controls:AdaptiveGridView.ItemTemplate>
+                </controls:AdaptiveGridView>-->
+                <Button x:Name="HideContent" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Click" SourceObject="{Binding ElementName=HideContent}">
+                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}" PropertyName="Visibility" Value="Visible"/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE890;"/>
+                </Button>
+                <Grid Visibility="{Binding [sensitive],Converter={StaticResource BoolToVisibilityConverter}}" x:Name="SensitiveBlocker">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding ElementName=SensitiveBlocker}">
+                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}" PropertyName="Visibility" Value="Collapsed"/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+
+                    <Border Background="#7F000000">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:Blur Value="50" AutomaticallyStart="True"/>
+                        </interactivity:Interaction.Behaviors>
+                    </Border>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RequestedTheme="Dark" Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" Text="Sensitive"/>
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="ClickToView"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

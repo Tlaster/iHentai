@@ -10,11 +10,11 @@ namespace Html2Markdown.Scheme {
 	{
 		private readonly IList<IReplacer> _replacers = new List<IReplacer>
 		{
-		    new PatternReplacer
-		    {
-		        Pattern = @"</?span[^>]*>",
-		        Replacement = @"",
-		    },
+		    //new PatternReplacer
+		    //{
+		    //    Pattern = @"</?span[^>]*>",
+		    //    Replacement = @"",
+		    //},
             new PatternReplacer
 			{
 				Pattern = @"</?(strong|b)>",
@@ -105,11 +105,15 @@ namespace Html2Markdown.Scheme {
 				Pattern = @"<!--[^-]+-->",
 				Replacement = ""
 			},
-			new CustomReplacer
-			{
-				CustomAction = HtmlParser.ReplaceImg
-			},
-			new CustomReplacer
+		    new CustomReplacer
+		    {
+		        CustomAction = HtmlParser.ReplaceImg
+		    },
+		    new CustomReplacer
+		    {
+		        CustomAction = HtmlParser.ReplaceSpan
+		    },
+            new CustomReplacer
 			{
 				CustomAction = HtmlParser.ReplaceLists
 			},

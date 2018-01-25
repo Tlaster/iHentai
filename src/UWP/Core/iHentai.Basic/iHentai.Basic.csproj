@@ -122,6 +122,8 @@
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\HtmlToMarkdownConverter.cs" />
     <Compile Include="Converters\HumanizerConverter.cs" />
+    <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Extensions\JsonExtension.cs" />
     <Compile Include="Extensions\ResourceExtensions.cs" />
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
