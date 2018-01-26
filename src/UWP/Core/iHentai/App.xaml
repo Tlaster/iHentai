@@ -26,6 +26,8 @@
             <converters:HtmlToMarkdownConverter x:Key="HtmlToMarkdownConverter" />
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <converters:NullOrEmptyConverter x:Name="NullOrEmptyConverter"/>
+            <converters:EqualsConverter x:Name="EqualsConverter"/>
+            <converters:EqualsConverter Invert="True" x:Name="NonequalsConverter"/>
 
         </ResourceDictionary>
     </Application.Resources>

@@ -30,7 +30,7 @@ namespace iHentai.Services
             }
         }
 
-        //might cause leak
+        //TODO: Memory leak when tab close but InstanceData still contains the data
         public ConcurrentDictionary<Guid, IInstanceData> InstanceDatas { get; } =
             new ConcurrentDictionary<Guid, IInstanceData>();
 

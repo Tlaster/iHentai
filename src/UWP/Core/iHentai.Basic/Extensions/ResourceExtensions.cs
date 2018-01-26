@@ -7,7 +7,8 @@ namespace iHentai.Basic.Extensions
     {
         public static string GetLocalized(this string resourceKey)
         {
-            return Singleton<ResourceLoader>.Instance.GetString(resourceKey);
+            var result = Singleton<ResourceLoader>.Instance.GetString(resourceKey);
+            return result.IsEmpty() ? resourceKey : result;
         }
     }
 }

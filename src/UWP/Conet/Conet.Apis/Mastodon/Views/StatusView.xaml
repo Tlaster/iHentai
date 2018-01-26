@@ -14,6 +14,7 @@
     xmlns:system="using:System"
     xmlns:interop="using:Windows.UI.Xaml.Interop"
     xmlns:converters1="using:iHentai.Basic.Converters"
+    xmlns:helpers="using:iHentai.Basic.Helpers"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance linq:JObject}"
     d:DesignHeight="300"
@@ -78,11 +79,42 @@
                         </interactivity:Interaction.Behaviors>
                     </Border>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RequestedTheme="Dark" Orientation="Vertical">
-                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" Text="Sensitive"/>
-                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="ClickToView"/>
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" Text="{helpers:Localization Key=Sensitive}"/>
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{helpers:Localization Key=ClickToView}"/>
                     </StackPanel>
                 </Grid>
             </Grid>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}"/>
+                </StackPanel.Resources>
+
+                <Button>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97A;"/>
+                </Button>
+
+                <Button Visibility="{Binding [visibility], Converter={StaticResource EqualsConverter}, ConverterParameter=public}">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="ReShare"/>
+                        <TextBlock Text="{Binding [reblogs_count]}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button IsEnabled="False" Visibility="{Binding [visibility], Converter={StaticResource NonequalsConverter}, ConverterParameter=public}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"/>
+                </Button>
+
+                <Button>
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Favorite"/>
+                        <TextBlock Text="{Binding [favourites_count]}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button>
+                    <SymbolIcon Symbol="More"/>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

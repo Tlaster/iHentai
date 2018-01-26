@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
+using Windows.UI.Xaml;
 using Conet.Apis.Core;
 using Conet.Apis.Mastodon.Api;
 using iHentai.Services;
@@ -13,6 +14,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon
 {
+
+    
+
     [ApiKey(nameof(Mastodon))]
     public class Apis : IConetApi
     {
@@ -53,11 +57,20 @@ namespace Conet.Apis.Mastodon
             return (res.MaxId, res.Result);
         }
 
+
+
         public async Task<JToken> User(IInstanceData data, string uid)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();
 
             return await Accounts.Fetching(model.Domain, uid, model.AccessToken);
         }
+
+        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        {
+            throw new NotImplementedException();
+        }
     }
+
+    
 }

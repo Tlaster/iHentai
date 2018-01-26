@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Conet.Apis.Core;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
@@ -31,6 +32,10 @@ namespace Conet.Apis.Twitter
         {
             throw new NotImplementedException();
         }
-        
+
+        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

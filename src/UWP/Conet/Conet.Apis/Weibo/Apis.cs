@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
+using Windows.UI.Xaml;
 using Conet.Apis.Core;
 using Flurl;
 using iHentai.Basic.Helpers;
@@ -76,6 +77,11 @@ namespace Conet.Apis.Weibo
         {
             if (!(data is InstanceData instanceData)) throw new ArgumentException();
             return await _apiv2.User(instanceData.AccessToken, instanceData.Source, Convert.ToInt64(uid));
+        }
+
+        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        {
+            throw new NotImplementedException();
         }
 
         private string GetOauthLoginPage(LoginData data)

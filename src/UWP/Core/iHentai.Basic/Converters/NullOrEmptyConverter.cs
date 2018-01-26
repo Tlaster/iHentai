@@ -18,7 +18,7 @@ namespace iHentai.Basic.Converters
                          value is string && string.IsNullOrEmpty(value.ToString()) ||
                          value is IList list && list.Count == 0 ||
                          value is JArray array && array.Count == 0 ||
-                         value is JToken token && !(value is JArray) && token.Value<string>().IsEmpty()
+                         value is JValue token && (token.Value is string str && str.IsEmpty())
                 ? isInverted
                 : !isInverted;
             if (targetType == typeof(bool))
