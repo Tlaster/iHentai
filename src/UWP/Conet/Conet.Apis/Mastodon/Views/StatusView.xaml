@@ -6,14 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:converters="using:Conet.Apis.Weibo.Views.Converters"
     xmlns:linq="using:Newtonsoft.Json.Linq"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-    xmlns:system="using:System"
-    xmlns:interop="using:Windows.UI.Xaml.Interop"
-    xmlns:converters1="using:iHentai.Basic.Converters"
     xmlns:helpers="using:iHentai.Basic.Helpers"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance linq:JObject}"
@@ -51,13 +47,6 @@
                         </DataTemplate>
                     </controls:AdaptiveGridView.ItemTemplate>
                 </controls:AdaptiveGridView>
-                <!--<controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None" StretchContentForSingleRow="True" ItemsSource="{Binding [media_attachments]}">
-                    <controls:AdaptiveGridView.ItemTemplate>
-                        <DataTemplate>
-                            <controls:ImageEx MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding [preview_url]}"/>
-                        </DataTemplate>
-                    </controls:AdaptiveGridView.ItemTemplate>
-                </controls:AdaptiveGridView>-->
                 <Button x:Name="HideContent" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Click" SourceObject="{Binding ElementName=HideContent}">
@@ -72,7 +61,6 @@
                             <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}" PropertyName="Visibility" Value="Collapsed"/>
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-
                     <Border Background="#7F000000">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:Blur Value="50" AutomaticallyStart="True"/>
@@ -86,7 +74,13 @@
             </Grid>
             <StackPanel Orientation="Horizontal">
                 <StackPanel.Resources>
-                    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}"/>
+                    <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="SymbolIcon">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
                 </StackPanel.Resources>
 
                 <Button>
@@ -112,6 +106,17 @@
                 </Button>
 
                 <Button>
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Text="{helpers:Localization Key=OpenTweet}"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='MentionWith'}}"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='HideWith'}}"/>
+                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='BlockWith'}}"/>
+                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='ReportWith'}}"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
                     <SymbolIcon Symbol="More"/>
                 </Button>
             </StackPanel>

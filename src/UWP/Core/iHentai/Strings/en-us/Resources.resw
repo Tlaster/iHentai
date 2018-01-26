@@ -145,35 +145,34 @@
     <value>Light</value>
     <comment>Light theme text for Settings</comment>
   </data>
-  <data name="Settings_About.Text" xml:space="preserve">    
+  <data name="Settings_About.Text" xml:space="preserve">
     <value>About this application</value>
     <comment>About this application title for Settings</comment>
   </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">    
+  <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>Settings page placeholder text.  Your app description goes here.</value>
     <comment>About this application description for Settings</comment>
   </data>
-  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">    
+  <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Privacy Statement</value>
     <comment>Privacy Statement link content for Settings</comment>
   </data>
-  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">  
+  <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://YourPrivacyUrlGoesHere/</value>
     <comment>Here is your Privacy Statement url for Settings</comment>
   </data>
-  <data name="Settings_Personalization.Text" xml:space="preserve">   
+  <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
     <comment>Personalization text for Settings</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">   
+  <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">
     <value>value must be an Enum!</value>
     <comment>Value must be an Enum in enum to boolean converter</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterParameterMustBeAnEnumName" xml:space="preserve">   
+  <data name="ExceptionEnumToBooleanConverterParameterMustBeAnEnumName" xml:space="preserve">
     <value>parameter must be an Enum name!</value>
     <comment>Parameter must be an Enum name in enum to boolean converter</comment>
   </data>
-  NavigateUri
   <data name="FirstRun_Body.Text" xml:space="preserve">
     <value>Replace the content of this dialog with whatever content is appropriate to your app.
 You might want to explain key features or functionality.
@@ -187,7 +186,7 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac tu
 
 Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.</value>
     <comment>First use prompt message body</comment>
-  </data>  
+  </data>
   <data name="FirstRun_Title.Text" xml:space="preserve">
     <value>Welcome</value>
     <comment>First use prompt message title</comment>
@@ -206,5 +205,17 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="AfterUpdate_Title.Text" xml:space="preserve">
     <value>What's new in this version</value>
     <comment>What's new prompt message title</comment>
+  </data>
+  <data name="BlockWith" xml:space="preserve">
+    <value>Block @{0}</value>
+  </data>
+  <data name="HideWith" xml:space="preserve">
+    <value>Hide @{0}</value>
+  </data>
+  <data name="MentionWith" xml:space="preserve">
+    <value>Mention @{0}</value>
+  </data>
+  <data name="ReportWith" xml:space="preserve">
+    <value>Report @{0}</value>
   </data>
 </root>
