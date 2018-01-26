@@ -16,108 +16,140 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
-        <local:StatusDataContextConverter x:Key="StatusDataContextConverter" ReblogPath="reblog"/>
+        <local:StatusDataContextConverter x:Key="StatusDataContextConverter" ReblogPath="reblog" />
     </UserControl.Resources>
 
 
-    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}" d:DataContext="{d:DesignInstance linq:JObject}">
+    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}"
+          d:DataContext="{d:DesignInstance linq:JObject}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <controls:ImageEx IsCacheEnabled="True" CornerRadius="25" Width="50" Height="50" Source="{Binding [account][avatar]}" Margin="0,0,8,0" VerticalAlignment="Top"/>
+        <controls:ImageEx IsCacheEnabled="True" CornerRadius="25" Width="50" Height="50"
+                          Source="{Binding [account][avatar]}" Margin="0,0,8,0" VerticalAlignment="Top" />
         <StackPanel Grid.Column="1">
             <Grid>
                 <StackPanel DataContext="{Binding [account]}" Orientation="Horizontal">
-                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" Text="{Binding [display_name]}" />
-                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{Binding [acct],Converter={StaticResource StringFormatConverter},ConverterParameter='@{0}'}"/>
+                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}"
+                               Text="{Binding [display_name]}" />
+                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}"
+                               Foreground="{ThemeResource TextControlForegroundDisabled}"
+                               Text="{Binding [acct],Converter={StaticResource StringFormatConverter},ConverterParameter='@{0}'}" />
                 </StackPanel>
-                <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{Binding [created_at], Converter={StaticResource HumanizerConverter}, ConverterParameter=DateTime}"/>
+                <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right"
+                           Foreground="{ThemeResource TextControlForegroundDisabled}"
+                           Text="{Binding [created_at], Converter={StaticResource HumanizerConverter}, ConverterParameter=DateTime}" />
             </Grid>
-            <TextBlock IsTextSelectionEnabled="True" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}" Text="{Binding [spoiler_text]}"/>
-            <controls:Expander Header="ShowMore" Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}">
-                <controls:MarkdownTextBlock HorizontalAlignment="Left" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
+            <TextBlock IsTextSelectionEnabled="True"
+                       Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}"
+                       Text="{Binding [spoiler_text]}" />
+            <controls:Expander Header="ShowMore"
+                               Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter}}">
+                <controls:MarkdownTextBlock HorizontalAlignment="Left"
+                                            Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}" />
             </controls:Expander>
-            <controls:MarkdownTextBlock Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter},ConverterParameter=true}" Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}"/>
-            <Grid Padding="0,8,0,0" MaxWidth="720" Visibility="{Binding [media_attachments],Converter={StaticResource NullOrEmptyConverter}}">
-                <controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None" StretchContentForSingleRow="True" ItemsSource="{Binding [media_attachments]}">
+            <controls:MarkdownTextBlock
+                Visibility="{Binding [spoiler_text],Converter={StaticResource NullOrEmptyConverter},ConverterParameter=true}"
+                Text="{Binding [content], Converter={StaticResource HtmlToMarkdownConverter}}" />
+            <Grid Padding="0,8,0,0" MaxWidth="720"
+                  Visibility="{Binding [media_attachments],Converter={StaticResource NullOrEmptyConverter}}">
+                <controls:AdaptiveGridView IsItemClickEnabled="True" DesiredWidth="150" SelectionMode="None"
+                                           StretchContentForSingleRow="True"
+                                           ItemsSource="{Binding [media_attachments]}">
                     <controls:AdaptiveGridView.ItemTemplate>
                         <DataTemplate>
-                            <controls:ImageEx MaxHeight="300" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="{Binding [preview_url]}"/>
+                            <controls:ImageEx MaxHeight="300" IsCacheEnabled="True" HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" Stretch="UniformToFill"
+                                              Source="{Binding [preview_url]}" />
                         </DataTemplate>
                     </controls:AdaptiveGridView.ItemTemplate>
                 </controls:AdaptiveGridView>
                 <Button x:Name="HideContent" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Click" SourceObject="{Binding ElementName=HideContent}">
-                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}" PropertyName="Visibility" Value="Visible"/>
+                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}"
+                                                       PropertyName="Visibility" Value="Visible" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE890;"/>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE890;" />
                 </Button>
-                <Grid Visibility="{Binding [sensitive],Converter={StaticResource BoolToVisibilityConverter}}" x:Name="SensitiveBlocker">
+                <Grid Visibility="{Binding [sensitive],Converter={StaticResource BoolToVisibilityConverter}}"
+                      x:Name="SensitiveBlocker">
                     <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding ElementName=SensitiveBlocker}">
-                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}" PropertyName="Visibility" Value="Collapsed"/>
+                        <core:EventTriggerBehavior EventName="Tapped"
+                                                   SourceObject="{Binding ElementName=SensitiveBlocker}">
+                            <core:ChangePropertyAction TargetObject="{Binding ElementName=SensitiveBlocker}"
+                                                       PropertyName="Visibility" Value="Collapsed" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
                     <Border Background="#7F000000">
                         <interactivity:Interaction.Behaviors>
-                            <behaviors:Blur Value="50" AutomaticallyStart="True"/>
+                            <behaviors:Blur Value="50" AutomaticallyStart="True" />
                         </interactivity:Interaction.Behaviors>
                     </Border>
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RequestedTheme="Dark" Orientation="Vertical">
-                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" Text="{helpers:Localization Key=Sensitive}"/>
-                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}" Foreground="{ThemeResource TextControlForegroundDisabled}" Text="{helpers:Localization Key=ClickToView}"/>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RequestedTheme="Dark"
+                                Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}"
+                                   Text="{helpers:Localization Key=Sensitive}" />
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BodyTextBlockStyle}"
+                                   Foreground="{ThemeResource TextControlForegroundDisabled}"
+                                   Text="{helpers:Localization Key=ClickToView}" />
                     </StackPanel>
                 </Grid>
             </Grid>
             <StackPanel Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                     <Style TargetType="SymbolIcon">
-                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                 </StackPanel.Resources>
 
                 <Button>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97A;"/>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97A;" />
                 </Button>
 
-                <Button Visibility="{Binding [visibility], Converter={StaticResource EqualsConverter}, ConverterParameter=public}">
+                <Button
+                    Visibility="{Binding [visibility], Converter={StaticResource EqualsConverter}, ConverterParameter=public}">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="ReShare"/>
-                        <TextBlock Text="{Binding [reblogs_count]}"/>
+                        <SymbolIcon Symbol="ReShare" />
+                        <TextBlock Text="{Binding [reblogs_count]}" />
                     </StackPanel>
                 </Button>
 
-                <Button IsEnabled="False" Visibility="{Binding [visibility], Converter={StaticResource NonequalsConverter}, ConverterParameter=public}">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;"/>
+                <Button IsEnabled="False"
+                        Visibility="{Binding [visibility], Converter={StaticResource NonequalsConverter}, ConverterParameter=public}">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;" />
                 </Button>
 
                 <Button>
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="Favorite"/>
-                        <TextBlock Text="{Binding [favourites_count]}"/>
+                        <SymbolIcon Symbol="Favorite" />
+                        <TextBlock Text="{Binding [favourites_count]}" />
                     </StackPanel>
                 </Button>
 
                 <Button>
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem Text="{helpers:Localization Key=OpenTweet}"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='MentionWith'}}"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='HideWith'}}"/>
-                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='BlockWith'}}"/>
-                            <MenuFlyoutItem Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='ReportWith'}}"/>
+                            <MenuFlyoutItem Text="{helpers:Localization Key=OpenTweet}" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem
+                                Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='MentionWith'}}" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem
+                                Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='HideWith'}}" />
+                            <MenuFlyoutItem
+                                Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='BlockWith'}}" />
+                            <MenuFlyoutItem
+                                Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='ReportWith'}}" />
                         </MenuFlyout>
                     </Button.Flyout>
-                    <SymbolIcon Symbol="More"/>
+                    <SymbolIcon Symbol="More" />
                 </Button>
             </StackPanel>
         </StackPanel>
