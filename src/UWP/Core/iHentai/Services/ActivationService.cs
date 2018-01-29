@@ -82,8 +82,8 @@ namespace iHentai.Services
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
             FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
             JobManager.Initialize(Singleton<JobRegistry>.Instance);
-            await Singleton<CacheManager>.Instance.InitializeAsync();
-            await Singleton<CacheManager>.Instance.CleanDisk();
+            //await Singleton<CacheManager>.Instance.InitializeAsync();
+            //await Singleton<CacheManager>.Instance.CleanDisk();
         }
 
         private async Task StartupAsync()

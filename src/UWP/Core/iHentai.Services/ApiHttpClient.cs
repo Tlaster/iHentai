@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 using FluentScheduler;
 using Flurl.Http.Configuration;
 using iHentai.Basic.Helpers;
-using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace iHentai.Services
 {
@@ -28,33 +24,33 @@ namespace iHentai.Services
 
     public class CacheManager : IJob
     {
-        private StorageFolder _cacheFolder;
-
-
         private readonly ConcurrentDictionary<string, CacheModel<byte[]>> _memoryCache =
             new ConcurrentDictionary<string, CacheModel<byte[]>>();
+
+        //private StorageFolder _cacheFolder;
 
         public CacheManager()
         {
             Singleton<JobRegistry>.Instance.Schedule(this).ToRunEvery(5).Minutes();
         }
 
-        public async Task InitializeAsync()
-        {
-            _cacheFolder =
-                await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Caches",
-                    CreationCollisionOption.OpenIfExists);
-        }
-
         public void Execute()
         {
-            CleanMemory().Wait();
+            CleanMemory();
         }
 
-        public async Task<bool> Contains(string key)
+        //public async Task InitializeAsync()
+        //{
+        //    _cacheFolder =
+        //        await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Caches",
+        //            CreationCollisionOption.OpenIfExists);
+        //}
+
+        public bool Contains(string key)
         {
             var base64 = key.EncodeToFileName();
-            return _memoryCache.ContainsKey(base64) || await _cacheFolder.FileExistsAsync(base64);
+            return _memoryCache.ContainsKey(base64) && _memoryCache.TryGetValue(base64, out var item) &&
+                   item.LastUsed >= DateTime.UtcNow - item.MaxAge /* || await _cacheFolder.FileExistsAsync(base64)*/;
         }
 
         public void Put(string key, byte[] data, TimeSpan maxAge)
@@ -68,7 +64,7 @@ namespace iHentai.Services
             });
         }
 
-        public async Task<byte[]> Get(string key, TimeSpan maxAge)
+        public byte[] Get(string key /*, TimeSpan maxAge*/)
         {
             var base64 = key.EncodeToFileName();
             if (_memoryCache.ContainsKey(base64) && _memoryCache.TryGetValue(base64, out var value))
@@ -77,31 +73,34 @@ namespace iHentai.Services
                 return value.Data;
             }
 
-            var file = await _cacheFolder.GetFileAsync(base64);
-            var bytes = await file.ReadBytesAsync();
-            _memoryCache.TryAdd(base64, new CacheModel<byte[]>(DateTime.UtcNow, bytes, maxAge));
-            return bytes;
+            return null;
+
+            //var file = await _cacheFolder.GetFileAsync(base64);
+            //var bytes = await file.ReadBytesAsync();
+            //_memoryCache.TryAdd(base64, new CacheModel<byte[]>(DateTime.UtcNow, bytes, maxAge));
+            //return bytes;
         }
 
-        private async Task CleanMemory()
+        private void CleanMemory()
         {
             var items = _memoryCache.AsParallel()
-                .Where(item => item.Value.LastUsed > DateTime.UtcNow - item.Value.MaxAge).ToList();
-            await Task.WhenAll(items.Select(async item =>
-            {
-                var file = await _cacheFolder.CreateFileAsync(item.Key, CreationCollisionOption.ReplaceExisting);
-                await File.WriteAllBytesAsync(file.Path, item.Value.Data);
-                _memoryCache.TryRemove(item.Key, out var _);
-            }));
+                .Where(item => item.Value.LastUsed < DateTime.UtcNow - item.Value.MaxAge).ToList();
+            items.ForEach(x => _memoryCache.TryRemove(x.Key, out var _));
+            //await Task.WhenAll(items.Select(async item =>
+            //{
+            //    var file = await _cacheFolder.CreateFileAsync($"{item.Key}:{item.Value.MaxAge}:{DateTime.UtcNow}", CreationCollisionOption.ReplaceExisting);
+            //    await File.WriteAllBytesAsync(file.Path, item.Value.Data);
+            //    _memoryCache.TryRemove(item.Key, out var _);
+            //}));
         }
 
-        public async Task CleanDisk()
-        {
-            var files = await _cacheFolder.GetFilesAsync();
-            foreach (var file in files)
-                if (file.DateCreated > DateTimeOffset.Now - TimeSpan.FromDays(1))
-                    await file.DeleteAsync();
-        }
+        //public async Task CleanDisk()
+        //{
+        //    var files = await _cacheFolder.GetFilesAsync();
+        //    foreach (var file in files)
+        //        if (file.DateCreated > DateTimeOffset.Now - TimeSpan.FromDays(1))
+        //            await file.DeleteAsync();
+        //}
 
         public class CacheModel<T>
         {
@@ -147,43 +146,39 @@ namespace iHentai.Services
             Singleton<ApiContainer>.Instance.InstanceDatas.Values.FirstOrDefault(item =>
                 item is IHttpHandler handler && handler.Handle(ref request));
             var key = request.RequestUri.ToString();
+            if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache && Singleton<CacheManager>.Instance.Contains(key))
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(Singleton<CacheManager>.Instance.Get(key)),
+                    RequestMessage = request,
+                    Version = request.Version
+                };
+
+            //try
+            //{
+            var result = await base.SendAsync(request, cancellationToken);
             if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache)
-                if (await Singleton<CacheManager>.Instance.Contains(key))
-                {
-                    var age = request.Headers.CacheControl.MaxAge ?? TimeSpan.FromMinutes(DefaultCacheAge);
-                    return new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new ByteArrayContent(await Singleton<CacheManager>.Instance.Get(key, age)),
-                        RequestMessage = request,
-                        Version = request.Version
-                    };
-                }
-
-            try
             {
-                var result = await base.SendAsync(request, cancellationToken);
-                if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache)
-                {
-                    var age = request.Headers.CacheControl.MaxAge ?? TimeSpan.FromMinutes(DefaultCacheAge);
-                    var bytes = await result.Content.ReadAsByteArrayAsync();
-                    Singleton<CacheManager>.Instance.Put(key, bytes, age);
-                }
-
-                return result;
+                var age = request.Headers.CacheControl.MaxAge ?? TimeSpan.FromMinutes(DefaultCacheAge);
+                var bytes = await result.Content.ReadAsByteArrayAsync();
+                Singleton<CacheManager>.Instance.Put(key, bytes, age);
             }
-            catch (Exception e) when (e is HttpRequestException || e is WebException || e is WebSocketException)
-            {
-                if (await Singleton<CacheManager>.Instance.Contains(key))
-                    return new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new ByteArrayContent(
-                            await Singleton<CacheManager>.Instance.Get(key, TimeSpan.FromMinutes(DefaultCacheAge))),
-                        RequestMessage = request,
-                        Version = request.Version
-                    };
 
-                throw;
-            }
+            return result;
+            //}
+            //catch (Exception e) when (e is HttpRequestException || e is WebException || e is WebSocketException)
+            //{
+            //    if (Singleton<CacheManager>.Instance.Contains(key))
+            //        return new HttpResponseMessage(HttpStatusCode.OK)
+            //        {
+            //            Content = new ByteArrayContent(
+            //                Singleton<CacheManager>.Instance.Get(key)),
+            //            RequestMessage = request,
+            //            Version = request.Version
+            //        };
+
+            //    throw;
+            //}
         }
     }
 }
