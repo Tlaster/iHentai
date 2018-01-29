@@ -152,9 +152,9 @@
     <Compile Include="Mastodon\Common\MastodonException.cs" />
     <Compile Include="Mastodon\InstanceData.cs" />
     <Compile Include="Mastodon\LoginData.cs" />
-    <Compile Include="Mastodon\Model\Apps\OAuthModel.cs" />
-    <Compile Include="Mastodon\Model\ArrayModel.cs" />
-    <Compile Include="Mastodon\Model\OAuth\TokenModel.cs" />
+    <Compile Include="Mastodon\Models\Apps\OAuthModel.cs" />
+    <Compile Include="Mastodon\Models\ArrayModel.cs" />
+    <Compile Include="Mastodon\Models\OAuth\TokenModel.cs" />
     <Compile Include="Mastodon\Views\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -163,6 +163,9 @@
     </Compile>
     <Compile Include="Mastodon\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mastodon\Views\StatusActionView.xaml.cs">
+      <DependentUpon>StatusActionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mastodon\Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
@@ -220,7 +223,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Models\Interfaces\" />
-    <Folder Include="Mastodon\Models\" />
     <Folder Include="Twitter\Models\" />
     <Folder Include="Twitter\Views\" />
     <Folder Include="Weibo\Models\" />
@@ -235,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mastodon\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mastodon\Views\StatusActionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

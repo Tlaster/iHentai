@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Conet.Apis.Mastodon.Model.Apps;
+using Conet.Apis.Mastodon.Models.Apps;
 
 namespace Conet.Apis.Mastodon.Api
 {

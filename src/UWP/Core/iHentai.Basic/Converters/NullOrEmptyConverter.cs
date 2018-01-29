@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using iHentai.Basic.Extensions;
@@ -13,12 +12,7 @@ namespace iHentai.Basic.Converters
         {
             var isInverted = false;
             if (parameter is string) bool.TryParse(parameter.ToString(), out isInverted);
-            var result = value == null || int.TryParse(value.ToString(), out var res) && res == 0 ||
-                         decimal.TryParse(value + "", out var deres) && deres == 0M ||
-                         value is string && string.IsNullOrEmpty(value.ToString()) ||
-                         value is IList list && list.Count == 0 ||
-                         value is JArray array && array.Count == 0 ||
-                         value is JValue token && (token.Value is string str && str.IsEmpty())
+            var result = value.IsEmpty() || value is JValue token && token.Value.IsEmpty()
                 ? isInverted
                 : !isInverted;
             if (targetType == typeof(bool))

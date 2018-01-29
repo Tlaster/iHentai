@@ -128,7 +128,7 @@
     <Compile Include="Extensions\JsonExtension.cs" />
     <Compile Include="Extensions\ResourceExtensions.cs" />
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
-    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Extensions\EmptyExtension.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Helpers\AutoList.cs" />
     <Compile Include="Helpers\JobRegistry.cs" />

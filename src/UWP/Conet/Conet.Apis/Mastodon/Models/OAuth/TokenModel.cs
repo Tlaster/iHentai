@@ -1,7 +1,6 @@
-﻿using iHentai.Services;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Conet.Apis.Mastodon.Model.OAuth
+namespace Conet.Apis.Mastodon.Models.OAuth
 {
     public class TokenModel
     {

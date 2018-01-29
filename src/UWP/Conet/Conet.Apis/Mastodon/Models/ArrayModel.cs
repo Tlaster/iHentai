@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Conet.Apis.Mastodon.Model
+namespace Conet.Apis.Mastodon.Models
 {
     public class ArrayModel<T>
     {

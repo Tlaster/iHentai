@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Conet.Apis.Mastodon.Model;
+using Conet.Apis.Mastodon.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Api

@@ -31,16 +31,13 @@ namespace Conet.Apis.Weibo.Views.Converters
         public const string URL = "http://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
         public readonly string REGEX = $"({AT})|({TOPIC})|({EMOJI})|({URL})";
 
-        public IList<IReplacer> Replacers()
+        public IEnumerable<IReplacer> Replacers()
         {
-            return new List<IReplacer>
-            {
-                new EmojiReplacer(),
-                new LongWeiboReplacer(),
-                new UserNameReplacer(),
-                new TopicReplacer(),
-                new UrlReplacer()
-            };
+            yield return new EmojiReplacer();
+            yield return new LongWeiboReplacer();
+            yield return new UserNameReplacer();
+            yield return new TopicReplacer();
+            yield return new UrlReplacer();
         }
     }
 

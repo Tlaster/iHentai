@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Conet.Apis.Mastodon.Model.Apps
+namespace Conet.Apis.Mastodon.Models.Apps
 {
     public class OAuthModel
     {

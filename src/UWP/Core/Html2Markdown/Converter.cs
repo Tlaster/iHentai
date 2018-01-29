@@ -13,8 +13,8 @@ namespace Html2Markdown
 	/// </summary>
 	public class Converter
 	{
-		private IList<IReplacer> _replacers;
-		private IScheme _scheme;
+		private readonly IEnumerable<IReplacer> _replacers;
+		private readonly IScheme _scheme;
 
 		/// <summary>
 		/// Create a Converter with the standard Markdown conversion scheme

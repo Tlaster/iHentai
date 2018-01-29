@@ -20,9 +20,13 @@
     </UserControl.Resources>
 
 
-    <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}"
-          d:DataContext="{d:DesignInstance linq:JObject}">
-        <StackPanel>
+    <Grid Padding="8">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <local:StatusActionView Visibility="{Binding [reblog], Converter={StaticResource NullOrEmptyConverter}}" ActionType="reblog" ActionAccount="{Binding [account]}"/>
+        <StackPanel Grid.Row="1" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}" d:DataContext="{d:DesignInstance linq:JObject}">
             <Grid>
                 <local:AccountView DataContext="{Binding [account]}"/>
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right"

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Common;
-using Conet.Apis.Mastodon.Model.OAuth;
+using Conet.Apis.Mastodon.Models.OAuth;
 
 namespace Conet.Apis.Mastodon.Api
 {

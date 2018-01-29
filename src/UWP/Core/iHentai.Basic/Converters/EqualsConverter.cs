@@ -11,11 +11,16 @@ namespace iHentai.Basic.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var result = false;
-            if (value is JValue token)
-                result = System.Convert.ChangeType(token.Value, parameter.GetType()).Equals(parameter);
-            else
-                result = value == parameter;
+            bool result;
+            switch (value)
+            {
+                case JValue token:
+                    result = System.Convert.ChangeType(token.Value, parameter.GetType()).Equals(parameter);
+                    break;
+                default:
+                    result = value?.Equals(parameter) ?? false;
+                    break;
+            }
 
             result = Invert ? !result : result;
 

@@ -90,29 +90,29 @@ namespace Html2Markdown.Replacement
             return tag.Replace("\t", "    ");
         }
 
-        internal static string ReplaceSpan(string html)
-        {
-            var doc = GetHtmlDocument(html);
-            var nodes = doc.QuerySelectorAll("span");
-            if (nodes == null) return html;
-            nodes.ToList().ForEach(node =>
-            {
-                var className = node.GetAttributeOrEmpty("class");
+        //internal static string ReplaceSpan(string html)
+        //{
+        //    var doc = GetHtmlDocument(html);
+        //    var nodes = doc.QuerySelectorAll("span");
+        //    if (nodes == null) return html;
+        //    nodes.ToList().ForEach(node =>
+        //    {
+        //        var className = node.GetAttributeOrEmpty("class");
 
-                var markdown = string.Empty;
-                if (!string.IsNullOrEmpty(className) &&
-                    string.Equals(className, "invisible", StringComparison.InvariantCultureIgnoreCase))
-                {
-                }
-                else
-                {
-                    markdown = node.InnerHtml;
-                }
+        //        var markdown = string.Empty;
+        //        if (!string.IsNullOrEmpty(className) &&
+        //            string.Equals(className, "invisible", StringComparison.InvariantCultureIgnoreCase))
+        //        {
+        //        }
+        //        else
+        //        {
+        //            markdown = node.InnerHtml;
+        //        }
 
-                ReplaceNode(node, markdown);
-            });
-            return doc.Body.InnerHtml;
-        }
+        //        ReplaceNode(node, markdown);
+        //    });
+        //    return doc.Body.InnerHtml;
+        //}
 
         internal static string ReplaceImg(string html)
         {

@@ -10,6 +10,6 @@ namespace Html2Markdown.Scheme {
 		/// The collection of IReplacer that for this scheme
 		/// </summary>
 		/// <returns>IList of IReplacer for use by Converter</returns>
-		IList<IReplacer> Replacers();
+		IEnumerable<IReplacer> Replacers();
 	}
 }
