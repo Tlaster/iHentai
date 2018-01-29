@@ -128,7 +128,6 @@
     <Compile Include="Services\ToastNotificationsService.cs" />
     <Compile Include="Services\ToastNotificationsService.Samples.cs" />
     <Compile Include="Services\WhatsNewDisplayService.cs" />
-    <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\ServiceSelectionViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\FirstRunDialog.xaml.cs">

@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance weibo:InstanceData}">
 
     <Grid>
-        <controls:ImageEx x:Name="UserImage" CornerRadius="25" Width="50" Height="50"/>
+        <controls:ImageEx IsCacheEnabled="True" x:Name="UserImage" CornerRadius="25" Width="50" Height="50"/>
         <ProgressRing x:Name="ProgressRing" Width="50" Height="50" IsActive="True"/>
     </Grid>
 </UserControl>

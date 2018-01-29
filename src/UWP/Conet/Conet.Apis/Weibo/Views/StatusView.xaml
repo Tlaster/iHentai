@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:ImageEx CornerRadius="25" Source="{Binding [user][avatar_large]}" Width="50" Height="50"/>
+        <controls:ImageEx IsCacheEnabled="True" CornerRadius="25" Source="{Binding [user][avatar_large]}" Width="50" Height="50"/>
         <controls:MarkdownTextBlock ImageResolving="{x:Bind WeiboContentOnImageResolving}" LinkClicked="{x:Bind WeiboContentOnLinkClicked}" x:Name="WeiboContent" Grid.Row="1" TextWrapping="WrapWholeWords" >
             <controls:MarkdownTextBlock.Text>
                 <Binding Path="[text]">

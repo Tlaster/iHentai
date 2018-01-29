@@ -143,7 +143,7 @@ namespace iHentai.Views
 
         private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
         {
-            tab.TabListRoot.Padding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0,
+            tab.TabHeaderPadding = new Thickness(coreTitleBar.SystemOverlayLeftInset, 0,
                 coreTitleBar.SystemOverlayRightInset, 0);
             tab.TabListRoot.Height = coreTitleBar.Height;
         }
@@ -152,6 +152,24 @@ namespace iHentai.Views
         {
             tab.TabListRoot.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
             tab.TabListBackground.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Tab_OnTabClosed(object sender, TabCloseEventArgs e)
+        {
+            if (e.TabCount == 0) Application.Current.Exit();
+        }
+
+        private async void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var newViewId = 0;
+            await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                var content = new RootView(null, DefaultNavItem);
+                Window.Current.Content = content;
+                Window.Current.Activate();
+                newViewId = ApplicationView.GetForCurrentView().Id;
+            });
+            var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
         }
     }
 }

@@ -160,6 +160,7 @@
                                 </Grid.RowDefinitions>
 
                                 <controls:ImageEx
+                                    IsCacheEnabled="True"
                                     Tapped="MoreInfoImage_OnTapped"
                                     x:Name="MoreInfoImage"
                                     Grid.Row="0"

@@ -19,7 +19,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <controls:ImageEx Stretch="UniformToFill" Source="{Binding Link}" />
+                <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" Source="{Binding Link}" />
                 <TextBlock Grid.Row="1" Text="{Binding Page}" HorizontalAlignment="Center" />
             </Grid>
         </DataTemplate>

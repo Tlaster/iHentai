@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;

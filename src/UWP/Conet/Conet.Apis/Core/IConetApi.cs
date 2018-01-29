@@ -18,6 +18,8 @@ namespace Conet.Apis.Core
 
     public interface IConetViewModel
     {
-        
+        string Title { get; }
+        object Icon { get; }
+        int Badge { get; }
     }
 }

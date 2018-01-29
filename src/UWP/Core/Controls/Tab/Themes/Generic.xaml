@@ -32,10 +32,11 @@
                         <Grid Grid.Row="0" x:Name="TabListRoot">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter Content="{TemplateBinding TabHeader}"
+                                              x:Name="TabHeaderContentPresenter"
                                               HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                             <ListView Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                       ScrollViewer.HorizontalScrollMode="Enabled" CanReorderItems="True"
@@ -76,11 +77,12 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            <Button VerticalAlignment="Stretch" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Grid.Column="2" x:Name="AddButton">
+                            <!--<Button VerticalAlignment="Stretch" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Grid.Column="2" x:Name="AddButton">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
-                            </Button>
-                            <!--<ContentPresenter Grid.Column="2" Content="{TemplateBinding TabFooter}"
-                                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />-->
+                            </Button>-->
+                            <ContentPresenter Grid.Column="2" Content="{TemplateBinding TabFooter}"
+                                              x:Name="TabFooterContentPresenter"
+                                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>

@@ -10,14 +10,15 @@
     xmlns:viewModels="using:iHentai.ViewModels"
     xmlns:tab="using:Tab"
     xmlns:mvvm="using:iHentai.Mvvm"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModels:RootViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" x:Name="tab"
                     TitlePath="self.CurrentPageTitle"
+                    TabClosed="Tab_OnTabClosed"
                     DefaultContentParam="{x:Bind DefaultNavItem}">
         <tab:TabControl.WindowGenerator>
             <local:WindowGenerator DefaultNavItem="{x:Bind DefaultNavItem}"/>
@@ -40,7 +41,18 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="12" />
             </Button>
         </tab:TabControl.TabHeader>
+        <tab:TabControl.TabFooter>
+            <Button VerticalAlignment="Stretch" Click="{x:Bind tab.Add}" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Grid.Column="2">
+                <ContentControl.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Open new window" Click="MenuFlyoutItem_OnClick"/>
+                    </MenuFlyout>
+                </ContentControl.ContextFlyout>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
+            </Button>
+        </tab:TabControl.TabFooter>
     </tab:TabControl>
+    <controls:InAppNotification ShowDismissButton="False" x:Name="Notification"/>
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"
           Grid.RowSpan="2">

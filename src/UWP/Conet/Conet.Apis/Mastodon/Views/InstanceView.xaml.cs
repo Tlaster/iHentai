@@ -9,8 +9,6 @@ namespace Conet.Apis.Mastodon.Views
 {
     public sealed partial class InstanceView : IContentView<InstanceData>
     {
-        private InstanceData _cache;
-
         public InstanceView()
         {
             InitializeComponent();
@@ -18,8 +16,7 @@ namespace Conet.Apis.Mastodon.Views
 
         private void InstanceView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            if (!(args.NewValue is InstanceData data) || _cache == data) return;
-            _cache = data;
+            if (!(args.NewValue is InstanceData data)) return;
             nameof(Mastodon).Get<Apis>().User(data, data.Uid).ContinueWith(async t =>
             {
                 if (t.Result == null || t.Exception != null) return;
