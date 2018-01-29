@@ -89,7 +89,6 @@ namespace iHentai.ViewModels
             if (api is ICanLogin canLogin) data = await canLogin.Login(LoginData);
             CheckAndGo(service, data);
             IsLoading = false;
-            
         }
 
         public void InstanceDataClicked(object sender, ItemClickEventArgs e)

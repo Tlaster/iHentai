@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="Conet.Apis.Mastodon.Views.AccountView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Conet.Apis.Mastodon.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:linq="using:Newtonsoft.Json.Linq"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance linq:JObject}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <controls:ImageEx Margin="0,4" CornerRadius="25" Grid.RowSpan="2" Source="{Binding [avatar]}" Width="50" Height="50" IsCacheEnabled="True"/>
+        <TextBlock Padding="4,0" Grid.Row="0" Grid.Column="1" IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" VerticalAlignment="Center"
+                   Text="{Binding [display_name]}" />
+        <TextBlock Padding="4,0" Grid.Row="1" Grid.Column="1" IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}" VerticalAlignment="Top"
+                   Foreground="{ThemeResource TextControlForegroundDisabled}"
+                   Text="{Binding [acct],Converter={StaticResource StringFormatConverter},ConverterParameter='@{0}'}" />
+    </Grid>
+</UserControl>

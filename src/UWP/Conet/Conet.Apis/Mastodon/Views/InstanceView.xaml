@@ -14,7 +14,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <controls:ImageEx IsCacheEnabled="True" x:Name="UserImage" CornerRadius="25" Width="50" Height="50"/>
-        <ProgressRing x:Name="ProgressRing" Width="50" Height="50" IsActive="True"/>
+        <local:AccountView x:Name="AccountView"/>
     </Grid>
 </UserControl>

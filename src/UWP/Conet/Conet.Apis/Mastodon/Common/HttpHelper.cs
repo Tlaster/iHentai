@@ -6,6 +6,10 @@ using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Model;
+using Flurl;
+using Flurl.Http;
+using iHentai.Basic.Helpers;
+using iHentai.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -31,17 +35,16 @@ namespace Conet.Apis.Mastodon.Common
             return values.Select(value => (paramName, value));
         }
 
-        private static HttpClient GetHttpClient(string token, string tokenType = "Bearer") => string.IsNullOrEmpty(token)
-            ? new HttpClient()
-            : new HttpClient
-            {
-                DefaultRequestHeaders = {Authorization = new AuthenticationHeaderValue(tokenType, token)}
-            };
+        //private static HttpClient GetHttpClient(string token, string tokenType = "Bearer") => string.IsNullOrEmpty(token)
+        //    ? new HttpClient(Singleton<ApiHttpClient>.Instance)
+        //    : new HttpClient(Singleton<ApiHttpClient>.Instance)
+        //    {
+        //        DefaultRequestHeaders = {Authorization = new AuthenticationHeaderValue(tokenType, token)}
+        //    };
 
         public static async Task<string> GetAsync(string url, string token, IEnumerable<(string Key, string Value)> param)
         {
-            using (var client = GetHttpClient(token))
-                return CheckForError(await client.GetStringAsync(UrlEncode(url, param)));
+            return CheckForError(await url.WithOAuthBearerToken(token).SetQueryParams(param?.Where(CheckForValue).ToDictionary(item => item.Key, item => item.Value)).GetStringAsync());
         }
         public static async Task<T> GetAsync<T>(string url, string token, IEnumerable<(string Key, string Value)> param) => JsonConvert.DeserializeObject<T>(await GetAsync(url, token, param));
 
@@ -59,8 +62,7 @@ namespace Conet.Apis.Mastodon.Common
 
         public static async Task<ArrayModel<T>> GetArrayAsync<T>(string url, string token, IEnumerable<(string Key, string Value)> param)
         {
-            using (var client = GetHttpClient(token))
-            using (var res = await client.GetAsync(UrlEncode(url, param)))
+            using (var res = await url.WithOAuthBearerToken(token).SetQueryParams(param?.Where(CheckForValue).ToDictionary(item => item.Key, item => item.Value)).GetAsync())
             {
                 if (res.Headers.TryGetValues("Link", out var values))
                 {
@@ -91,37 +93,32 @@ namespace Conet.Apis.Mastodon.Common
 
         public static async Task<string> PostAsync<TValue>(string url, string token, IEnumerable<(string Key, TValue Value)> param)
         {
-            using (var client = GetHttpClient(token))
+            if (param == null)
+                param = new List<(string Key, TValue Value)>();
+            if (param.Select(p => p.Value).Any(item => item is HttpContent))
             {
-                if (param == null)
-                    param = new List<(string Key, TValue Value)>();
-                if (param.Select(p => p.Value).Any(item => item is HttpContent))
+                using (var formData = new MultipartFormDataContent())
                 {
-                    using (var formData = new MultipartFormDataContent())
-                    {
-                        foreach (var item in param)
-                            if (item.Value is StreamContent)
-                                formData.Add(item.Value as StreamContent, item.Key, "file");
-                            else if (CheckForValue(item))
-                                formData.Add(item.Value as HttpContent, item.Key);
-                        using (var res = await client.PostAsync(url, formData))
-                            return CheckForError(await res.Content.ReadAsStringAsync());
-                    }
+                    foreach (var item in param)
+                        if (item.Value is StreamContent)
+                            formData.Add(item.Value as StreamContent, item.Key, "file");
+                        else if (CheckForValue(item))
+                            formData.Add(item.Value as HttpContent, item.Key);
+                    using (var res = await url.WithOAuthBearerToken(token).PostAsync(formData))
+                        return CheckForError(await res.Content.ReadAsStringAsync());
                 }
-                client.Timeout = TimeSpan.FromSeconds(30);
-                var items = param.Where(CheckForValue).Select(item => new KeyValuePair<string, string>(item.Key, item.Value.ToString()));
-                using (var formData = new FormUrlEncodedContent(items))
-                using (var res = await client.PostAsync(url, formData))
-                    return CheckForError(await res.Content.ReadAsStringAsync());
             }
+            var items = param.Where(CheckForValue).Select(item => new KeyValuePair<string, string>(item.Key, item.Value.ToString()));
+            using (var formData = new FormUrlEncodedContent(items))
+            using (var res = await url.WithOAuthBearerToken(token).PostAsync(formData))
+                return CheckForError(await res.Content.ReadAsStringAsync());
         }
 
 
 
         public static async Task<string> DeleteAsync(string url, string token)
         {
-            using (var client = GetHttpClient(token))
-            using (var response = await client.SendAsync(new HttpRequestMessage(new HttpMethod("DELETE"), url)))
+            using (var response = await url.WithOAuthBearerToken(token).DeleteAsync())
                 return CheckForError(await response.Content.ReadAsStringAsync());
         }
 
@@ -137,8 +134,7 @@ namespace Conet.Apis.Mastodon.Common
                     else
                         formData.Add(item.Value, item.Key);
                 }
-                using (var client = GetHttpClient(token))
-                using (var response = await client.SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), url) { Content = formData }))
+                using (var response = await url.WithOAuthBearerToken(token).PatchAsync(formData))
                     return CheckForError(await response.Content.ReadAsStringAsync());
             }
         }

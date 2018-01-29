@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
@@ -14,9 +13,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon
 {
-
-    
-
     [ApiKey(nameof(Mastodon))]
     public class Apis : IConetApi
     {
@@ -49,15 +45,14 @@ namespace Conet.Apis.Mastodon
 
         public Type InstanceDataType { get; } = typeof(InstanceData);
 
-        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20, long cursor = 0L)
+        public async Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20,
+            long cursor = 0L)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();
 
             var res = await Timelines.Home(model.Domain, model.AccessToken, cursor, 0);
             return (res.MaxId, res.Result);
         }
-
-
 
         public async Task<JToken> User(IInstanceData data, string uid)
         {
@@ -71,6 +66,4 @@ namespace Conet.Apis.Mastodon
             throw new NotImplementedException();
         }
     }
-
-    
 }

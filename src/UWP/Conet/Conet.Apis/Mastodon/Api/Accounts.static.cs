@@ -18,7 +18,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="id">Account Id</param>
         /// <param name="token">AccessToken</param>
         /// <returns><see cref="JToken"/></returns>
-        public static async Task<JToken> Fetching(string domain, string id, string token) => await HttpHelper.GetAsync<JToken>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsFetching.Id(id.ToString())}", token, null);
+        public static async Task<JToken> Fetching(string domain, string id, string token) => await HttpHelper.GetAsync<JToken>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsFetching.Id(id)}", token, null);
 
         /// <summary>
         /// Getting the current user

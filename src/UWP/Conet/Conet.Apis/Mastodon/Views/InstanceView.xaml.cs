@@ -21,11 +21,7 @@ namespace Conet.Apis.Mastodon.Views
             {
                 if (t.Result == null || t.Exception != null) return;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () =>
-                    {
-                        UserImage.Source = t.Result.Value<string>("avatar");
-                        ProgressRing.IsActive = false;
-                    });
+                    () => { AccountView.DataContext = t.Result; });
             }).ConfigureAwait(false);
         }
     }

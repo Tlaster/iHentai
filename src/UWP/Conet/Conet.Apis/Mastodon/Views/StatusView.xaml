@@ -22,21 +22,9 @@
 
     <Grid Padding="8" DataContext="{Binding Converter={StaticResource StatusDataContextConverter}}"
           d:DataContext="{d:DesignInstance linq:JObject}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <controls:ImageEx IsCacheEnabled="True" CornerRadius="25" Width="50" Height="50"
-                          Source="{Binding [account][avatar]}" Margin="0,0,8,0" VerticalAlignment="Top" />
-        <StackPanel Grid.Column="1">
+        <StackPanel>
             <Grid>
-                <StackPanel DataContext="{Binding [account]}" Orientation="Horizontal">
-                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}"
-                               Text="{Binding [display_name]}" />
-                    <TextBlock IsTextSelectionEnabled="True" Style="{ThemeResource BodyTextBlockStyle}"
-                               Foreground="{ThemeResource TextControlForegroundDisabled}"
-                               Text="{Binding [acct],Converter={StaticResource StringFormatConverter},ConverterParameter='@{0}'}" />
-                </StackPanel>
+                <local:AccountView DataContext="{Binding [account]}"/>
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" HorizontalAlignment="Right"
                            Foreground="{ThemeResource TextControlForegroundDisabled}"
                            Text="{Binding [created_at], Converter={StaticResource HumanizerConverter}, ConverterParameter=DateTime}" />

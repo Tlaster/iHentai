@@ -61,12 +61,12 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <GridView ItemsSource="{Binding Datas}" IsItemClickEnabled="True" SelectionMode="None"
+                    <ListView ItemsSource="{Binding Datas}" IsItemClickEnabled="True" SelectionMode="None"
                               ItemClick="{x:Bind ViewModel.InstanceDataClicked}">
                         <!--<GridView.ItemTemplateSelector>
                             <services:ContentViewTemplateSelector/>
                         </GridView.ItemTemplateSelector>-->
-                        <GridView.ItemTemplate>
+                        <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ContentControl Content="{Binding Value}" DataContext="{Binding}" x:Name="InstanceDataContentRoot">
                                     <ContentControl.ContextFlyout>
@@ -81,8 +81,8 @@
                                     </ContentControl.ContentTemplateSelector>
                                 </ContentControl>
                             </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                        </ListView.ItemTemplate>
+                    </ListView>
                     <Button Margin="8" Content="Using existing account"
                             Click="{x:Bind ViewModel.ConfirmWithExistingAccount}"
                             Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}"

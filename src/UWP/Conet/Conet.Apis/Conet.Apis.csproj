@@ -155,6 +155,9 @@
     <Compile Include="Mastodon\Model\Apps\OAuthModel.cs" />
     <Compile Include="Mastodon\Model\ArrayModel.cs" />
     <Compile Include="Mastodon\Model\OAuth\TokenModel.cs" />
+    <Compile Include="Mastodon\Views\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mastodon\Views\InstanceView.xaml.cs">
       <DependentUpon>InstanceView.xaml</DependentUpon>
     </Compile>
@@ -223,6 +226,10 @@
     <Folder Include="Weibo\Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Mastodon\Views\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Mastodon\Views\InstanceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
