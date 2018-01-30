@@ -109,11 +109,6 @@
     <Compile Include="Animations\FadeAnimation.cs" />
     <Compile Include="Animations\IPageAnimation.cs" />
     <Compile Include="Animations\PageInsertionMode.cs" />
-    <Compile Include="Animations\PushPageAnimation.cs" />
-    <Compile Include="Animations\ScalePageAnimation.cs" />
-    <Compile Include="Animations\TurnstilePageAnimation.cs" />
-    <Compile Include="Handlers\BackKeyPressedHandler.cs" />
-    <Compile Include="Handlers\NavigationKeyHandler.cs" />
     <Compile Include="Handlers\PageStackManager.cs" />
     <Compile Include="Handlers\PageStateHandler.cs" />
     <Compile Include="HentaiFrame.cs" />

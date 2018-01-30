@@ -38,7 +38,7 @@ namespace Conet.Apis.Twitter
             throw new NotImplementedException();
         }
 
-        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        public IEnumerable<IConetViewModel> GetHomeContent(IInstanceData data)
         {
             throw new NotImplementedException();
         }

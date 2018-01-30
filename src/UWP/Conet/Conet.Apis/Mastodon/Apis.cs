@@ -66,7 +66,7 @@ namespace Conet.Apis.Mastodon
             return await Accounts.Fetching(model.Domain, uid, model.AccessToken);
         }
 
-        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        public IEnumerable<IConetViewModel> GetHomeContent(IInstanceData data)
         {
             throw new NotImplementedException();
         }

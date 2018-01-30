@@ -84,7 +84,7 @@ namespace Conet.Apis.Weibo
             return await _apiv2.User(instanceData.AccessToken, instanceData.Source, Convert.ToInt64(uid));
         }
 
-        public IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent()
+        public IEnumerable<IConetViewModel> GetHomeContent(IInstanceData data)
         {
             throw new NotImplementedException();
         }

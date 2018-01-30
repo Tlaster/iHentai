@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using iHentai.Basic.Controls;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 
@@ -15,13 +16,13 @@ namespace Conet.Apis.Core
 
         Task<JToken> User(IInstanceData data, string uid);
 
-        IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent();
+        IEnumerable<IConetViewModel> GetHomeContent(IInstanceData data);
     }
 
     public interface IConetViewModel
     {
         string Title { get; }
-        object Icon { get; }
+        Icons Icon { get; }
         int Badge { get; }
     }
 }

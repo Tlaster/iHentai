@@ -6,20 +6,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
-    mc:Ignorable="d">
+    xmlns:controls="using:iHentai.Basic.Controls"
+    xmlns:viewModels="using:Conet.ViewModels"
+    xmlns:core="using:Conet.Apis.Core"
+    xmlns:services="using:iHentai.Services"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
 
     <Grid>
-        <NavigationView>
+        <NavigationView x:Name="NavigationView" MenuItemsSource="{Binding Source}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid d:DataContext="{d:DesignInstance core:IConetViewModel}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
+                        <controls:Icon Icons="{Binding Icon}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Title}" />
                     </Grid>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
+            <Pivot ItemsSource="{Binding Source}" SelectedItem="{Binding ElementName=NavigationView, Path=SelectedItem, Mode=TwoWay}">
+                <Pivot.ItemTemplateSelector>
+                    <services:ContentViewTemplateSelector/>
+                </Pivot.ItemTemplateSelector>
+            </Pivot>
         </NavigationView>
     </Grid>
 </mvvm:MvvmPage>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Conet.Apis.Core;
 using iHentai.Mvvm;
 using iHentai.Services;
 
@@ -17,8 +18,11 @@ namespace Conet.ViewModels
         {
             _data = data;
             ServiceType = serviceType;
+            Source = serviceType.Get<IConetApi>().GetHomeContent(_data.Get<IInstanceData>()).ToList();
         }
-        
+
+        public List<IConetViewModel> Source { get; }
+
         public string ServiceType { get; }
 
         protected override void OnStart()

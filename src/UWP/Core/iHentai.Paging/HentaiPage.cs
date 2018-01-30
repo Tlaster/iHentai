@@ -37,15 +37,12 @@ namespace iHentai.Paging
             VerticalContentAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
             VerticalAlignment = VerticalAlignment.Stretch;
-
-            NavigationKeyHandler = new NavigationKeyHandler(this);
+            
             PageStateHandler = new PageStateHandler(this, Guid.NewGuid().ToString());
         }
 
         internal PageStateHandler PageStateHandler { get; }
-
-        internal NavigationKeyHandler NavigationKeyHandler { get; }
-
+        
 
         public static HentaiPage Current => HentaiFrame.Current != null && HentaiFrame.Current.CurrentPageModel != null
             ? HentaiFrame.Current.CurrentPageModel.Page
@@ -111,25 +108,7 @@ namespace iHentai.Paging
             Frame = frame;
             PageStateHandler.PageKey = pageKey;
         }
-
-
-        public Func<CancelEventArgs, Task> AddGoBackHandler(Action<CancelEventArgs> handler)
-        {
-            return NavigationKeyHandler.AddGoBackHandler(handler);
-        }
-
-
-        public void AddGoBackAsyncHandler(Func<CancelEventArgs, Task> handler)
-        {
-            NavigationKeyHandler.AddGoBackAsyncHandler(handler);
-        }
-
-
-        public void RemoveGoBackAsyncHandler(Func<CancelEventArgs, Task> handler)
-        {
-            NavigationKeyHandler.RemoveGoBackAsyncHandler(handler);
-        }
-
+        
 
         protected internal virtual void OnLoadState(Dictionary<string, object> pageState)
         {
