@@ -22,7 +22,7 @@ namespace iHentai.Paging
 
         public T GetParameter<T>(int index)
         {
-            return (T) Parameters[index];
+            return (T) Parameters[index];   
         }
 
 

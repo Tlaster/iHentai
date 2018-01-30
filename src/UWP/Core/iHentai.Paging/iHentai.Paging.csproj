@@ -110,15 +110,12 @@
     <Compile Include="Animations\IPageAnimation.cs" />
     <Compile Include="Animations\PageInsertionMode.cs" />
     <Compile Include="Handlers\PageStackManager.cs" />
-    <Compile Include="Handlers\PageStateHandler.cs" />
     <Compile Include="HentaiFrame.cs" />
     <Compile Include="HentaiNavigatingCancelEventArgs.cs" />
     <Compile Include="HentaiNavigationEventArgs.cs" />
     <Compile Include="HentaiPage.cs" />
     <Compile Include="HentaiPageModel.cs" />
     <Compile Include="HentaiSuspensionManager.cs" />
-    <Compile Include="Keyboard.cs" />
-    <Compile Include="PopupHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\iHentai.Paging.rd.xml" />
   </ItemGroup>

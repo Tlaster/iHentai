@@ -53,9 +53,6 @@ namespace iHentai.Paging
         public Frame InternalFrame { get; private set; }
 
 
-        public static HentaiFrame Current => Window.Current.Content as HentaiFrame;
-
-
         public bool AutomaticBackButtonHandling
         {
             get => _pageStackManager.AutomaticBackButtonHandling;

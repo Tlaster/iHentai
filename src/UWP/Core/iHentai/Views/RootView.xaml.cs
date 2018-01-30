@@ -9,11 +9,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Basic.Extensions;
-using iHentai.Database;
 using iHentai.Mvvm;
 using iHentai.Services;
-using iHentai.ViewModels;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Tab;
 
@@ -56,6 +53,9 @@ namespace iHentai.Views
             Loaded += RootView_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
+
+        public Type DefaultNavItem { get; }
+
         private void ExtendAcrylicIntoTitleBar()
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
@@ -64,8 +64,6 @@ namespace iHentai.Views
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonForegroundColor = Colors.Gray;
         }
-
-        public Type DefaultNavItem { get; }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {

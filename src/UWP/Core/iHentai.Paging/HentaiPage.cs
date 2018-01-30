@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -8,7 +5,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Paging.Animations;
-using iHentai.Paging.Handlers;
 
 namespace iHentai.Paging
 {
@@ -37,17 +33,7 @@ namespace iHentai.Paging
             VerticalContentAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
             VerticalAlignment = VerticalAlignment.Stretch;
-            
-            PageStateHandler = new PageStateHandler(this, Guid.NewGuid().ToString());
         }
-
-        internal PageStateHandler PageStateHandler { get; }
-        
-
-        public static HentaiPage Current => HentaiFrame.Current != null && HentaiFrame.Current.CurrentPageModel != null
-            ? HentaiFrame.Current.CurrentPageModel.Page
-            : null;
-
 
         public IPageAnimation PageAnimation { get; set; }
 
@@ -106,21 +92,7 @@ namespace iHentai.Paging
         protected internal virtual void SetFrame(HentaiFrame frame, string pageKey)
         {
             Frame = frame;
-            PageStateHandler.PageKey = pageKey;
         }
-        
-
-        protected internal virtual void OnLoadState(Dictionary<string, object> pageState)
-        {
-            // Must be empty
-        }
-
-
-        protected internal virtual void OnSaveState(Dictionary<string, object> pageState)
-        {
-            // Must be empty
-        }
-
 
         protected internal virtual void OnKeyActivated(AcceleratorKeyEventArgs args)
         {
@@ -227,16 +199,11 @@ namespace iHentai.Paging
         internal void OnNavigatedFromCore(HentaiNavigationEventArgs e)
         {
             OnNavigatedFrom(e);
-            PageStateHandler.OnNavigatedFrom(e);
         }
-
-        // internal methods ensure that base implementations of InternalOn* is always called
-        // even if user does not call base.InternalOn* in the overridden On* method. 
-
+        
         internal virtual void OnNavigatedToCore(HentaiNavigationEventArgs e)
         {
             OnNavigatedTo(e);
-            PageStateHandler.OnNavigatedTo(e);
         }
     }
 }
