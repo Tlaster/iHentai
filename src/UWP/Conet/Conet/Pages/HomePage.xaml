@@ -8,8 +8,19 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid>
+        <NavigationView>
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+        </NavigationView>
     </Grid>
 </mvvm:MvvmPage>
 

@@ -11,6 +11,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:helpers="using:iHentai.Basic.Helpers"
+    xmlns:controls1="using:iHentai.Basic.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance linq:JObject}"
     d:DesignHeight="300"
@@ -64,7 +65,7 @@
                                                        PropertyName="Visibility" Value="Visible" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE890;" />
+                    <controls1:Icon Icons="View"/>
                 </Button>
                 <Grid Visibility="{Binding [sensitive],Converter={StaticResource BoolToVisibilityConverter}}"
                       x:Name="SensitiveBlocker">
@@ -96,31 +97,31 @@
                         <Setter Property="VerticalContentAlignment" Value="Center" />
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
-                    <Style TargetType="SymbolIcon">
+                    <Style TargetType="controls1:Icon">
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                 </StackPanel.Resources>
 
                 <Button>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE97A;" />
+                    <controls1:Icon Icons="Reply" />
                 </Button>
 
                 <Button
                     Visibility="{Binding [visibility], Converter={StaticResource EqualsConverter}, ConverterParameter=public}">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="ReShare" />
+                        <controls1:Icon Icons="ReShare" />
                         <TextBlock Text="{Binding [reblogs_count]}" />
                     </StackPanel>
                 </Button>
 
                 <Button IsEnabled="False"
                         Visibility="{Binding [visibility], Converter={StaticResource NonequalsConverter}, ConverterParameter=public}">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72E;" />
+                    <controls1:Icon Icons="Lock" />
                 </Button>
 
                 <Button>
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Symbol="Favorite" />
+                        <controls1:Icon Icons="FavoriteStar" />
                         <TextBlock Text="{Binding [favourites_count]}" />
                     </StackPanel>
                 </Button>
@@ -141,7 +142,7 @@
                                 Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='ReportWith'}}" />
                         </MenuFlyout>
                     </Button.Flyout>
-                    <SymbolIcon Symbol="More" />
+                    <controls1:Icon Icons="More" />
                 </Button>
             </StackPanel>
         </StackPanel>

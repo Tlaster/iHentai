@@ -12,6 +12,7 @@
     xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Animations.Effects"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:controls1="using:iHentai.Basic.Controls"
     Title="{Binding Title}"
     x:Name="Root"
     mc:Ignorable="d"
@@ -99,7 +100,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <SymbolIcon Symbol="Setting" Margin="4" />
+                <controls1:Icon Icons="Settings" Margin="4" />
                 <TextBlock Grid.Column="1" Text="Settings" Margin="4" />
             </Grid>
         </Button>

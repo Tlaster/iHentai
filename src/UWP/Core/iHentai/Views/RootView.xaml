@@ -11,6 +11,7 @@
     xmlns:tab="using:Tab"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls1="using:iHentai.Basic.Controls"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     mc:Ignorable="d"
     d:DesignHeight="300"
@@ -38,7 +39,7 @@
                     d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
                     IsEnabled="{Binding CanGoBack}" Style="{ThemeResource NavigationBackButtonSmallStyle}"
                     Command="{Binding GoBackCommand}" Width="48">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="12" />
+                <controls1:Icon Icons="Back" FontSize="12" />
             </Button>
         </tab:TabControl.TabHeader>
         <tab:TabControl.TabFooter>
@@ -48,7 +49,7 @@
                         <MenuFlyoutItem Text="Open new window" Click="MenuFlyoutItem_OnClick"/>
                     </MenuFlyout>
                 </ContentControl.ContextFlyout>
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontSize="12" />
+                <controls1:Icon Icons="Add" FontSize="12" />
             </Button>
         </tab:TabControl.TabFooter>
     </tab:TabControl>

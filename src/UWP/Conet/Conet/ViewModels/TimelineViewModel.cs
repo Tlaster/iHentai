@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Conet.ViewModels
 {
-    [Startup]
+    //[Startup]
     public class TimelineViewModel : ViewModel
     {
         private readonly Guid _data;

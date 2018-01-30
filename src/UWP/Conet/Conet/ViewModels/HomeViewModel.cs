@@ -8,9 +8,23 @@ using iHentai.Services;
 
 namespace Conet.ViewModels
 {
-    //[Startup]
+    [Startup]
     public class HomeViewModel : ViewModel
     {
+        private readonly Guid _data;
 
+        public HomeViewModel(string serviceType, Guid data)
+        {
+            _data = data;
+            ServiceType = serviceType;
+        }
+        
+        public string ServiceType { get; }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            Frame.ClearBackStack();
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace Conet.Apis.Core
     {
         Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20, long cursor = 0L);
 
+        Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count, long cursor = 0L);
+
         Task<JToken> User(IInstanceData data, string uid);
 
         IEnumerable<(IConetViewModel ViewModel, UIElement Content)> GetNotificationContent();

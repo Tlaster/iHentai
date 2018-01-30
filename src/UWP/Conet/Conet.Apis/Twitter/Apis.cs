@@ -28,6 +28,11 @@ namespace Conet.Apis.Twitter
             throw new NotImplementedException();
         }
 
+        public Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count, long cursor = 0)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<JToken> User(IInstanceData data, string uid)
         {
             throw new NotImplementedException();

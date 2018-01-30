@@ -54,6 +54,11 @@ namespace Conet.Apis.Mastodon
             return (res.MaxId, res.Result);
         }
 
+        public Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count, long cursor = 0)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<JToken> User(IInstanceData data, string uid)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();

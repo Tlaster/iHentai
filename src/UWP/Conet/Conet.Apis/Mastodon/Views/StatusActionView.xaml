@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:iHentai.Basic.Helpers"
+    xmlns:controls="using:iHentai.Basic.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -29,7 +30,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8EB;" />
+            <controls:Icon Icons="Reshare"/>
             <Button Grid.Column="1"  Content="{x:Bind ActionAccount['display_name']}"/>
             <TextBlock Grid.Column="2" Text="{helpers:Localization Key=RebloggedBy}" />
         </Grid>
@@ -39,7 +40,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE910;" />
+            <controls:Icon Icons="Accounts" />
             <Button Grid.Column="1"  Content="{x:Bind ActionAccount['display_name']}"/>
             <TextBlock Grid.Column="2" Text="{helpers:Localization Key=MentionBy}" />
         </Grid>
@@ -49,7 +50,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE735;" />
+            <controls:Icon Icons="FavoriteStarFill" />
             <Button Grid.Column="1"  Content="{x:Bind ActionAccount['display_name']}"/>
             <TextBlock Grid.Column="2" Text="{helpers:Localization Key=FavouriteBy}" />
         </Grid>
@@ -59,7 +60,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8FA;" />
+            <controls:Icon Icons="AddFriend" />
             <Button Grid.Column="1"  Content="{x:Bind ActionAccount['display_name']}"/>
             <TextBlock Grid.Column="2" Text="{helpers:Localization Key=FollowedBy}" />
         </Grid>

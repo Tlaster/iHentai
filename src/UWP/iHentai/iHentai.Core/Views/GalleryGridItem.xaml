@@ -7,6 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:model="using:iHentai.Apis.Core.Models.Interfaces"
+    xmlns:controls1="using:iHentai.Basic.Controls"
     ToolTipService.ToolTip="{Binding Title}"
     IsHoldingEnabled="True"
     mc:Ignorable="d"
@@ -27,7 +28,7 @@
         <Grid>
             <controls:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" x:Name="GalleryImage" Source="{Binding Thumb}" />
             <Button Tapped="UIElement_OnTapped" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;" Foreground="White"/>
+                <controls1:Icon Icons="InfoSolid" Foreground="White"/>
             </Button>
         </Grid>
     </Grid>

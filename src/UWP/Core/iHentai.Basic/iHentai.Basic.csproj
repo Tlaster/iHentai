@@ -118,6 +118,8 @@
     <Compile Include="Controls\AutoListStateView.xaml.cs">
       <DependentUpon>AutoListStateView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Icon.cs" />
+    <Compile Include="Controls\Icons.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\EqualsConverter.cs" />
