@@ -24,16 +24,16 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <controls:Icon Icons="{Binding Icon}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Title}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="16,0" VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding ElementName=NavigationView, Path=SelectedItem.Title}"/>
+                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" VerticalAlignment="Center" Padding="8" Text="{Binding ElementName=NavigationView, Path=SelectedItem.Title}"/>
                 </DataTemplate>
             </NavigationView.HeaderTemplate>
-            <Pivot x:Name="ContentContainer" ItemsSource="{Binding Source}">
+            <Pivot x:Name="ContentContainer" ItemsSource="{Binding Source}" IsLocked="True" SelectedItem="{x:Bind NavigationView.SelectedItem, Mode=OneWay}">
                 <Pivot.ItemContainerStyle>
                     <Style TargetType="PivotItem">
                         <Setter Property="Margin" Value="0"/>
