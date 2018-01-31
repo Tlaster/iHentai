@@ -362,32 +362,32 @@ namespace Tab
         {
             var container = sender as ContentControl;
             var item = container?.Content;
-            if ((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)
-                ?.Content is TabPreview toolTip && item != null &&
-                ItemsSource.FirstOrDefault(x => x == item)?.View is UIElement uiElement)
-                if (_previews.TryGetValue(item, out var preview))
+            if (!((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)
+                    ?.Content is TabPreview toolTip) || item == null ||
+                !(ItemsSource.FirstOrDefault(x => x == item)?.View is UIElement uiElement)) return;
+            if (_previews.TryGetValue(item, out var preview))
+            {
+                if (SelectedItem != item)
                 {
-                    if (SelectedItem != item)
-                    {
-                        toolTip.FindDescendant<Image>().Source = preview;
-                    }
-                    else
-                    {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        preview.RenderAsync(uiElement);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        toolTip.FindDescendant<Image>().Source = preview;
-                    }
+                    toolTip.FindDescendant<Image>().Source = preview;
                 }
                 else
                 {
-                    var bitmap = new RenderTargetBitmap();
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    bitmap.RenderAsync(uiElement);
+                    preview.RenderAsync(uiElement);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    _previews.TryAdd(item, bitmap);
-                    toolTip.FindDescendant<Image>().Source = bitmap;
+                    toolTip.FindDescendant<Image>().Source = preview;
                 }
+            }
+            else
+            {
+                var bitmap = new RenderTargetBitmap();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                bitmap.RenderAsync(uiElement);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                _previews.TryAdd(item, bitmap);
+                toolTip.FindDescendant<Image>().Source = bitmap;
+            }
         }
 
         private void ContainerItemLoaded(object sender, RoutedEventArgs e)
@@ -434,6 +434,7 @@ namespace Tab
             }
 
             (ItemsSource as IList)?.Remove(item);
+            _previews.TryRemove(item, out var _);
             TabClosed?.Invoke(this, new TabCloseEventArgs(ItemsSource.Count));
         }
     }
