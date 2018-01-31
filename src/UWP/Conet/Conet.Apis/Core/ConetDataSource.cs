@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Markup;
+using iHentai.Services;
 using Microsoft.Toolkit.Collections;
 using Newtonsoft.Json.Linq;
 
@@ -28,5 +29,22 @@ namespace Conet.Apis.Core
         }
 
         protected abstract Task<(long Curser, IEnumerable<T> Data)> GetDataAsync(long curser, int pageSize, CancellationToken cancellationToken);
+    }
+    public class TimelineDataSource : ConetDataSource<JToken>
+    {
+        private readonly string _serviceType;
+        private readonly Guid _data;
+
+        public TimelineDataSource(Guid data, string serviceType)
+        {
+            _data = data;
+            _serviceType = serviceType;
+        }
+
+        protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
+            CancellationToken cancellationToken)
+        {
+            return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser);
+        }
     }
 }

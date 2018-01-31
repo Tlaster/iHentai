@@ -67,7 +67,7 @@ namespace iHentai.Paging
 
         internal HentaiPageModel CurrentPageModel => _pageStackManager.CurrentPage;
 
-        public HentaiPage CurrentPage => CurrentPageModel.Page;
+        public HentaiPage CurrentPage => CurrentPageModel?.Page;
 
         internal HentaiPageModel NextPage => _pageStackManager.NextPage;
 

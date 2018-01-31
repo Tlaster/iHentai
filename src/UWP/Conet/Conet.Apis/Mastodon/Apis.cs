@@ -5,9 +5,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
-using Windows.UI.Xaml;
 using Conet.Apis.Core;
 using Conet.Apis.Mastodon.Api;
+using iHentai.Basic.Controls;
+using iHentai.Basic.Extensions;
+using iHentai.Basic.Helpers;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 
@@ -54,7 +56,8 @@ namespace Conet.Apis.Mastodon
             return (res.MaxId, res.Result);
         }
 
-        public Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count, long cursor = 0)
+        public Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count,
+            long cursor = 0)
         {
             throw new NotImplementedException();
         }
@@ -66,9 +69,23 @@ namespace Conet.Apis.Mastodon
             return await Accounts.Fetching(model.Domain, uid, model.AccessToken);
         }
 
-        public IEnumerable<IConetViewModel> GetHomeContent(IInstanceData data)
+        public IEnumerable<IConetViewModel> GetHomeContent(Guid data, Guid messageGuid)
         {
-            throw new NotImplementedException();
+            yield return new HomeTimelineViewModel(messageGuid, data);
         }
+    }
+
+    public class HomeTimelineViewModel : ConetViewModelBase
+    {
+        public HomeTimelineViewModel(Guid messageGuid, Guid data) : base(messageGuid, data)
+        {
+            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, nameof(Mastodon)));
+        }
+
+        public override string Title => "Home".GetLocalized();
+        public override Icons Icon { get; } = Icons.Home;
+        public override int Badge { get; set; }
+
+        public AutoList<TimelineDataSource, JToken> Source { get; }
     }
 }

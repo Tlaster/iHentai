@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
+using iHentai.Basic;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
@@ -47,6 +48,11 @@ namespace iHentai.Core.ViewModels
         public void GoDetail(IGalleryModel model)
         {
             Navigate<GalleryDetailViewModel>(_serviceType, model, _data).FireAndForget();
+        }
+
+        public void OpenDetailInNewTab(IGalleryModel model)
+        {
+            Singleton<MessagingCenter>.Instance.Send(NewTabArgs.NewTab, new NewTabArgs(typeof(GalleryDetailViewModel), _serviceType, model, _data));
         }
 
         public void SearchSubmit()

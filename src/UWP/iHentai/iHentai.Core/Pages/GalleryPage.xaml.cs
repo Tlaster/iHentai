@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Numerics;
+using Windows.Devices.Input;
 using Windows.Foundation;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -137,8 +139,27 @@ namespace iHentai.Core.Pages
 
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
+            e.Handled = true;
             _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
+            ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
+        }
+
+        private void UIElement_OnPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            e.Handled = true;
+            _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
+            {
+                var ptrPt = e.GetCurrentPoint(sender as ListViewItem);
+                if (ptrPt.Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
+                {
+                    ViewModel.OpenDetailInNewTab((sender as GalleryGridItem).DataContext as IGalleryModel);
+                    return;
+                }
+            }
+
             ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
         }
     }

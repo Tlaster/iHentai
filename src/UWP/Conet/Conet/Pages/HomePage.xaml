@@ -10,14 +10,15 @@
     xmlns:viewModels="using:Conet.ViewModels"
     xmlns:core="using:Conet.Apis.Core"
     xmlns:services="using:iHentai.Services"
+    Loaded="HomePage_OnLoaded"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
 
     <Grid>
-        <NavigationView x:Name="NavigationView" MenuItemsSource="{Binding Source}">
+        <NavigationView x:Name="NavigationView" MenuItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate>
-                    <Grid d:DataContext="{d:DesignInstance core:IConetViewModel}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -27,7 +28,17 @@
                     </Grid>
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
-            <Pivot ItemsSource="{Binding Source}" SelectedItem="{Binding ElementName=NavigationView, Path=SelectedItem, Mode=TwoWay}">
+            <NavigationView.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding ElementName=NavigationView, Path=SelectedItem.Title}"/>
+                </DataTemplate>
+            </NavigationView.HeaderTemplate>
+            <Pivot x:Name="ContentContainer" ItemsSource="{Binding Source}">
+                <Pivot.ItemContainerStyle>
+                    <Style TargetType="PivotItem">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </Pivot.ItemContainerStyle>
                 <Pivot.ItemTemplateSelector>
                     <services:ContentViewTemplateSelector/>
                 </Pivot.ItemTemplateSelector>
