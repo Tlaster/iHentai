@@ -119,12 +119,14 @@
     <Compile Include="TabPreview.xaml.cs">
       <DependentUpon>TabPreview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VisualTree.cs" />
     <EmbeddedResource Include="Properties\Tab.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.4.0</Version>

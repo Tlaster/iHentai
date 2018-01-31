@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using ListViewBase = Windows.UI.Xaml.Controls.ListViewBase;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -268,38 +270,38 @@ namespace Tab
             _tabList.ItemsSource = ItemsSource;
             _tabList.ContainerContentChanging += TabList_ContainerContentChanging;
             _tabList.ChoosingItemContainer += TabList_ChoosingItemContainer;
-            _tabList.DragItemsCompleted += TabListOnDragItemsCompleted;
+            //_tabList.DragItemsCompleted += TabListOnDragItemsCompleted;
             UpdateTabListSize();
         }
 
-        private async void TabListOnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs e)
-        {
-            return;
-            var res = e.Items.ToList();
-            //if (ItemsSource.Count == 1 && !CoreApplication.GetCurrentView().IsMain)
-            //{
-            //    await ApplicationViewSwitcher.SwitchAsync(((App)Application.Current).Views[0].ViewId, this.ViewId, ApplicationViewSwitchingOptions.ConsolidateViews);
-            //}
-            if (e.DropResult == DataPackageOperation.None && WindowGenerator != null)
-            {
-                var newViewId = 0;
-                await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    var content = WindowGenerator.GetNewWindowElement();
-                    var tab = content.FindDescendant<TabControl>();
-                    Window.Current.Content = content;
-                    Window.Current.Activate();
-                    newViewId = ApplicationView.GetForCurrentView().Id;
-                    //if (tab != null)
-                    //{
-                    //    tab.ItemsSource.Clear();
-                    //    tab.Add(res.FirstOrDefault() as TabModel);
-                    //}
-                });
-                var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-                if (viewShown) CloseTab(res.FirstOrDefault());
-            }
-        }
+        //private async void TabListOnDragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs e)
+        //{
+        //    return;
+        //    //var res = e.Items.ToList();
+        //    ////if (ItemsSource.Count == 1 && !CoreApplication.GetCurrentView().IsMain)
+        //    ////{
+        //    ////    await ApplicationViewSwitcher.SwitchAsync(((App)Application.Current).Views[0].ViewId, this.ViewId, ApplicationViewSwitchingOptions.ConsolidateViews);
+        //    ////}
+        //    //if (e.DropResult == DataPackageOperation.None && WindowGenerator != null)
+        //    //{
+        //    //    var newViewId = 0;
+        //    //    await CoreApplication.CreateNewView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+        //    //    {
+        //    //        var content = WindowGenerator.GetNewWindowElement();
+        //    //        var tab = content.FindDescendant<TabControl>();
+        //    //        Window.Current.Content = content;
+        //    //        Window.Current.Activate();
+        //    //        newViewId = ApplicationView.GetForCurrentView().Id;
+        //    //        //if (tab != null)
+        //    //        //{
+        //    //        //    tab.ItemsSource.Clear();
+        //    //        //    tab.Add(res.FirstOrDefault() as TabModel);
+        //    //        //}
+        //    //    });
+        //    //    var viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+        //    //    if (viewShown) CloseTab(res.FirstOrDefault());
+        //    //}
+        //}
 
         //private void AddButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
         //{
