@@ -135,6 +135,7 @@
     <Compile Include="Helpers\AutoList.cs" />
     <Compile Include="Helpers\JobRegistry.cs" />
     <Compile Include="Helpers\Localization.cs" />
+    <Compile Include="Helpers\MessageCenter.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\Singleton.cs" />

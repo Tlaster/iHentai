@@ -9,6 +9,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Basic.Extensions;
+using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
 using iHentai.Services;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -48,10 +49,13 @@ namespace iHentai.Views
             {
                 ExtendedSplash.Visibility = Visibility.Collapsed;
             }
-
             ExtendAcrylicIntoTitleBar();
             Loaded += RootView_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            Singleton<MessagingCenter>.Instance.Subscribe(this, "NewTab", () =>
+            {
+                tab.Add();
+            });
         }
 
         public Type DefaultNavItem { get; }
@@ -76,6 +80,7 @@ namespace iHentai.Views
 
         private void RootView_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= RootView_Loaded;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             tab.TabListRoot.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(tab.TabListBackground);
