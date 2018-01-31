@@ -140,6 +140,7 @@
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\ThemeHelper.cs" />
+    <Compile Include="NewTabArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\iHentai.Basic.rd.xml" />
   </ItemGroup>

@@ -14,6 +14,28 @@ using iHentai.Paging;
 
 namespace iHentai.Mvvm
 {
+
+    public static class MvvmFrameExtensions
+    {
+        public static async Task Navigate(this MvvmFrame frame, Type vmType, params object[] args)
+        {
+            var pInfo = vmType.GetTypeInfo();
+            var uwpPage = typeof(HentaiPage).GetTypeInfo();
+            if (pInfo.IsSubclassOf(typeof(ViewModel)) && ViewModel.KnownViews.TryGetValue(vmType, out var pageInfo))
+            {
+                var vm = Activator.CreateInstance(vmType, args) as ViewModel;
+                await frame.NavigateAsync(pageInfo, vm);
+            }
+            else if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(HentaiPage)))
+            {
+                await frame.NavigateAsync(vmType);
+            }
+            else
+            {
+                throw new ArgumentException("Page Type must be based on HentaiPage");
+            }
+        }
+    }
     public abstract class ViewModel : INotifyPropertyChanged
     {
         static ViewModel()
@@ -30,7 +52,7 @@ namespace iHentai.Mvvm
                 .ToDictionary(item => item.GenericType, item => item.ViewType);
         }
 
-        protected internal HentaiFrame Frame { get; internal set; }
+        protected internal MvvmFrame Frame { get; internal set; }
 
         internal static Dictionary<Type, TypeInfo> KnownViews { get; }
 
@@ -63,23 +85,9 @@ namespace iHentai.Mvvm
             await Navigate(typeof(T), args);
         }
 
-        protected async Task Navigate(Type vmType, params object[] args)
+        protected Task Navigate(Type vmType, params object[] args)
         {
-            var pInfo = vmType.GetTypeInfo();
-            var uwpPage = typeof(HentaiPage).GetTypeInfo();
-            if (pInfo.IsSubclassOf(typeof(ViewModel)) && KnownViews.TryGetValue(vmType, out var pageInfo))
-            {
-                var vm = Activator.CreateInstance(vmType, args) as ViewModel;
-                await Frame.NavigateAsync(pageInfo, vm);
-            }
-            else if (pInfo.IsAssignableFrom(uwpPage) || pInfo.IsSubclassOf(typeof(HentaiPage)))
-            {
-                await Frame.NavigateAsync(vmType);
-            }
-            else
-            {
-                throw new ArgumentException("Page Type must be based on HentaiPage");
-            }
+            return Frame.Navigate(vmType, args);
         }
 
         protected IAsyncOperation<bool> RunOnUiThread(Action action)

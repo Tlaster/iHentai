@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace iHentai.Basic.Helpers
@@ -12,7 +10,7 @@ namespace iHentai.Basic.Helpers
     {
         private readonly Dictionary<Sender, List<Subscription>> _subscriptions =
             new Dictionary<Sender, List<Subscription>>();
-       
+
 
         public void Send<TArgs>(string message, TArgs args)
         {
@@ -24,8 +22,8 @@ namespace iHentai.Basic.Helpers
             InnerSend(message, null, null);
         }
 
-        public void Subscribe<TSender, TArgs>(object subscriber, string message,
-            Action<TSender, TArgs> callback)
+        public void Subscribe<TArgs>(object subscriber, string message,
+            Action<TArgs> callback)
         {
             if (subscriber == null)
                 throw new ArgumentNullException(nameof(subscriber));
@@ -33,7 +31,7 @@ namespace iHentai.Basic.Helpers
                 throw new ArgumentNullException(nameof(callback));
 
             var target = callback.Target;
-            
+
             InnerSubscribe(subscriber, message, typeof(TArgs), target, callback.GetMethodInfo());
         }
 
@@ -45,7 +43,7 @@ namespace iHentai.Basic.Helpers
                 throw new ArgumentNullException(nameof(callback));
 
             var target = callback.Target;
-            
+
 
             InnerSubscribe(subscriber, message, null, target, callback.GetMethodInfo());
         }
@@ -90,14 +88,9 @@ namespace iHentai.Basic.Helpers
             var key = new Sender(message, argType);
             var value = new Subscription(subscriber, target, methodInfo);
             if (_subscriptions.ContainsKey(key))
-            {
                 _subscriptions[key].Add(value);
-            }
             else
-            {
-                var list = new List<Subscription> {value};
-                _subscriptions[key] = list;
-            }
+                _subscriptions[key] = new List<Subscription> {value};
         }
 
         private void InnerUnsubscribe(string message, Type argType, object subscriber)

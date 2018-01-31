@@ -26,13 +26,13 @@ namespace Tab
 {
     internal sealed class TabModel
     {
-        public TabModel(object dataContext, object view)
+        public TabModel(/*object dataContext,*/ object view)
         {
-            DataContext = dataContext;
+            //DataContext = dataContext;
             View = view;
         }
 
-        public object DataContext { get; }
+        //public object DataContext { get; }
         public object View { get; }
     }
 
@@ -230,19 +230,27 @@ namespace Tab
         {
             var content = ItemsTemplate.LoadContent();
             if (content is FrameworkElement frameworkElement) frameworkElement.DataContext = DefaultContentParam;
-            ItemsSource.Add(new TabModel(DefaultContentParam, content));
+            ItemsSource.Add(new TabModel(content));
 #pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
 #pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
         }
 
-//        private void Add(TabModel data)
-//        {
-//            ItemsSource.Add(data);
-//#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-//            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
-//#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
-//        }
+        public void AddContent(DependencyObject content)
+        {
+            ItemsSource.Add(new TabModel(content));
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+        }
+
+        //        private void Add(TabModel data)
+        //        {
+        //            ItemsSource.Add(data);
+        //#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+        //            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
+        //#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+        //        }
 
         protected override void OnApplyTemplate()
         {

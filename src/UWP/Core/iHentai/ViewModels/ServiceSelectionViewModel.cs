@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
+using iHentai.Basic;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Database;

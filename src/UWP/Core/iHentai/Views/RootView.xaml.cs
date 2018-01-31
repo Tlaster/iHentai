@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using iHentai.Basic;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Mvvm;
@@ -52,9 +53,13 @@ namespace iHentai.Views
             ExtendAcrylicIntoTitleBar();
             Loaded += RootView_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
-            Singleton<MessagingCenter>.Instance.Subscribe(this, "NewTab", () =>
+            Singleton<MessagingCenter>.Instance.Subscribe<NewTabArgs>(this, NewTabArgs.NewTab, args =>
             {
-                tab.Add();
+                var content = new MvvmFrame();
+                tab.AddContent(content);
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                content.Navigate(args.ViewModel, args.Params);
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
             });
         }
 

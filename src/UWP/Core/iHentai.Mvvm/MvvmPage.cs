@@ -30,7 +30,7 @@ namespace iHentai.Mvvm
         {
             base.SetFrame(frame, pageKey);
             if (ViewModel != null && ViewModel.Frame == null)
-                ViewModel.Frame = frame;
+                ViewModel.Frame = frame as MvvmFrame;
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
@@ -48,7 +48,7 @@ namespace iHentai.Mvvm
             base.OnNavigatedTo(e);
             ViewModel = e.Parameter as ViewModel;
             if (ViewModel != null && ViewModel.Frame == null)
-                ViewModel.Frame = Frame;
+                ViewModel.Frame = Frame as MvvmFrame;
             DataContext = ViewModel;
             OnPropertyChanged(nameof(ViewModel));
             switch (e.NavigationMode)
