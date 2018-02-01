@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Conet.Apis.Mastodon.Models;
 using Flurl.Http;
+using iHentai.Basic.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

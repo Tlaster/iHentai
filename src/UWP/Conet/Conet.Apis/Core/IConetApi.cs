@@ -12,8 +12,7 @@ namespace Conet.Apis.Core
 {
     public interface IConetApi : IApi, ICanLogin
     {
-        Task<(long Cursor, IEnumerable<JToken> Data)>
-            HomeTimeline(IInstanceData data, int count = 20, long cursor = 0L);
+        Task<(long Cursor, IEnumerable<JToken> Data)> HomeTimeline(IInstanceData data, int count = 20, long cursor = 0L);
 
         Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count, long cursor = 0L);
 
@@ -24,8 +23,8 @@ namespace Conet.Apis.Core
 
     public abstract class ConetViewModelBase : IConetViewModel, INotifyPropertyChanged
     {
-        protected readonly Guid _messageGuid;
         protected readonly Guid _data;
+        protected readonly Guid _messageGuid;
 
         protected ConetViewModelBase(Guid messageGuid, Guid data)
         {

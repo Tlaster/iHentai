@@ -117,6 +117,7 @@
     <Compile Include="Core\ConetActionArgs.cs" />
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
+    <Compile Include="Core\ViewModels\HomeTimelineViewModel.cs" />
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\Api\Accounts.cs" />
     <Compile Include="Mastodon\Api\Accounts.static.cs" />
@@ -159,7 +160,7 @@
     <Compile Include="Mastodon\Views\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Mastodon\Views\HomeTimelineView.xaml.cs">
+    <Compile Include="Core\Views\HomeTimelineView.xaml.cs">
       <DependentUpon>HomeTimelineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mastodon\Views\InstanceView.xaml.cs">
@@ -237,7 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Mastodon\Views\HomeTimelineView.xaml">
+    <Page Include="Core\Views\HomeTimelineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

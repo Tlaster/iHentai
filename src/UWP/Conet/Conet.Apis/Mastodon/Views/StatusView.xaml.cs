@@ -25,7 +25,7 @@ namespace Conet.Apis.Mastodon.Views
         }
     }
 
-    [ContentKey(nameof(Mastodon))]
+    [ContentKey(nameof(Mastodon) + "Status")]
     public sealed partial class StatusView : IContentView<JObject>
     {
         public StatusView()

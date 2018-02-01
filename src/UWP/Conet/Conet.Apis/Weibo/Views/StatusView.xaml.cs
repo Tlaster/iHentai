@@ -25,7 +25,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Weibo.Views
 {
-    [ContentKey(nameof(Weibo))]
+    [ContentKey(nameof(Weibo) + "Status")]
     public sealed partial class StatusView : IContentView<JObject>
     {
         public StatusView()

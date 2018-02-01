@@ -10,7 +10,6 @@
     xmlns:viewModels="using:Conet.ViewModels"
     xmlns:core="using:Conet.Apis.Core"
     xmlns:services="using:iHentai.Services"
-    Loaded="HomePage_OnLoaded"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
 

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
+using Conet.Apis.Core.ViewModels;
 using Conet.Apis.Mastodon.Api;
 using iHentai.Basic.Controls;
 using iHentai.Basic.Extensions;
@@ -71,21 +72,8 @@ namespace Conet.Apis.Mastodon
 
         public IEnumerable<IConetViewModel> GetHomeContent(Guid data, Guid messageGuid)
         {
-            yield return new HomeTimelineViewModel(messageGuid, data);
+            yield return new HomeTimelineViewModel(nameof(Mastodon), messageGuid, data);
         }
     }
 
-    public class HomeTimelineViewModel : ConetViewModelBase
-    {
-        public HomeTimelineViewModel(Guid messageGuid, Guid data) : base(messageGuid, data)
-        {
-            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, nameof(Mastodon)));
-        }
-
-        public override string Title => "Home".GetLocalized();
-        public override Icons Icon { get; } = Icons.Home;
-        public override int Badge { get; set; }
-
-        public AutoList<TimelineDataSource, JToken> Source { get; }
-    }
 }
