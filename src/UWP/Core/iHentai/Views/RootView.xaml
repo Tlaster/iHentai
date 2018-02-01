@@ -18,7 +18,7 @@
     d:DesignWidth="400">
 
     <tab:TabControl TabBackground="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" x:Name="tab"
-                    TitlePath="self.CurrentPageTitle"
+                    TitlePath="CurrentPageTitle"
                     TabClosed="Tab_OnTabClosed"
                     DefaultContentParam="{x:Bind DefaultNavItem}">
         <tab:TabControl.WindowGenerator>

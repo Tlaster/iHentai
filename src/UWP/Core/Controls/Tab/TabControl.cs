@@ -1,16 +1,12 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Extensions;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Input;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,23 +14,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 using ListViewBase = Windows.UI.Xaml.Controls.ListViewBase;
 
 // The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
 namespace Tab
 {
-    internal sealed class TabModel
-    {
-        public TabModel(/*object dataContext,*/ object view)
-        {
-            //DataContext = dataContext;
-            View = view;
-        }
+    //internal sealed class TabModel
+    //{
+    //    public TabModel(/*object dataContext,*/ object view)
+    //    {
+    //        //DataContext = dataContext;
+    //        View = view;
+    //    }
 
-        //public object DataContext { get; }
-        public object View { get; }
-    }
+    //    //public object DataContext { get; }
+    //    public object View { get; }
+    //}
 
     public interface IWindowGenerator
     {
@@ -69,33 +66,24 @@ namespace Tab
             nameof(TabHeader), typeof(object), typeof(TabControl), new PropertyMetadata(default));
 
         public static readonly DependencyProperty TabFooterProperty = DependencyProperty.Register(
-            nameof(TabFooter), typeof(object), typeof(TabControl), new PropertyMetadata(default(object)));
+            nameof(TabFooter), typeof(object), typeof(TabControl), new PropertyMetadata(default));
 
         public static readonly DependencyProperty DefaultContentParamProperty = DependencyProperty.Register(
             nameof(DefaultContentParam), typeof(object), typeof(TabControl),
             new PropertyMetadata(default, OnDefaultContentParamChanged));
 
         public static readonly DependencyProperty TabHeaderPaddingProperty = DependencyProperty.Register(
-            nameof(TabHeaderPadding), typeof(Thickness), typeof(TabControl), new PropertyMetadata(default(Thickness), OnTabHeaderPaddingChanged));
-
-        private static void OnTabHeaderPaddingChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            (dependencyObject as TabControl).OnTabHeaderPaddingChanged((Thickness) e.NewValue);
-        }
-
-        private void OnTabHeaderPaddingChanged(Thickness newValue)
-        {
-            UpdateTabListSize();
-        }
+            nameof(TabHeaderPadding), typeof(Thickness), typeof(TabControl),
+            new PropertyMetadata(default(Thickness), OnTabHeaderPaddingChanged));
 
         private readonly ConcurrentDictionary<object, RenderTargetBitmap>
             _previews = new ConcurrentDictionary<object, RenderTargetBitmap>();
 
+        private ContentPresenter _tabFooter;
+
         //private Button _addButton;
         private ContentPresenter _tabHeader;
-
         private ListView _tabList;
-        private ContentPresenter _tabFooter;
 
         public TabControl()
         {
@@ -117,8 +105,8 @@ namespace Tab
             set => SetValue(DefaultContentParamProperty, value);
         }
 
-        private ObservableCollection<TabModel> ItemsSource { get; } =
-            new ObservableCollection<TabModel>();
+        public ObservableCollection<DependencyObject> ItemsSource { get; } =
+            new ObservableCollection<DependencyObject>();
 
         public Brush TabBackground
         {
@@ -176,6 +164,17 @@ namespace Tab
 
         public ContentPresenter TabContentPresenter { get; set; }
 
+        private static void OnTabHeaderPaddingChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs e)
+        {
+            (dependencyObject as TabControl).OnTabHeaderPaddingChanged((Thickness) e.NewValue);
+        }
+
+        private void OnTabHeaderPaddingChanged(Thickness newValue)
+        {
+            UpdateTabListSize();
+        }
+
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_tabList == null || _tabHeader == null || _tabFooter == null) return;
@@ -223,14 +222,17 @@ namespace Tab
                     _previews.TryAdd(oldValue, bitmap);
                 }
 
-            Content = ItemsSource.FirstOrDefault(item => item == newValue)?.View;
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            Dispatcher.RunAsync(CoreDispatcherPriority.Low, () => _tabList.ScrollIntoView(newValue));
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+            Content = ItemsSource.FirstOrDefault(item => item == newValue);
         }
 
         public void Add()
         {
             var content = ItemsTemplate.LoadContent();
             if (content is FrameworkElement frameworkElement) frameworkElement.DataContext = DefaultContentParam;
-            ItemsSource.Add(new TabModel(content));
+            ItemsSource.Add(content);
 #pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
 #pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
@@ -238,7 +240,7 @@ namespace Tab
 
         public void AddContent(DependencyObject content)
         {
-            ItemsSource.Add(new TabModel(content));
+            ItemsSource.Add(content);
 #pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SelectedItem = ItemsSource.LastOrDefault());
 #pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
@@ -339,13 +341,6 @@ namespace Tab
                     Source = item,
                     Mode = BindingMode.OneWay
                 };
-            else if (TitlePath.StartsWith("self.", StringComparison.CurrentCultureIgnoreCase))
-                binding = new Binding
-                {
-                    Source = ItemsSource.FirstOrDefault(x => x == item)?.View,
-                    Path = new PropertyPath(TitlePath.Substring("self.".Length)),
-                    Mode = BindingMode.OneWay
-                };
             else
                 binding = new Binding
                 {
@@ -355,17 +350,30 @@ namespace Tab
                 };
             text?.SetBinding(TextBlock.TextProperty, binding);
             prevText.SetBinding(TextBlock.TextProperty, binding);
-            toolTip.DataContext = ItemsSource.FirstOrDefault(x => x == item)?.View;
+            toolTip.DataContext = item;
         }
 
         private void TabList_ChoosingItemContainer(ListViewBase sender, ChoosingItemContainerEventArgs args)
         {
-            var container = args.ItemContainer ?? new ListViewItem();
-            container.DataContext = args.Item;
-            container.Loaded += ContainerItemLoaded;
-            container.PointerReleased += Container_PointerReleased;
-            container.PointerEntered += ContainerOnPointerEntered;
-            args.ItemContainer = container;
+            if (args.ItemContainer == null)
+            {
+                var container = new ListViewItem();
+                container.Loaded += ContainerItemLoaded;
+                container.PointerReleased += Container_PointerReleased;
+                container.PointerEntered += ContainerOnPointerEntered;
+#pragma warning disable CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                container.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () => container.FindDescendant<Button>().Click += OnClick);
+#pragma warning restore CS4014 // 由于此调用不会等待，因此在调用完成前将继续执行当前方法
+                args.ItemContainer = container;
+            }
+
+            args.ItemContainer.DataContext = DataContext = args.Item;
+        }
+
+        private void OnClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            CloseTab((sender as Button).FindAscendant<ListViewItem>());
         }
 
         private void ContainerOnPointerEntered(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
@@ -374,7 +382,7 @@ namespace Tab
             var item = container?.Content;
             if (!((ToolTipService.GetToolTip(container.FindDescendant<Grid>()) as ToolTip)
                     ?.Content is TabPreview toolTip) || item == null ||
-                !(ItemsSource.FirstOrDefault(x => x == item)?.View is UIElement uiElement)) return;
+                !(ItemsSource.FirstOrDefault(x => x == item) is UIElement uiElement)) return;
             if (_previews.TryGetValue(item, out var preview))
             {
                 if (SelectedItem != item)
@@ -403,11 +411,8 @@ namespace Tab
         private void ContainerItemLoaded(object sender, RoutedEventArgs e)
         {
             var container = sender as ContentControl;
-            container.Loaded -= ContainerItemLoaded;
             var item = container.Content;
             UpdateContainer(container, item);
-            var button = container.FindDescendant<Button>();
-            button.Click += ButtonClick;
         }
 
         private void Container_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -418,22 +423,27 @@ namespace Tab
                 var ptrPt = e.GetCurrentPoint(sender as ListViewItem);
                 if (ptrPt.Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
                 {
-                    CloseTab((sender as ListViewItem).Content);
-                    (sender as ListViewItem).PointerReleased -= Container_PointerReleased;
+                    CloseTab(sender as ListViewItem);
                     e.Handled = true;
                 }
             }
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
-        {
-            (sender as Button).Click -= ButtonClick;
-            var item = (sender as Button).DataContext;
-            CloseTab(item);
-        }
+        //private void ButtonClick(object sender, RoutedEventArgs e)
+        //{
+        //    (sender as Button).Click -= ButtonClick;
+        //    var item = (sender as Button).DataContext;
+        //    CloseTab(item);
+        //}
 
-        public void CloseTab(object item)
+        private void CloseTab(ListViewItem container)
         {
+            container.Loaded -= ContainerItemLoaded;
+            container.PointerReleased -= Container_PointerReleased;
+            container.PointerEntered -= ContainerOnPointerEntered;
+
+            var item = container.Content;
+
             var index = (ItemsSource as IList).IndexOf(item);
             if (SelectedItem == item)
             {

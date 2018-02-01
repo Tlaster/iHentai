@@ -65,10 +65,11 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis"
-                                                       Style="{ThemeResource BodyTextBlockStyle}"
-                                                       x:Name="TitleTextBlock" VerticalAlignment="Center" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis"
+                                                           Style="{ThemeResource BodyTextBlockStyle}"
+                                                           x:Name="TitleTextBlock" VerticalAlignment="Center" />
+                                            <!--<ContentPresenter Grid.Column="1" />-->
                                             <Button Style="{ThemeResource TextBlockButtonStyle}" Grid.Column="1"
                                                     x:Name="CloseButton">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" FontSize="12" />
