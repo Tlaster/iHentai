@@ -1,0 +1,31 @@
+﻿<UserControl
+    x:Class="Conet.Apis.Mastodon.Views.UserTimelineView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Conet.Apis.Core.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:Conet.Apis.Core.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:services="using:iHentai.Services"
+    xmlns:viewModels1="using:Conet.Apis.Mastodon.ViewModels"
+    xmlns:views="using:Conet.Apis.Mastodon.Views"
+    mc:Ignorable="d"
+    DataContextChanged="UserTimelineView_OnDataContextChanged"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{d:DesignInstance viewModels1:UserTimelineViewModel}">
+
+    <controls:PullToRefreshListView ItemsSource="{Binding Source}" x:Name="PullToRefreshListView" RefreshCommand="{Binding Source.RefreshCommand}">
+        <controls:PullToRefreshListView.Header>
+            <controls:ScrollHeader Mode="QuickReturn" TargetListViewBase="{Binding ElementName=PullToRefreshListView}">
+                <views:UserView Account="{Binding UserSource.Result}" Relationship="{Binding RelationshipSource.Result}"/>
+            </controls:ScrollHeader>
+        </controls:PullToRefreshListView.Header>
+        <controls:PullToRefreshListView.ItemTemplate>
+            <DataTemplate>
+                <views:StatusView/>
+            </DataTemplate>
+        </controls:PullToRefreshListView.ItemTemplate>
+    </controls:PullToRefreshListView>
+</UserControl>

@@ -118,6 +118,10 @@
     <Compile Include="Core\ConetDataSource.cs" />
     <Compile Include="Core\IConetApi.cs" />
     <Compile Include="Core\ViewModels\HomeTimelineViewModel.cs" />
+    <Compile Include="Mastodon\ViewModels\UserTimelineViewModel.cs" />
+    <Compile Include="Mastodon\Views\UserTimelineView.xaml.cs">
+      <DependentUpon>UserTimelineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mastodon\Apis.cs" />
     <Compile Include="Mastodon\Api\Accounts.cs" />
     <Compile Include="Mastodon\Api\Accounts.static.cs" />
@@ -175,6 +179,9 @@
     <Compile Include="Mastodon\Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mastodon\Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Twitter\Apis.cs" />
     <Compile Include="Twitter\LoginData.cs" />
@@ -203,10 +210,16 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>2.3.23</Version>
+      <Version>2.3.25</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Nito.AsyncEx">
+      <Version>5.0.0-pre-05</Version>
+    </PackageReference>
+    <PackageReference Include="Nito.Mvvm.Async">
+      <Version>1.0.0-pre-03</Version>
     </PackageReference>
     <PackageReference Include="refit">
       <Version>4.2.0</Version>
@@ -228,12 +241,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Models\Interfaces\" />
-    <Folder Include="Mastodon\ViewModels\" />
     <Folder Include="Twitter\Models\" />
     <Folder Include="Twitter\Views\" />
     <Folder Include="Weibo\Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Mastodon\Views\UserTimelineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Mastodon\Views\AccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,6 +271,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Mastodon\Views\StatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mastodon\Views\UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

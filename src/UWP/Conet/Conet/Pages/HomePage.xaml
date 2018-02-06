@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
 
     <Grid>
-        <NavigationView x:Name="NavigationView" MenuItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+        <NavigationView x:Name="NavigationView" MenuItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.Source[0], Mode=OneWay}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate>
                     <Grid>

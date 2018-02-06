@@ -59,7 +59,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="since_id">(optional) Get a list of followers with ID greater than this value</param>
         /// <param name="limit">(optional) Maximum number of accounts to get (Default 40, Max 80)</param>
         /// <returns>Returns an array of <see cref="JToken"/></returns>
-        public static async Task<ArrayModel<JToken>> Followers(string domain, string token, long id, long max_id = 0, long since_id = 0, long limit = 40)
+        public static async Task<ArrayModel<JToken>> Followers(string domain, string token, string id, long max_id = 0, long since_id = 0, long limit = 40)
         {
             if (limit > 80 || limit < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(limit)}");
@@ -81,7 +81,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="since_id">(optional) Get a list of following with ID greater than this value</param>
         /// <param name="limit">(optional) Maximum number of accounts to get (Default 40, Max 80)</param>
         /// <returns>Returns an array of <see cref="JToken"/></returns>
-        public static async Task<ArrayModel<JToken>> Following(string domain, string token, long id, long max_id = 0, long since_id = 0, long limit = 40)
+        public static async Task<ArrayModel<JToken>> Following(string domain, string token, string id, long max_id = 0, long since_id = 0, long limit = 40)
         {
             if (limit > 80 || limit < 0)
                 throw new ArgumentOutOfRangeException($"{nameof(limit)}");
@@ -104,7 +104,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="only_media">(optional) Only return statuses that have media attachments</param>
         /// <param name="exclude_replies">(optional) Skip statuses that reply to other statuses</param>
         /// <returns>Returns an array of <see cref="JToken"/></returns>
-        public static async Task<ArrayModel<JToken>> Statuses(string domain, string token, long id, long max_id = 0, long since_id = 0, bool only_media = false, bool exclude_replies = false)
+        public static async Task<ArrayModel<JToken>> Statuses(string domain, string token, string id, long max_id = 0, long since_id = 0, bool only_media = false, bool exclude_replies = false)
         {
             return await HttpHelper.GetArrayAsync<JToken>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsStatuses.Id(id.ToString())}", token, new[]
             {
@@ -122,7 +122,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> Follow(string domain, string token, long id)
+        public static async Task<JToken> Follow(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsFollow.Id(id.ToString())}", token, null);
         }
@@ -134,7 +134,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> UnFollow(string domain, string token, long id)
+        public static async Task<JToken> UnFollow(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsUnFollow.Id(id.ToString())}", token, null);
         }
@@ -146,7 +146,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> Block(string domain, string token, long id)
+        public static async Task<JToken> Block(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsBlock.Id(id.ToString())}", token, null);
         }
@@ -158,7 +158,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> UnBlock(string domain, string token, long id)
+        public static async Task<JToken> UnBlock(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsUnBlock.Id(id.ToString())}", token, null);
         }
@@ -172,7 +172,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> Mute(string domain, string token, long id)
+        public static async Task<JToken> Mute(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsMute.Id(id.ToString())}", token, null);
         }
@@ -184,7 +184,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">Account Id</param>
         /// <returns>Returns the target account's <see cref="JToken"/></returns>
-        public static async Task<JToken> UnMute(string domain, string token, long id)
+        public static async Task<JToken> UnMute(string domain, string token, string id)
         {
             return await HttpHelper.PostAsync<JToken, HttpContent>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsUnMute.Id(id.ToString())}", token, null);
         }
@@ -196,7 +196,7 @@ namespace Conet.Apis.Mastodon.Api
         /// <param name="token">AccessToken</param>
         /// <param name="id">(can be array) Account IDs</param>
         /// <returns>Returns an array of <see cref="JToken"/> of the current user to a list of given accounts</returns>
-        public static async Task<ArrayModel<JToken>> Relationships(string domain, string token, params long[] id)
+        public static async Task<ArrayModel<JToken>> Relationships(string domain, string token, params string[] id)
         {
             return await HttpHelper.GetArrayAsync<JToken>($"{HttpHelper.HTTPS}{domain}{Constants.AccountsRelationships}", token, HttpHelper.ArrayEncode(nameof(id), id.Select(v => v.ToString()).ToArray()));
         }

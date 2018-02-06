@@ -47,4 +47,21 @@ namespace Conet.Apis.Core
             return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser);
         }
     }
+    public class UserTimelineDataSource : ConetDataSource<JToken>
+    {
+        private readonly string _serviceType;
+        private readonly Guid _data;
+
+        public UserTimelineDataSource(Guid data, string serviceType)
+        {
+            _data = data;
+            _serviceType = serviceType;
+        }
+
+        protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
+            CancellationToken cancellationToken)
+        {
+            return _serviceType.Get<IConetApi>().UserTimeline(_data.Get<IInstanceData>(), pageSize, curser);
+        }
+    }
 }

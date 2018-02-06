@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -8,6 +9,8 @@ using Windows.Security.Authentication.Web;
 using Conet.Apis.Core;
 using Conet.Apis.Core.ViewModels;
 using Conet.Apis.Mastodon.Api;
+using Conet.Apis.Mastodon.Models;
+using Conet.Apis.Mastodon.ViewModels;
 using iHentai.Basic.Controls;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
@@ -57,10 +60,22 @@ namespace Conet.Apis.Mastodon
             return (res.MaxId, res.Result);
         }
 
-        public Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count,
+        public async Task<(long Cursor, IEnumerable<JToken> Data)> UserTimeline(IInstanceData data, int count,
             long cursor = 0)
         {
-            throw new NotImplementedException();
+            if (!(data is InstanceData model)) throw new ArgumentException();
+            var result = await Accounts.Statuses(model.Domain, model.AccessToken, model.Uid, cursor);
+            return (result.MaxId, result.Result);
+        }
+
+        public async Task<JToken> Relationship(InstanceData data, string id)
+        {
+            return (await Accounts.Relationships(data.Domain, data.AccessToken, id)).Result.FirstOrDefault();
+        }
+
+        public async Task<ArrayModel<JToken>> Relationships(InstanceData data, params string[] ids)
+        {
+            return await Accounts.Relationships(data.Domain, data.AccessToken, ids);
         }
 
         public async Task<JToken> User(IInstanceData data, string uid)
@@ -73,6 +88,7 @@ namespace Conet.Apis.Mastodon
         public IEnumerable<IConetViewModel> GetHomeContent(Guid data, Guid messageGuid)
         {
             yield return new HomeTimelineViewModel(nameof(Mastodon), messageGuid, data);
+            yield return new UserTimelineViewModel(data.Get<InstanceData>().Uid, messageGuid, data);
         }
     }
 

@@ -19,7 +19,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Mastodon.Views
 {
-    [ContentKey("Account")]
+    [ContentKey(nameof(Mastodon) + "AccountCompat")]
     public sealed partial class AccountView : IContentView<JObject>
     {
         public AccountView()

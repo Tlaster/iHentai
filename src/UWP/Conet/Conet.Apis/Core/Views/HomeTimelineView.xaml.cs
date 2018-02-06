@@ -15,7 +15,7 @@ namespace Conet.Apis.Core.Views
             this.InitializeComponent();
         }
 
-        public HomeTimelineViewModel ViewModel => (HomeTimelineViewModel) DataContext;
+        public HomeTimelineViewModel ViewModel => DataContext as HomeTimelineViewModel;
 
         private void HomeTimelineView_OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
