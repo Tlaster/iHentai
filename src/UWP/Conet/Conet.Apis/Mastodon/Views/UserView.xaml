@@ -33,7 +33,7 @@
                 <controls:MarkdownTextBlock HorizontalAlignment="Center" Foreground="LightGray"
                                                 Text="{Binding Account[note], Mode=OneWay, Converter={StaticResource HtmlToMarkdownConverter}}" />
             </StackPanel>
-            <Grid Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}, ConverterParameter=true}">
+            <Grid Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}}">
                 <Grid Padding="16" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Button Style="{ThemeResource TextBlockButtonStyle}"
                             Visibility="{Binding Relationship[following],Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=true}">
@@ -65,7 +65,7 @@
                 </Style>
             </Grid.Resources>
             <Button Style="{ThemeResource TextBlockButtonStyle}"
-                    Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter},ConverterParameter=true}">
+                    Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}}">
                 <controls1:Icon Icons="GlobalNavigationButton" />
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -94,7 +94,7 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-            <Button Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}}" Style="{ThemeResource TextBlockButtonStyle}">
+            <Button Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}, ConverterParameter=true}" Style="{ThemeResource TextBlockButtonStyle}">
                 <controls1:Icon Icons="GlobalNavigationButton" />
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">

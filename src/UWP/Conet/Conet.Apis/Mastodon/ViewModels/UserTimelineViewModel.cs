@@ -15,8 +15,9 @@ namespace Conet.Apis.Mastodon.ViewModels
         {
             Source = new AutoList<UserTimelineDataSource, JToken>(new UserTimelineDataSource(_data, nameof(Mastodon)));
             UserSource = NotifyTask.Create(nameof(Mastodon).Get<Apis>().User(data.Get<IInstanceData>(), uid));
-            RelationshipSource =
-                NotifyTask.Create(nameof(Mastodon).Get<Apis>().Relationship(data.Get<InstanceData>(), uid));
+            if (data.Get<InstanceData>().Uid != uid)
+                RelationshipSource =
+                    NotifyTask.Create(nameof(Mastodon).Get<Apis>().Relationship(data.Get<InstanceData>(), uid));
         }
 
         public NotifyTask<JToken> RelationshipSource { get; }

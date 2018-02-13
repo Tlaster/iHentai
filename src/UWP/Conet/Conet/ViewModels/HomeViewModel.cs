@@ -23,7 +23,21 @@ namespace Conet.ViewModels
             _messageGuid = Guid.NewGuid();
             Singleton<MessagingCenter>.Instance.Subscribe<ConetActionArgs>(this, $"{ConetActionArgs.ConetAction}:{_messageGuid}", args =>
             {
-
+                switch (args.Action)
+                {
+                    case ActionTypes.Account:
+                        break;
+                    case ActionTypes.Detail:
+                        break;
+                    case ActionTypes.Follower:
+                        break;
+                    case ActionTypes.Following:
+                        break;
+                    case ActionTypes.Custom:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             });
             Source = serviceType.Get<IConetApi>().GetHomeContent(_data, _messageGuid).ToList();
         }

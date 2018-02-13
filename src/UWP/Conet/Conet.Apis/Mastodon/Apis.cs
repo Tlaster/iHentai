@@ -11,9 +11,6 @@ using Conet.Apis.Core.ViewModels;
 using Conet.Apis.Mastodon.Api;
 using Conet.Apis.Mastodon.Models;
 using Conet.Apis.Mastodon.ViewModels;
-using iHentai.Basic.Controls;
-using iHentai.Basic.Extensions;
-using iHentai.Basic.Helpers;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 
@@ -68,16 +65,6 @@ namespace Conet.Apis.Mastodon
             return (result.MaxId, result.Result);
         }
 
-        public async Task<JToken> Relationship(InstanceData data, string id)
-        {
-            return (await Accounts.Relationships(data.Domain, data.AccessToken, id)).Result.FirstOrDefault();
-        }
-
-        public async Task<ArrayModel<JToken>> Relationships(InstanceData data, params string[] ids)
-        {
-            return await Accounts.Relationships(data.Domain, data.AccessToken, ids);
-        }
-
         public async Task<JToken> User(IInstanceData data, string uid)
         {
             if (!(data is InstanceData model)) throw new ArgumentException();
@@ -90,6 +77,15 @@ namespace Conet.Apis.Mastodon
             yield return new HomeTimelineViewModel(nameof(Mastodon), messageGuid, data);
             yield return new UserTimelineViewModel(data.Get<InstanceData>().Uid, messageGuid, data);
         }
-    }
 
+        public async Task<JToken> Relationship(InstanceData data, string id)
+        {
+            return (await Accounts.Relationships(data.Domain, data.AccessToken, id)).Result.FirstOrDefault();
+        }
+
+        public async Task<ArrayModel<JToken>> Relationships(InstanceData data, params string[] ids)
+        {
+            return await Accounts.Relationships(data.Domain, data.AccessToken, ids);
+        }
+    }
 }
