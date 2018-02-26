@@ -11,13 +11,13 @@ namespace Conet.Apis.Mastodon.ViewModels
 {
     public class UserTimelineViewModel : ConetViewModelBase
     {
-        public UserTimelineViewModel(string uid, Guid messageGuid, Guid data) : base(messageGuid, data)
+        public UserTimelineViewModel(string uid)
         {
-            Source = new AutoList<UserTimelineDataSource, JToken>(new UserTimelineDataSource(_data, nameof(Mastodon)));
-            UserSource = NotifyTask.Create(nameof(Mastodon).Get<Apis>().User(data.Get<IInstanceData>(), uid));
-            if (data.Get<InstanceData>().Uid != uid)
+            Source = new AutoList<UserTimelineDataSource, JToken>(new UserTimelineDataSource(nameof(Mastodon)));
+            UserSource = NotifyTask.Create(nameof(Mastodon).Get<Apis>().User(Singleton<ApiContainer>.Instance.CurrentInstanceData, uid));
+            if ((Singleton<ApiContainer>.Instance.CurrentInstanceData as InstanceData).Uid != uid)
                 RelationshipSource =
-                    NotifyTask.Create(nameof(Mastodon).Get<Apis>().Relationship(data.Get<InstanceData>(), uid));
+                    NotifyTask.Create(nameof(Mastodon).Get<Apis>().Relationship(Singleton<ApiContainer>.Instance.CurrentInstanceData as InstanceData, uid));
         }
 
         public NotifyTask<JToken> RelationshipSource { get; }

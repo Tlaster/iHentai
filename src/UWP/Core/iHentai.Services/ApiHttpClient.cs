@@ -143,8 +143,10 @@ namespace iHentai.Services
                 .Cast<Cookie>()
                 .ToList()
                 .ForEach(c => c.Expired = true);
-            Singleton<ApiContainer>.Instance.InstanceDatas.Values.FirstOrDefault(item =>
-                item is IHttpHandler handler && handler.Handle(ref request));
+            if (Singleton<ApiContainer>.Instance.CurrentInstanceData is IHttpHandler httpHandler)
+            {
+                httpHandler.Handle(ref request);
+            }
             var key = request.RequestUri.ToString();
             if (request.Headers.CacheControl != null && !request.Headers.CacheControl.NoCache && Singleton<CacheManager>.Instance.Contains(key))
                 return new HttpResponseMessage(HttpStatusCode.OK)

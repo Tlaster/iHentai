@@ -18,20 +18,11 @@ namespace Conet.Apis.Core
 
         Task<JToken> User(IInstanceData data, string uid);
 
-        IEnumerable<IConetViewModel> GetHomeContent(Guid data, Guid messageGuid);
+        IEnumerable<IConetViewModel> GetHomeContent();
     }
 
     public abstract class ConetViewModelBase : IConetViewModel, INotifyPropertyChanged
     {
-        protected readonly Guid _data;
-        protected readonly Guid _messageGuid;
-
-        protected ConetViewModelBase(Guid messageGuid, Guid data)
-        {
-            _messageGuid = messageGuid;
-            _data = data;
-        }
-
         public abstract string Title { get; }
 
         public abstract Icons Icon { get; }
@@ -42,7 +33,7 @@ namespace Conet.Apis.Core
 
         public void Action(ActionTypes action, params object[] param)
         {
-            Singleton<MessagingCenter>.Instance.Send($"{ConetActionArgs.ConetAction}:{_messageGuid}",
+            Singleton<MessagingCenter>.Instance.Send($"{ConetActionArgs.ConetAction}",
                 new ConetActionArgs(action, param));
         }
 

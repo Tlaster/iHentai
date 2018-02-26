@@ -11,13 +11,11 @@ namespace iHentai.Core.ViewModels
 {
     public class GalleryDetailViewModel : ViewModel
     {
-        private readonly Guid _data;
         private readonly string _serviceType;
 
-        public GalleryDetailViewModel(string serviceType, IGalleryModel model, Guid data)
+        public GalleryDetailViewModel(string serviceType, IGalleryModel model)
         {
             Model = model;
-            _data = data;
             _serviceType = serviceType;
             DetailModel = NotifyTask.Create(GetDetailAsync);
         }
@@ -30,7 +28,7 @@ namespace iHentai.Core.ViewModels
 
         private Task<IGalleryDetailModel> GetDetailAsync()
         {
-            return _serviceType.Get<IHentaiApi>().Detail(Singleton<ApiContainer>.Instance[_data], Model);
+            return _serviceType.Get<IHentaiApi>().Detail(Singleton<ApiContainer>.Instance.CurrentInstanceData, Model);
         }
     }
 }

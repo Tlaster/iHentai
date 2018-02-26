@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Markup;
+using iHentai.Basic.Helpers;
 using iHentai.Services;
 using Microsoft.Toolkit.Collections;
 using Newtonsoft.Json.Linq;
@@ -33,35 +34,31 @@ namespace Conet.Apis.Core
     public class TimelineDataSource : ConetDataSource<JToken>
     {
         private readonly string _serviceType;
-        private readonly Guid _data;
 
-        public TimelineDataSource(Guid data, string serviceType)
+        public TimelineDataSource(string serviceType)
         {
-            _data = data;
             _serviceType = serviceType;
         }
 
         protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
             CancellationToken cancellationToken)
         {
-            return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser);
+            return _serviceType.Get<IConetApi>().HomeTimeline(Singleton<ApiContainer>.Instance.CurrentInstanceData, pageSize, curser);
         }
     }
     public class UserTimelineDataSource : ConetDataSource<JToken>
     {
         private readonly string _serviceType;
-        private readonly Guid _data;
 
-        public UserTimelineDataSource(Guid data, string serviceType)
+        public UserTimelineDataSource(string serviceType)
         {
-            _data = data;
             _serviceType = serviceType;
         }
 
         protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
             CancellationToken cancellationToken)
         {
-            return _serviceType.Get<IConetApi>().UserTimeline(_data.Get<IInstanceData>(), pageSize, curser);
+            return _serviceType.Get<IConetApi>().UserTimeline(Singleton<ApiContainer>.Instance.CurrentInstanceData, pageSize, curser);
         }
     }
 }
