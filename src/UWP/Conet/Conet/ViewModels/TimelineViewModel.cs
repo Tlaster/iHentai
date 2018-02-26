@@ -17,13 +17,10 @@ namespace Conet.ViewModels
     //[Startup]
     public class TimelineViewModel : ViewModel
     {
-        private readonly Guid _data;
-
-        public TimelineViewModel(string serviceType, Guid data)
+        public TimelineViewModel(string serviceType)
         {
-            _data = data;
             ServiceType = serviceType;
-            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, ServiceType));
+            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(ServiceType));
         }
 
         public AutoList<TimelineDataSource, JToken> Source { get; }
@@ -40,18 +37,16 @@ namespace Conet.ViewModels
     public class TimelineDataSource : ConetDataSource<JToken>
     {
         private readonly string _serviceType;
-        private readonly Guid _data;
 
-        public TimelineDataSource(Guid data, string serviceType)
+        public TimelineDataSource(string serviceType)
         {
-            _data = data;
             _serviceType = serviceType;
         }
 
         protected override Task<(long Curser, IEnumerable<JToken> Data)> GetDataAsync(long curser, int pageSize,
             CancellationToken cancellationToken)
         {
-            return _serviceType.Get<IConetApi>().HomeTimeline(_data.Get<IInstanceData>(), pageSize, curser);
+            return _serviceType.Get<IConetApi>().HomeTimeline(Singleton<ApiContainer>.Instance.CurrentInstanceData, pageSize, curser);
         }
     }
 }

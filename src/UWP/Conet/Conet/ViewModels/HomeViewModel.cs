@@ -13,15 +13,10 @@ namespace Conet.ViewModels
     [Startup]
     public class HomeViewModel : ViewModel
     {
-        private readonly Guid _data;
-        private readonly Guid _messageGuid;
-
-        public HomeViewModel(string serviceType, Guid data)
+        public HomeViewModel(string serviceType)
         {
-            _data = data;
             ServiceType = serviceType;
-            _messageGuid = Guid.NewGuid();
-            Singleton<MessagingCenter>.Instance.Subscribe<ConetActionArgs>(this, $"{ConetActionArgs.ConetAction}:{_messageGuid}", args =>
+            Singleton<MessagingCenter>.Instance.Subscribe<ConetActionArgs>(this, $"{ConetActionArgs.ConetAction}", args =>
             {
                 switch (args.Action)
                 {
@@ -39,13 +34,13 @@ namespace Conet.ViewModels
                         throw new ArgumentOutOfRangeException();
                 }
             });
-            Source = serviceType.Get<IConetApi>().GetHomeContent(_data, _messageGuid).ToList();
+            Source = serviceType.Get<IConetApi>().GetHomeContent().ToList();
         }
 
         protected override void OnDestory()
         {
             base.OnDestory();
-            Singleton<MessagingCenter>.Instance.Unsubscribe(this, $"{ConetActionArgs.ConetAction}:{_messageGuid}");
+            Singleton<MessagingCenter>.Instance.Unsubscribe(this, $"{ConetActionArgs.ConetAction}");
         }
 
         public List<IConetViewModel> Source { get; }

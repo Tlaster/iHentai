@@ -31,7 +31,7 @@ namespace iHentai.Basic.Converters
 
         private static string HumanizerDateTime(DateTime dateTime)
         {
-            return dateTime > DateTime.UtcNow - TimeSpan.FromDays(5) ? dateTime.ToOrdinalWords() : dateTime.Humanize();
+            return dateTime < DateTime.UtcNow - TimeSpan.FromDays(5) ? dateTime.ToOrdinalWords() : dateTime.Humanize();
         }
     }
 }

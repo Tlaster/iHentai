@@ -35,14 +35,7 @@ namespace iHentai.Services
     public interface IInstanceData
     {
     }
-
-    public static class InstanceDataExtensions
-    {
-        public static T Get<T>(this Guid data) where T : class, IInstanceData
-        {
-            return Singleton<ApiContainer>.Instance[data] as T;
-        }
-    }
+    
 
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class StartupAttribute : Attribute

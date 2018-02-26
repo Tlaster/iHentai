@@ -19,22 +19,20 @@ namespace iHentai.Core.ViewModels
     public class GalleryViewModel : ViewModel
     {
         private readonly string _serviceType;
-        private readonly Guid _data;
 
-        public GalleryViewModel() : this(nameof(Apis.NHentai), Guid.NewGuid())
+        public GalleryViewModel() : this(nameof(Apis.NHentai))
         {
         }
 
-        public GalleryViewModel(string serviceType, Guid data) :
-            this(serviceType, data, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
+        public GalleryViewModel(string serviceType) :
+            this(serviceType, null) //DO NOT use optional parameter since we use reflection at ServiceSelectionViewModel
         {
         }
 
-        public GalleryViewModel(string serviceType, Guid data, SearchOptionBase option)
+        public GalleryViewModel(string serviceType, SearchOptionBase option)
         {
             _serviceType = serviceType;
-            _data = data;
-            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(), _data, option));
+            Source = new AutoList<GalleryDataSource, IGalleryModel>(new GalleryDataSource(serviceType.Get<IHentaiApi>(), option));
             if (option != null && !option.Keyword.IsEmpty())
                 SearchPlaceholder = option.Keyword;
         }
@@ -47,7 +45,7 @@ namespace iHentai.Core.ViewModels
 
         public void GoDetail(IGalleryModel model)
         {
-            Navigate<GalleryDetailViewModel>(_serviceType, model, _data).FireAndForget();
+            Navigate<GalleryDetailViewModel>(_serviceType, model).FireAndForget();
         }
         
         public void SearchSubmit()
@@ -74,12 +72,9 @@ namespace iHentai.Core.ViewModels
 
     public class GalleryDataSource : IIncrementalSource<IGalleryModel>
     {
-        private readonly Guid _data;
-
-        public GalleryDataSource(IHentaiApi apis, Guid data, SearchOptionBase option = null)
+        public GalleryDataSource(IHentaiApi apis, SearchOptionBase option = null)
         {
             Apis = apis;
-            _data = data;
             SearchOption = option ?? apis.SearchOptionGenerator;
         }
 
@@ -90,7 +85,7 @@ namespace iHentai.Core.ViewModels
         public async Task<IEnumerable<IGalleryModel>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            return (await Apis.Gallery(_data.Get<IInstanceData>(), pageIndex, SearchOption, cancellationToken)).Gallery;
+            return (await Apis.Gallery(Singleton<ApiContainer>.Instance.CurrentInstanceData, pageIndex, SearchOption, cancellationToken)).Gallery;
         }
     }
 }

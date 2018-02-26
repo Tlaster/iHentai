@@ -12,9 +12,9 @@ namespace Conet.Apis.Core.ViewModels
 {
     public class HomeTimelineViewModel : ConetViewModelBase
     {
-        public HomeTimelineViewModel(string serviceType, Guid messageGuid, Guid data) : base(messageGuid, data)
+        public HomeTimelineViewModel(string serviceType)
         {
-            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(_data, serviceType));
+            Source = new AutoList<TimelineDataSource, JToken>(new TimelineDataSource(serviceType));
             ContentKey = $"{serviceType}Status";
         }
 

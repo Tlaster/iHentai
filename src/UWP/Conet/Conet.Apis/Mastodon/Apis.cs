@@ -11,6 +11,7 @@ using Conet.Apis.Core.ViewModels;
 using Conet.Apis.Mastodon.Api;
 using Conet.Apis.Mastodon.Models;
 using Conet.Apis.Mastodon.ViewModels;
+using iHentai.Basic.Helpers;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 
@@ -72,10 +73,10 @@ namespace Conet.Apis.Mastodon
             return await Accounts.Fetching(model.Domain, uid, model.AccessToken);
         }
 
-        public IEnumerable<IConetViewModel> GetHomeContent(Guid data, Guid messageGuid)
+        public IEnumerable<IConetViewModel> GetHomeContent()
         {
-            yield return new HomeTimelineViewModel(nameof(Mastodon), messageGuid, data);
-            yield return new UserTimelineViewModel(data.Get<InstanceData>().Uid, messageGuid, data);
+            yield return new HomeTimelineViewModel(nameof(Mastodon));
+            yield return new UserTimelineViewModel((Singleton<ApiContainer>.Instance.CurrentInstanceData as InstanceData).Uid);
         }
 
         public async Task<JToken> Relationship(InstanceData data, string id)
