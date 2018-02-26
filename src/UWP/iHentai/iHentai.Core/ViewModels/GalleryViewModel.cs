@@ -49,12 +49,7 @@ namespace iHentai.Core.ViewModels
         {
             Navigate<GalleryDetailViewModel>(_serviceType, model, _data).FireAndForget();
         }
-
-        public void OpenDetailInNewTab(IGalleryModel model)
-        {
-            Singleton<MessagingCenter>.Instance.Send(NewTabArgs.NewTab, new NewTabArgs(typeof(GalleryDetailViewModel), _serviceType, model, _data));
-        }
-
+        
         public void SearchSubmit()
         {
             if (Source.DataSource.SearchOption.Keyword.IsEmpty())
