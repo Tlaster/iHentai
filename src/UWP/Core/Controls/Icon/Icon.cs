@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace iHentai.Basic.Controls
+namespace iHentai.Controls
 {
     public partial class Icon : FontIcon
     {

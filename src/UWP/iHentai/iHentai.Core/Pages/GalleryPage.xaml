@@ -17,6 +17,7 @@
     xmlns:viewModels="using:iHentai.Core.ViewModels"
     xmlns:basic="using:iHentai.Basic.Controls"
     xmlns:services="using:iHentai.Services"
+    xmlns:controls1="using:iHentai.Controls"
     x:Name="Page"
     SizeChanged="GalleryPage_OnSizeChanged"
     Title="{Binding Title}"
@@ -87,20 +88,20 @@
                         </Grid.RowDefinitions>
                         <ToggleButton IsChecked="{Binding ElementName=RootSplitView, Path=IsPaneOpen, Mode=TwoWay}"
                                       Background="Transparent" VerticalAlignment="Stretch">
-                            <basic:Icon Icons="GlobalNavigationButton" />
+                            <controls1:Icon Icons="GlobalNavigationButton" />
                         </ToggleButton>
                         <AutoSuggestBox QuerySubmitted="{x:Bind ViewModel.SearchSubmit}"
                                         Text="{Binding Source.DataSource.SearchOption.Keyword, Mode=TwoWay}"
                                         Grid.Row="0" Grid.Column="1" Background="Transparent"
                                         PlaceholderText="{Binding SearchPlaceholder}">
                             <AutoSuggestBox.QueryIcon>
-                                <basic:Icon Icons="Search" FontSize="20" />
+                                <controls1:Icon Icons="Search" FontSize="20" />
                             </AutoSuggestBox.QueryIcon>
                         </AutoSuggestBox>
                         <ToggleButton BorderThickness="0" Grid.Row="0" Grid.Column="2" x:Name="AdvSearchSwitch"
                                       Background="Transparent"
                                       VerticalAlignment="Stretch">
-                            <basic:Icon Icons="Add" />
+                            <controls1:Icon Icons="Add" />
                         </ToggleButton>
                         <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0"
                               Visibility="{Binding ElementName=AdvSearchSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">

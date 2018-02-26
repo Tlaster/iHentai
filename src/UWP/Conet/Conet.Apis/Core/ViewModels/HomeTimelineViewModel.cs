@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using iHentai.Basic.Controls;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
+using iHentai.Controls;
 using Newtonsoft.Json.Linq;
 
 namespace Conet.Apis.Core.ViewModels

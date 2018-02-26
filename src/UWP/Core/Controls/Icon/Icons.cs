@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace iHentai.Basic.Controls
+namespace iHentai.Controls
 {
     public partial class Icon
     {

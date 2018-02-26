@@ -172,6 +172,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Controls\Icon\Icon.csproj">
+      <Project>{58138B9A-6421-49EA-919D-88CD2BEBFD6C}</Project>
+      <Name>Icon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
       <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
       <Name>iHentai.Services</Name>

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using iHentai.Basic.Controls;
 using iHentai.Basic.Helpers;
+using iHentai.Controls;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 

@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{152BB566-C7FF-47C7-AA15-EAB367ABECC6}</ProjectGuid>
+    <ProjectGuid>{58138B9A-6421-49EA-919D-88CD2BEBFD6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Conet</RootNamespace>
-    <AssemblyName>Conet</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <RootNamespace>Icon</RootNamespace>
+    <AssemblyName>Icon</AssemblyName>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -106,77 +106,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Pages\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TimelinePage.xaml.cs">
-      <DependentUpon>TimelinePage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Icon.cs" />
+    <Compile Include="Icons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\TimelineViewModel.cs" />
-    <EmbeddedResource Include="Properties\Conet.rd.xml" />
+    <EmbeddedResource Include="Properties\Icon.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fody">
-      <Version>2.4.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.7</Version>
+      <Version>6.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>2.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody">
-      <Version>2.2.6</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Controls\Icon\Icon.csproj">
-      <Project>{58138B9A-6421-49EA-919D-88CD2BEBFD6C}</Project>
-      <Name>Icon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
-      <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
-      <Name>iHentai.Basic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Mvvm\iHentai.Mvvm.csproj">
-      <Project>{834bd393-52af-43db-879f-934f9cadf811}</Project>
-      <Name>iHentai.Mvvm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Paging\iHentai.Paging.csproj">
-      <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
-      <Name>iHentai.Paging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
-      <Project>{c082ded4-fbb4-4a92-89f5-6fa8ffed436c}</Project>
-      <Name>iHentai.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Controls\WaterFallView\WaterFallView.vcxproj">
-      <Project>{1bd1bc4b-f0b7-4b8a-b27d-741413a19518}</Project>
-      <Name>WaterFallView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Conet.Apis\Conet.Apis.csproj">
-      <Project>{ff200c31-7908-4dc4-b917-e20a415d20df}</Project>
-      <Name>Conet.Apis</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Pages\HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TimelinePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

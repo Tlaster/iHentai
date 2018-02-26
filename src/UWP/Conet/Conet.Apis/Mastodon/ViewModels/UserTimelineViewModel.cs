@@ -3,6 +3,7 @@ using Conet.Apis.Core;
 using iHentai.Basic.Controls;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
+using iHentai.Controls;
 using iHentai.Services;
 using Newtonsoft.Json.Linq;
 using Nito.Mvvm;
