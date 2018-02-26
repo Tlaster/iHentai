@@ -144,23 +144,5 @@ namespace iHentai.Core.Pages
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
             ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
         }
-
-        private void UIElement_OnPointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            e.Handled = true;
-            _tappedItem = (sender as GalleryGridItem).FindDescendant<ImageEx>();
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("detail_image", _tappedItem);
-            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse)
-            {
-                var ptrPt = e.GetCurrentPoint(sender as ListViewItem);
-                if (ptrPt.Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
-                {
-                    ViewModel.OpenDetailInNewTab((sender as GalleryGridItem).DataContext as IGalleryModel);
-                    return;
-                }
-            }
-
-            ViewModel.GoDetail((sender as GalleryGridItem).DataContext as IGalleryModel);
-        }
     }
 }

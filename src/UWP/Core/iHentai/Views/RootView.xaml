@@ -8,7 +8,6 @@
     xmlns:paging="using:iHentai.Paging"
     xmlns:animations="using:iHentai.Paging.Animations"
     xmlns:viewModels="using:iHentai.ViewModels"
-    xmlns:tab="using:Tab"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:iHentai.Basic.Controls"
@@ -17,42 +16,11 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <tab:TabControl TabBackground="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" x:Name="tab"
-                    TitlePath="CurrentPageTitle"
-                    TabClosed="Tab_OnTabClosed"
-                    DefaultContentParam="{x:Bind DefaultNavItem}">
-        <tab:TabControl.WindowGenerator>
-            <local:WindowGenerator DefaultNavItem="{x:Bind DefaultNavItem}"/>
-        </tab:TabControl.WindowGenerator>
-        <tab:TabControl.ItemsTemplate>
-            <DataTemplate>
-                <mvvm:MvvmFrame x:Name="TabRootFrame"
-                                TargetSourcePage="{Binding}">
-                    <paging:HentaiFrame.PageAnimation>
-                        <animations:FadeAnimation />
-                    </paging:HentaiFrame.PageAnimation>
-                </mvvm:MvvmFrame>
-            </DataTemplate>
-        </tab:TabControl.ItemsTemplate>
-        <tab:TabControl.TabHeader>
-            <Button VerticalAlignment="Stretch" DataContext="{Binding ElementName=tab, Path=Content}"
-                    d:DataContext="{d:DesignInstance mvvm:MvvmFrame}"
-                    IsEnabled="{Binding CanGoBack}" Style="{ThemeResource NavigationBackButtonSmallStyle}"
-                    Command="{Binding GoBackCommand}" Width="48">
-                <controls1:Icon Icons="Back" FontSize="12" />
-            </Button>
-        </tab:TabControl.TabHeader>
-        <tab:TabControl.TabFooter>
-            <Button VerticalAlignment="Stretch" Click="{x:Bind tab.Add}" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Grid.Column="2">
-                <ContentControl.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Open new window" Click="MenuFlyoutItem_OnClick"/>
-                    </MenuFlyout>
-                </ContentControl.ContextFlyout>
-                <controls1:Icon Icons="Add" FontSize="12" />
-            </Button>
-        </tab:TabControl.TabFooter>
-    </tab:TabControl>
+    <mvvm:MvvmFrame x:Name="RootFrame" TargetSourcePage="{x:Bind DefaultNavItem}">
+        <paging:HentaiFrame.PageAnimation>
+            <animations:FadeAnimation />
+        </paging:HentaiFrame.PageAnimation>
+    </mvvm:MvvmFrame>
     <controls:InAppNotification ShowDismissButton="False" x:Name="Notification"/>
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"
