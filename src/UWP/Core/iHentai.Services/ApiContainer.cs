@@ -36,7 +36,7 @@ namespace iHentai.Services
 
         public IInstanceData CurrentInstanceData { get; set; }
 
-        public IApi this[string index] => Apis.GetOrAdd(index, str => (IApi) Activator.CreateInstance(KnownApis[str]));
+        public IApi this[string index] => Apis.GetOrAdd(index, str => Activator.CreateInstance(KnownApis[str]) as IApi);
 
         public ConcurrentDictionary<string, IApi> Apis { get; } = new ConcurrentDictionary<string, IApi>();
 

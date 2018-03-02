@@ -47,6 +47,7 @@ namespace iHentai.Services
             var items = KnownViews.Where(x => x.Key.ItemType == item.GetType());
             if (!items.Any()) return new DataTemplate();
             if (items.Count() > 1) items = items.Where(x => x.Key.ContentType == ContentKey);
+            if (!items.Any()) return new DataTemplate();
             var type = items.FirstOrDefault().Value;
             var template =
                 $"<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><views:{type.Name} xmlns:views=\"using:{type.Namespace}\"/></DataTemplate>";

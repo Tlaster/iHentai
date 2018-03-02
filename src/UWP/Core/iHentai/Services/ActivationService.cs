@@ -13,6 +13,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using FluentScheduler;
 using Flurl.Http;
+using Flurl.Http.Configuration;
 using Humanizer;
 using iHentai.Activation;
 using iHentai.Basic.Helpers;
@@ -21,6 +22,8 @@ using iHentai.Paging;
 using iHentai.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.UI;
+using Newtonsoft.Json;
+using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace iHentai.Services
 {
@@ -80,7 +83,14 @@ namespace iHentai.Services
             Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasks();
             ThemeSelectorService.Initialize();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<ApiHttpClient>.Instance);
-            FlurlHttp.Configure(c => c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance);
+            FlurlHttp.Configure(c =>
+            {
+                c.JsonSerializer = new NewtonsoftJsonSerializer(new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                });
+                c.HttpClientFactory = Singleton<ApiHttpClientFactory>.Instance;
+            });
             JobManager.Initialize(Singleton<JobRegistry>.Instance);
             //await Singleton<CacheManager>.Instance.InitializeAsync();
             //await Singleton<CacheManager>.Instance.CleanDisk();

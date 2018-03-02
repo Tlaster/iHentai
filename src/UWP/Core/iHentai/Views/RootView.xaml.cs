@@ -9,6 +9,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Basic.Extensions;
+using iHentai.Basic.Helpers;
 using iHentai.Paging;
 using iHentai.Services;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -20,6 +21,7 @@ namespace iHentai.Views
     public sealed partial class RootView
     {
         private readonly SplashScreen _splash;
+        private readonly UISettings _uiSettings;
         private Rect _splashImageRect;
 
         public RootView(SplashScreen splashScreen, Type defaultNavItem)
@@ -37,9 +39,46 @@ namespace iHentai.Views
             {
                 ExtendedSplash.Visibility = Visibility.Collapsed;
             }
+
             RootFrame.Navigated += RootFrameOnNavigated;
-            //ExtendAcrylicIntoTitleBar();
+            ExtendAcrylicIntoTitleBar();
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            CustomTitleBar.Height = coreTitleBar.Height;
+            Window.Current.SetTitleBar(CustomTitleBar);
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBarOnLayoutMetricsChanged;
+            coreTitleBar.IsVisibleChanged += CoreTitleBarOnIsVisibleChanged;
+
+            _uiSettings = new UISettings();
+            _uiSettings.ColorValuesChanged += UiSettingsOnColorValuesChanged;
+            ThemeHelper.AccentColorUpdated(CustomTitleBar);
+        }
+
+        public Type DefaultNavItem { get; }
+
+        private async void UiSettingsOnColorValuesChanged(UISettings sender, object args)
+        {
+            await Dispatcher.TryRunAsync(CoreDispatcherPriority.Low,
+                () => ThemeHelper.AccentColorUpdated(CustomTitleBar));
+        }
+
+        private void CoreTitleBarOnIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            CustomTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void CoreTitleBarOnLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            UpdateTitleBarLayout(sender);
+        }
+
+
+        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
+            RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
+            CustomTitleBar.Height = coreTitleBar.Height;
         }
 
         private void RootFrameOnNavigated(object sender, HentaiNavigationEventArgs e)
@@ -48,8 +87,6 @@ namespace iHentai.Views
                 ? AppViewBackButtonVisibility.Visible
                 : AppViewBackButtonVisibility.Collapsed;
         }
-
-        public Type DefaultNavItem { get; }
 
         private void ExtendAcrylicIntoTitleBar()
         {

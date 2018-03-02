@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
@@ -12,10 +11,19 @@ namespace iHentai.Mvvm
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             nameof(Title), typeof(string), typeof(MvvmPage), new PropertyMetadata(default(string)));
 
+        public static readonly DependencyProperty IsTitlebarShownProperty = DependencyProperty.Register(
+            nameof(IsTitlebarShown), typeof(bool), typeof(MvvmPage), new PropertyMetadata(true));
+
         public MvvmPage()
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
+        }
+
+        public bool IsTitlebarShown
+        {
+            get => (bool) GetValue(IsTitlebarShownProperty);
+            set => SetValue(IsTitlebarShownProperty, value);
         }
 
         public string Title
@@ -25,6 +33,8 @@ namespace iHentai.Mvvm
         }
 
         public ViewModel ViewModel { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected override void SetFrame(HentaiFrame frame, string pageKey)
         {
@@ -128,8 +138,6 @@ namespace iHentai.Mvvm
         {
             ViewModel?.OnDestory();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
