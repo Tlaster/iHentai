@@ -26,6 +26,8 @@ namespace iHentai.Mvvm
             set => SetValue(TargetSourcePageProperty, value);
         }
 
+        public MvvmPage CurrentMvvmPage => CurrentPage as MvvmPage;
+
         public string CurrentPageTitle => (CurrentPage as MvvmPage)?.Title ?? Package.Current.DisplayName;
 
         public ICommand GoBackCommand => new RelayCommand(() => GoBackAsync());
@@ -69,6 +71,7 @@ namespace iHentai.Mvvm
             base.OnNavigated(sender, args);
             OnPropertyChanged(nameof(CanGoBack));
             OnPropertyChanged(nameof(CurrentPageTitle));
+            OnPropertyChanged(nameof(CurrentMvvmPage));
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -8,7 +8,6 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:converters="using:iHentai.Basic.Converters"
     xmlns:viewModels="using:iHentai.ViewModels"
-    IsTitlebarShown="False"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <mvvm:MvvmPage.Resources>
