@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
-using iHentai.Basic;
 using iHentai.Basic.Extensions;
 using iHentai.Basic.Helpers;
 using iHentai.Database;
@@ -32,7 +29,7 @@ namespace iHentai.ViewModels
         public Dictionary<string, List<(string Data, int Key)>> Instances { get; set; }
 
         public bool IsLoading { get; set; }
-        
+
         public List<ServiceSelectionBannerModel> Source { get; } =
             Singleton<ApiContainer>.Instance.KnownApis.Keys.Select(
                 item => new ServiceSelectionBannerModel(item)).ToList();
@@ -94,7 +91,7 @@ namespace iHentai.ViewModels
 
         public void InstanceDataClicked(object sender, ItemClickEventArgs e)
         {
-            Go(SelectedService?.ServiceType, ((KeyValuePair<int, IInstanceData>)e.ClickedItem).Value);
+            Go(SelectedService?.ServiceType, ((KeyValuePair<int, IInstanceData>) e.ClickedItem).Value);
         }
 
         public void ConfirmWithExistingAccount()
