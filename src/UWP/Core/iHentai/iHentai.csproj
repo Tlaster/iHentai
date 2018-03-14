@@ -103,7 +103,7 @@
       <Version>2.4.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.8</Version>
@@ -254,13 +254,17 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Conet\Conet.Apis\Conet.Apis.csproj">
-      <Project>{ff200c31-7908-4dc4-b917-e20a415d20df}</Project>
-      <Name>Conet.Apis</Name>
+    <ProjectReference Include="..\..\Conet.Twitter\Conet.Twitter.csproj">
+      <Project>{19668b38-b5a0-447c-ac53-fcd74b1a892a}</Project>
+      <Name>Conet.Twitter</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Conet\Conet\Conet.csproj">
-      <Project>{152bb566-c7ff-47c7-aa15-eab367abecc6}</Project>
-      <Name>Conet</Name>
+    <ProjectReference Include="..\..\Conet\Conet.Mastodon\Conet.Mastodon.csproj">
+      <Project>{6712afef-f482-4616-87fc-aa4050dddc69}</Project>
+      <Name>Conet.Mastodon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Conet\Conet.Weibo\Conet.Weibo.csproj">
+      <Project>{c431cc88-9a38-4807-99ad-583ba3636285}</Project>
+      <Name>Conet.Weibo</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\iHentai\iHentai.Apis\iHentai.Apis.csproj">
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>

@@ -4,6 +4,6 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.9.9.1" />
+    <PackageReference Include="AngleSharp" Version="0.9.9.2" />
   </ItemGroup>
 </Project>
