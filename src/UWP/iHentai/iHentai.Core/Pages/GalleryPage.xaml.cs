@@ -44,20 +44,20 @@ namespace iHentai.Core.Pages
             //var detailTitleAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("detail_title");
             //if (MoreInfoCanvas.Visibility == Visibility.Visible)
             //    detailTitleAnimation?.TryStart(MoreInfoTitle);
-            if (detailImageAnimation != null)
-                if (MoreInfoCanvas.Visibility == Visibility.Visible)
-                {
-                    detailImageAnimation.TryStart(MoreInfoImage);
-                }
-                else if (_tappedItem != null)
-                {
-                    detailImageAnimation.TryStart(_tappedItem);
-                    _tappedItem = null;
-                }
-                else
-                {
-                    detailImageAnimation.Cancel();
-                }
+            if (detailImageAnimation == null) return;
+            if (MoreInfoCanvas.Visibility == Visibility.Visible)
+            {
+                detailImageAnimation.TryStart(MoreInfoImage);
+            }
+            else if (_tappedItem != null)
+            {
+                detailImageAnimation.TryStart(_tappedItem);
+                _tappedItem = null;
+            }
+            else
+            {
+                detailImageAnimation.Cancel();
+            }
         }
 
         private void HideMoreInfo()
@@ -111,7 +111,7 @@ namespace iHentai.Core.Pages
             var centerX = point.X + container.ActualWidth / 2 - x;
             var centerY = point.Y + container.ActualHeight / 2 - y;
 
-            VisualEx.SetCenterPoint(MoreInfoContent, new Vector3((float) centerX, (float) centerY, 0).ToString());
+            VisualExtensions.SetCenterPoint(MoreInfoContent, new Vector3((float) centerX, (float) centerY, 0).ToString());
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("image", ffimage).TryStart(MoreInfoImage);
 
             MoreInfoCanvas.Visibility = Visibility.Visible;

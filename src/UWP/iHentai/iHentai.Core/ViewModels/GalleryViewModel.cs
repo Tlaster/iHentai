@@ -60,7 +60,7 @@ namespace iHentai.Core.ViewModels
                 Source.DataSource.SearchOption.SearchType = SearchTypes.Keyword;
             }
 
-            Source.RefreshAsync().FireAndForget();
+            Source.Refresh();
         }
 
         protected override void OnStart()

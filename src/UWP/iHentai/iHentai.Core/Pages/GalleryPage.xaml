@@ -161,6 +161,7 @@
                                 </Grid.RowDefinitions>
 
                                 <controls:ImageEx
+                                    Style="{StaticResource ImageExNoTransition}"
                                     IsCacheEnabled="True"
                                     Tapped="MoreInfoImage_OnTapped"
                                     x:Name="MoreInfoImage"

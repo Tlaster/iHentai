@@ -108,7 +108,11 @@
   <ItemGroup>
     <Compile Include="Api.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AccountSelectionViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
+    <Compile Include="Views\AccountSelectionPage.xaml.cs">
+      <DependentUpon>AccountSelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimelinePage.xaml.cs">
       <DependentUpon>TimelinePage.xaml</DependentUpon>
     </Compile>
@@ -143,6 +147,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\AccountSelectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimelinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

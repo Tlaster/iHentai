@@ -7,117 +7,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:services="using:iHentai.Services"
     xmlns:viewModels="using:iHentai.ViewModels"
-    xmlns:effects="using:Microsoft.Toolkit.Uwp.UI.Animations.Effects"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-    xmlns:controls1="using:iHentai.Basic.Controls"
-    xmlns:controls2="using:iHentai.Controls"
+    xmlns:controls1="using:iHentai.Controls"
     Title="{Binding Title}"
     x:Name="Root"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
-
-    <mvvm:MvvmPage.Resources>
-        <MenuFlyout x:Name="InstanceDataFlayout">
-            <MenuFlyoutItem Text="Remove" />
-        </MenuFlyout>
-    </mvvm:MvvmPage.Resources>
-
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <controls:Carousel EasingFunction="{x:Null}" ItemDepth="400" ItemsSource="{Binding Source}"
-                           SelectedItem="{Binding SelectedService,Mode=TwoWay}">
-            <controls:Carousel.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel MaxWidth="300">
-                        <Image Source="{Binding Image}" />
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}" />
-                    </StackPanel>
-                </DataTemplate>
-            </controls:Carousel.ItemTemplate>
-        </controls:Carousel>
-        <ScrollViewer Grid.Row="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <ContentControl MaxWidth="500" Padding="8" Content="{Binding LoginData, TargetNullValue=null}"
-                                HorizontalContentAlignment="Stretch">
-                    <ContentControl.ContentTemplateSelector>
-                        <services:ContentViewTemplateSelector />
-                    </ContentControl.ContentTemplateSelector>
-                    <ContentControl.ContentTransitions>
-                        <TransitionCollection>
-                            <ContentThemeTransition />
-                        </TransitionCollection>
-                    </ContentControl.ContentTransitions>
-                </ContentControl>
-                <Grid MaxWidth="500" Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding Datas}" IsItemClickEnabled="True" SelectionMode="None"
-                              ItemClick="{x:Bind ViewModel.InstanceDataClicked}">
-                        <!--<GridView.ItemTemplateSelector>
-                            <services:ContentViewTemplateSelector/>
-                        </GridView.ItemTemplateSelector>-->
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ContentControl Content="{Binding Value}" DataContext="{Binding}" x:Name="InstanceDataContentRoot">
-                                    <ContentControl.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem
-                                                DataContext="{Binding ElementName=InstanceDataContentRoot, Path=DataContext}"
-                                                Text="Remove" Click="MenuFlyoutItem_OnClick" />
-                                        </MenuFlyout>
-                                    </ContentControl.ContextFlyout>
-                                    <ContentControl.ContentTemplateSelector>
-                                        <services:ContentViewTemplateSelector />
-                                    </ContentControl.ContentTemplateSelector>
-                                </ContentControl>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Button Margin="8" Content="Using existing account"
-                            Click="{x:Bind ViewModel.ConfirmWithExistingAccount}"
-                            Visibility="{Binding IsSingletonAccountApi, Converter={StaticResource BoolToVisibilityConverter}}"
-                            HorizontalAlignment="Stretch" />
-                    <Button Margin="8" Grid.Row="1" Content="Go" HorizontalAlignment="Stretch"
-                            Click="{x:Bind ViewModel.Confirm}" />
-                </Grid>
-            </Grid>
-        </ScrollViewer>
-        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Padding="32,8" Style="{ThemeResource HeaderTextBlockStyle}" Text="Please select a service"/>
+            <controls:Carousel ItemDepth="400" 
+                               Margin="0,32"
+                               ItemsSource="{Binding Source}"
+                               VerticalAlignment="Top"
+                               VerticalContentAlignment="Top"
+                               SelectedItem="{Binding SelectedService,Mode=TwoWay}">
+                <controls:Carousel.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel MaxWidth="300">
+                            <Image Source="{Binding Image}" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding ServiceType}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:Carousel.ItemTemplate>
+            </controls:Carousel>
+            <Button Margin="16" Content="Confirm" Click="{x:Bind ViewModel.Confirm}" HorizontalAlignment="Stretch" MaxWidth="500"/>
+        </StackPanel>
+        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <controls2:Icon Icons="Settings" Margin="4" />
+                <controls1:Icon Icons="Settings" Margin="4" />
                 <TextBlock Grid.Column="1" Text="Settings" Margin="4" />
             </Grid>
         </Button>
-        <controls:Loading HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Opacity="0.8"
-                          Grid.Row="0" Grid.RowSpan="2" IsLoading="{Binding IsLoading}">
-            <Grid>
-                <Border Background="{ThemeResource DefaultTextForegroundThemeBrush}" Opacity="0.66">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:Blur AutomaticallyStart="True"
-                                        Delay="0"
-                                        Value="10"
-                                        Duration="0" />
-                    </interactivity:Interaction.Behaviors>
-                </Border>
-                <ProgressRing IsActive="{Binding IsLoading}" Width="50" Height="50" />
-            </Grid>
-        </controls:Loading>
     </Grid>
 </mvvm:MvvmPage>

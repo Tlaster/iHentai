@@ -15,7 +15,7 @@ namespace Conet.Mastodon.Views
             InitializeComponent();
         }
 
-        public TimelineViewModel ViewModel
+        public new TimelineViewModel ViewModel
         {
             get => (TimelineViewModel) base.ViewModel;
             set => base.ViewModel = value;

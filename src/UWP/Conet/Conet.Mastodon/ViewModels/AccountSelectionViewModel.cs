@@ -8,9 +8,10 @@ using iHentai.Services;
 
 namespace Conet.Mastodon.ViewModels
 {
-    public class TimelineViewModel : ViewModel
+    [Startup]
+    public class AccountSelectionViewModel : ViewModel
     {
-        public TimelineViewModel(string service)
+        public AccountSelectionViewModel()
         {
             
         }
