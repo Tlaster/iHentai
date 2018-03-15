@@ -10,5 +10,6 @@ namespace Conet.Mastodon
     [ApiKey(nameof(Mastodon))]
     public class Api : IApi
     {
+
     }
 }

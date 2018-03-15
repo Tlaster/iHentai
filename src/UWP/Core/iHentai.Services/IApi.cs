@@ -15,22 +15,22 @@ namespace iHentai.Services
         bool Handle(ref HttpRequestMessage message);
     }
 
-    public interface ILoginData
-    {
-    }
+    //public interface ILoginData
+    //{
+    //}
 
-    public interface ICanLogin
-    {
-        ILoginData LoginDataGenerator { get; }
+    //public interface ICanLogin
+    //{
+    //    ILoginData LoginDataGenerator { get; }
 
-        Type InstanceDataType { get; }
+    //    Type InstanceDataType { get; }
 
-        Task<IInstanceData> Login(ILoginData data, CancellationToken token = default);
-    }
+    //    Task<IInstanceData> Login(ILoginData data, CancellationToken token = default);
+    //}
 
-    public interface ISingletonLogin : ICanLogin
-    {
-    }
+    //public interface ISingletonLogin : ICanLogin
+    //{
+    //}
 
     public interface IInstanceData
     {

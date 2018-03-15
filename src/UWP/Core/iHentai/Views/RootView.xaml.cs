@@ -40,13 +40,13 @@ namespace iHentai.Views
                 ExtendedSplash.Visibility = Visibility.Collapsed;
             }
 
-            RootFrame.Navigated += RootFrameOnNavigated;
+            //RootFrame.Navigated += RootFrameOnNavigated;
             ExtendAcrylicIntoTitleBar();
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             CustomTitleBar.Height = coreTitleBar.Height;
-            Window.Current.SetTitleBar(CustomTitleBar);
+            Window.Current.SetTitleBar(CustomTitleBarBackground);
             coreTitleBar.LayoutMetricsChanged += CoreTitleBarOnLayoutMetricsChanged;
             coreTitleBar.IsVisibleChanged += CoreTitleBarOnIsVisibleChanged;
 
@@ -81,12 +81,12 @@ namespace iHentai.Views
             CustomTitleBar.Height = coreTitleBar.Height;
         }
 
-        private void RootFrameOnNavigated(object sender, HentaiNavigationEventArgs e)
-        {
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
-                ? AppViewBackButtonVisibility.Visible
-                : AppViewBackButtonVisibility.Collapsed;
-        }
+        //private void RootFrameOnNavigated(object sender, HentaiNavigationEventArgs e)
+        //{
+        //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
+        //        ? AppViewBackButtonVisibility.Visible
+        //        : AppViewBackButtonVisibility.Collapsed;
+        //}
 
         private void ExtendAcrylicIntoTitleBar()
         {

@@ -15,8 +15,8 @@
     d:DataContext="{d:DesignInstance viewModels:ServiceSelectionViewModel}">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Padding="32,8" Style="{ThemeResource HeaderTextBlockStyle}" Text="Please select a service"/>
-            <controls:Carousel ItemDepth="400" 
+            <TextBlock Padding="32,8" Style="{ThemeResource HeaderTextBlockStyle}" Text="Please select a service" />
+            <controls:Carousel ItemDepth="400"
                                Margin="0,32"
                                ItemsSource="{Binding Source}"
                                VerticalAlignment="Top"
@@ -31,9 +31,11 @@
                     </DataTemplate>
                 </controls:Carousel.ItemTemplate>
             </controls:Carousel>
-            <Button Margin="16" Content="Confirm" Click="{x:Bind ViewModel.Confirm}" HorizontalAlignment="Stretch" MaxWidth="500"/>
+            <Button Margin="16" Content="Confirm" Click="{x:Bind ViewModel.Confirm}" HorizontalAlignment="Stretch"
+                    MaxWidth="500" />
         </StackPanel>
-        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <Button Padding="16,8" Style="{ThemeResource TextBlockButtonStyle}" Click="{x:Bind ViewModel.GoSettings}"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

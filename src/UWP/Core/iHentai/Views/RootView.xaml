@@ -11,14 +11,15 @@
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:iHentai.Basic.Controls"
+    xmlns:controls2="using:iHentai.Controls"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
+
     <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
     <mvvm:MvvmFrame Grid.Row="1" x:Name="RootFrame" TargetSourcePage="{x:Bind DefaultNavItem}">
@@ -26,7 +27,7 @@
             <animations:FadeAnimation />
         </paging:HentaiFrame.PageAnimation>
     </mvvm:MvvmFrame>
-    <controls:InAppNotification Grid.Row="1" ShowDismissButton="False" x:Name="Notification"/>
+    <controls:InAppNotification Grid.Row="1" ShowDismissButton="False" x:Name="Notification" />
     <Grid x:Name="ExtendedSplash" d:IsHidden="True" Background="{StaticResource SystemControlBackgroundAccentBrush}"
           Grid.Row="0"
           Grid.RowSpan="2">
@@ -35,25 +36,30 @@
                    Source="ms-appx:///Assets/SplashScreen.png" />
         </Canvas>
     </Grid>
-    <Grid Grid.Row="0" Visibility="{x:Bind RootFrame.CurrentMvvmPage.IsTitlebarShown, Mode=OneWay}">
-        <Grid Grid.Row="0" x:Name="CustomTitleBar"
-              Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+    <Grid Grid.Row="0" x:Name="CustomTitleBar"
+          Visibility="{x:Bind RootFrame.CurrentMvvmPage.IsTitlebarShown, Mode=OneWay}"
+          Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
+            <ColumnDefinition />
+            <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
-                <ColumnDefinition />
-                <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image Source="../Assets/Square44x44Logo.png" HorizontalAlignment="Left" x:Name="LogoImage"
-                       Width="20" Height="20" Margin="12,0" />
-                <TextBlock Grid.Column="1" Text="{Binding ElementName=RootFrame, Path=CurrentPageTitle}" VerticalAlignment="Center" x:Name="TitleTextBlock"
-                           Style="{StaticResource CaptionTextBlockStyle}" />
-            </Grid>
+            <TextBlock Grid.Column="1" Padding="16, 0"
+                       Text="{Binding ElementName=RootFrame, Path=CurrentPageTitle}" VerticalAlignment="Center"
+                       x:Name="TitleTextBlock"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+            <Border x:Name="CustomTitleBarBackground" Background="Transparent" Grid.ColumnSpan="3" Grid.Column="0" />
+            <Button Grid.Column="0" Padding="16, 0" VerticalAlignment="Stretch"
+                    Visibility="{x:Bind RootFrame.CanGoBack, Mode=OneWay}"
+                    Command="{Binding ElementName=RootFrame, Path=GoBackCommand}">
+                <controls2:Icon FontSize="12" Icons="Back" />
+            </Button>
         </Grid>
     </Grid>
 </Grid>

@@ -62,12 +62,6 @@ namespace iHentai.Core.ViewModels
 
             Source.Refresh();
         }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-            Frame.ClearBackStack();
-        }
     }
 
     public class GalleryDataSource : IIncrementalSource<IGalleryModel>

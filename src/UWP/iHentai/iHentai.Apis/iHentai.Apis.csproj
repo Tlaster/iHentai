@@ -143,7 +143,6 @@
     <Compile Include="EHentai\Models\HtmlConverters\RatingConverter.cs" />
     <Compile Include="EHentai\Models\InstanceData.cs" />
     <Compile Include="EHentai\Models\LanguageModel.cs" />
-    <Compile Include="EHentai\Models\LoginData.cs" />
     <Compile Include="EHentai\Models\TagNamespaceModel.cs" />
     <Compile Include="EHentai\Models\UconfigCategoryModel.cs" />
     <Compile Include="EHentai\SearchOption.cs" />
@@ -155,9 +154,6 @@
     </Compile>
     <Compile Include="EHentai\Views\GalleryInfoView.xaml.cs">
       <DependentUpon>GalleryInfoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EHentai\Views\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="NHentai\Apis.cs" />
     <Compile Include="NHentai\Converters\TagConverter.cs" />
@@ -227,10 +223,6 @@
     <Page Include="EHentai\Views\GalleryInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="EHentai\Views\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NHentai\Views\GalleryDetailInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>

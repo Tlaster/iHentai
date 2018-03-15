@@ -50,7 +50,7 @@ namespace iHentai.Paging
         public bool DisableCache { get; set; }
 
 
-        public Frame InternalFrame { get; private set; }
+        public ContentPresenter InternalFrame { get; private set; }
 
 
         public bool AutomaticBackButtonHandling
@@ -282,7 +282,7 @@ namespace iHentai.Paging
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            InternalFrame = (Frame) GetTemplateChild("Frame");
+            InternalFrame = (ContentPresenter) GetTemplateChild("Frame");
         }
 
         private Task<bool> NavigateAsync(HentaiPageModel newPage, NavigationMode navigationMode)

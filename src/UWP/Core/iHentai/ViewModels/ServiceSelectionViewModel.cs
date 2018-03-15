@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel;
@@ -8,6 +9,7 @@ using iHentai.Basic.Helpers;
 using iHentai.Database;
 using iHentai.Database.Models;
 using iHentai.Mvvm;
+using iHentai.Paging;
 using iHentai.Services;
 using PropertyChanged;
 
@@ -32,6 +34,13 @@ namespace iHentai.ViewModels
         {
             var service = SelectedService.ServiceType;
             Navigate(Singleton<ApiContainer>.Instance.Navigation(service), service).FireAndForget();
+            Frame.Navigated += FrameOnNavigated;
+        }
+
+        private void FrameOnNavigated(object sender, HentaiNavigationEventArgs hentaiNavigationEventArgs)
+        {
+            Frame.Navigated -= FrameOnNavigated;
+            Frame.ClearBackStack();
         }
 
         public void GoSettings()
