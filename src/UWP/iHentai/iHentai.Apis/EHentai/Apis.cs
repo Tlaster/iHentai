@@ -17,20 +17,20 @@ using iHentai.Services;
 namespace iHentai.Apis.EHentai
 {
     [ApiKey(nameof(EHentai))]
-    public class Apis : IHentaiApi, IShareApi
+    public class Apis : IHentaiApi, IShareApi, ILoginApi
     {
-        public bool IsExhentaiMode { get; set; } = true;
+        public bool IsExhentaiMode { get; set; } = false;
 
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
 
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
-        public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";
+        public string Host => IsExhentaiMode ? "exhentai.org" : "e-hentai.org";
 
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(IInstanceData data, int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
-            if (!(data is InstanceData instanceData)) throw new ArgumentException();
+            //if (!(data is InstanceData instanceData)) throw new ArgumentException();
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
                 req = $"https://{Host}/"
@@ -46,7 +46,7 @@ namespace iHentai.Apis.EHentai
         public async Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model,
             CancellationToken cancellationToken = default)
         {
-            if (!(model is GalleryModel item) || !(data is InstanceData instanceData))
+            if (!(model is GalleryModel item) /*|| !(data is InstanceData instanceData)*/)
                 throw new ArgumentException();
             return await $"https://{Host}/"
                 .AppendPathSegment("g")

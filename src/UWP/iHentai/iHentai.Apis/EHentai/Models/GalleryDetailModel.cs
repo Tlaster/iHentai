@@ -23,7 +23,7 @@ namespace iHentai.Apis.EHentai.Models
         [HtmlItem("#gj")]
         public string TitleJp { get; set; }
 
-        [HtmlItem(".ic", Attr = "alt")]
+        [HtmlItem("#gdc > a", Attr = "href")]
         [HtmlConverter(typeof(CategoryConverter))]
         public CategoryFlags Category { get; set; }
 

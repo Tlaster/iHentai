@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PropertyChanged;
@@ -49,8 +50,8 @@ namespace iHentai.Basic.Helpers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.WriteLine(e.StackTrace);
+                Debug.WriteLine(e);
+                Debug.WriteLine(e.StackTrace);
             }
             IsRunning = false;
             OnCanExecuteChanged();

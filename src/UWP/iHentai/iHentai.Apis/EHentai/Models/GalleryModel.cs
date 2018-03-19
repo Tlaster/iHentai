@@ -17,7 +17,7 @@ namespace iHentai.Apis.EHentai.Models
         [HtmlItem(".itd")]
         public DateTime PublishAt { get; set; }
 
-        [HtmlItem(".ic", Attr = "alt")]
+        [HtmlItem(".itdc > a", Attr = "href")]
         [HtmlConverter(typeof(CategoryConverter))]
         public CategoryFlags Category { get; set; }
 

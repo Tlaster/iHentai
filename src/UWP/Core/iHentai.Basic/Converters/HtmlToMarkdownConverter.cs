@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml.Data;
 using Html2Markdown;
@@ -21,7 +22,7 @@ namespace iHentai.Basic.Converters
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 return value + "";
             }
         }

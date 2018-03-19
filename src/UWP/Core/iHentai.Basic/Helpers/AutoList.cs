@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Toolkit.Uwp;
 
@@ -42,6 +43,8 @@ namespace iHentai.Basic.Helpers
         {
             IsError = true;
             ErrorException = exception;
+            Debug.WriteLine(exception.Message);
+            Debug.WriteLine(exception.StackTrace);
         }
     }
 }
