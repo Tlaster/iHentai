@@ -131,7 +131,7 @@
     <Compile Include="Extensions\EmptyExtension.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Helpers\AutoList.cs" />
-    <Compile Include="Helpers\Clip.cs" />
+    <Compile Include="Extensions\FrameworkElementExtensions.cs" />
     <Compile Include="Helpers\JobRegistry.cs" />
     <Compile Include="Helpers\Localization.cs" />
     <Compile Include="Helpers\MessageCenter.cs" />

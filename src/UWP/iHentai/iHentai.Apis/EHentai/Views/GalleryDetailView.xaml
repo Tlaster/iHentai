@@ -9,6 +9,7 @@
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls="using:iHentai.Apis.Core.Common.Controls"
     xmlns:helpers="using:iHentai.Basic.Helpers"
+    xmlns:extensions="using:iHentai.Basic.Extensions"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance models:GalleryDetailModel}"
     d:DesignHeight="300"
@@ -43,7 +44,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Viewbox>
-                            <Grid Width="{Binding Size.Width}" Height="{Binding Size.Height}" helpers:Clip.ToBounds="True">
+                            <Grid Width="{Binding Size.Width}" Height="{Binding Size.Height}" extensions:FrameworkElementExtensions.ClipToBounds="True">
                                 <toolkit:ImageEx IsCacheEnabled="True" Stretch="UniformToFill" Margin="{Binding Offset, Converter={StaticResource ThicknessConverter}}" Source="{Binding Link}"/>
                             </Grid>
                         </Viewbox>
