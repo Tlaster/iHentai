@@ -182,7 +182,7 @@
       <Version>2.2.1</Version>
     </PackageReference>
     <PackageReference Include="Html2Model">
-      <Version>1.0.3</Version>
+      <Version>1.0.5</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.2.0</Version>
