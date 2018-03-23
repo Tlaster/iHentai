@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using iHentai.Apis.Core;
 using iHentai.Apis.Core.Models.Interfaces;
@@ -26,9 +27,18 @@ namespace iHentai.Core.ViewModels
 
         public IGalleryModel Model { get; }
 
-        private Task<IGalleryDetailModel> GetDetailAsync()
+        private async Task<IGalleryDetailModel> GetDetailAsync()
         {
-            return _serviceType.Get<IHentaiApi>().Detail(Singleton<ApiContainer>.Instance.CurrentInstanceData, Model);
+            try
+            {
+                return await _serviceType.Get<IHentaiApi>().Detail(Singleton<ApiContainer>.Instance.CurrentInstanceData, Model);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
+                throw;
+            }
         }
     }
 }

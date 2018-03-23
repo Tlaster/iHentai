@@ -32,6 +32,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <controls:ImageEx
+                            Style="{StaticResource ImageExNoTransition}"
                             IsCacheEnabled="True"
                             Margin="16"
                             MaxHeight="300"

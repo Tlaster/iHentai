@@ -10,6 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:iHentai.Basic.Controls"
     xmlns:helpers="using:iHentai.Basic.Helpers"
+    xmlns:controls2="using:iHentai.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -37,11 +38,11 @@
                 <Grid Padding="16" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Button Style="{ThemeResource TextBlockButtonStyle}"
                             Visibility="{Binding Relationship[following],Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=true}">
-                        <controls1:Icon Icons="AddFriend" />
+                        <controls2:Icon Icons="AddFriend" />
                     </Button>
                     <Button Style="{ThemeResource TextBlockButtonStyle}"
                             Visibility="{Binding Relationship[following],Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
-                        <controls1:Icon Icons="Remove" />
+                        <controls2:Icon Icons="Remove" />
                     </Button>
                 </Grid>
             </Grid>
@@ -66,7 +67,7 @@
             </Grid.Resources>
             <Button Style="{ThemeResource TextBlockButtonStyle}"
                     Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}}">
-                <controls1:Icon Icons="GlobalNavigationButton" />
+                <controls2:Icon Icons="GlobalNavigationButton" />
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
@@ -95,7 +96,7 @@
                 </Button.Flyout>
             </Button>
             <Button Visibility="{Binding Relationship, Mode=OneWay,Converter={StaticResource NullOrEmptyConverter}, ConverterParameter=true}" Style="{ThemeResource TextBlockButtonStyle}">
-                <controls1:Icon Icons="GlobalNavigationButton" />
+                <controls2:Icon Icons="GlobalNavigationButton" />
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
+using AngleSharp.Dom.Css;
 using Html2Model;
 using Html2Model.Attributes;
 using iHentai.Apis.Core.Models.Interfaces;
@@ -23,7 +26,7 @@ namespace iHentai.Apis.EHentai.Models
         [HtmlItem("#gj")]
         public string TitleJp { get; set; }
 
-        [HtmlItem(".ic", Attr = "alt")]
+        [HtmlItem("#gdc > a", Attr = "href")]
         [HtmlConverter(typeof(CategoryConverter))]
         public CategoryFlags Category { get; set; }
 
@@ -80,7 +83,10 @@ namespace iHentai.Apis.EHentai.Models
         public int TorrentCount { get; set; }
 
         [HtmlMultiItems(".gdtl")]
-        public ImageModel[] Images { get; set; }
+        public LargeImageModel[] LargeImages { get; set; }
+
+        [HtmlMultiItems(".gdtm")]
+        public SmallImageModel[] SmallImages { get; set; }
 
         [HtmlItem(".ptt > tbody > tr > td:nth-last-child(2)")]
         public int MaxPage { get; set; }
@@ -89,7 +95,49 @@ namespace iHentai.Apis.EHentai.Models
         public CommentModel[] Comments { get; set; }
     }
 
-    public class ImageModel
+    public class SmallImageModel
+    {
+        [HtmlItem("div", Attr = "style", RegexPattern = @"url\((.*)\)", RegexGroup = 1)]
+        public string Link { get; set; }
+
+        [HtmlItem("div", Attr = "style")]
+        [HtmlConverter(typeof(OffsetConverter))]
+        public Vector2 Offset { get; set; }
+
+        [HtmlItem("img", Attr = "alt")]
+        public int Page { get; set; }
+
+        [HtmlItem("img")]
+        [HtmlConverter(typeof(SizeConverter))]
+        public Size Size { get; set; }
+
+        public class SizeConverter : IHtmlConverter
+        {
+            public object ReadHtml(INode node, Type targetType, object existingValue)
+            {
+                var style = (node as IElementCssInlineStyle).Style;
+                if (int.TryParse(style.Width.Replace("px", string.Empty), out var width) && int.TryParse(style.Height.Replace("px", string.Empty), out var height))
+                    return new Size(width, height);
+
+                return default(Size);
+            }
+        }
+
+        public class OffsetConverter : IHtmlConverter
+        {
+            public object ReadHtml(INode node, Type targetType, object existingValue)
+            {
+                var position = (node as IElementCssInlineStyle).Style.BackgroundPosition.Replace("px", string.Empty)
+                    .Split(' ');
+                if (float.TryParse(position[0], out var x) && float.TryParse(position[1], out var y))
+                    return new Vector2(x, y);
+
+                return default(Vector2);
+            }
+        }
+    }
+
+    public class LargeImageModel
     {
         [HtmlItem("img", Attr = "src")]
         public string Link { get; set; }

@@ -21,10 +21,5 @@ namespace iHentai.Views
             get => (ServiceSelectionViewModel) base.ViewModel;
             set => base.ViewModel = value;
         }
-
-        private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            ViewModel.RemoveInstanceDataCommand?.Execute((sender as FrameworkElement).DataContext);
-        }
     }
 }

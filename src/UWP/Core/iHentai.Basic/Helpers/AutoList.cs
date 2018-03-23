@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Toolkit.Uwp;
 
@@ -12,7 +13,6 @@ namespace iHentai.Basic.Helpers
             OnError = OnErrorHandler;
             OnStartLoading = OnStartLoadingHandler;
             OnEndLoading = OnEndLoadingHandler;
-            RefreshCommand = new RelayAsyncCommand(RefreshAsync);
         }
 
         public AutoList(TSource source) : base(source)
@@ -20,11 +20,7 @@ namespace iHentai.Basic.Helpers
             OnError = OnErrorHandler;
             OnStartLoading = OnStartLoadingHandler;
             OnEndLoading = OnEndLoadingHandler;
-            RefreshCommand = new RelayAsyncCommand(RefreshAsync);
         }
-
-        public IAsyncCommand RefreshCommand { get; }
-
         public TSource DataSource => Source;
         public bool IsError { get; private set; }
         public Exception ErrorException { get; private set; }
@@ -47,6 +43,8 @@ namespace iHentai.Basic.Helpers
         {
             IsError = true;
             ErrorException = exception;
+            Debug.WriteLine(exception.Message);
+            Debug.WriteLine(exception.StackTrace);
         }
     }
 }

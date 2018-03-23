@@ -17,30 +17,20 @@ using iHentai.Services;
 namespace iHentai.Apis.EHentai
 {
     [ApiKey(nameof(EHentai))]
-    public class Apis : IHentaiApi, IWebApi, ISingletonLogin
+    public class Apis : IHentaiApi, IShareApi, ILoginApi
     {
-        public bool IsExhentaiMode { get; set; } = true;
-        
+        public bool IsExhentaiMode { get; set; } = false;
+
         public string LoginWebViewUrl { get; } = "https://forums.e-hentai.org/index.php?act=Login";
-
-        public ILoginData LoginDataGenerator => new LoginData();
-
-        public Task<IInstanceData> Login(ILoginData data, CancellationToken token = default)
-        {
-            if (!(data is LoginData loginData)) throw new ArgumentException();
-            return Login(loginData.UserName, loginData.Password, token);
-        }
-
-        public Type InstanceDataType => typeof(InstanceData);
 
         public SearchOptionBase SearchOptionGenerator => new SearchOption();
 
-        public string Host => IsExhentaiMode ? "exhentai.org" : "g.e-hentai.org";
+        public string Host => IsExhentaiMode ? "exhentai.org" : "e-hentai.org";
 
         public async Task<(int MaxPage, IEnumerable<IGalleryModel> Gallery)> Gallery(IInstanceData data, int page = 0,
             SearchOptionBase searchOption = null, CancellationToken cancellationToken = default)
         {
-            if (!(data is InstanceData instanceData)) throw new ArgumentException();
+            //if (!(data is InstanceData instanceData)) throw new ArgumentException();
             Url req;
             if (searchOption != null && searchOption.SearchType == SearchTypes.Tag)
                 req = $"https://{Host}/"
@@ -56,7 +46,7 @@ namespace iHentai.Apis.EHentai
         public async Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model,
             CancellationToken cancellationToken = default)
         {
-            if (!(model is GalleryModel item) || !(data is InstanceData instanceData))
+            if (!(model is GalleryModel item) /*|| !(data is InstanceData instanceData)*/)
                 throw new ArgumentException();
             return await $"https://{Host}/"
                 .AppendPathSegment("g")
@@ -75,27 +65,7 @@ namespace iHentai.Apis.EHentai
                 .AppendPathSegment(item.ID)
                 .AppendPathSegment(item.Token);
         }
-
-        //public bool WebViewLoginHandler(string url, string cookie)
-        //{
-        //    if (!cookie.Contains("ipb_member_id") || !cookie.Contains("ipb_pass_hash")) return false;
-        //    var memberid = Regex.Match(cookie, @"ipb_member_id=([^;]*)").Groups[1].Value;
-        //    var passHash = Regex.Match(cookie, @"ipb_pass_hash=([^;]*)").Groups[1].Value;
-        //    Cookie = new Dictionary<string, string>
-        //    {
-        //        {"ipb_member_id", memberid},
-        //        {"ipb_pass_hash", passHash}
-        //    };
-        //    return true;
-        //}
-
-        //public async Task<bool> WebViewLoginFollowup(CancellationToken cancellationToken)
-        //{
-        //    if (!Cookie.ContainsKey("s"))
-        //        Cookie = await UpdateCookie(Cookie, cancellationToken);
-        //    return true;
-        //}
-
+        
         private async Task<IInstanceData> Login(string userName, string password,
             CancellationToken cancellationToken = default)
         {

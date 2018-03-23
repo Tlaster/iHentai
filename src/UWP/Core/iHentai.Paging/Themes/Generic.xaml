@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="paging:HentaiFrame">
-                    <Frame x:Name="Frame" Background="{TemplateBinding Background}"
+                    <ContentPresenter x:Name="Frame" Background="{TemplateBinding Background}"
                            Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
                            ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
                 </ControlTemplate>

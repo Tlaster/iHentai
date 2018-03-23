@@ -18,7 +18,12 @@ namespace iHentai.Apis.Core
         Task<IGalleryDetailModel> Detail(IInstanceData data, IGalleryModel model, CancellationToken cancellationToken = default);
     }
 
-    public interface IWebApi
+    public interface ILoginApi
+    {
+
+    }
+
+    public interface IShareApi
     {
         string GetWebLink(IGalleryModel model);
     }

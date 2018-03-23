@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AngleSharp.Dom;
 using Html2Model;
 
@@ -61,7 +62,7 @@ namespace iHentai.Apis.EHentai.Models
     {
         public object ReadHtml(INode node, Type targetType, object existingValue)
         {
-            var text = (node as IElement).GetAttribute("alt").ToLowerInvariant();
+            var text = (node as IElement).GetAttribute("href").ToLowerInvariant().Split('/').LastOrDefault();
             switch (text)
             {
                 case "non-h":

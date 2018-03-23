@@ -207,13 +207,13 @@
       <Version>1.8.3</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
-      <Version>2.2.0</Version>
+      <Version>2.2.1</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>2.4.2</Version>
+      <Version>2.4.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.7</Version>
+      <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Nito.AsyncEx">
       <Version>5.0.0-pre-05</Version>
@@ -226,6 +226,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Controls\Icon\Icon.csproj">
+      <Project>{58138B9A-6421-49EA-919D-88CD2BEBFD6C}</Project>
+      <Name>Icon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\Html2Markdown\Html2Markdown.csproj">
       <Project>{63a2ba58-d11c-4843-b584-8e4526bb7774}</Project>
       <Name>Html2Markdown</Name>

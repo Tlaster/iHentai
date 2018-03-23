@@ -10,6 +10,7 @@
     xmlns:viewModels="using:Conet.ViewModels"
     xmlns:core="using:Conet.Apis.Core"
     xmlns:services="using:iHentai.Services"
+    xmlns:controls1="using:iHentai.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
 
@@ -22,7 +23,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <controls:Icon Icons="{Binding Icon}"/>
+                        <controls1:Icon Icons="{Binding Icon}"/>
                         <TextBlock Grid.Column="1" Text="{Binding Title}" Margin="16,0" VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>

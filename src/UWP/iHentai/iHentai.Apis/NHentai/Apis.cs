@@ -14,7 +14,7 @@ using iHentai.Services;
 namespace iHentai.Apis.NHentai
 {
     [ApiKey(nameof(NHentai))]
-    public class Apis : IHentaiApi, IWebApi
+    public class Apis : IHentaiApi, IShareApi
     {
         public string Host { get; } = "nhentai.net";
 

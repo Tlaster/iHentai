@@ -12,6 +12,7 @@
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:helpers="using:iHentai.Basic.Helpers"
     xmlns:controls1="using:iHentai.Basic.Controls"
+    xmlns:controls2="using:iHentai.Controls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance linq:JObject}"
     d:DesignHeight="300"
@@ -65,7 +66,7 @@
                                                        PropertyName="Visibility" Value="Visible" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-                    <controls1:Icon Icons="View"/>
+                    <controls2:Icon Icons="View"/>
                 </Button>
                 <Grid Visibility="{Binding [sensitive],Converter={StaticResource BoolToVisibilityConverter}}"
                       x:Name="SensitiveBlocker">
@@ -97,31 +98,31 @@
                         <Setter Property="VerticalContentAlignment" Value="Center" />
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
-                    <Style TargetType="controls1:Icon">
+                    <Style TargetType="controls2:Icon">
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                 </StackPanel.Resources>
 
                 <Button>
-                    <controls1:Icon Icons="Reply" />
+                    <controls2:Icon Icons="Reply" />
                 </Button>
 
                 <Button
                     Visibility="{Binding [visibility], Converter={StaticResource EqualsConverter}, ConverterParameter=public}">
                     <StackPanel Orientation="Horizontal">
-                        <controls1:Icon Icons="ReShare" />
+                        <controls2:Icon Icons="ReShare" />
                         <TextBlock Text="{Binding [reblogs_count]}" />
                     </StackPanel>
                 </Button>
 
                 <Button IsEnabled="False"
                         Visibility="{Binding [visibility], Converter={StaticResource NonequalsConverter}, ConverterParameter=public}">
-                    <controls1:Icon Icons="Lock" />
+                    <controls2:Icon Icons="Lock" />
                 </Button>
 
                 <Button>
                     <StackPanel Orientation="Horizontal">
-                        <controls1:Icon Icons="FavoriteStar" />
+                        <controls2:Icon Icons="FavoriteStar" />
                         <TextBlock Text="{Binding [favourites_count]}" />
                     </StackPanel>
                 </Button>
@@ -142,7 +143,7 @@
                                 Text="{Binding [account][username], Converter={StaticResource StringFormatConverter}, ConverterParameter={helpers:Localization Key='ReportWith'}}" />
                         </MenuFlyout>
                     </Button.Flyout>
-                    <controls1:Icon Icons="More" />
+                    <controls2:Icon Icons="More" />
                 </Button>
             </StackPanel>
         </StackPanel>

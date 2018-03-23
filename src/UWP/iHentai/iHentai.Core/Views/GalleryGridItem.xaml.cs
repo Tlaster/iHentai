@@ -17,9 +17,8 @@ namespace iHentai.Core.Views
     {
         public Size Resize(object item, Size oldSize, Size availableSize)
         {
-            if (!(item is IGalleryModel))
+            if (!(item is IGalleryModel model))
                 return availableSize;
-            var model = (IGalleryModel) item;
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return availableSize;
             var size = new Size(availableSize.Width,
@@ -53,14 +52,13 @@ namespace iHentai.Core.Views
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (!(DataContext is IGalleryModel))
+            if (!(DataContext is IGalleryModel model))
                 return base.MeasureOverride(availableSize);
-            var model = (IGalleryModel) DataContext;
             if (model.ThumbHeight < 0d || model.ThumbWidth < 0d)
                 return base.MeasureOverride(availableSize);
             var size = new Size(availableSize.Width,
                 model.ThumbHeight / model.ThumbWidth * availableSize.Width);
-            VisualEx.SetCenterPoint(RootGrid, $"{size.Width / 2d}, {size.Height / 2d}, 0");
+            VisualExtensions.SetCenterPoint(RootGrid, $"{size.Width / 2d}, {size.Height / 2d}, 0");
             return size;
         }
 
