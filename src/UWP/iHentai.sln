@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conet.Weibo", "Conet\Conet.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conet.Mastodon", "Conet\Conet.Mastodon\Conet.Mastodon.csproj", "{6712AFEF-F482-4616-87FC-AA4050DDDC69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conet.Twitter", "Conet.Twitter\Conet.Twitter.csproj", "{19668B38-B5A0-447C-AC53-FCD74B1A892A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conet.Twitter", "Conet\Conet.Twitter\Conet.Twitter.csproj", "{19668B38-B5A0-447C-AC53-FCD74B1A892A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

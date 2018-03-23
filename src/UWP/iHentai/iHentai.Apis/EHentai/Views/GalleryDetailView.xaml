@@ -37,7 +37,7 @@
         <controls:ThumbListView Grid.Row="1" ItemsSource="{Binding LargeImages}" />
         <controls:ThumbListView Grid.Row="1" ItemsSource="{Binding SmallImages}" >
             <controls:ThumbListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate>  
                     <Grid Padding="8">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />

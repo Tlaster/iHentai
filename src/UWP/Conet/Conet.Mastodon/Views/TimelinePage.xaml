@@ -10,7 +10,7 @@
     d:DataContext="{d:DesignInstance viewModels:TimelineViewModel}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
 
     </Grid>
 </mvvm:MvvmPage>

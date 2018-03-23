@@ -11,6 +11,7 @@ namespace Conet.Mastodon.ViewModels
     [Startup]
     public class AccountSelectionViewModel : ViewModel
     {
+
         public AccountSelectionViewModel()
         {
             

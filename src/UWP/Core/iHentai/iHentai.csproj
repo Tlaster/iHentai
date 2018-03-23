@@ -254,13 +254,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Conet.Twitter\Conet.Twitter.csproj">
-      <Project>{19668b38-b5a0-447c-ac53-fcd74b1a892a}</Project>
-      <Name>Conet.Twitter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Conet\Conet.Mastodon\Conet.Mastodon.csproj">
       <Project>{6712afef-f482-4616-87fc-aa4050dddc69}</Project>
       <Name>Conet.Mastodon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Conet\Conet.Twitter\Conet.Twitter.csproj">
+      <Project>{19668b38-b5a0-447c-ac53-fcd74b1a892a}</Project>
+      <Name>Conet.Twitter</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Conet\Conet.Weibo\Conet.Weibo.csproj">
       <Project>{c431cc88-9a38-4807-99ad-583ba3636285}</Project>
