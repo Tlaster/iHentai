@@ -1,0 +1,2 @@
+# iHentai
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ae318fb1c2d43fa8baf0c177971f69d)](https://app.codacy.com/app/Tlaster/iHentai?utm_source=github.com&utm_medium=referral&utm_content=Tlaster/iHentai&utm_campaign=badger)
