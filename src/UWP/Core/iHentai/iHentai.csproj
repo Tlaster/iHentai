@@ -254,10 +254,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Conet\Conet.Mastodon\Conet.Mastodon.csproj">
-      <Project>{6712afef-f482-4616-87fc-aa4050dddc69}</Project>
-      <Name>Conet.Mastodon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Conet\Conet.Twitter\Conet.Twitter.csproj">
       <Project>{19668b38-b5a0-447c-ac53-fcd74b1a892a}</Project>
       <Name>Conet.Twitter</Name>
@@ -265,6 +261,10 @@
     <ProjectReference Include="..\..\Conet\Conet.Weibo\Conet.Weibo.csproj">
       <Project>{c431cc88-9a38-4807-99ad-583ba3636285}</Project>
       <Name>Conet.Weibo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Conet\Mastodon\Conet.Mastodon\Conet.Mastodon.csproj">
+      <Project>{6712afef-f482-4616-87fc-aa4050dddc69}</Project>
+      <Name>Conet.Mastodon</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\iHentai\iHentai.Apis\iHentai.Apis.csproj">
       <Project>{17adf4d3-9b3e-4dec-b2e2-2417ccc1ffe8}</Project>

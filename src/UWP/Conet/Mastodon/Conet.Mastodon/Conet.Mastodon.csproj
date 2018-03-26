@@ -128,25 +128,29 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
+    <ProjectReference Include="..\..\..\Core\iHentai.Basic\iHentai.Basic.csproj">
       <Project>{6e47aaef-a369-4767-ba36-1e59c1e64f45}</Project>
       <Name>iHentai.Basic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Database\iHentai.Database.csproj">
+    <ProjectReference Include="..\..\..\Core\iHentai.Database\iHentai.Database.csproj">
       <Project>{dbb34726-b622-4799-a122-40746e721bbd}</Project>
       <Name>iHentai.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Mvvm\iHentai.Mvvm.csproj">
+    <ProjectReference Include="..\..\..\Core\iHentai.Mvvm\iHentai.Mvvm.csproj">
       <Project>{834BD393-52AF-43DB-879F-934F9CADF811}</Project>
       <Name>iHentai.Mvvm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Paging\iHentai.Paging.csproj">
+    <ProjectReference Include="..\..\..\Core\iHentai.Paging\iHentai.Paging.csproj">
       <Project>{7eae4838-bf0d-48ec-af8f-2f979fac91e2}</Project>
       <Name>iHentai.Paging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\iHentai.Services\iHentai.Services.csproj">
+    <ProjectReference Include="..\..\..\Core\iHentai.Services\iHentai.Services.csproj">
       <Project>{C082DED4-FBB4-4A92-89F5-6FA8FFED436C}</Project>
       <Name>iHentai.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mastodon\Mastodon.csproj">
+      <Project>{3c2da873-1022-4b2a-85d9-9264a00a0c09}</Project>
+      <Name>Mastodon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
