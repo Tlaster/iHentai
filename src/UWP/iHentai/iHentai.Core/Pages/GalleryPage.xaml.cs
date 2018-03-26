@@ -37,6 +37,13 @@ namespace iHentai.Core.Pages
             set => base.ViewModel = value;
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+            ConnectedAnimationService.GetForCurrentView().GetAnimation("service_text")
+                ?.TryStart(this.Frame.Parent.FindDescendantByName("TitleTextBlock"));
+        }
+
         protected override void OnRestart()
         {
             base.OnRestart();

@@ -7,11 +7,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:iHentai.Mvvm"
     xmlns:viewModels="using:Conet.Mastodon.ViewModels"
+    xmlns:model="using:Mastodon.Model"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls1="using:iHentai.Controls"
     d:DataContext="{d:DesignInstance viewModels:AccountSelectionViewModel}"
     mc:Ignorable="d">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="HeaderText" Padding="32,16" Text="Mastodon" Style="{ThemeResource HeaderTextBlockStyle}" />
+        <ListView Grid.Row="1" ItemsSource="{Binding AccountList}" MaxWidth="400" MaxHeight="600">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid d:DataContext="{d:DesignInstance model:Account}" DataContext="{Binding Result}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:ImageEx Grid.RowSpan="2" CornerRadius="25" Width="50" Height="50" Source="{Binding AvatarUrl}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}"/>
+                        <!--<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding AccountName}"/>-->
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ProfileUrl}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <Grid>
+                    <Button HorizontalAlignment="Stretch" Click="{x:Bind ViewModel.Add}" Padding="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <controls1:Icon Icons="Add"/>
+                            <TextBlock Margin="8" Grid.Column="1" Text="Add account" />
+                        </Grid>
+                    </Button>
+                </Grid>
+            </ListView.Footer>
+        </ListView>
     </Grid>
 </mvvm:MvvmPage>
 

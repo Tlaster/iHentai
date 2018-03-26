@@ -10,7 +10,7 @@ namespace Conet.Mastodon.Models
     public class InstanceData : IInstanceData
     {
         public string AccessToken { get; set; }
-        public string Uid { get; set; }
+        public long Uid { get; set; }
         public string Domain { get; set; }
     }
 }
