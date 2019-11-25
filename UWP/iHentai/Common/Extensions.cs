@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
 
 namespace iHentai.Common
 {
-
     internal static class Extensions
     {
         // Kotlin: fun <T> T.also(block: (T) -> Unit): T
@@ -42,6 +38,5 @@ namespace iHentai.Common
         {
             return JsonConvert.SerializeObject(value);
         }
-
     }
 }

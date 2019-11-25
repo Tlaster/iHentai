@@ -2,12 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iHentai.Common
 {
-
     internal class BroadcastCenter
     {
         private readonly ConcurrentDictionary<Guid, (string message, Action<object, object> action)> _listeners =
@@ -47,6 +44,7 @@ namespace iHentai.Common
             {
                 action.Invoke(item.sender, item.args);
             }
+
             var id = Guid.NewGuid();
             _listeners.TryAdd(id, (message, action));
             return id;
