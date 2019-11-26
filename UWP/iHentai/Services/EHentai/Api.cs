@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Flurl;
@@ -44,16 +46,17 @@ namespace iHentai.Services.EHentai
 
     internal class Api
     {
-        public const string HOST = "https://e-hentai.org/";
+        private const string HOST = "https://e-hentai.org/";
 
-        public async Task<IGallery> Home(int page = 0)
+        public async Task<IEnumerable<IGallery>> Home(int page = 0)
         {
-            return await $"{HOST}"
+            var result = await $"{HOST}"
                 .SetQueryParams(new
                 {
                     page
                 })
-                .GetHtmlAsync<EHGallery>();
+                .GetHtmlAsync<EHGalleryList>();
+            return result.Items.Where(it => it.Title != null);
         }
     }
 }

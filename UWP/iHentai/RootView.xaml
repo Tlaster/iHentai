@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:activities="using:iHentai.Activities"
+    xmlns:paging="using:Bug10.Paging"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -19,7 +21,9 @@
             <x:Double x:Key="TabViewItemHeaderMaxWidth">250</x:Double>
         </controls:TabView.Resources>
 
-        <controls:TabViewItem Header="Tab1"></controls:TabViewItem>
+        <controls:TabViewItem Header="Tab1">
+            <paging:ActivityContainer Name="ActivityContainer"/>
+        </controls:TabViewItem>
         <controls:TabViewItem Header="Tab2"></controls:TabViewItem>
         <controls:TabViewItem Header="Tab3"></controls:TabViewItem>
     </controls:TabView>

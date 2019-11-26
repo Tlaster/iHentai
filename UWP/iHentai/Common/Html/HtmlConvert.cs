@@ -211,7 +211,11 @@ namespace iHentai.Common.Html
         {
             var value = (string.IsNullOrEmpty(htmlItem.Attr)
                 ? element.Text()
-                : element.GetAttribute(htmlItem.Attr)).Trim();
+                : element.GetAttribute(htmlItem.Attr))?.Trim();
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
             if (!string.IsNullOrEmpty(htmlItem.RegexPattern))
             {
                 value = Regex.Match(value, htmlItem.RegexPattern).Groups[htmlItem.RegexGroup].Value;
@@ -244,7 +248,7 @@ namespace iHentai.Common.Html
             foreach (var attribute in attributes)
             {
                 node = element.QuerySelector(attribute.Selector);
-                if (node == null)
+                if (node == null || !string.IsNullOrEmpty(attribute.Attr) && !node.HasAttribute(attribute.Attr))
                 {
                     continue;
                 }

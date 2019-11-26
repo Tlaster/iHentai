@@ -6,9 +6,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:Bug10.Paging"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:extensions="using:iHentai.Common.Extensions"
+    xmlns:layout="using:iHentai.Common.Layout"
+    xmlns:core="using:iHentai.Services.Core"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls2="using:iHentai.Controls"
+    xmlns:model="using:iHentai.Services.EHentai.Model"
     mc:Ignorable="d">
 
-    <Grid>
+    <RefreshContainer extensions:RefreshContainerExtension.ItemsSource="{x:Bind ViewModel.Source}">
+        <ScrollViewer extensions:ScrollViewerExtension.ItemsSource="{x:Bind ViewModel.Source}">
+            <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}">
+                <controls:ItemsRepeater.Layout>
+                    <layout:StaggeredLayout DesiredColumnWidth="200"/>
+                </controls:ItemsRepeater.Layout>
+                <controls:ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="model:EHGallery">
+                        <controls2:AspectRatioView Margin="4" WidthRequest="{x:Bind ThumbWidth}" HeightRequest="{x:Bind ThumbHeight}">
+                            <controls1:ImageEx Source="{x:Bind Thumb}" Stretch="UniformToFill"/>
+                        </controls2:AspectRatioView>
+                    </DataTemplate>
+                </controls:ItemsRepeater.ItemTemplate>
+            </controls:ItemsRepeater>
+        </ScrollViewer>
+    </RefreshContainer>
 
-    </Grid>
 </paging:Activity>

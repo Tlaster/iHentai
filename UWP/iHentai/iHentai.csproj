@@ -125,7 +125,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BroadcastCenter.cs" />
+    <Compile Include="Common\Collection\LoadingCollection.cs" />
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
+    <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\Helpers\Singleton.cs" />
     <Compile Include="Common\Html\Attributes\HtmlConverterAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlItemAttribute.cs" />
@@ -133,6 +136,8 @@
     <Compile Include="Common\Html\Attributes\IHtmlItem.cs" />
     <Compile Include="Common\Html\HtmlConvert.cs" />
     <Compile Include="Common\Helpers\ReflectionHelper.cs" />
+    <Compile Include="Common\Layout\StaggeredLayout.cs" />
+    <Compile Include="Controls\AspectRatioView.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootView.xaml.cs">
@@ -205,9 +210,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

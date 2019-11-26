@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace iHentai.Common
 {
-    internal static class Extensions
+    internal static class Extension
     {
         // Kotlin: fun <T> T.also(block: (T) -> Unit): T
         public static T Also<T>(this T self, Action<T> block)

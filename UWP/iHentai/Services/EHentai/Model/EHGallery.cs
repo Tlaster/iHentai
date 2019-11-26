@@ -11,11 +11,18 @@ using iHentai.Services.Core;
 
 namespace iHentai.Services.EHentai.Model
 {
+    class EHGalleryList
+    {
+        [HtmlMultiItems(".itg.gltc tr")]
+        public List<EHGallery> Items { get; set; }
+    }
+
     class EHGallery : IGallery
     {
         [HtmlItem(".glink")]
         public string Title { get; set; }
         [HtmlItem(".glthumb img", Attr = "data-src")]
+        [HtmlItem(".glthumb img", Attr = "src")]
         public string Thumb { get; set; }
         [HtmlItem(".glname a", Attr = "href")]
         public string Link { get; set; }
