@@ -1,4 +1,4 @@
-﻿<paging:Activity
+﻿<tab:TabActivity
     x:Class="iHentai.Activities.GalleryActivity"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,6 +13,7 @@
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls2="using:iHentai.Controls"
     xmlns:model="using:iHentai.Services.EHentai.Model"
+    xmlns:tab="using:iHentai.Common.Tab"
     mc:Ignorable="d">
 
     <RefreshContainer extensions:RefreshContainerExtension.ItemsSource="{x:Bind ViewModel.Source}">
@@ -32,4 +33,4 @@
         </ScrollViewer>
     </RefreshContainer>
 
-</paging:Activity>
+</tab:TabActivity>

@@ -3,201 +3,467 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Windows.Foundation;
+using Windows.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace iHentai.Common.Layout
 {
-    class StaggeredLayout : VirtualizingLayout
+    
+    [System.Diagnostics.DebuggerDisplay("Count = {Count}, Height = {Height}")]
+    internal class StaggeredColumnLayout : List<StaggeredItem>
     {
-        private readonly List<Rect> m_cachedBounds = new List<Rect>();
-        private readonly List<double> m_columnOffsets = new List<double>();
+        public double Height { get; private set; }
 
-        private int m_firstIndex;
-        private double m_lastAvailableWidth;
-        private int m_lastIndex;
-
-        //public StaggeredLayout()
-        //{
-        //    DesiredColumnWidth = 150.0;
-        //}
-
-        public double VerticalOffset { get; set; } = 0D;
-        public double DesiredColumnWidth { get; set; } = 250D;
-
-        protected override void OnItemsChangedCore(VirtualizingLayoutContext context, object source, NotifyCollectionChangedEventArgs args)
+        public new void Add(StaggeredItem item)
         {
-            base.OnItemsChangedCore(context, source, args);
-            switch (args.Action)
+            Height = item.Top + item.Height;
+            base.Add(item);
+        }
+
+        public new void Clear()
+        {
+            Height = 0;
+            base.Clear();
+        }
+    }
+    
+    internal class StaggeredItem
+    {
+        public StaggeredItem(int index)
+        {
+            this.Index = index;
+        }
+
+        public double Top { get; internal set; }
+
+        public double Height { get; internal set; }
+
+        public int Index { get; }
+    }
+    internal class StaggeredLayoutState
+    {
+        private List<StaggeredItem> _items = new List<StaggeredItem>();
+        private VirtualizingLayoutContext _context;
+        private Dictionary<int, StaggeredColumnLayout> _columnLayout = new Dictionary<int, StaggeredColumnLayout>();
+        private double _lastAverageHeight;
+
+        public StaggeredLayoutState(VirtualizingLayoutContext context)
+        {
+            _context = context;
+        }
+
+        public double ColumnWidth { get; internal set; }
+
+        public int NumberOfColumns { get { return _columnLayout.Count; } }
+
+        public double RowSpacing { get; internal set; }
+
+        internal void AddItemToColumn(StaggeredItem item, int columnIndex)
+        {
+            if (_columnLayout.TryGetValue(columnIndex, out StaggeredColumnLayout columnLayout) == false)
             {
-                case NotifyCollectionChangedAction.Add:
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    m_cachedBounds.Clear();
-                    m_columnOffsets.Clear();
-                    InvalidateMeasure();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                columnLayout = new StaggeredColumnLayout();
+                _columnLayout[columnIndex] = columnLayout;
+            }
+
+            if (columnLayout.Contains(item) == false)
+            {
+                columnLayout.Add(item);
             }
         }
 
-        protected override Size MeasureOverride(VirtualizingLayoutContext context, Size availableSize)
+        internal StaggeredItem GetItemAt(int index)
         {
-            var viewport = context.RealizationRect;
-
-            if (availableSize.Width != m_lastAvailableWidth)
+            if (index < 0)
             {
-                UpdateCachedBounds(availableSize);
-                m_lastAvailableWidth = availableSize.Width;
+                throw new IndexOutOfRangeException();
             }
 
-            // Initialize column offsets
-            var numColumns = (int) Math.Floor(availableSize.Width / Math.Min(DesiredColumnWidth, availableSize.Width));
-            var columnWidth = availableSize.Width / numColumns;
-            if (m_columnOffsets.Count == 0)
+            if (index <= (_items.Count - 1))
             {
-                for (var i = 0; i < numColumns; i++)
-                {
-                    m_columnOffsets.Add(VerticalOffset);
-                }
-            }
-
-            m_firstIndex = GetStartIndex(viewport);
-            var currentIndex = m_firstIndex;
-            var nextOffset = -1.0;
-
-            // Measure items from start index to when we hit the end of the viewport.
-            while (currentIndex < context.ItemCount && nextOffset < viewport.Bottom)
-            {
-                var child = context.GetOrCreateElementAt(currentIndex);
-                child.Measure(new Size(columnWidth, availableSize.Height));
-
-                if (currentIndex >= m_cachedBounds.Count)
-                {
-                    // We do not have bounds for this index. Lay it out and cache it.
-                    var columnIndex = GetIndexOfLowestColumn(m_columnOffsets, out nextOffset);
-                    m_cachedBounds.Add(new Rect(columnIndex * columnWidth, nextOffset, columnWidth,
-                        child.DesiredSize.Height));
-                    m_columnOffsets[columnIndex] += child.DesiredSize.Height;
-                }
-                else if (child.DesiredSize.Height != m_cachedBounds[currentIndex].Height) // Item height has changed
-                {
-                    m_cachedBounds.RemoveRange(currentIndex, m_cachedBounds.Count - currentIndex);
-                    UpdateCachedBounds(availableSize);
-                    var columnIndex = GetIndexOfLowestColumn(m_columnOffsets, out nextOffset);
-                    m_cachedBounds.Add(new Rect(columnIndex * columnWidth, nextOffset, columnWidth,
-                        child.DesiredSize.Height));
-                    m_columnOffsets[columnIndex] += child.DesiredSize.Height;
-                }
-                else if (currentIndex + 1 == m_cachedBounds.Count)
-                {
-                    // Last element. Use the next offset.
-                    GetIndexOfLowestColumn(m_columnOffsets, out nextOffset);
-                }
-                else
-                {
-                    nextOffset = m_cachedBounds[currentIndex + 1].Top;
-                }
-
-                //child.Arrange(m_cachedBounds[currentIndex]);
-
-                m_lastIndex = currentIndex;
-                currentIndex++;
-            }
-
-            var extent = GetExtentSize(availableSize);
-            return extent;
-        }
-
-        private Size GetExtentSize(Size availableSize)
-        {
-            var largestColumnOffset = m_columnOffsets[0];
-            largestColumnOffset = m_columnOffsets.Concat(new[] {largestColumnOffset}).Max();
-
-            return new Size(availableSize.Width, largestColumnOffset);
-        }
-
-        private int GetIndexOfLowestColumn(IReadOnlyList<double> columnOffsets, out double lowestOffset)
-        {
-            var lowestIndex = 0;
-            lowestOffset = columnOffsets[lowestIndex];
-            for (var index = 0; index < columnOffsets.Count; index++)
-            {
-                var currentOffset = columnOffsets[index];
-                if (lowestOffset > currentOffset)
-                {
-                    lowestOffset = currentOffset;
-                    lowestIndex = index;
-                }
-            }
-
-            return lowestIndex;
-        }
-
-        private int GetStartIndex(Rect viewport)
-        {
-            var startIndex = 0;
-            if (m_cachedBounds.Count == 0)
-            {
-                startIndex = 0;
+                return _items[index];
             }
             else
             {
-                // find first index that intersects the viewport
-                // perhaps this can be done more efficiently than walking
-                // from the start of the list.
-                for (var i = 0; i < m_cachedBounds.Count; i++)
+                StaggeredItem item = new StaggeredItem(index);
+                _items.Add(item);
+                return item;
+            }
+        }
+
+        internal StaggeredColumnLayout GetColumnLayout(int columnIndex)
+        {
+            _columnLayout.TryGetValue(columnIndex, out StaggeredColumnLayout columnLayout);
+            return columnLayout;
+        }
+
+        /// <summary>
+        /// Clear everything that has been calculated.
+        /// </summary>
+        internal void Clear()
+        {
+            _columnLayout.Clear();
+            _items.Clear();
+        }
+
+        /// <summary>
+        /// Clear the layout columns so they will be recalculated.
+        /// </summary>
+        internal void ClearColumns()
+        {
+            _columnLayout.Clear();
+        }
+
+        /// <summary>
+        /// Gets the estimated height of the layout.
+        /// </summary>
+        /// <returns>The estimated height of the layout.</returns>
+        /// <remarks>
+        /// If all of the items have been calculated then the actual height will be returned.
+        /// If all of the items have not been calculated then an estimated height will be calculated based on the average height of the items.
+        /// </remarks>
+        internal double GetHeight()
+        {
+            double desiredHeight = Enumerable.Max(_columnLayout.Values, c => c.Height);
+
+            var itemCount = Enumerable.Sum(_columnLayout.Values, c => c.Count);
+            if (itemCount == _context.ItemCount)
+            {
+                return desiredHeight;
+            }
+
+            double averageHeight = 0;
+            foreach (var kvp in _columnLayout)
+            {
+                averageHeight += kvp.Value.Height / kvp.Value.Count;
+            }
+
+            averageHeight /= _columnLayout.Count;
+            double estimatedHeight = (averageHeight * _context.ItemCount) / _columnLayout.Count;
+            if (estimatedHeight > desiredHeight)
+            {
+                desiredHeight = estimatedHeight;
+            }
+
+            if (Math.Abs(desiredHeight - _lastAverageHeight) < 5)
+            {
+                return _lastAverageHeight;
+            }
+
+            _lastAverageHeight = desiredHeight;
+            return desiredHeight;
+        }
+
+        internal void RemoveFromIndex(int index)
+        {
+            if (index > _items.Count)
+            {
+                // Item was added/removed but we haven't realized that far yet
+                return;
+            }
+
+            int numToRemove = _items.Count - index;
+            _items.RemoveRange(index, numToRemove);
+
+            foreach (var kvp in _columnLayout)
+            {
+                StaggeredColumnLayout layout = kvp.Value;
+                for (int i = 0; i < layout.Count; i++)
                 {
-                    var currentBounds = m_cachedBounds[i];
-                    if (currentBounds.Y < viewport.Bottom &&
-                        currentBounds.Bottom > viewport.Top)
+                    if (layout[i].Index >= index)
                     {
-                        startIndex = i;
+                        numToRemove = layout.Count - i;
+                        layout.RemoveRange(i, numToRemove);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Arranges child elements into a staggered grid pattern where items are added to the column that has used least amount of space.
+    /// </summary>
+    public class StaggeredLayout : VirtualizingLayout
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StaggeredLayout"/> class.
+        /// </summary>
+        public StaggeredLayout()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the desired width for each column.
+        /// </summary>
+        /// <remarks>
+        /// The width of columns can exceed the DesiredColumnWidth if the HorizontalAlignment is set to Stretch.
+        /// </remarks>
+        public double DesiredColumnWidth
+        {
+            get { return (double)GetValue(DesiredColumnWidthProperty); }
+            set { SetValue(DesiredColumnWidthProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="DesiredColumnWidth"/> dependency property.
+        /// </summary>
+        /// <returns>The identifier for the <see cref="DesiredColumnWidth"/> dependency property.</returns>
+        public static readonly DependencyProperty DesiredColumnWidthProperty = DependencyProperty.Register(
+            nameof(DesiredColumnWidth),
+            typeof(double),
+            typeof(StaggeredLayout),
+            new PropertyMetadata(250d, OnDesiredColumnWidthChanged));
+
+        /// <summary>
+        /// Gets or sets the spacing between columns of items.
+        /// </summary>
+        public double ColumnSpacing
+        {
+            get { return (double)GetValue(ColumnSpacingProperty); }
+            set { SetValue(ColumnSpacingProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="ColumnSpacing"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ColumnSpacingProperty = DependencyProperty.Register(
+            nameof(ColumnSpacing),
+            typeof(double),
+            typeof(StaggeredLayout),
+            new PropertyMetadata(0d, OnSpacingChanged));
+
+        /// <summary>
+        /// Gets or sets the spacing between rows of items.
+        /// </summary>
+        public double RowSpacing
+        {
+            get { return (double)GetValue(RowSpacingProperty); }
+            set { SetValue(RowSpacingProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="RowSpacing"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty RowSpacingProperty = DependencyProperty.Register(
+            nameof(RowSpacing),
+            typeof(double),
+            typeof(StaggeredLayout),
+            new PropertyMetadata(0d, OnSpacingChanged));
+
+        /// <inheritdoc/>
+        protected override void InitializeForContextCore(VirtualizingLayoutContext context)
+        {
+            context.LayoutState = new StaggeredLayoutState(context);
+            base.InitializeForContextCore(context);
+        }
+
+        /// <inheritdoc/>
+        protected override void UninitializeForContextCore(VirtualizingLayoutContext context)
+        {
+            context.LayoutState = null;
+            base.UninitializeForContextCore(context);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnItemsChangedCore(VirtualizingLayoutContext context, object source, NotifyCollectionChangedEventArgs args)
+        {
+            var state = (StaggeredLayoutState)context.LayoutState;
+
+            if (args.Action == NotifyCollectionChangedAction.Remove)
+            {
+                state.RemoveFromIndex(args.OldStartingIndex);
+            }
+            else if (args.Action == NotifyCollectionChangedAction.Add)
+            {
+                state.RemoveFromIndex(args.NewStartingIndex);
+            }
+            else if (args.Action == NotifyCollectionChangedAction.Reset)
+            {
+                state.Clear();
+            }
+
+            base.OnItemsChangedCore(context, source, args);
+        }
+
+        /// <inheritdoc/>
+        protected override Size MeasureOverride(VirtualizingLayoutContext context, Size availableSize)
+        {
+            if (context.ItemCount == 0)
+            {
+                return new Size(availableSize.Width, 0);
+            }
+
+            if ((context.RealizationRect.Width == 0) && (context.RealizationRect.Height == 0))
+            {
+                return new Size(availableSize.Width, 0.0);
+            }
+
+            var state = (StaggeredLayoutState)context.LayoutState;
+
+            double availableWidth = availableSize.Width;
+            double availableHeight = availableSize.Height;
+
+            double columnWidth = Math.Min(DesiredColumnWidth, availableWidth);
+            if (columnWidth != state.ColumnWidth)
+            {
+                // The items will need to be remeasured
+                state.Clear();
+            }
+
+            state.ColumnWidth = Math.Min(DesiredColumnWidth, availableWidth);
+            int numColumns = Math.Max(1, (int)Math.Floor(availableWidth / state.ColumnWidth));
+
+            // adjust for column spacing on all columns expect the first
+            double totalWidth = state.ColumnWidth + ((numColumns - 1) * (state.ColumnWidth + ColumnSpacing));
+            if (totalWidth > availableWidth)
+            {
+                numColumns--;
+            }
+            else if (double.IsInfinity(availableWidth))
+            {
+                availableWidth = totalWidth;
+            }
+
+            if (numColumns != state.NumberOfColumns)
+            {
+                // The items will not need to be remeasured, but they will need to go into new columns
+                state.ClearColumns();
+            }
+
+            if (RowSpacing != state.RowSpacing)
+            {
+                // If the RowSpacing changes the height of the rows will be different.
+                // The columns stores the height so we'll want to clear them out to
+                // get the proper height
+                state.ClearColumns();
+                state.RowSpacing = RowSpacing;
+            }
+
+            var columnHeights = new double[numColumns];
+            var itemsPerColumn = new int[numColumns];
+            var deadColumns = new HashSet<int>();
+
+            for (int i = 0; i < context.ItemCount; i++)
+            {
+                var columnIndex = GetColumnIndex(columnHeights);
+
+                UIElement element = null;
+                StaggeredItem item = state.GetItemAt(i);
+                if (item.Height == 0)
+                {
+                    element = context.GetOrCreateElementAt(i);
+                    element.Measure(new Size(state.ColumnWidth, availableHeight));
+                    item.Height = element.DesiredSize.Height;
+                }
+
+                double spacing = itemsPerColumn[columnIndex] > 0 ? RowSpacing : 0;
+                item.Top = columnHeights[columnIndex] + spacing;
+                double bottom = item.Top + item.Height;
+                columnHeights[columnIndex] = bottom;
+                itemsPerColumn[columnIndex]++;
+                state.AddItemToColumn(item, columnIndex);
+
+                if (bottom < context.RealizationRect.Top)
+                {
+                    // The bottom of the element is above the realization area
+                    if (element != null)
+                    {
+                        context.RecycleElement(element);
+                    }
+                }
+                else if (item.Top > context.RealizationRect.Bottom)
+                {
+                    // The top of the element is below the realization area
+                    // item.RecycleElement();
+                    deadColumns.Add(columnIndex);
+                }
+                else
+                {
+                    // We ALWAYS want to measure an item that will be in the bounds
+                    context.GetOrCreateElementAt(i).Measure(new Size(state.ColumnWidth, availableHeight));
+                }
+
+                if (deadColumns.Count == numColumns)
+                {
+                    break;
+                }
+            }
+
+            double desiredHeight = state.GetHeight();
+
+            return new Size(availableWidth, desiredHeight);
+        }
+
+        /// <inheritdoc/>
+        protected override Size ArrangeOverride(VirtualizingLayoutContext context, Size finalSize)
+        {
+            if ((context.RealizationRect.Width == 0) && (context.RealizationRect.Height == 0))
+            {
+                return finalSize;
+            }
+
+            var state = (StaggeredLayoutState)context.LayoutState;
+
+            // Cycle through each column and arrange the items that are within the realization bounds
+            for (int columnIndex = 0; columnIndex < state.NumberOfColumns; columnIndex++)
+            {
+                StaggeredColumnLayout layout = state.GetColumnLayout(columnIndex);
+                for (int i = 0; i < layout.Count; i++)
+                {
+                    StaggeredItem item = layout[i];
+
+                    double bottom = item.Top + item.Height;
+                    if (bottom < context.RealizationRect.Top)
+                    {
+                        // element is above the realization bounds
+                        continue;
+                    }
+
+                    if (item.Top <= context.RealizationRect.Bottom)
+                    {
+                        double itemHorizontalOffset = (state.ColumnWidth * columnIndex) + (ColumnSpacing * columnIndex);
+
+                        Rect bounds = new Rect(itemHorizontalOffset, item.Top, state.ColumnWidth, item.Height);
+                        UIElement element = context.GetOrCreateElementAt(item.Index);
+                        element.Arrange(bounds);
+                    }
+                    else
+                    {
                         break;
                     }
                 }
             }
 
-            return startIndex;
-        }
-
-        protected override Size ArrangeOverride(VirtualizingLayoutContext context, Size finalSize)
-        {
-            if (context.RealizationRect != default && context.ItemCount > 0)
-            {
-                for (var index = m_firstIndex; index <= m_lastIndex; index++)
-                {
-                    var child = context.GetOrCreateElementAt(index);
-                    child.Arrange(m_cachedBounds[index]);
-                }
-            }
             return finalSize;
         }
 
-        private void UpdateCachedBounds(Size availableSize)
+        private static void OnDesiredColumnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var numColumns = (int) Math.Floor(availableSize.Width / Math.Min(DesiredColumnWidth, availableSize.Width));
-            var columnWidth = availableSize.Width / numColumns;
-            m_columnOffsets.Clear();
-            for (var i = 0; i < numColumns; i++)
+            var panel = (StaggeredLayout)d;
+            panel.InvalidateMeasure();
+        }
+
+        private static void OnSpacingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var panel = (StaggeredLayout)d;
+            panel.InvalidateMeasure();
+        }
+
+        private int GetColumnIndex(double[] columnHeights)
+        {
+            int columnIndex = 0;
+            double height = columnHeights[0];
+            for (int j = 1; j < columnHeights.Length; j++)
             {
-                m_columnOffsets.Add(VerticalOffset);
+                if (columnHeights[j] < height)
+                {
+                    columnIndex = j;
+                    height = columnHeights[j];
+                }
             }
 
-            for (var index = 0; index < m_cachedBounds.Count; index++)
-            {
-                var columnIndex = GetIndexOfLowestColumn(m_columnOffsets, out var nextOffset);
-                var oldHeight = m_cachedBounds[index].Height;
-                m_cachedBounds[index] = new Rect(columnIndex * columnWidth, nextOffset, columnWidth,
-                    oldHeight);
-                m_columnOffsets[columnIndex] += oldHeight;
-            }
+            return columnIndex;
         }
     }
 }

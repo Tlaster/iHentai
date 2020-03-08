@@ -1,0 +1,21 @@
+﻿<tab:TabActivity
+    x:Class="iHentai.Activities.NewTabActivity"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Activities"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="New Tab"
+    xmlns:paging="using:Bug10.Paging"
+    xmlns:tab="using:iHentai.Common.Tab"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <controls:WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Margin="4" Content="E-Hentai"/>
+            <Button Margin="4" Content="exHentai"/>
+            <Button Margin="4" Content="Manhuagui"/>
+        </controls:WrapPanel>
+    </Grid>
+</tab:TabActivity>
