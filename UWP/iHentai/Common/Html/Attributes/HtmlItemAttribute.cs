@@ -14,5 +14,6 @@ namespace iHentai.Common.Html.Attributes
         public string Attr { get; set; }
         public string RegexPattern { get; set; }
         public int RegexGroup { get; set; }
+        public bool RawHtml { get; set; }
     }
 }

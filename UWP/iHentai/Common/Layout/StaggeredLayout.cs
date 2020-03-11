@@ -154,6 +154,12 @@ namespace iHentai.Common.Layout
             return desiredHeight;
         }
 
+        internal void RecycleElementAt(int index)
+        {
+            UIElement element = _context.GetOrCreateElementAt(index);
+            _context.RecycleElement(element);
+        }
+
         internal void RemoveFromIndex(int index)
         {
             if (index > _items.Count)
@@ -179,8 +185,39 @@ namespace iHentai.Common.Layout
                 }
             }
         }
-    }
 
+        internal void RemoveRange(int startIndex, int endIndex)
+        {
+            for (int i = startIndex; i <= endIndex; i++)
+            {
+                if (i > _items.Count)
+                {
+                    break;
+                }
+
+                StaggeredItem item = _items[i];
+                item.Height = 0;
+                item.Top = 0;
+
+                // We must recycle all elements to ensure that it gets the correct context
+                RecycleElementAt(i);
+            }
+
+            foreach (var kvp in _columnLayout)
+            {
+                StaggeredColumnLayout layout = kvp.Value;
+                for (int i = 0; i < layout.Count; i++)
+                {
+                    if ((startIndex <= layout[i].Index) && (layout[i].Index <= endIndex))
+                    {
+                        int numToRemove = layout.Count - i;
+                        layout.RemoveRange(i, numToRemove);
+                        break;
+                    }
+                }
+            }
+        }
+    }
     /// <summary>
     /// Arranges child elements into a staggered grid pattern where items are added to the column that has used least amount of space.
     /// </summary>
@@ -270,17 +307,28 @@ namespace iHentai.Common.Layout
         {
             var state = (StaggeredLayoutState)context.LayoutState;
 
-            if (args.Action == NotifyCollectionChangedAction.Remove)
+            switch (args.Action)
             {
-                state.RemoveFromIndex(args.OldStartingIndex);
-            }
-            else if (args.Action == NotifyCollectionChangedAction.Add)
-            {
-                state.RemoveFromIndex(args.NewStartingIndex);
-            }
-            else if (args.Action == NotifyCollectionChangedAction.Reset)
-            {
-                state.Clear();
+                case NotifyCollectionChangedAction.Add:
+                    state.RemoveFromIndex(args.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    state.RemoveFromIndex(args.NewStartingIndex);
+
+                    // We must recycle the element to ensure that it gets the correct context
+                    state.RecycleElementAt(args.NewStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    int minIndex = Math.Min(args.NewStartingIndex, args.OldStartingIndex);
+                    int maxIndex = Math.Max(args.NewStartingIndex, args.OldStartingIndex);
+                    state.RemoveRange(minIndex, maxIndex);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    state.RemoveFromIndex(args.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    state.Clear();
+                    break;
             }
 
             base.OnItemsChangedCore(context, source, args);
@@ -303,16 +351,16 @@ namespace iHentai.Common.Layout
 
             double availableWidth = availableSize.Width;
             double availableHeight = availableSize.Height;
+            var numColumns = (int) Math.Floor(availableSize.Width / Math.Min(DesiredColumnWidth, availableSize.Width));
+            var columnWidth = availableSize.Width / numColumns;
 
-            double columnWidth = Math.Min(DesiredColumnWidth, availableWidth);
             if (columnWidth != state.ColumnWidth)
             {
                 // The items will need to be remeasured
                 state.Clear();
             }
 
-            state.ColumnWidth = Math.Min(DesiredColumnWidth, availableWidth);
-            int numColumns = Math.Max(1, (int)Math.Floor(availableWidth / state.ColumnWidth));
+            state.ColumnWidth = columnWidth;
 
             // adjust for column spacing on all columns expect the first
             double totalWidth = state.ColumnWidth + ((numColumns - 1) * (state.ColumnWidth + ColumnSpacing));
@@ -352,6 +400,7 @@ namespace iHentai.Common.Layout
                 StaggeredItem item = state.GetItemAt(i);
                 if (item.Height == 0)
                 {
+                    // Item has not been measured yet. Get the element and store the values
                     element = context.GetOrCreateElementAt(i);
                     element.Measure(new Size(state.ColumnWidth, availableHeight));
                     item.Height = element.DesiredSize.Height;
@@ -375,7 +424,11 @@ namespace iHentai.Common.Layout
                 else if (item.Top > context.RealizationRect.Bottom)
                 {
                     // The top of the element is below the realization area
-                    // item.RecycleElement();
+                    if (element != null)
+                    {
+                        context.RecycleElement(element);
+                    }
+
                     deadColumns.Add(columnIndex);
                 }
                 else
@@ -450,7 +503,7 @@ namespace iHentai.Common.Layout
             panel.InvalidateMeasure();
         }
 
-        private int GetColumnIndex(double[] columnHeights)
+        private static int GetColumnIndex(double[] columnHeights)
         {
             int columnIndex = 0;
             double height = columnHeights[0];

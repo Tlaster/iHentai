@@ -155,6 +155,10 @@ namespace iHentai.Common.Html
                 return null;
             }
 
+            if (htmlItem is HtmlItemAttribute attribute && attribute.RawHtml)
+            {
+                return elements.InnerHtml;
+            }
             var converter = CheckForConverter(propertyInfo);
             var targetValue = GetTargetValue(htmlItem, elements, propertyInfo.PropertyType);
             if (converter != null)

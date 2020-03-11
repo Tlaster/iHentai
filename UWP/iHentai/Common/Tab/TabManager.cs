@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Bug10.Paging;
@@ -37,11 +36,20 @@ namespace iHentai.Common.Tab
         }
     }
 
-    internal interface ITabItem
+    public interface ITabViewModel
     {
-        string Icon { get; }
         string Title { get; }
         bool IsLoading { get; }
+    }
+
+    public interface IHistoricalTabItem
+    {
+        void GoBack();
+    }
+
+    public interface ITabItem
+    {
+        ITabViewModel TabViewModel { get; }
     }
 
     internal class TabItemTemplateSelector : DataTemplateSelector
@@ -54,6 +62,7 @@ namespace iHentai.Common.Tab
             {
                 return ActivityTabItemTemplate;
             }
+
             return base.SelectTemplateCore(item, container);
         }
     }
@@ -71,9 +80,7 @@ namespace iHentai.Common.Tab
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Icon { get; internal set; }
-        public string Title { get; internal set; }
-        public bool IsLoading { get; internal set; }
+        public ITabViewModel TabViewModel { get; internal set; }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -81,33 +88,29 @@ namespace iHentai.Common.Tab
         }
     }
 
-    internal class TabActivityContainer : ActivityContainer
+    internal class TabActivityContainer : ActivityContainer, IHistoricalTabItem
     {
+        public static readonly DependencyProperty ActivityTabItemProperty = DependencyProperty.Register(
+            nameof(ActivityTabItem), typeof(ActivityTabItem), typeof(TabActivityContainer),
+            new PropertyMetadata(default(ActivityTabItem), PropertyChangedCallback));
+
         public TabActivityContainer()
         {
             Navigated += OnNavigated;
         }
 
-        private void OnNavigated(object sender, EventArgs e)
-        {
-            if (CurrentActivity is TabActivity tabActivity)
-            {
-                ActivityTabItem.Title = tabActivity.Title;
-            }
-            else
-            {
-                ActivityTabItem.Title = string.Empty;
-            }
-        }
-
-        public static readonly DependencyProperty ActivityTabItemProperty = DependencyProperty.Register(
-            nameof(ActivityTabItem), typeof(ActivityTabItem), typeof(TabActivityContainer),
-            new PropertyMetadata(default(ActivityTabItem), PropertyChangedCallback));
-
         public ActivityTabItem ActivityTabItem
         {
             get => (ActivityTabItem) GetValue(ActivityTabItemProperty);
             set => SetValue(ActivityTabItemProperty, value);
+        }
+
+        private void OnNavigated(object sender, EventArgs e)
+        {
+            if (CurrentActivity is TabActivity tabActivity && ActivityTabItem != null)
+            {
+                ActivityTabItem.TabViewModel = tabActivity.TabViewModel;
+            }
         }
 
         private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -116,73 +119,31 @@ namespace iHentai.Common.Tab
             {
                 if (e.Property == ActivityTabItemProperty)
                 {
-                    view.OnTabItemChanged(e.NewValue as ActivityTabItem);
+                    view.OnTabItemChanged(e.OldValue as ActivityTabItem, e.NewValue as ActivityTabItem);
                 }
             }
         }
 
-        private void OnTabItemChanged(ActivityTabItem newValue)
+        private void OnTabItemChanged(ActivityTabItem oldValue, ActivityTabItem newValue)
         {
-            Navigate(newValue.TargetActivity, newValue.Parameter);
+            newValue?.Also(it =>
+            {
+                Navigate(it.TargetActivity, it.Parameter);
+            });
             OnNavigated(this, EventArgs.Empty);
         }
 
-    }
-
-    internal class TabActivity : Activity, ITabItem
-    {
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-            nameof(Title), typeof(string), typeof(TabActivity),
-            new PropertyMetadata(default(string), PropertyChangedCallback));
-
-        public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(
-            nameof(IsLoading), typeof(bool), typeof(TabActivity),
-            new PropertyMetadata(default(bool), PropertyChangedCallback));
-
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Icon), typeof(string), typeof(TabActivity),
-            new PropertyMetadata(default(string), PropertyChangedCallback));
-
-        public string Title
+        void IHistoricalTabItem.GoBack()
         {
-            get => (string) GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
-        }
-
-        public bool IsLoading
-        {
-            get => (bool) GetValue(IsLoadingProperty);
-            set => SetValue(IsLoadingProperty, value);
-        }
-
-        public string Icon
-        {
-            get => (string) GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is TabActivity view)
+            if (CanGoBack)
             {
-                if (view.Container is TabActivityContainer tabActivityContainer)
-                {
-                    if (e.Property == TitleProperty)
-                    {
-                        tabActivityContainer.ActivityTabItem.Title = e.NewValue as string;
-                    }
-
-                    if (e.Property == IsLoadingProperty)
-                    {
-                        tabActivityContainer.ActivityTabItem.IsLoading = e.NewValue is bool value && value;
-                    }
-
-                    if (e.Property == IconProperty)
-                    {
-                        tabActivityContainer.ActivityTabItem.Icon = e.NewValue as string;
-                    }
-                }
+                GoBack();
             }
         }
+    }
+
+    internal class TabActivity : Activity
+    {
+        public virtual ITabViewModel TabViewModel { get; }
     }
 }

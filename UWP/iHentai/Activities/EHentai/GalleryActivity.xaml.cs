@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml;
+using iHentai.Services.EHentai.Model;
 using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace iHentai.Activities
+namespace iHentai.Activities.EHentai
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -28,6 +16,14 @@ namespace iHentai.Activities
         public GalleryActivity()
         {
             this.InitializeComponent();
+        }
+
+        private async void AspectRatioView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

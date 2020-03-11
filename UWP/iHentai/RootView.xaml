@@ -14,20 +14,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <Grid.KeyboardAccelerators>
-        <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number1" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number2" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number3" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number4" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number5" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number6" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number7" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number8" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        <KeyboardAccelerator Key="Number9" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-    </Grid.KeyboardAccelerators>
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
@@ -40,10 +26,24 @@
                       AllowDropTabs="True"
                       CanDragTabs="True"
                       CanReorderTabs="True">
+        <controls:TabView.KeyboardAccelerators>
+            <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number1" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number2" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number3" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number4" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number5" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number6" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number7" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number8" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number9" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        </controls:TabView.KeyboardAccelerators>
         <controls:TabView.TabItemTemplate>
             <DataTemplate x:DataType="tab1:ITabItem">
-                <controls:TabViewItem Header="{x:Bind}" Padding="0">
-                    <controls:TabViewItem.HeaderTemplate>
+                <controls:TabViewItem Header="{Binding TabViewModel.Title, Mode=OneWay}" Padding="0">
+                    <!--<controls:TabViewItem.HeaderTemplate>
                         <DataTemplate x:DataType="tab1:ITabItem">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -55,7 +55,7 @@
                                 <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title, Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
-                    </controls:TabViewItem.HeaderTemplate>
+                    </controls:TabViewItem.HeaderTemplate>-->
                 </controls:TabViewItem>
             </DataTemplate>
         </controls:TabView.TabItemTemplate>
@@ -67,22 +67,22 @@
         </controls:TabView.TabStripFooter>
         <controls:TabView.Resources>
             <ResourceDictionary>
-                <Thickness x:Key="TabViewItemHeaderPadding">6</Thickness>
+                <Thickness x:Key="TabViewHeaderPadding">0</Thickness>
+                <x:Double x:Key="TabViewItemScrollButtonHeight">32</x:Double>
                 <ResourceDictionary.ThemeDictionaries>
                     <ResourceDictionary x:Key="Light">
                         <media:AcrylicBrush x:Key="TabViewBackground" BackgroundSource="HostBackdrop"
-                                            TintOpacity="0.5" TintColor="{ThemeResource SystemAccentColorLight2}"
-                                            FallbackColor="{ThemeResource SystemAccentColorLight3}" />
+                                            TintOpacity="0.8" TintColor="{ThemeResource SystemChromeMediumColor}"
+                                            FallbackColor="{ThemeResource SystemChromeMediumColor}" />
                     </ResourceDictionary>
                     <ResourceDictionary x:Key="Dark">
                         <media:AcrylicBrush x:Key="TabViewBackground" BackgroundSource="HostBackdrop"
-                                            TintOpacity="0.5" TintColor="{ThemeResource SystemAccentColorDark2}"
-                                            FallbackColor="{ThemeResource SystemAccentColorDark3}" />
+                                            TintOpacity="0.8" TintColor="{ThemeResource SystemChromeMediumColor}"
+                                            FallbackColor="{ThemeResource SystemChromeMediumColor}" />
                     </ResourceDictionary>
                 </ResourceDictionary.ThemeDictionaries>
             </ResourceDictionary>
         </controls:TabView.Resources>
-        
         <animations:Implicit.ShowAnimations>
             <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
             <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
@@ -92,8 +92,13 @@
             <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
         </animations:Implicit.HideAnimations>
     </controls:TabView>
-    <ContentControl Grid.Row="1" Content="{x:Bind RootTabView.SelectedItem, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-        <ContentControl.ContentTemplateSelector>
+    <Pivot Grid.Row="1" x:Name="ContentPivot" Loaded="ContentPivot_Loaded" ItemsSource="{x:Bind TabManager.TabItems}" SelectedIndex="{x:Bind RootTabView.SelectedIndex, Mode=OneWay}">
+        <Pivot.ItemContainerStyle>
+            <Style TargetType="PivotItem">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+        </Pivot.ItemContainerStyle>
+        <Pivot.ItemTemplateSelector>
             <tab1:TabItemTemplateSelector>
                 <tab1:TabItemTemplateSelector.ActivityTabItemTemplate>
                     <DataTemplate x:DataType="tab1:ActivityTabItem">
@@ -101,9 +106,31 @@
                     </DataTemplate>
                 </tab1:TabItemTemplateSelector.ActivityTabItemTemplate>
             </tab1:TabItemTemplateSelector>
-        </ContentControl.ContentTemplateSelector>
-    </ContentControl>
-    <Grid Grid.Row="0" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="SecondaryTitleBar" Visibility="Visible">
+        </Pivot.ItemTemplateSelector>
+    </Pivot>
+    <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="SecondaryTitleBar" Visibility="Visible">
+        <Grid.KeyboardAccelerators>
+            <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number1" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number2" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number3" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number4" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number5" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number6" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number7" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number8" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            <KeyboardAccelerator Key="Number9" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        </Grid.KeyboardAccelerators>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="SecondaryTitleBarInset" />
+        <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset"/>
+        <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" Padding="8"/>
         <animations:Implicit.ShowAnimations>
             <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
             <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />

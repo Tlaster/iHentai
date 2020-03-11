@@ -12,12 +12,11 @@ using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ViewModels
 {
-
     class GallerySource : IIncrementalSource<IGallery>
     {
         public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
         {
-            return await Singleton<Api>.Instance.Home(pageIndex);
+            return await Singleton<EHApi>.Instance.Home(pageIndex);
         }
     }
 
