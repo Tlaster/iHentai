@@ -214,7 +214,7 @@ namespace iHentai.Common.Html
         private static string GetValue(IHtmlItem htmlItem, IElement element)
         {
             var value = (string.IsNullOrEmpty(htmlItem.Attr)
-                ? element.Text()
+                ? element.TextContent
                 : element.GetAttribute(htmlItem.Attr))?.Trim();
             if (string.IsNullOrEmpty(value))
             {

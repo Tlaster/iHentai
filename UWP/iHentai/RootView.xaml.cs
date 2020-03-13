@@ -48,7 +48,7 @@ namespace iHentai
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
             var container = ContentPivot.ContainerFromIndex(ContentPivot.SelectedIndex);
-            if (container is IHistoricalTabItem item)
+            if (container is PivotItem pivotItem && pivotItem.ContentTemplateRoot is IHistoricalTabItem item)
             {
                 item.GoBack();
             }

@@ -47,6 +47,18 @@ namespace iHentai.Services.EHentai.Model
         [HtmlMultiItems(".gdtm")] public List<EHGalleryPageNormalImage> NormalImages { get; set; }
 
         [HtmlMultiItems(".c1")] public List<EHGalleryComment> Comments { get; set; }
+
+        [HtmlMultiItems("#gdd tr")]
+        public List<EHGalleryInformation> Information { get; set; }
+    }
+
+    internal class EHGalleryInformation
+    {
+        [HtmlItem(".gdt1")]
+        public string Title { get; set; }
+
+        [HtmlItem(".gdt2")]
+        public string Value { get; set; }
     }
 
     internal class EHGalleryComment
@@ -73,8 +85,14 @@ namespace iHentai.Services.EHentai.Model
         [HtmlItem("div", Attr = "style", RegexPattern = "url\\(([^\\s]*)\\) ((-)?\\d+)(px)? ((-)?\\d+)(px)?",
             RegexGroup = 5)]
         public double OffsetY { get; set; }
+        
+        [HtmlItem("img", Attr = "style", RegexPattern = "height:(\\d+)", RegexGroup = 1)]
+        public int ThumbHeight { get; set; }
 
-        [HtmlItem("a")] public string Text { get; set; }
+        [HtmlItem("img", Attr = "style", RegexPattern = "width:(\\d+)", RegexGroup = 1)]
+        public int ThumbWidth { get; set; }
+
+        [HtmlItem("img", Attr = "alt")] public string Text { get; set; }
     }
 
     internal class EHGalleryPageLargeImage
@@ -90,7 +108,7 @@ namespace iHentai.Services.EHentai.Model
     {
         [HtmlItem(".tc")] public string Name { get; set; }
 
-        [HtmlMultiItems("td:nth-child(2)")] public List<EHGalleryTag> Tags { get; set; }
+        [HtmlMultiItems("td:nth-child(2) > div")] public List<EHGalleryTag> Tags { get; set; }
     }
 
     internal class EHGalleryTag

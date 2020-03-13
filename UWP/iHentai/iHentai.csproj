@@ -121,6 +121,9 @@
     <Compile Include="Activities\EHentai\GalleryActivity.xaml.cs">
       <DependentUpon>GalleryActivity.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Activities\EHentai\GalleryDetailActivity.xaml.cs">
+      <DependentUpon>GalleryDetailActivity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Activities\NewTabActivity.xaml.cs">
       <DependentUpon>NewTabActivity.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,7 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
+    <Compile Include="Common\FadeActivityTransition.cs" />
     <Compile Include="Common\Html\Attributes\HtmlConverterAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlItemAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlMultiItemsAttribute.cs" />
@@ -142,6 +146,7 @@
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
     <Compile Include="Controls\CardView.cs" />
+    <Compile Include="Controls\ImageEx2.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootView.xaml.cs">
@@ -150,9 +155,10 @@
     <Compile Include="Services\Core\IGallery.cs" />
     <Compile Include="Services\EHentai\EHApi.cs" />
     <Compile Include="Services\EHentai\Model\EHGallery.cs" />
+    <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
-    <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\EHentai\GalleryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp">
-      <Version>0.14.0-alpha-794</Version>
+      <Version>0.14.0-alpha-798</Version>
     </PackageReference>
     <PackageReference Include="Bug10.Paging">
       <Version>1.0.12</Version>
@@ -207,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Activities\EHentai\GalleryActivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Activities\EHentai\GalleryDetailActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

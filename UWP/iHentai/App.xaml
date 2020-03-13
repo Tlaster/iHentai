@@ -2,10 +2,48 @@
     x:Class="iHentai.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:iHentai">
+    xmlns:local="using:iHentai"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls">
 
     <Application.Resources>
         <ResourceDictionary>
+            
+            <Style TargetType="controls:ImageEx" x:Key="DetailImageStyle">
+                <Setter Property="IsCacheEnabled" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:ImageEx">
+                            <Grid Background="{TemplateBinding Background}"
+                                  CornerRadius="{TemplateBinding CornerRadius}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}">
+                                <Image Name="PlaceholderImage"
+                                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                       Visibility="Collapsed"
+                                       Source="{TemplateBinding PlaceholderSource}"
+                                       Stretch="{TemplateBinding PlaceholderStretch}" />
+                                <Image Name="Image"
+                                       HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                       NineGrid="{TemplateBinding NineGrid}"
+                                       Stretch="{TemplateBinding Stretch}" />
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Failed">
+                                        </VisualState>
+                                        <VisualState x:Name="Loading">
+                                        </VisualState>
+                                        <VisualState x:Name="Loaded">
+                                        </VisualState>
+                                        <VisualState x:Name="Unloaded" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
             </ResourceDictionary.MergedDictionaries>

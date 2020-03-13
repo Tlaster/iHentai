@@ -34,11 +34,19 @@ namespace iHentai.Controls
             var availableWidth = finalSize.Width;
             if (WidthRequest == 0 || HeightRequest == 0)
             {
-                return new Size(0, 0);
+                foreach (var item in Children)
+                {
+                    item.Arrange(new Rect(0, 0, finalSize.Width, height: finalSize.Height));
+                }
+
+                return Children.Max(it => it.DesiredSize);
             }
 
             var requestHeight = Convert.ToDouble(HeightRequest) / Convert.ToDouble(WidthRequest) *
                                 Convert.ToDouble(availableWidth);
+            requestHeight = Math.Min(requestHeight, finalSize.Height);
+            availableWidth =  Convert.ToDouble(WidthRequest) / Convert.ToDouble(HeightRequest) *
+                              Convert.ToDouble(requestHeight);
             var size = new Size(availableWidth, requestHeight);
             var rect = new Rect(0, 0, size.Width, size.Height);
             foreach (var item in Children)
@@ -54,11 +62,19 @@ namespace iHentai.Controls
             var availableWidth = availableSize.Width;
             if (WidthRequest == 0 || HeightRequest == 0)
             {
-                return new Size(0, 0);
+                foreach (var item in Children)
+                {
+                    item.Measure(availableSize);
+                }
+
+                return Children.Max(it => it.DesiredSize);
             }
 
             var requestHeight = Convert.ToDouble(HeightRequest) / Convert.ToDouble(WidthRequest) *
                                 Convert.ToDouble(availableWidth);
+            requestHeight = Math.Min(requestHeight, availableSize.Height);
+            availableWidth =  Convert.ToDouble(WidthRequest) / Convert.ToDouble(HeightRequest) *
+                              Convert.ToDouble(requestHeight);
             var size = new Size(availableWidth, requestHeight);
             foreach (var item in Children)
             {
