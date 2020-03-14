@@ -5,7 +5,6 @@
     xmlns:local="using:iHentai.Activities"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:paging="using:Bug10.Paging"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:extensions="using:iHentai.Common.Extensions"
     xmlns:ehentai="using:iHentai.Services.EHentai"
@@ -26,6 +25,7 @@
                 <controls:ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="model:EHGallery">
                         <controls2:AspectRatioView 
+                            ToolTipService.ToolTip="{x:Bind Title}"
                             Tag="{x:Bind}"
                             Tapped="AspectRatioView_Tapped"
                             Margin="4" WidthRequest="{x:Bind ThumbWidth}"

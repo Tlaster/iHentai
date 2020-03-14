@@ -13,7 +13,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Bug10.Paging;
 using iHentai.Common;
 using iHentai.Common.Tab;
 using iHentai.ViewModels;

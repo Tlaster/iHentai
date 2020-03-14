@@ -51,11 +51,11 @@ namespace iHentai.Services.EHentai
 
     internal class EHApi
     {
-        private const string HOST = "https://e-hentai.org/";
+        protected virtual string Host => "https://e-hentai.org/";
 
         public async Task<IEnumerable<IGallery>> Home(int page = 0)
         {
-            var result = await $"{HOST}"
+            var result = await $"{Host}"
                 .SetQueryParams(new
                 {
                     page

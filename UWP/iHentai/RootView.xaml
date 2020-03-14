@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:activities="using:iHentai.Activities"
-    xmlns:paging="using:Bug10.Paging"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
     xmlns:tab1="using:iHentai.Common.Tab"

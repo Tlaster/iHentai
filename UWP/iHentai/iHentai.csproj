@@ -148,6 +148,11 @@
     <Compile Include="Controls\CardView.cs" />
     <Compile Include="Controls\HtmlTextBlock.cs" />
     <Compile Include="Controls\ImageEx2.cs" />
+    <Compile Include="Controls\Paging\Activity.cs" />
+    <Compile Include="Controls\Paging\ActivityContainer.cs" />
+    <Compile Include="Controls\Paging\ActivityModel.cs" />
+    <Compile Include="Controls\Paging\ActivityStackManager.cs" />
+    <Compile Include="Controls\Paging\IActivityTransition.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootView.xaml.cs">
@@ -187,9 +192,6 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp">
       <Version>0.14.0-alpha-798</Version>
-    </PackageReference>
-    <PackageReference Include="Bug10.Paging">
-      <Version>1.0.12</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
       <Version>3.0.0-pre3</Version>

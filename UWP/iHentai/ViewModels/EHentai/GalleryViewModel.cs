@@ -11,18 +11,27 @@ namespace iHentai.ViewModels.EHentai
 {
     class GallerySource : IIncrementalSource<IGallery>
     {
+        private readonly EHApi _api;
+        public GallerySource(EHApi api)
+        {
+            _api = api;
+        }
         public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
         {
-            return await Singleton<EHApi>.Instance.Home(pageIndex);
+            return await _api.Home(pageIndex);
         }
     }
 
     class GalleryViewModel : TabViewModelBase
     {
-        public GalleryViewModel()
+        public EHApi Api { get; }
+
+        public GalleryViewModel(EHApi api)
         {
+            Api = api;
             Title = "EHentai";
+            Source = new LoadingCollection<GallerySource, IGallery>(new GallerySource(Api));
         }
-        public LoadingCollection<GallerySource, IGallery> Source { get; } = new LoadingCollection<GallerySource, IGallery>();
+        public LoadingCollection<GallerySource, IGallery> Source { get; }
     }
 }

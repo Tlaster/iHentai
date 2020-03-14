@@ -32,6 +32,12 @@ namespace iHentai.Services.EHentai.Model
 
         [HtmlItem("#gd1 > div", Attr = "style", RegexPattern = "url\\(([^\\s]*)\\)", RegexGroup = 1)]
         public string Thumb { get; set; }
+        
+        [HtmlItem("#gd1 > div", Attr = "style", RegexPattern = "height:(\\d+)", RegexGroup = 1)]
+        public int ThumbHeight { get; set; }
+
+        [HtmlItem("#gd1 > div", Attr = "style", RegexPattern = "width:(\\d+)", RegexGroup = 1)]
+        public int ThumbWidth { get; set; }
 
         [HtmlItem("#rating_image", Attr = "style")]
         [HtmlConverter(typeof(RatingConverter))]

@@ -32,22 +32,22 @@
                     <Grid MaxHeight="400" MaxWidth="400" VerticalAlignment="Top">
                         <controls:AspectRatioView
                             Tag="{x:Bind}"
-                            Margin="4" WidthRequest="{x:Bind ViewModel.Gallery.ThumbWidth}"
-                            HeightRequest="{x:Bind ViewModel.Gallery.ThumbHeight}">
+                            Margin="4" WidthRequest="{x:Bind ViewModel.ThumbWidth, Mode=OneWay}"
+                            HeightRequest="{x:Bind ViewModel.ThumbHeight, Mode=OneWay}">
                             <controls1:ImageEx
                                 Style="{StaticResource DetailImageStyle}"
                                 x:Name="DetailImage"
-                                Source="{x:Bind ViewModel.Gallery.Thumb}" IsCacheEnabled="True"
+                                Source="{x:Bind ViewModel.Thumb, Mode=OneWay}" IsCacheEnabled="True"
                                 Stretch="Uniform" />
                         </controls:AspectRatioView>
                     </Grid>
                     <StackPanel Margin="8,0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
-                        <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.Gallery.Title}"
+                        <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.GalleryTitle,Mode=OneWay}"
                                    Style="{ThemeResource TitleTextBlockStyle}" IsTextSelectionEnabled="True" />
                         <TextBlock Margin="0,8,0,0" TextWrapping="Wrap"
                                    Text="{x:Bind ViewModel.Detail.NameJP, Mode=OneWay}" IsTextSelectionEnabled="True" />
                         <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind ViewModel.Gallery.Uploader}" VerticalAlignment="Center" />
+                            <TextBlock Text="{x:Bind ViewModel.Uploader, Mode=OneWay}" VerticalAlignment="Center" />
                             <TextBlock Text="·" Margin="8,0" VerticalAlignment="Center" />
                             <Border RequestedTheme="Dark" Padding="8,4"
                                     Background="{x:Bind ehentai:EHApi.GetCatColorBrush(ViewModel.Gallery.Category)}">

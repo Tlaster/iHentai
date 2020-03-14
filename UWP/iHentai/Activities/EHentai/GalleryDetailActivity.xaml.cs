@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using AngleSharp.Common;
 using iHentai.Common.Tab;
+using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
 using iHentai.ViewModels.EHentai;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -38,12 +39,18 @@ namespace iHentai.Activities.EHentai
         public override ITabViewModel TabViewModel => ViewModel;
         private GalleryDetailViewModel ViewModel { get; set; }
 
-        protected override void OnCreate(object parameter)
+        protected internal override void OnCreate(object parameter)
         {
             base.OnCreate(parameter);
-            if (parameter is EHGallery gallery)
+            var api = Intent.TryGet("api") as EHApi;
+            switch (parameter)
             {
-                ViewModel = new GalleryDetailViewModel(gallery);
+                case EHGallery gallery:
+                    ViewModel = new GalleryDetailViewModel(gallery, api);
+                    break;
+                case string link:
+                    ViewModel = new GalleryDetailViewModel(link, api);
+                    break;
             }
         }
 
@@ -52,9 +59,10 @@ namespace iHentai.Activities.EHentai
             service.GetAnimation("image")?.TryStart(DetailImage);
         }
 
-        protected override void OnPrepareConnectedAnimation(ConnectedAnimationService service)
+        protected internal override bool OnBackRequest()
         {
-            service.PrepareToAnimate("image", DetailImage).Configuration = new DirectConnectedAnimationConfiguration();
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("image", DetailImage).Configuration = new DirectConnectedAnimationConfiguration();
+            return base.OnBackRequest();
         }
 
         void OpenInBrowser()

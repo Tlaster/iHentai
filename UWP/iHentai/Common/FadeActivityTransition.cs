@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Bug10.Paging;
+using iHentai.Controls.Paging;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 namespace iHentai.Common

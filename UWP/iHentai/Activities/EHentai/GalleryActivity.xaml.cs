@@ -1,10 +1,14 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
+using AngleSharp.Common;
 using iHentai.Common;
 using iHentai.Common.Tab;
+using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
 using iHentai.ViewModels;
 using iHentai.ViewModels.EHentai;
+using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 
@@ -20,11 +24,23 @@ namespace iHentai.Activities.EHentai
         private FrameworkElement _animationImageElement;
         public override ITabViewModel TabViewModel => ViewModel;
 
-        GalleryViewModel ViewModel { get; } = new GalleryViewModel();
+        GalleryViewModel ViewModel { get; set; }
 
         public GalleryActivity()
         {
             this.InitializeComponent();
+        }
+
+        protected internal override void OnCreate(object parameter)
+        {
+            base.OnCreate(parameter);
+            if (!Intent.ContainsKey("api"))
+            {
+                Intent.Add("api", Singleton<EHApi>.Instance);
+            }
+            var api = Intent.TryGet("api") as EHApi;
+            ViewModel = new GalleryViewModel(api);
+
         }
 
         private async void AspectRatioView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -33,7 +49,7 @@ namespace iHentai.Activities.EHentai
             {
                 e.Handled = true;
                 _animationImageElement = element.FindDescendant<ImageEx>();
-                StartActivity<GalleryDetailActivity>(gallery);
+                StartActivity<GalleryDetailActivity>(gallery, Intent);
             }
         }
 

@@ -3,8 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:iHentai"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:controls1="using:iHentai.Controls">
+    xmlns:controls1="using:iHentai.Controls"
+    xmlns:paging="using:iHentai.Controls.Paging">
 
+    <Style TargetType="paging:ActivityContainer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="paging:ActivityContainer">
+                    <ContentPresenter x:Name="InternalContentPresenter" Background="{TemplateBinding Background}"
+                                      Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+                                      ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style TargetType="controls1:CardView">
         <Setter Property="Template">
