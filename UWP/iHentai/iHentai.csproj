@@ -124,6 +124,9 @@
     <Compile Include="Activities\EHentai\GalleryDetailActivity.xaml.cs">
       <DependentUpon>GalleryDetailActivity.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Activities\EHentai\LoginActivity.xaml.cs">
+      <DependentUpon>LoginActivity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Activities\NewTabActivity.xaml.cs">
       <DependentUpon>NewTabActivity.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,7 @@
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\FadeActivityTransition.cs" />
+    <Compile Include="Common\HentaiHttpMessageHandler.cs" />
     <Compile Include="Common\Html\Attributes\HtmlConverterAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlItemAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlMultiItemsAttribute.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Common\Html\HtmlConvert.cs" />
     <Compile Include="Common\Helpers\ReflectionHelper.cs" />
     <Compile Include="Common\Layout\StaggeredLayout.cs" />
+    <Compile Include="Common\Settings.cs" />
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
     <Compile Include="Controls\CardView.cs" />
@@ -162,6 +167,7 @@
     <Compile Include="Services\EHentai\EHApi.cs" />
     <Compile Include="Services\EHentai\Model\EHGallery.cs" />
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
+    <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="ViewModels\EHentai\GalleryViewModel.cs" />
@@ -220,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Activities\EHentai\GalleryDetailActivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Activities\EHentai\LoginActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

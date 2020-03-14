@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Core;
 using Windows.System;
@@ -11,9 +12,12 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Flurl.Http;
 using iHentai.Common;
 using iHentai.Common.Tab;
+using iHentai.Controls;
 using Microsoft.Toolkit.Helpers;
+using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 using Microsoft.UI.Xaml.Controls;
 
@@ -58,6 +62,10 @@ namespace iHentai
                     AppViewBackButtonVisibility.Visible;
                 it.BackRequested += OnBackRequested;
             });
+            ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
+            ImageEx2.ImageCache2.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
+            FlurlHttp.Configure(it => { it.HttpClientFactory = new HentaiHttpClientFactory(); });
+
             Singleton<BroadcastCenter>.Instance.Subscribe("tab_toggle_visible", (o, o1) => { ToggleTabBar(); });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
         }

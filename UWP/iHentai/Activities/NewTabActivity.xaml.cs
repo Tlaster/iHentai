@@ -13,8 +13,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using iHentai.Activities.EHentai;
 using iHentai.Common;
 using iHentai.Common.Tab;
+using iHentai.Services.EHentai;
 using iHentai.ViewModels;
 using Microsoft.Toolkit.Helpers;
 
@@ -40,7 +42,25 @@ namespace iHentai.Activities
         {
             if (e.ClickedItem is KeyValuePair<string, Type> item)
             {
-                StartActivity(item.Value);
+                //TODO: a better way
+                if (item.Key == "exHentai")
+                {
+                    if (Singleton<ExApi>.Instance.RequireLogin)
+                    {
+                        StartActivity<LoginActivity>();
+                    }
+                    else
+                    {
+                        StartActivity<GalleryActivity>(intent: new Dictionary<string, object>
+                        {
+                            { "api", Singleton<ExApi>.Instance}
+                        });
+                    }
+                }
+                else
+                {
+                    StartActivity(item.Value);
+                }
                 Finish();
             }
         }

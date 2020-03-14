@@ -7,7 +7,9 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            
+            <Style TargetType="controls:ImageEx">
+                <Setter Property="IsCacheEnabled" Value="True" />
+            </Style>
             <Style TargetType="controls:ImageEx" x:Key="DetailImageStyle">
                 <Setter Property="IsCacheEnabled" Value="True" />
                 <Setter Property="Template">

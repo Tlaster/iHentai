@@ -10,7 +10,9 @@ namespace iHentai.Services.EHentai.Model
 {
     internal class EHGalleryList
     {
-        [HtmlMultiItems(".itg.gltc tr")] public List<EHGallery> Items { get; set; }
+        [HtmlMultiItems(".itg.gltc tr:not(:first-child)")]
+        [HtmlMultiItems(".itg.gltm tr:not(:first-child)")]
+        public List<EHGallery> Items { get; set; }
     }
 
     internal class EHGalleryDetail

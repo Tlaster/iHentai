@@ -198,10 +198,11 @@ namespace iHentai.Controls
             }
             var name = element.GetAttribute("alt")?.TrimStart('[')?.TrimEnd(']');
             var link = element.GetAttribute("src");
-            var img = new Image
+            var img = new ImageEx
             {
                 Source = new BitmapImage(new Uri(link)),
                 MaxWidth = 200,
+                IsCacheEnabled = true,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 Stretch = Stretch.UniformToFill
