@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
@@ -54,6 +55,11 @@ namespace iHentai.Activities.EHentai
         protected override void OnPrepareConnectedAnimation(ConnectedAnimationService service)
         {
             service.PrepareToAnimate("image", DetailImage).Configuration = new DirectConnectedAnimationConfiguration();
+        }
+
+        void OpenInBrowser()
+        {
+            Launcher.LaunchUriAsync(new Uri(ViewModel.Gallery.Link));
         }
     }
 

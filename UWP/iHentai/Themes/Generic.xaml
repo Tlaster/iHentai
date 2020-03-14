@@ -30,4 +30,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="controls1:HtmlTextBlock">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls1:HtmlTextBlock">
+                    <Border
+                        Name="RootElement"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <RichTextBlock Name="RichTextContent" TextWrapping="Wrap" IsTextSelectionEnabled="{TemplateBinding IsTextSelectionEnabled}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

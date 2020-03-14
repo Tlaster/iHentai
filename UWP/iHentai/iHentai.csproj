@@ -146,6 +146,7 @@
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
     <Compile Include="Controls\CardView.cs" />
+    <Compile Include="Controls\HtmlTextBlock.cs" />
     <Compile Include="Controls\ImageEx2.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,9 +25,9 @@ namespace iHentai.Common.Tab
             TabItems.Add(item);
         }
 
-        public void Remove(ITabItem item)
+        public void Remove(int index)
         {
-            TabItems.Remove(item);
+            TabItems.RemoveAt(index);
         }
 
         public void AddDefault()

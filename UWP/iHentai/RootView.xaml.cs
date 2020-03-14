@@ -1,4 +1,7 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Core;
 using Windows.System;
 using Windows.UI;
@@ -18,9 +21,23 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace iHentai
 {
-    public sealed partial class RootView
+    public sealed partial class RootView : INotifyPropertyChanged
     {
+        private bool _isUpdatingTab;
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set
+            {
+                if (!_isUpdatingTab)
+                {
+                    _selectedTabIndex = value;
+                }
+            }
+        }
+
         private Grid _titleBarGrid;
+        private int _selectedTabIndex;
         TabManager TabManager { get; } = new TabManager();
         public RootView()
         {
@@ -47,12 +64,20 @@ namespace iHentai
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
+            var handled = false;
             var container = ContentPivot.ContainerFromIndex(ContentPivot.SelectedIndex);
             if (container is PivotItem pivotItem && pivotItem.ContentTemplateRoot is IHistoricalTabItem item)
             {
+                handled = true;
                 item.GoBack();
             }
 
+            if (!handled)
+            {
+                handled = TabManager.Count > 1;
+            }
+
+            e.Handled = handled;
         }
 
         private void TabItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -107,10 +132,8 @@ namespace iHentai
         
         private void RootTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            if (args.Item is ITabItem item)
-            {
-                RemoveTab(item);
-            }
+            var index = sender.TabItems.IndexOf(args.Item);
+            RemoveTab(index);
         }
 
         private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -134,7 +157,7 @@ namespace iHentai
                 return;
             }
 
-            RootTabView.SelectedIndex = index;
+            SelectedTabIndex = index;
         }
 
         private void NewTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -146,10 +169,7 @@ namespace iHentai
         private void CloseSelectedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
-            if (RootTabView.SelectedItem is ITabItem item)
-            {
-                RemoveTab(item);
-            }
+            RemoveTab(SelectedTabIndex);
         }
 
         private void RootTabView_Loaded(object sender, RoutedEventArgs e)
@@ -182,18 +202,26 @@ namespace iHentai
 
         private void AddTab()
         {
+            _isUpdatingTab = true;
             TabManager.AddDefault();
+            _isUpdatingTab = false;
             if (TabManager.Count > 0)
             {
-                RootTabView.SelectedIndex = TabManager.Count - 1;
+                SelectedTabIndex = TabManager.Count - 1;
             }
         }
 
-        private void RemoveTab(ITabItem item)
+        private void RemoveTab(int index)
         {
             if (TabManager.Count > 1)
             {
-                TabManager.Remove(item);
+                if (SelectedTabIndex == index)
+                {
+                    SelectedTabIndex = Math.Min(SelectedTabIndex + 1, TabManager.Count - 1);
+                }
+                _isUpdatingTab = true;
+                TabManager.Remove(index);
+                _isUpdatingTab = false;
             }
         }
 
@@ -204,13 +232,20 @@ namespace iHentai
                 return;
             }
 
-            var nextIndex = RootTabView.SelectedIndex + 1;
+            var nextIndex = SelectedTabIndex + 1;
             if (nextIndex > TabManager.Count - 1)
             {
                 nextIndex = 0;
             }
 
-            RootTabView.SelectedIndex = nextIndex;
+            SelectedTabIndex = nextIndex;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

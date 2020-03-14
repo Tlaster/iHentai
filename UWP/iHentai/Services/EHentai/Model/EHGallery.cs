@@ -50,6 +50,9 @@ namespace iHentai.Services.EHentai.Model
 
         [HtmlMultiItems("#gdd tr")]
         public List<EHGalleryInformation> Information { get; set; }
+
+        [HtmlMultiItems(".ptt td:not(:first-child):not(:last-child) > a", Attr = "href")]
+        public List<string> Pages { get; set; }
     }
 
     internal class EHGalleryInformation
@@ -63,6 +66,8 @@ namespace iHentai.Services.EHentai.Model
 
     internal class EHGalleryComment
     {
+        [HtmlItem(".c3", RegexPattern = "Posted on (.*) by:", RegexGroup = 1)] public string CreatedAt { get; set; }
+
         [HtmlItem(".c6", RawHtml = true)] public string Content { get; set; }
 
         [HtmlItem(".c7")] public string Votes { get; set; }
@@ -100,8 +105,8 @@ namespace iHentai.Services.EHentai.Model
         [HtmlItem("a", Attr = "href")] public string Link { get; set; }
 
         [HtmlItem("img", Attr = "src")] public string Source { get; set; }
-
-        [HtmlItem("a")] public string Text { get; set; }
+        
+        [HtmlItem("img", Attr = "alt")] public string Text { get; set; }
     }
 
     internal class EHGalleryTagCategory
