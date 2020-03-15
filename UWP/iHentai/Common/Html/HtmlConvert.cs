@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -18,7 +19,7 @@ namespace iHentai.Common.Html
         {
             return new HtmlParser();
         }
-
+        
         public static T DeserializeObject<T>(string html)
         {
             var parser = GetParser();
@@ -27,6 +28,20 @@ namespace iHentai.Common.Html
         }
 
         public static object DeserializeObject(string html, Type type)
+        {
+            var parser = GetParser();
+            var doc = parser.ParseDocument(html);
+            return DeserializeObject(doc, type);
+        }
+
+        public static T DeserializeObject<T>(Stream html)
+        {
+            var parser = GetParser();
+            var doc = parser.ParseDocument(html);
+            return (T) DeserializeObject(doc, typeof(T));
+        }
+
+        public static object DeserializeObject(Stream html, Type type)
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);

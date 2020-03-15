@@ -4,7 +4,8 @@
     xmlns:local="using:iHentai"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:iHentai.Controls"
-    xmlns:paging="using:iHentai.Controls.Paging">
+    xmlns:paging="using:iHentai.Controls.Paging"
+    xmlns:book="using:iHentai.Controls.Book">
 
     <Style TargetType="paging:ActivityContainer">
         <Setter Property="Template">
@@ -59,4 +60,18 @@
         </Setter>
     </Style>
 
+
+    <Style TargetType="book:BookView">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="book:BookView">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

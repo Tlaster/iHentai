@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,10 +16,12 @@ using Flurl;
 using Flurl.Http;
 using Flurl.Http.Configuration;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using iHentai.Common.Html;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai.Model;
 using Microsoft.Toolkit.Helpers;
+using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Animations.Behaviors;
 using ColorHelper = Microsoft.Toolkit.Uwp.Helpers.ColorHelper;
 
@@ -127,6 +130,11 @@ namespace iHentai.Services.EHentai
     {
         protected virtual string Host => "https://e-hentai.org/";
 
+        public EHApi()
+        {
+            Singleton<HtmlCache<EHGalleryImage>>.Instance.CacheDuration = TimeSpan.FromDays(7);
+        }
+
         public async Task<IEnumerable<IGallery>> Home(int page = 0)
         {
             var result = await $"{Host}"
@@ -138,14 +146,21 @@ namespace iHentai.Services.EHentai
             return result.Items;
         }
 
-        public async Task<EHGalleryDetail> Detail(string link, int page = 0)
+        public async Task<EHGalleryDetail> Detail(string link, bool removeCache = false)
         {
-            return await link.SetQueryParams(new
-                {
-                    p = page
-                })
-                .GetHtmlAsync<EHGalleryDetail>();
+            if (removeCache)
+            {
+                await Singleton<HtmlCache<EHGalleryDetail>>.Instance.RemoveAsync(new[] {new Uri(link)});
+            }
+
+            return await Singleton<HtmlCache<EHGalleryDetail>>.Instance.GetFromCacheAsync(new Uri(link));
         }
+
+        public async Task<EHGalleryImage> GetImages(string link)
+        {
+            return await Singleton<HtmlCache<EHGalleryImage>>.Instance.GetFromCacheAsync(new Uri(link));
+        }
+
         public static string GetLanguageTag(string title)
         {
             var result = string.Empty;

@@ -130,16 +130,20 @@
     <Compile Include="Activities\NewTabActivity.xaml.cs">
       <DependentUpon>NewTabActivity.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Activities\ReadingActivity.xaml.cs">
+      <DependentUpon>ReadingActivity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\BroadcastCenter.cs" />
+    <Compile Include="Common\Helpers\BroadcastCenter.cs" />
     <Compile Include="Common\Collection\LoadingCollection.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\FadeActivityTransition.cs" />
-    <Compile Include="Common\HentaiHttpMessageHandler.cs" />
+    <Compile Include="Common\Helpers\HtmlCache.cs" />
+    <Compile Include="Common\Helpers\HentaiHttpMessageHandler.cs" />
     <Compile Include="Common\Html\Attributes\HtmlConverterAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlItemAttribute.cs" />
     <Compile Include="Common\Html\Attributes\HtmlMultiItemsAttribute.cs" />
@@ -147,9 +151,10 @@
     <Compile Include="Common\Html\HtmlConvert.cs" />
     <Compile Include="Common\Helpers\ReflectionHelper.cs" />
     <Compile Include="Common\Layout\StaggeredLayout.cs" />
-    <Compile Include="Common\Settings.cs" />
+    <Compile Include="Common\Helpers\Settings.cs" />
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
+    <Compile Include="Controls\Book\BookView.cs" />
     <Compile Include="Controls\CardView.cs" />
     <Compile Include="Controls\HtmlTextBlock.cs" />
     <Compile Include="Controls\ImageEx2.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
+    <Compile Include="ViewModels\ReadingViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="ViewModels\EHentai\GalleryViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -234,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Activities\NewTabActivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Activities\ReadingActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

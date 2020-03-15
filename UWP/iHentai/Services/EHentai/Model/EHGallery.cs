@@ -15,6 +15,24 @@ namespace iHentai.Services.EHentai.Model
         public List<EHGallery> Items { get; set; }
     }
 
+    internal class EHGalleryImage
+    {
+        [HtmlItem("#img", Attr = "src")]
+        public string Source { get; set; }
+        
+        [HtmlItem("#img", Attr = "style", RegexPattern = "height:(\\d+)", RegexGroup = 1)]
+        public int Height { get; set; }
+
+        [HtmlItem("#img", Attr = "style", RegexPattern = "width:(\\d+)", RegexGroup = 1)]
+        public int Width { get; set; }
+
+        [HtmlItem("#i7 > a", Attr = "href")]
+        public string OriginalSource { get; set; }
+
+        [HtmlItem("#loadfail", Attr = "onclick", RegexPattern = "\\((.*)\\)", RegexGroup = 1)] 
+        public string LoadFailed { get; set; }
+    }
+
     internal class EHGalleryDetail
     {
         [HtmlItem("#gn")] public string Name { get; set; }

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Flurl.Http;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using iHentai.Common.Tab;
 using iHentai.Controls;
 using Microsoft.Toolkit.Helpers;
