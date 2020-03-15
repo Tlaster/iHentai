@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using iHentai.Common.Tab;
+using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +24,20 @@ namespace iHentai.Activities
     /// </summary>
     partial class ReadingActivity
     {
+        public override ITabViewModel TabViewModel => ViewModel;
+        public ReadingViewModel ViewModel { get; private set; }
         public ReadingActivity()
         {
             this.InitializeComponent();
+        }
+
+        protected internal override void OnCreate(object parameter)
+        {
+            base.OnCreate(parameter);
+            if (parameter is ReadingViewModel viewModel)
+            {
+                ViewModel = viewModel;
+            }
         }
     }
 }

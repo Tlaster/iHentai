@@ -1,17 +1,14 @@
 ﻿using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
-using Microsoft.Toolkit.Helpers;
 using PropertyChanged;
 
 namespace iHentai.ViewModels.EHentai
 {
     internal class GalleryDetailViewModel : TabViewModelBase
     {
-        private readonly EHApi _api;
-
         public GalleryDetailViewModel(EHGallery gallery, EHApi api)
         {
-            _api = api;
+            Api = api;
             Gallery = gallery;
             Title = gallery.Title;
             Init();
@@ -19,9 +16,11 @@ namespace iHentai.ViewModels.EHentai
 
         public GalleryDetailViewModel(string gallery, EHApi api)
         {
-            _api = api;
+            Api = api;
             Init(gallery);
         }
+
+        public EHApi Api { get; }
 
         [DependsOn(nameof(Detail))] public int ThumbWidth => Gallery?.ThumbWidth ?? Detail?.ThumbWidth ?? 0;
 
@@ -38,18 +37,21 @@ namespace iHentai.ViewModels.EHentai
 
         public EHGalleryDetail Detail { get; private set; }
         public EHGallery Gallery { get; }
+        public string Link { get; private set; }
 
         private async void Init(string gallery)
         {
             IsLoading = true;
-            Detail = await _api.Detail(gallery);
+            Link = gallery;
+            Detail = await Api.Detail(gallery);
             IsLoading = false;
         }
 
         private async void Init()
         {
             IsLoading = true;
-            Detail = await _api.Detail(Gallery.Link);
+            Link = Gallery.Link;
+            Detail = await Api.Detail(Gallery.Link);
             IsLoading = false;
         }
     }

@@ -11,6 +11,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using AngleSharp.Common;
@@ -68,6 +69,11 @@ namespace iHentai.Activities.EHentai
         void OpenInBrowser()
         {
             Launcher.LaunchUriAsync(new Uri(ViewModel.Gallery.Link));
+        }
+
+        void OpenRead()
+        {
+            StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link));
         }
     }
 

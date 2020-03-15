@@ -6,9 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tab="using:iHentai.Common.Tab"
+    xmlns:viewModels="using:iHentai.ViewModels"
     mc:Ignorable="d">
 
     <Grid>
-
+        <FlipView ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:IReadingImage">
+                    <Grid>
+                        <Image Source="{x:Bind Source, Mode=OneWay}" />
+                        <ProgressRing Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                      IsActive="{x:Bind IsLoading, Mode=OneWay}" Width="50" Height="50"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+        <ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                      IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </tab:TabActivity>

@@ -103,7 +103,13 @@ namespace iHentai.Services.EHentai.Model
         [HtmlItem(".c5 > span")] public string Point { get; set; }
     }
 
-    internal class EHGalleryPageNormalImage
+    internal interface IEHGalleryImage
+    {
+        string Text { get; }
+        string Link { get; }
+    }
+
+    internal class EHGalleryPageNormalImage : IEHGalleryImage
     {
         [HtmlItem("a", Attr = "href")] public string Link { get; set; }
 
@@ -126,7 +132,7 @@ namespace iHentai.Services.EHentai.Model
         [HtmlItem("img", Attr = "alt")] public string Text { get; set; }
     }
 
-    internal class EHGalleryPageLargeImage
+    internal class EHGalleryPageLargeImage : IEHGalleryImage
     {
         [HtmlItem("a", Attr = "href")] public string Link { get; set; }
 

@@ -171,6 +171,7 @@
     <Compile Include="Services\Core\IGallery.cs" />
     <Compile Include="Services\EHentai\EHApi.cs" />
     <Compile Include="Services\EHentai\Model\EHGallery.cs" />
+    <Compile Include="ViewModels\EHentai\EHReadingViewModel.cs" />
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />

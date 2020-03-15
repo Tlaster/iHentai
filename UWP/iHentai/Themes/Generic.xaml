@@ -65,11 +65,32 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="book:BookView">
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
+                    <Grid Name="RootGrid">
+                        <Grid.Resources>
+                            <book:PageTemplateSelector x:Key="PageTemplateSelector" />
+                            <book:IndexConverter x:Key="IndexConverter"/>
+                        </Grid.Resources>
+                        <FlipView Name="ContentFlipView" SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Converter={StaticResource IndexConverter}, Mode=TwoWay}">
+                            <FlipView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Content="{Binding [0]}" VerticalContentAlignment="Stretch"
+                                                        HorizontalContentAlignment="Stretch"
+                                                        Grid.Column="0"
+                                                        ContentTemplateSelector="{StaticResource PageTemplateSelector}" />
+                                        <ContentControl Content="{Binding [1]}" VerticalContentAlignment="Stretch"
+                                                        HorizontalContentAlignment="Stretch"
+                                                        Grid.Column="1"
+                                                        ContentTemplateSelector="{StaticResource PageTemplateSelector}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
