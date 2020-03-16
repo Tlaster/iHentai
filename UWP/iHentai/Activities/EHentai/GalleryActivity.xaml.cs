@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using AngleSharp.Common;
 using iHentai.Common;
@@ -66,5 +67,6 @@ namespace iHentai.Activities.EHentai
                 _animationImageElement = null;
             });
         }
+
     }
 }

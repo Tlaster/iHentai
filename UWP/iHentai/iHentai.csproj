@@ -141,7 +141,7 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
-    <Compile Include="Common\FadeActivityTransition.cs" />
+    <Compile Include="Common\UI\FadeActivityTransition.cs" />
     <Compile Include="Common\Helpers\HtmlCache.cs" />
     <Compile Include="Common\Helpers\HentaiHttpMessageHandler.cs" />
     <Compile Include="Common\Html\Attributes\HtmlConverterAttribute.cs" />
@@ -150,7 +150,9 @@
     <Compile Include="Common\Html\Attributes\IHtmlItem.cs" />
     <Compile Include="Common\Html\HtmlConvert.cs" />
     <Compile Include="Common\Helpers\ReflectionHelper.cs" />
-    <Compile Include="Common\Layout\StaggeredLayout.cs" />
+    <Compile Include="Common\UI\FixedColumnLayout.cs" />
+    <Compile Include="Common\UI\QuickReturnHeaderBehavior.cs" />
+    <Compile Include="Common\UI\StaggeredLayout.cs" />
     <Compile Include="Common\Helpers\Settings.cs" />
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
@@ -168,9 +170,19 @@
     <Compile Include="RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Core\Attributes\BoolValueAttribute.cs" />
+    <Compile Include="Services\Core\Attributes\EnumValueAttribute.cs" />
     <Compile Include="Services\Core\IGallery.cs" />
+    <Compile Include="Services\Core\Attributes\IntValueAttribute.cs" />
+    <Compile Include="Services\Core\ISearchOption.cs" />
+    <Compile Include="Services\Core\Attributes\IValueAttribute.cs" />
+    <Compile Include="Services\Core\Attributes\StringValueAttribute.cs" />
+    <Compile Include="Services\Core\Attributes\ValueAttributeExtension.cs" />
+    <Compile Include="Services\EHentai\ApiExtensions.cs" />
     <Compile Include="Services\EHentai\EHApi.cs" />
+    <Compile Include="Services\EHentai\ExApi.cs" />
     <Compile Include="Services\EHentai\Model\EHGallery.cs" />
+    <Compile Include="Services\EHentai\SearchOption.cs" />
     <Compile Include="ViewModels\EHentai\EHReadingViewModel.cs" />
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />

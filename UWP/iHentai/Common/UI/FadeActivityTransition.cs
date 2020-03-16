@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using iHentai.Controls.Paging;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
-namespace iHentai.Common
+namespace iHentai.Common.UI
 {
     internal class FadeActivityTransition : IActivityTransition
     {

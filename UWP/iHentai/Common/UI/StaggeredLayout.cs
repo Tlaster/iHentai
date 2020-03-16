@@ -6,7 +6,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace iHentai.Common.Layout
+namespace iHentai.Common.UI
 {
     
     [System.Diagnostics.DebuggerDisplay("Count = {Count}, Height = {Height}")]
@@ -230,6 +230,16 @@ namespace iHentai.Common.Layout
         {
         }
 
+
+        public static readonly DependencyProperty VerticalOffsetProperty = DependencyProperty.Register(
+            nameof(VerticalOffset), typeof(double), typeof(StaggeredLayout), new PropertyMetadata(default(double)));
+
+        public double VerticalOffset
+        {
+            get { return (double) GetValue(VerticalOffsetProperty); }
+            set { SetValue(VerticalOffsetProperty, value); }
+        }
+
         /// <summary>
         /// Gets or sets the desired width for each column.
         /// </summary>
@@ -339,12 +349,12 @@ namespace iHentai.Common.Layout
         {
             if (context.ItemCount == 0)
             {
-                return new Size(availableSize.Width, 0);
+                return new Size(availableSize.Width, VerticalOffset);
             }
 
             if ((context.RealizationRect.Width == 0) && (context.RealizationRect.Height == 0))
             {
-                return new Size(availableSize.Width, 0.0);
+                return new Size(availableSize.Width, VerticalOffset);
             }
 
             var state = (StaggeredLayoutState)context.LayoutState;
@@ -388,7 +398,7 @@ namespace iHentai.Common.Layout
                 state.RowSpacing = RowSpacing;
             }
 
-            var columnHeights = new double[numColumns];
+            var columnHeights = Enumerable.Repeat(VerticalOffset, numColumns).ToArray();
             var itemsPerColumn = new int[numColumns];
             var deadColumns = new HashSet<int>();
 
@@ -400,7 +410,7 @@ namespace iHentai.Common.Layout
                 StaggeredItem item = state.GetItemAt(i);
                 if (item.Height == 0)
                 {
-                    // Item has not been measured yet. Get the element and store the values
+                    // Item has not been measured yet. GetValueAttribute the element and store the values
                     element = context.GetOrCreateElementAt(i);
                     element.Measure(new Size(state.ColumnWidth, availableHeight));
                     item.Height = element.DesiredSize.Height;
@@ -443,7 +453,7 @@ namespace iHentai.Common.Layout
                 }
             }
 
-            double desiredHeight = state.GetHeight();
+            double desiredHeight = state.GetHeight() + VerticalOffset;
 
             return new Size(availableWidth, desiredHeight);
         }

@@ -11,6 +11,7 @@
     xmlns:tab1="using:iHentai.Common.Tab"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:common="using:iHentai.Common"
+    xmlns:ui="using:iHentai.Common.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -105,7 +106,7 @@
                     <DataTemplate x:DataType="tab1:ActivityTabItem">
                         <tab1:TabActivityContainer ActivityTabItem="{x:Bind}" >
                             <tab1:TabActivityContainer.ActivityTransition>
-                                <common:FadeActivityTransition/>
+                                <ui:FadeActivityTransition/>
                             </tab1:TabActivityContainer.ActivityTransition>
                         </tab1:TabActivityContainer>
                     </DataTemplate>

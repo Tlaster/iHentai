@@ -24,6 +24,7 @@ namespace iHentai.ViewModels.EHentai
 
     class GalleryViewModel : TabViewModelBase
     {
+        public SearchOption SearchOption { get; } = new SearchOption();
         public EHApi Api { get; }
 
         public GalleryViewModel(EHApi api)
