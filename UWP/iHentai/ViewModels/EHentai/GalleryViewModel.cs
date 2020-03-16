@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Common.Collection;
@@ -9,21 +10,9 @@ using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ViewModels.EHentai
 {
-    class GallerySource : IIncrementalSource<IGallery>
+    class GalleryViewModel : TabViewModelBase, IIncrementalSource<IGallery>
     {
-        private readonly EHApi _api;
-        public GallerySource(EHApi api)
-        {
-            _api = api;
-        }
-        public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
-        {
-            return await _api.Home(pageIndex);
-        }
-    }
-
-    class GalleryViewModel : TabViewModelBase
-    {
+        private Func<int, Task<IEnumerable<IGallery>>> _loadTask;
         public SearchOption SearchOption { get; } = new SearchOption();
         public EHApi Api { get; }
 
@@ -31,8 +20,37 @@ namespace iHentai.ViewModels.EHentai
         {
             Api = api;
             Title = "EHentai";
-            Source = new LoadingCollection<GallerySource, IGallery>(new GallerySource(Api));
+            ResetHome();
+            Source = new LoadingCollection<IIncrementalSource<IGallery>, IGallery>(this);
         }
-        public LoadingCollection<GallerySource, IGallery> Source { get; }
+        public LoadingCollection<IIncrementalSource<IGallery>, IGallery> Source { get; }
+
+        public List<string> GetSearchSuggestion(string queryText)
+        {
+            return Api.GetSearchSuggestion(queryText);
+        }
+
+        public void Search(string queryText)
+        {
+            Api.SetSearchSuggestion(queryText);
+            _loadTask = page => Api.Search(SearchOption, page);
+            Source.Clear();
+            Source.Refresh();
+        }
+
+        public Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
+        {
+            return _loadTask.Invoke(pageIndex);
+        }
+
+        public void ResetHome()
+        {
+            _loadTask = page => Api.Home(page);
+            if (Source != null)
+            {
+                Source.Clear();
+                Source.Refresh();
+            }
+        }
     }
 }

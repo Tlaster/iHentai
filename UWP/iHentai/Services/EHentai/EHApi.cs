@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
@@ -31,15 +32,20 @@ namespace iHentai.Services.EHentai
             Singleton<HtmlCache<EHGalleryImage>>.Instance.CacheDuration = TimeSpan.FromDays(7);
         }
 
-        public async Task<IEnumerable<IGallery>> Home(int page = 0)
+        public async Task<IEnumerable<IGallery>> Gallery(string link, int page = 0)
         {
-            var result = await $"{Host}"
+            var result = await $"{link}"
                 .SetQueryParams(new
                 {
                     page
                 })
                 .GetHtmlAsync<EHGalleryList>();
             return result.Items;
+        }
+
+        public Task<IEnumerable<IGallery>> Home(int page = 0)
+        {
+            return Gallery(Host, page);
         }
 
         public async Task<EHGalleryDetail> Detail(string link, bool removeCache = false)
@@ -105,6 +111,28 @@ namespace iHentai.Services.EHentai
             {
                 result = value;
             }
+        }
+
+        public List<string> GetSearchSuggestion(string queryText)
+        {
+            return Singleton<Settings>.Instance.Get(GetType().Name + "_search_list", new List<string>()).Where(it => it.Contains(queryText)).ToList();
+        }
+
+        public void SetSearchSuggestion(string queryText)
+        {
+            if (string.IsNullOrEmpty(queryText))
+            {
+                return;
+            }
+            var current = Singleton<Settings>.Instance.Get(GetType().Name + "_search_list", new List<string>());
+            current.Remove(queryText);
+            current.Insert(0, queryText);
+            Singleton<Settings>.Instance.Set(GetType().Name + "_search_list", current);
+        }
+
+        public Task<IEnumerable<IGallery>> Search(SearchOption searchOption, int page = 0)
+        {
+            return Gallery(Host + "?" + searchOption.ToSearchParameter(), page);
         }
     }
 }

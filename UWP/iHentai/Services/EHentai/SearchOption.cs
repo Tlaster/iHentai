@@ -61,9 +61,18 @@ namespace iHentai.Services.EHentai
 
         [BoolValue("", Separator = "", OnValue = "f_sdt2=on")]
         public bool SearchDownvotedTags { get; set; }
-
+        
         [BoolValue("", Separator = "", OnValue = "f_sh=on")]
         public bool ShowExpunged { get; set; }
+        
+        [BoolValue("", Separator = "", OnValue = "f_sfl=on")]
+        public bool DisableDefaultFiltersForLanguage { get; set; }
+
+        [BoolValue("", Separator = "", OnValue = "f_sfu=on")]
+        public bool DisableDefaultFiltersForUploader { get; set; }
+
+        [BoolValue("", Separator = "", OnValue = "f_sft=on")]
+        public bool DisableDefaultFiltersForTags { get; set; }
 
         [BoolValue("", Separator = "", OnValue = "f_sr=on")]
         public bool EnableMinimumRating { get; set; }

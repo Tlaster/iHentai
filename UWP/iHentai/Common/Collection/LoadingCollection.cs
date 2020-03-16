@@ -8,13 +8,16 @@ using Microsoft.Toolkit.Uwp;
 
 namespace iHentai.Common.Collection
 {
-
+    public interface IStatusReport
+    {
+        bool IsLoading { get; }
+    }
     public interface ISupportRefresh
     {
         Task Refresh();
     }
 
-    public class LoadingCollection<TSource, IType> : IncrementalLoadingCollection<TSource, IType>, ISupportRefresh
+    public class LoadingCollection<TSource, IType> : IncrementalLoadingCollection<TSource, IType>, ISupportRefresh, IStatusReport
         where TSource : IIncrementalSource<IType>
     {
         public LoadingCollection(int itemsPerPage = 20, Action onStartLoading = null, Action onEndLoading = null,

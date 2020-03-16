@@ -136,11 +136,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Extensions\LoadingExtension.cs" />
     <Compile Include="Common\Helpers\BroadcastCenter.cs" />
     <Compile Include="Common\Collection\LoadingCollection.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
+    <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\UI\FadeActivityTransition.cs" />
     <Compile Include="Common\Helpers\HtmlCache.cs" />
     <Compile Include="Common\Helpers\HentaiHttpMessageHandler.cs" />
@@ -216,7 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp">
-      <Version>0.14.0-alpha-798</Version>
+      <Version>0.14.0-alpha-801</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
       <Version>3.0.0-pre3</Version>

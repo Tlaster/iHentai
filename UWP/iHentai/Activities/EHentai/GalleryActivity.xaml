@@ -8,6 +8,7 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:extensions="using:iHentai.Common.Extensions"
     xmlns:ehentai="using:iHentai.Services.EHentai"
+    xmlns:helper="using:iHentai.Common.Helpers"
     xmlns:core="using:iHentai.Services.Core"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls2="using:iHentai.Controls"
@@ -96,6 +97,14 @@
                 </controls:ItemsRepeater>
             </ScrollViewer>
         </RefreshContainer>
+
+        <ProgressRing IsActive="{x:Bind ViewModel.Source.IsLoading, Mode=OneWay}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Width="50"
+                      Height="50"
+                      Visibility="{x:Bind helper:XamlHelper.IsEmptyToVisibility(ViewModel.Source), Mode=OneWay}" />
+
         <Grid
             x:Name="HeaderContainer">
             <Grid Name="DockShadowContainer">
@@ -144,11 +153,11 @@
                         <ui:FixedColumnLayout DesiredColumnWidth="100" Margin="0,8,0,0">
                             <ui:FixedColumnLayout.Resources>
                                 <Style TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
                                 </Style>
                             </ui:FixedColumnLayout.Resources>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.Doujinshi, Mode=TwoWay}"
-                                          Content="Doujinshi" >
+                                          Content="Doujinshi">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#f26f5f" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#f26f5f" />
@@ -159,7 +168,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.Manga, Mode=TwoWay}"
-                                          Content="Manga" >
+                                          Content="Manga">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#fcb417" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#fcb417" />
@@ -170,7 +179,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.ArtistCG, Mode=TwoWay}"
-                                          Content="Artist CG" >
+                                          Content="Artist CG">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#dde500" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#dde500" />
@@ -181,7 +190,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.GameCG, Mode=TwoWay}"
-                                          Content="Game CG" >
+                                          Content="Game CG">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#05bf0b" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#05bf0b" />
@@ -192,7 +201,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.Western, Mode=TwoWay}"
-                                          Content="Western" >
+                                          Content="Western">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#14e723" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#14e723" />
@@ -203,7 +212,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.NonH, Mode=TwoWay}"
-                                          Content="Non-H" >
+                                          Content="Non-H">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#08d7e2" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#08d7e2" />
@@ -214,7 +223,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.ImageSet, Mode=TwoWay}"
-                                          Content="Image Set" >
+                                          Content="Image Set">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#5f5fff" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#5f5fff" />
@@ -225,7 +234,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.Cosplay, Mode=TwoWay}"
-                                          Content="Cosplay" >
+                                          Content="Cosplay">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#9755f5" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#9755f5" />
@@ -236,7 +245,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.AsianPorn, Mode=TwoWay}"
-                                          Content="Asia Porn" >
+                                          Content="Asia Porn">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#fe93ff" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#fe93ff" />
@@ -247,7 +256,7 @@
                                 </ToggleButton.Resources>
                             </ToggleButton>
                             <ToggleButton IsChecked="{x:Bind ViewModel.SearchOption.Misc, Mode=TwoWay}"
-                                          Content="Misc" >
+                                          Content="Misc">
                                 <ToggleButton.Resources>
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="#9e9e9e" />
                                     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="#9e9e9e" />
@@ -261,7 +270,7 @@
                         <controls1:WrapPanel>
                             <controls1:WrapPanel.Resources>
                                 <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
-                                    <Setter Property="Margin" Value="0,0,8,0"/>
+                                    <Setter Property="Margin" Value="0,0,8,0" />
                                 </Style>
                             </controls1:WrapPanel.Resources>
                             <CheckBox IsChecked="{x:Bind ViewModel.SearchOption.SearchName, Mode=TwoWay}"
@@ -280,7 +289,27 @@
                                       Content="Search Downvoted Tags" />
                             <CheckBox IsChecked="{x:Bind ViewModel.SearchOption.ShowExpunged, Mode=TwoWay}"
                                       Content="Show Expunged Galleries" />
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{x:Bind ViewModel.SearchOption.EnableMinimumRating, Mode=TwoWay}"
+                                          Content="Minimum Rating" />
+                                <controls:NumberBox
+                                    Maximum="5"
+                                    Minimum="2"
+                                    Value="{x:Bind ViewModel.SearchOption.MinimumRating, Mode=TwoWay}" />
+                            </StackPanel>
                         </controls1:WrapPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Disable default filters for" VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <CheckBox
+                                IsChecked="{x:Bind ViewModel.SearchOption.DisableDefaultFiltersForLanguage, Mode=TwoWay}"
+                                Content="Language" />
+                            <CheckBox
+                                IsChecked="{x:Bind ViewModel.SearchOption.DisableDefaultFiltersForUploader, Mode=TwoWay}"
+                                Content="Uploader" />
+                            <CheckBox
+                                IsChecked="{x:Bind ViewModel.SearchOption.DisableDefaultFiltersForTags, Mode=TwoWay}"
+                                Content="Tags" />
+                        </StackPanel>
                         <animations:Implicit.ShowAnimations>
                             <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                             <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
@@ -295,6 +324,9 @@
                     </Button>
                     <AutoSuggestBox Grid.Column="1"
                                     Margin="8,0"
+                                    TextChanged="AutoSuggestBox_TextChanged"
+                                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                                     Text="{x:Bind ViewModel.SearchOption.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <AutoSuggestBox.QueryIcon>
                             <SymbolIcon Symbol="Find" />
