@@ -114,7 +114,7 @@
             </tab1:TabItemTemplateSelector>
         </Pivot.ItemTemplateSelector>
     </Pivot>
-    <Grid Grid.Row="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}" VerticalAlignment="Top" HorizontalAlignment="Stretch" x:Name="SecondaryTitleBar" Visibility="Visible">
+    <Grid Grid.Row="0" Name="SecondaryTitleBarContainer" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
         <Grid.KeyboardAccelerators>
             <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
             <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
@@ -129,21 +129,24 @@
             <KeyboardAccelerator Key="Number8" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
             <KeyboardAccelerator Key="Number9" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
         </Grid.KeyboardAccelerators>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid x:Name="SecondaryTitleBarInset" />
-        <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset"/>
-        <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" Padding="8"/>
-        <animations:Implicit.ShowAnimations>
-            <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-            <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
-        </animations:Implicit.ShowAnimations>
-        <animations:Implicit.HideAnimations>
-            <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-            <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
-        </animations:Implicit.HideAnimations>
+        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" x:Name="SecondaryTitleBar" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="SecondaryTitleBarInset" />
+            <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset"/>
+            <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" Padding="8"/>
+            <animations:Implicit.ShowAnimations>
+                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
+            </animations:Implicit.HideAnimations>
+        </Grid>
+
     </Grid>
 </Grid>

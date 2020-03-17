@@ -178,6 +178,7 @@ namespace iHentai.Services.EHentai.Model
         public string UploaderLink { get; set; }
 
         [HtmlItem(".cn")]
+        [HtmlItem(".cs")]
         [HtmlConverter(typeof(CategoryConverter))]
         public EHCategory Category { get; set; }
 

@@ -51,6 +51,7 @@ namespace iHentai
             {
                 it.ExtendViewIntoTitleBar = true;
                 it.LayoutMetricsChanged += OnCoreTitleBarOnLayoutMetricsChanged;
+                it.IsVisibleChanged += OnTitleBarIsVisibleChanged;
             });
             ApplicationView.GetForCurrentView().TitleBar.Also(it =>
             {
@@ -69,6 +70,18 @@ namespace iHentai
 
             Singleton<BroadcastCenter>.Instance.Subscribe("tab_toggle_visible", (o, o1) => { ToggleTabBar(); });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
+        }
+
+        private void OnTitleBarIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            if (sender.IsVisible)
+            {
+                SecondaryTitleBarContainer.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SecondaryTitleBarContainer.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)

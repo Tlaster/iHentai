@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using iHentai.Services.Core;
@@ -8,35 +9,77 @@ namespace iHentai.Services.EHentai
 {
     public class SearchOption : ISearchOption, INotifyPropertyChanged
     {
-        [BoolValue("f_doujinshi", OnValue = "1", OffValue = "0")]
         public bool Doujinshi { get; set; } = true;
-
-        [BoolValue("f_manga", OnValue = "1", OffValue = "0")]
         public bool Manga { get; set; } = true;
-
-        [BoolValue("f_artistcg", OnValue = "1", OffValue = "0")]
         public bool ArtistCG { get; set; } = true;
-
-        [BoolValue("f_gamecg", OnValue = "1", OffValue = "0")]
         public bool GameCG { get; set; } = true;
-
-        [BoolValue("f_western", OnValue = "1", OffValue = "0")]
         public bool Western { get; set; } = true;
-
-        [BoolValue("f_non-h", OnValue = "1", OffValue = "0")]
         public bool NonH { get; set; } = true;
-
-        [BoolValue("f_imageset", OnValue = "1", OffValue = "0")]
         public bool ImageSet { get; set; } = true;
-
-        [BoolValue("f_cosplay", OnValue = "1", OffValue = "0")]
         public bool Cosplay { get; set; } = true;
-
-        [BoolValue("f_asianporn", OnValue = "1", OffValue = "0")]
         public bool AsianPorn { get; set; } = true;
-
-        [BoolValue("f_misc", OnValue = "1", OffValue = "0")]
         public bool Misc { get; set; } = true;
+
+        [IntValue("f_cats")]
+        public int Cats
+        {
+            get
+            {
+                //https://ehwiki.org/wiki/Gallery_Search_Engine
+                var result = 1023;
+                if (Doujinshi)
+                {
+                    result -= 2;
+                }
+
+                if (Manga)
+                {
+                    result -= 4;
+                }
+
+                if (ArtistCG)
+                {
+                    result -= 8;
+                }
+
+                if (GameCG)
+                {
+                    result -= 16;
+                }
+
+                if (Western)
+                {
+                    result -= 512;
+                }
+
+                if (NonH)
+                {
+                    result -= 256;
+                }
+
+                if (ImageSet)
+                {
+                    result -= 32;
+                }
+
+                if (Cosplay)
+                {
+                    result -= 64;
+                }
+
+                if (AsianPorn)
+                {
+                    result -= 128;
+                }
+
+                if (Misc)
+                {
+                    result -= 1;
+                }
+
+                return result;
+            }
+        }
 
         [BoolValue("advsearch", OnValue = "1", OffValue = "0")]
         public bool AdvSearch { get; set; }
