@@ -13,6 +13,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Flurl;
 using Flurl.Http.Configuration;
+using iHentai.Common;
 using iHentai.Common.Helpers;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai.Model;
@@ -25,7 +26,7 @@ namespace iHentai.Services.EHentai
 {
     internal class EHApi
     {
-        protected virtual string Host => "https://e-hentai.org/";
+        public virtual string Host => "https://e-hentai.org/";
 
         public EHApi()
         {
@@ -34,10 +35,17 @@ namespace iHentai.Services.EHentai
 
         public async Task<IEnumerable<IGallery>> Gallery(string link, int page = 0)
         {
-            var result = await $"{link}"
-                .SetQueryParams(new
+            var result = await $"{link}".Let(it =>
                 {
-                    page
+                    if (page != 0)
+                    {
+                        return it.SetQueryParams(new
+                        {
+                            page
+                        });
+                    }
+
+                    return new Url(it);
                 })
                 .GetHtmlAsync<EHGalleryList>();
             return result.Items;

@@ -13,7 +13,9 @@ namespace iHentai.ViewModels.EHentai
     class GalleryViewModel : TabViewModelBase, IIncrementalSource<IGallery>
     {
         private Func<int, Task<IEnumerable<IGallery>>> _loadTask;
-        public SearchOption SearchOption { get; } = new SearchOption();
+        private string _currentBaseUrl;
+        public SearchOption SearchOption { get; private set; } = new SearchOption();
+        public bool AdvSearchEnabled { get; private set; } = true;
         public EHApi Api { get; }
 
         public GalleryViewModel(EHApi api)
@@ -33,8 +35,8 @@ namespace iHentai.ViewModels.EHentai
         public void Search(string queryText)
         {
             Api.SetSearchSuggestion(queryText);
-            _loadTask = page => Api.Search(SearchOption, page);
-            Source.Clear();
+            var queryParameter = SearchOption.ToSearchParameter();
+            _loadTask = page => Api.Gallery(_currentBaseUrl + "?" + queryParameter, page);
             Source.Refresh();
         }
 
@@ -45,12 +47,39 @@ namespace iHentai.ViewModels.EHentai
 
         public void ResetHome()
         {
+            AdvSearchEnabled = true;
+            SearchOption = new SearchOption();
+            _currentBaseUrl = Api.Host;
             _loadTask = page => Api.Home(page);
-            if (Source != null)
-            {
-                Source.Clear();
-                Source.Refresh();
-            }
+            Source?.Refresh();
+        }
+
+        public void ResetWatched()
+        {
+            AdvSearchEnabled = true;
+            SearchOption = new SearchOption();
+            _currentBaseUrl = Api.Host + "watched";
+            _loadTask = page => Api.Gallery(_currentBaseUrl, page);
+            Source?.Refresh();
+        }
+
+        public void ResetFavorite()
+        {
+            AdvSearchEnabled = false;
+            SearchOption = new SearchOption();
+            _currentBaseUrl = Api.Host + "favorites.php";
+            _loadTask = page => Api.Gallery(_currentBaseUrl, page);
+            Source?.Refresh();
+        }
+
+        public void ResetPopular()
+        {
+            AdvSearchEnabled = true;
+            SearchOption = new SearchOption();
+            _currentBaseUrl = Api.Host;
+            var url = Api.Host + "popular";
+            _loadTask = page => Api.Gallery(url, page);
+            Source?.Refresh();
         }
     }
 }

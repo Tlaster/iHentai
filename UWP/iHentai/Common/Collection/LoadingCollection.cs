@@ -33,6 +33,7 @@ namespace iHentai.Common.Collection
 
         public async Task Refresh()
         {
+            Clear();
             await RefreshAsync();
         }
     }

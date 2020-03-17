@@ -218,7 +218,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp">
-      <Version>0.14.0-alpha-801</Version>
+      <Version>0.14.0-alpha-802</Version>
+    </PackageReference>
+    <PackageReference Include="Bug10.Icon">
+      <Version>1.0.12</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
       <Version>3.0.0-pre3</Version>

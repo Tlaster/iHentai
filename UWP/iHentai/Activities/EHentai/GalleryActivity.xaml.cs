@@ -13,6 +13,8 @@ using iHentai.ViewModels.EHentai;
 using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
+using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
+using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -86,6 +88,11 @@ namespace iHentai.Activities.EHentai
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             sender.Text = args.SelectedItem?.ToString() ?? string.Empty;
+        }
+
+        private void GalleryNavigation_OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            typeof(GalleryViewModel).GetMethod("Reset" + args.SelectedItemContainer.Tag)?.Invoke(ViewModel, new object[0]);
         }
     }
 }

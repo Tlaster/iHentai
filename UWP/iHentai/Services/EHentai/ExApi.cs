@@ -12,7 +12,7 @@ namespace iHentai.Services.EHentai
     internal class ExApi : EHApi, ICustomHttpHandler
     {
         private const string COOKIE_KEY = "exhentai_cookie";
-        protected override string Host => "https://exhentai.org/";
+        public override string Host => "https://exhentai.org/";
         public bool RequireLogin => string.IsNullOrEmpty(GetCookie());
 
         public ExApi()
@@ -22,12 +22,22 @@ namespace iHentai.Services.EHentai
 
         public bool CanHandle(Uri uri)
         {
-            return uri.Host.Equals("exhentai.org", StringComparison.InvariantCultureIgnoreCase);
+            if (uri.Host.Equals("exhentai.org", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return true;
+            }
+
+            if (uri.Host.Equals("e-hentai.org", StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(GetCookie()))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void Handle(HttpRequestMessage message)
         {
-            message.Headers.Add("Cookie", GetCookie() + ";igneous=");
+            message.Headers.Add("Cookie", GetCookie());
         }
 
         private string GetCookie()
@@ -58,7 +68,7 @@ namespace iHentai.Services.EHentai
             var cookie = cookies
                 .Select(item => item.Split(';').FirstOrDefault())
                 .Let(it => string.Join((string) ";", (IEnumerable<string>) it));
-            //cookie = await UpdateCookie(cookie);
+            cookie += ";" + await UpdateCookie(cookie);
             SetCookie(cookie);
         }
 
@@ -66,8 +76,8 @@ namespace iHentai.Services.EHentai
         {
             using var handler = new NoCookieHttpMessageHandler();
             using var client = new HttpClient(handler);
-            using var request = new HttpRequestMessage(HttpMethod.Get, "http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1");
-            request.Headers.Add("Cookie", $"{cookie};uconfig=");
+            using var request = new HttpRequestMessage(HttpMethod.Get, "https://exhentai.org/mytags ");
+            request.Headers.Add("Cookie", $"{cookie};igneous=");
             using var response = await client.SendAsync(request);
             response.Headers.TryGetValues("Set-Cookie", out var cookies);
             return cookies
