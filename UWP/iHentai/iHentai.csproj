@@ -157,6 +157,7 @@
     <Compile Include="Common\UI\StaggeredLayout.cs" />
     <Compile Include="Common\Helpers\Settings.cs" />
     <Compile Include="Common\Tab\TabManager.cs" />
+    <Compile Include="Common\UI\StaggeredLayout2.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
     <Compile Include="Controls\Book\BookView.cs" />
     <Compile Include="Controls\CardView.cs" />
