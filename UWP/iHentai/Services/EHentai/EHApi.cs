@@ -33,7 +33,25 @@ namespace iHentai.Services.EHentai
             Singleton<HtmlCache<EHGalleryImage>>.Instance.CacheDuration = TimeSpan.FromDays(7);
         }
 
-        public async Task<IEnumerable<IGallery>> Gallery(string link, int page = 0)
+        public async Task<IEnumerable<EHGallery>> Tag(string link, int page = 0, int from = 0)
+        {
+            var result = await $"{link}{(page == 0 ? "" : $"/{page}")}".Let(it =>
+                {
+                    if (from != 0)
+                    {
+                        return it.SetQueryParams(new
+                        {
+                            from
+                        });
+                    }
+
+                    return new Url(it);
+                })
+                .GetHtmlAsync<EHGalleryList>();
+            return result.Items.Where(it => !string.IsNullOrEmpty(it.Link));
+        }
+
+        public async Task<IEnumerable<EHGallery>> Gallery(string link, int page = 0)
         {
             var result = await $"{link}".Let(it =>
                 {
@@ -48,10 +66,10 @@ namespace iHentai.Services.EHentai
                     return new Url(it);
                 })
                 .GetHtmlAsync<EHGalleryList>();
-            return result.Items;
+            return result.Items.Where(it => !string.IsNullOrEmpty(it.Link));
         }
 
-        public Task<IEnumerable<IGallery>> Home(int page = 0)
+        public Task<IEnumerable<EHGallery>> Home(int page = 0)
         {
             return Gallery(Host, page);
         }
@@ -138,7 +156,7 @@ namespace iHentai.Services.EHentai
             Singleton<Settings>.Instance.Set(GetType().Name + "_search_list", current);
         }
 
-        public Task<IEnumerable<IGallery>> Search(SearchOption searchOption, int page = 0)
+        public Task<IEnumerable<EHGallery>> Search(SearchOption searchOption, int page = 0)
         {
             return Gallery(Host + "?" + searchOption.ToSearchParameter(), page);
         }

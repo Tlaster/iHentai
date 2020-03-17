@@ -1,31 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Common.Collection;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai;
+using iHentai.Services.EHentai.Model;
 using Microsoft.Toolkit.Collections;
-using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ViewModels.EHentai
 {
-    class GalleryViewModel : TabViewModelBase, IIncrementalSource<IGallery>
+    internal class GalleryViewModel : TabViewModelBase, IIncrementalSource<EHGallery>
     {
-        private Func<int, Task<IEnumerable<IGallery>>> _loadTask;
         private string _currentBaseUrl;
-        public SearchOption SearchOption { get; private set; } = new SearchOption();
-        public bool AdvSearchEnabled { get; private set; } = true;
-        public EHApi Api { get; }
+        private Func<int, Task<IEnumerable<EHGallery>>> _loadTask;
 
         public GalleryViewModel(EHApi api)
         {
             Api = api;
             Title = "EHentai";
             ResetHome();
-            Source = new LoadingCollection<IIncrementalSource<IGallery>, IGallery>(this);
+            Source = new LoadingCollection<IIncrementalSource<EHGallery>, EHGallery>(this);
         }
-        public LoadingCollection<IIncrementalSource<IGallery>, IGallery> Source { get; }
+
+        public GalleryViewModel(EHApi api, EHGalleryTag tag)
+        {
+            Api = api;
+            Title = "EHentai";
+            ResetTag(tag);
+            Source = new LoadingCollection<IIncrementalSource<EHGallery>, EHGallery>(this);
+        }
+
+        public SearchOption SearchOption { get; private set; } = new SearchOption();
+        public bool AdvSearchEnabled { get; private set; } = true;
+        public EHApi Api { get; }
+
+        public LoadingCollection<IIncrementalSource<EHGallery>, EHGallery> Source { get; }
+
+        public Task<IEnumerable<EHGallery>> GetPagedItemsAsync(int pageIndex, int pageSize,
+            CancellationToken cancellationToken = new CancellationToken())
+        {
+            return _loadTask.Invoke(pageIndex);
+        }
+
+        private void ResetTag(EHGalleryTag tag)
+        {
+            AdvSearchEnabled = true;
+            SearchOption = new SearchOption {Keyword = tag.FullName};
+            _currentBaseUrl = Api.Host;
+            _loadTask = page => Api.Tag(tag.Link, page, Source.LastOrDefault()?.Id ?? 0);
+            Source?.Refresh();
+        }
 
         public List<string> GetSearchSuggestion(string queryText)
         {
@@ -38,11 +64,6 @@ namespace iHentai.ViewModels.EHentai
             var queryParameter = SearchOption.ToSearchParameter();
             _loadTask = page => Api.Gallery(_currentBaseUrl + "?" + queryParameter, page);
             Source.Refresh();
-        }
-
-        public Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
-        {
-            return _loadTask.Invoke(pageIndex);
         }
 
         public void ResetHome()

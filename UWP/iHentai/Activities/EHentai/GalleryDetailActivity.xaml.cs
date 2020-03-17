@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using AngleSharp.Common;
+using iHentai.Common;
 using iHentai.Common.Tab;
 using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
@@ -62,7 +63,10 @@ namespace iHentai.Activities.EHentai
 
         protected internal override bool OnBackRequest()
         {
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("image", DetailImage).Configuration = new DirectConnectedAnimationConfiguration();
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("image", DetailImage)?.Also(it =>
+            {
+                it.Configuration = new DirectConnectedAnimationConfiguration();
+            });
             return base.OnBackRequest();
         }
 
@@ -74,6 +78,15 @@ namespace iHentai.Activities.EHentai
         void OpenRead()
         {
             StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link));
+        }
+
+        private void TagClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGalleryTag tag)
+            {
+                StartActivity<GalleryActivity>(tag, Intent);
+            }
+
         }
     }
 

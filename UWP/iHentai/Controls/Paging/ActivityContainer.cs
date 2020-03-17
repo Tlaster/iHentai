@@ -230,9 +230,9 @@ namespace iHentai.Controls.Paging
 
         private async Task GoForwardOrBack(NavigationMode navigationMode)
         {
-            if (CanGoBack && !CurrentActivity.OnBackRequest())
+            var currentActivity = CurrentActivityModel;
+            if (CanGoBack && !currentActivity.Activity.OnBackRequest())
             {
-                var currentActivity = CurrentActivityModel;
                 var nextActivityIndex =
                     _activityStackManager.CurrentIndex - 1;
                 var nextActivity = _activityStackManager.Activities[nextActivityIndex];

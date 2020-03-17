@@ -80,7 +80,7 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="model:EHGalleryTag">
-                                                    <Button Padding="0" Margin="4">
+                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked" >
                                                         <TextBlock Text="{x:Bind Name}" Padding="4" />
                                                     </Button>
                                                 </DataTemplate>

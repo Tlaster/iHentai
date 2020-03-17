@@ -43,7 +43,14 @@ namespace iHentai.Activities.EHentai
                 Intent.Add("api", Singleton<EHApi>.Instance);
             }
             var api = Intent.TryGet("api") as EHApi;
-            ViewModel = new GalleryViewModel(api);
+            if (parameter is EHGalleryTag tag)
+            {
+                ViewModel = new GalleryViewModel(api, tag);
+            }
+            else
+            {
+                ViewModel = new GalleryViewModel(api);
+            }
 
         }
 
@@ -59,7 +66,14 @@ namespace iHentai.Activities.EHentai
 
         protected override void OnPrepareConnectedAnimation(ConnectedAnimationService service)
         {
-            service.PrepareToAnimate("image", _animationImageElement).Configuration = new DirectConnectedAnimationConfiguration();
+            if (_animationImageElement == null)
+            {
+                return;
+            }
+            service.PrepareToAnimate("image", _animationImageElement)?.Also(it =>
+            {
+                it.Configuration = new DirectConnectedAnimationConfiguration();
+            });
         }
 
         protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)

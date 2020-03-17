@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
+using AngleSharp.Text;
 using iHentai.Common.Html;
 using iHentai.Common.Html.Attributes;
 using iHentai.Services.Core;
@@ -152,11 +153,16 @@ namespace iHentai.Services.EHentai.Model
     {
         [HtmlItem("a")] public string Name { get; set; }
 
+        [HtmlItem("a", Attr = "onclick", RegexPattern = "\\('(.*)',(.*)\\)", RegexGroup = 1)] 
+        public string FullName { get; set; }
+
         [HtmlItem("a", Attr = "href")] public string Link { get; set; }
     }
 
     internal class EHGallery : IGallery
     {
+        public int Id => Regex.Match(Link, "/g/(\\d+)/").Groups[1].Value.ToInteger(0);
+
         [HtmlItem(".glname a", Attr = "href")] public string Link { get; set; }
 
         [HtmlItem(".glthumb img", Attr = "style", RegexPattern = "height:(\\d+)", RegexGroup = 1)]
@@ -172,9 +178,12 @@ namespace iHentai.Services.EHentai.Model
         [HtmlConverter(typeof(RatingConverter))]
         public double Rating { get; set; }
 
-        [HtmlItem(".gl4c.glhide a")] public string Uploader { get; set; }
+        [HtmlItem(".gl4c.glhide a")] 
+        [HtmlItem(".gl5m a")] 
+        public string Uploader { get; set; }
 
         [HtmlItem(".gl4c.glhide a", Attr = "href")]
+        [HtmlItem(".gl5m a", Attr = "href")] 
         public string UploaderLink { get; set; }
 
         [HtmlItem(".cn")]
@@ -182,7 +191,9 @@ namespace iHentai.Services.EHentai.Model
         [HtmlConverter(typeof(CategoryConverter))]
         public EHCategory Category { get; set; }
 
-        [HtmlItem(".gldown a", Attr = "href")] public string TorrentLink { get; set; }
+        [HtmlItem(".gldown a", Attr = "href")] 
+        [HtmlItem(".gl6m a", Attr = "href")] 
+        public string TorrentLink { get; set; }
 
         [HtmlItem(".glink")] public string Title { get; set; }
 
