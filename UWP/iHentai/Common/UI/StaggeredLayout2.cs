@@ -88,15 +88,15 @@ namespace iHentai.Common.UI
                         child.DesiredSize.Height));
                     m_columnOffsets[columnIndex] += child.DesiredSize.Height;
                 }
-                else if (child.DesiredSize.Height != m_cachedBounds[currentIndex].Height) // Item height has changed
-                {
-                    m_cachedBounds.RemoveRange(currentIndex, m_cachedBounds.Count - currentIndex);
-                    UpdateCachedBounds(availableSize);
-                    var columnIndex = GetIndexOfLowestColumn(m_columnOffsets, out nextOffset);
-                    m_cachedBounds.Add(new Rect(columnIndex * columnWidth, nextOffset, columnWidth,
-                        child.DesiredSize.Height));
-                    m_columnOffsets[columnIndex] += child.DesiredSize.Height;
-                }
+                //else if (child.DesiredSize.Height != m_cachedBounds[currentIndex].Height) // Item height has changed
+                //{
+                //    m_cachedBounds.RemoveRange(currentIndex, m_cachedBounds.Count - currentIndex);
+                //    UpdateCachedBounds(availableSize);
+                //    var columnIndex = GetIndexOfLowestColumn(m_columnOffsets, out nextOffset);
+                //    m_cachedBounds.Add(new Rect(columnIndex * columnWidth, nextOffset, columnWidth,
+                //        child.DesiredSize.Height));
+                //    m_columnOffsets[columnIndex] += child.DesiredSize.Height;
+                //}
                 else if (currentIndex + 1 == m_cachedBounds.Count)
                 {
                     // Last element. Use the next offset.
