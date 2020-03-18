@@ -12,6 +12,7 @@ using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using AngleSharp.Common;
@@ -87,6 +88,15 @@ namespace iHentai.Activities.EHentai
                 StartActivity<GalleryActivity>(tag, Intent);
             }
 
+        }
+
+        private void GalleryImageTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            if (sender is FrameworkElement element && element.Tag is IEHGalleryImage image)
+            {
+                StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link, image));
+            }
         }
     }
 

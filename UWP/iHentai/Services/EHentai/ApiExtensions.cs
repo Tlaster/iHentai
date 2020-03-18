@@ -28,13 +28,13 @@ namespace iHentai.Services.EHentai
 
         public static async Task<T> ReceiveHtml<T>(this Task<IFlurlResponse> response)
         {
-            using var resp = await response.ConfigureAwait(false);
+            using var resp = await response;
             if (resp == null)
             {
                 return default;
             }
 
-            var result = await resp.GetStringAsync().ConfigureAwait(false);
+            using var result = await resp.GetStreamAsync();
             return HtmlConvert.DeserializeObject<T>(result);
         }
     }

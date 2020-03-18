@@ -6,22 +6,64 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tab="using:iHentai.Common.Tab"
+    xmlns:helpers="using:iHentai.Common.Helpers"
     xmlns:viewModels="using:iHentai.ViewModels"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:extensions1="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:icon="using:Bug10.Icon"
     mc:Ignorable="d">
 
     <Grid>
-        <FlipView ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}">
+        <FlipView ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}"
+                  SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}">
             <FlipView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:IReadingImage">
-                    <Grid>
-                        <Image Source="{x:Bind Source, Mode=OneWay}" />
-                        <ProgressRing Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                      IsActive="{x:Bind IsLoading, Mode=OneWay}" Width="50" Height="50"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Grid Tapped="UIElement_OnTapped">
+                        <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
+                            <Image Height="{Binding ElementName=Scroll, Path=ViewportHeight}"
+                                   Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
+                        </ScrollViewer>
+                        <StackPanel
+                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                            <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
+        <Grid Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
+            <Grid Background="Transparent"
+                  Height="40"
+                  PointerEntered="ReadingControl_OnPointerEntered" HorizontalAlignment="Stretch"
+                  VerticalAlignment="Bottom"/>
+            <Grid PointerExited="ReadingControl_OnPointerExited"
+                  Visibility="Collapsed" x:Name="ReadingControl" HorizontalAlignment="Stretch"
+                  VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Click="RefreshClicked" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Margin="8,0,0,0">
+                    <icon:IconView Icon="Refresh"/>
+                </Button>
+                <Slider Grid.Column="1" Margin="16,8" Maximum="{x:Bind ViewModel.Count, Mode=OneWay}"
+                        Value="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}" />
+
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, 40, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, 40, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Grid>
+        </Grid>
         <ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                       IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"
                       HorizontalAlignment="Center" VerticalAlignment="Center" />

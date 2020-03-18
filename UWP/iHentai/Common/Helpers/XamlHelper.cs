@@ -25,9 +25,13 @@ namespace iHentai.Common.Helpers
             return BoolToVisibility(false);
         }
 
-        private static Visibility BoolToVisibility(bool visible)
+        public static Visibility BoolToVisibility(bool visible)
         {
             return visible ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public static Visibility InvertBoolToVisibility(bool collapsed)
+        {
+            return BoolToVisibility(!collapsed);
         }
     }
 }

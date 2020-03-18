@@ -84,13 +84,13 @@ namespace iHentai.Services.EHentai
             return await Singleton<HtmlCache<EHGalleryDetail>>.Instance.GetFromCacheAsync(new Uri(link));
         }
 
-        public async Task<EHGalleryImage> GetImage(string link, bool removeCache = false, CancellationToken token = default)
+        public async Task<EHGalleryImage> GetImage(string link, string nl = null, bool removeCache = false, CancellationToken token = default)
         {
             if (removeCache)
             {
                 await Singleton<HtmlCache<EHGalleryImage>>.Instance.RemoveAsync(new[] {new Uri(link)});
             }
-            return await Singleton<HtmlCache<EHGalleryImage>>.Instance.GetFromCacheAsync(new Uri(link), cancellationToken: token);
+            return await Singleton<HtmlCache<EHGalleryImage>>.Instance.GetFromCacheAsync(link.Let(it => nl == null ? new Url(it) : it.SetQueryParam("nl", nl)).ToUri(), cancellationToken: token);
         }
 
         public static string GetLanguageTag(string title)

@@ -90,7 +90,7 @@ namespace iHentai
             var container = ContentPivot.ContainerFromIndex(ContentPivot.SelectedIndex);
             if (container is PivotItem pivotItem && pivotItem.ContentTemplateRoot is IHistoricalTabItem item)
             {
-                handled = true;
+                handled = item.CanGoBack;
                 item.GoBack();
             }
 

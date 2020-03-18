@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using PropertyChanged;
 
 namespace iHentai.ViewModels
 {
     internal interface IReadingImage : INotifyPropertyChanged
     {
         ImageSource Source { get; }
+        int Index { get; }
         bool IsLoading { get; }
         Task Reload();
     }
@@ -22,7 +25,7 @@ namespace iHentai.ViewModels
         {
             get
             {
-                if (_source == null)
+                if (_source == null && !IsLoading)
                 {
                     Reload(false);
                 }
@@ -31,12 +34,21 @@ namespace iHentai.ViewModels
             }
         }
 
+        public int Index { get; protected set; }
+
         private async Task Reload(bool removeCache)
         {
             IsLoading = true;
             _source = await LoadImage(removeCache, _cancellationTokenSource.Token);
             IsLoading = false;
-            OnPropertyChanged(nameof(Source));
+            if (_source != null)
+            {
+                OnPropertyChanged(nameof(Source));
+            }
+            else
+            {
+                Reload(true);
+            }
         }
 
         protected abstract Task<ImageSource> LoadImage(bool removeCache, CancellationToken token);
@@ -61,6 +73,20 @@ namespace iHentai.ViewModels
 
     internal abstract class ReadingViewModel : TabViewModelBase
     {
+        public int SelectedIndex { get; set; }
         public List<IReadingImage> Images { get; protected set; }
+        [DependsOn(nameof(Images))]
+        public int Count => (Images?.Count ?? 1) - 1;
+
+        public void ReloadCurrent()
+        {
+            var item = Images?.ElementAtOrDefault(SelectedIndex); 
+            if (item == null)
+            {
+                return;
+            }
+
+            item.Reload();
+        }
     }
 }

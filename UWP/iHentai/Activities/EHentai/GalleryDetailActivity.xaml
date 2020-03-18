@@ -80,7 +80,7 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="model:EHGalleryTag">
-                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked" >
+                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked" Style="{ThemeResource TextBlockButtonStyle}">
                                                         <TextBlock Text="{x:Bind Name}" Padding="4" />
                                                     </Button>
                                                 </DataTemplate>
@@ -130,13 +130,12 @@
                     </controls2:ItemsRepeater.Layout>
                     <controls2:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="model:EHGalleryPageNormalImage">
-                            <Grid Width="200">
+                            <Grid Width="200" Tag="{x:Bind}" Tapped="GalleryImageTapped">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <controls:AspectRatioView
-                                    Tag="{x:Bind}"
                                     Margin="4" WidthRequest="{x:Bind ThumbWidth}"
                                     HeightRequest="{x:Bind ThumbHeight}">
                                     <controls:ImageEx2

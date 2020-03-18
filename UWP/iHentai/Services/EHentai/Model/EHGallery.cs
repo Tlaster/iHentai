@@ -30,7 +30,7 @@ namespace iHentai.Services.EHentai.Model
         [HtmlItem("#i7 > a", Attr = "href")]
         public string OriginalSource { get; set; }
 
-        [HtmlItem("#loadfail", Attr = "onclick", RegexPattern = "\\((.*)\\)", RegexGroup = 1)] 
+        [HtmlItem("#loadfail", Attr = "onclick", RegexPattern = "\\('(.*)'\\)", RegexGroup = 1)] 
         public string LoadFailed { get; set; }
     }
 

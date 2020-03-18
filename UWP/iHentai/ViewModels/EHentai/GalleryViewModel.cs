@@ -87,7 +87,7 @@ namespace iHentai.ViewModels.EHentai
         public void ResetFavorite()
         {
             AdvSearchEnabled = false;
-            SearchOption = new SearchOption();
+            SearchOption = new FavSearchOption();
             _currentBaseUrl = Api.Host + "favorites.php";
             _loadTask = page => Api.Gallery(_currentBaseUrl, page);
             Source?.Refresh();

@@ -13,17 +13,17 @@ namespace iHentai.ViewModels.EHentai
     {
         private readonly EHApi _api;
         private readonly string _url;
-        
-        public EHReadingViewModel(EHApi api, string url)
+
+        public EHReadingViewModel(EHApi api, string url, IEHGalleryImage image = null)
         {
             _api = api;
             _url = url;
-            Init();
+            Init(image);
         }
 
         public EHGalleryDetail Detail { get; private set; }
 
-        private async void Init()
+        private async void Init(IEHGalleryImage image)
         {
             IsLoading = true;
             Detail = await _api.Detail(_url);
@@ -32,31 +32,39 @@ namespace iHentai.ViewModels.EHentai
             Images = list
                 .SelectMany(it =>
                     it.LargeImages ?? it.NormalImages?.OfType<IEHGalleryImage>())
-                .Select(it => new EHReadingImage(it, _api)).OfType<IReadingImage>().ToList();
+                .Select((it, index )=> new EHReadingImage(it, _api, index + 1)).OfType<IReadingImage>().ToList();
+            var selectedIndex = Images.OfType<EHReadingImage>().ToList().FindIndex(it => it.Data.Link == image?.Link);
+            if (selectedIndex != -1)
+            {
+                SelectedIndex = selectedIndex;
+            }
             IsLoading = false;
         }
     }
 
     internal class EHReadingImage : ReadingImageBase
     {
-        private readonly IEHGalleryImage _data;
         private readonly EHApi _api;
+        private EHGalleryImage _imageData;
 
-        public EHReadingImage(IEHGalleryImage it, EHApi api)
+        public EHReadingImage(IEHGalleryImage it, EHApi api, int index)
         {
-            _data = it;
+            Data = it;
             _api = api;
+            Index = index;
         }
+
+        public IEHGalleryImage Data { get; }
 
         protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
         {
-            //TODO: check if image already downloaded
-            var data = await _api.GetImage(_data.Link, removeCache, token);
             if (removeCache)
             {
-                await ImageCache.Instance.RemoveAsync(new[] {new Uri(data.Source)});
+                await ImageCache.Instance.RemoveAsync(new[] {new Uri(_imageData.Source)});
             }
-            return await ImageCache.Instance.GetFromCacheAsync(new Uri(data.Source), cancellationToken: token);
+            //TODO: check if image already downloaded
+            _imageData = await _api.GetImage(Data.Link, _imageData?.LoadFailed, removeCache, token);
+            return await ImageCache.Instance.GetFromCacheAsync(new Uri(_imageData.Source), cancellationToken: token);
         }
     }
 }

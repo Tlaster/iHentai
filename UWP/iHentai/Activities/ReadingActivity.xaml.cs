@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using Windows.Devices.Input;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using iHentai.Common;
 using iHentai.Common.Tab;
 using iHentai.ViewModels;
 
@@ -20,16 +10,17 @@ using iHentai.ViewModels;
 namespace iHentai.Activities
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    partial class ReadingActivity
+    internal partial class ReadingActivity
     {
-        public override ITabViewModel TabViewModel => ViewModel;
-        public ReadingViewModel ViewModel { get; private set; }
         public ReadingActivity()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+
+        public override ITabViewModel TabViewModel => ViewModel;
+        public ReadingViewModel ViewModel { get; private set; }
 
         protected internal override void OnCreate(object parameter)
         {
@@ -38,6 +29,40 @@ namespace iHentai.Activities
             {
                 ViewModel = viewModel;
             }
+        }
+
+        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            ReadingControl.Visibility = ReadingControl.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void ReadingControl_OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
+            {
+                e.Handled = true;
+                if (!ReadingControl.IsVisible())
+                {
+                    ReadingControl.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void ReadingControl_OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
+            {
+                e.Handled = true;
+                ReadingControl.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void RefreshClicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ReloadCurrent();
         }
     }
 }

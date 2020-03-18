@@ -126,7 +126,7 @@ namespace iHentai.Services.EHentai
         [StringValue("f_search")]
         public string Keyword { get; set; }
 
-        public string ToSearchParameter()
+        public virtual string ToSearchParameter()
         {
             var values = GetType()
                 .GetProperties()
@@ -141,6 +141,14 @@ namespace iHentai.Services.EHentai
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class FavSearchOption : SearchOption
+    {
+        public override string ToSearchParameter()
+        {
+            return $"favcat=all&f_search={Keyword}&sn=on&st=on&sf=on";
         }
     }
 }

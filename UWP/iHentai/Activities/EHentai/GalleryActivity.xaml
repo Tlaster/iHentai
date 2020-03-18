@@ -102,28 +102,31 @@
                         </controls:ItemsRepeater.Layout>
                         <controls:ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="model:EHGallery">
-                                <controls2:AspectRatioView
-                                    ToolTipService.ToolTip="{x:Bind Title}"
-                                    Tag="{x:Bind}"
-                                    Tapped="AspectRatioView_Tapped"
-                                    Margin="4" WidthRequest="{x:Bind ThumbWidth}"
-                                    HeightRequest="{x:Bind ThumbHeight}">
-                                    <Grid>
-                                        <controls1:ImageEx
-                                            Source="{x:Bind Thumb}" IsCacheEnabled="True"
-                                            Stretch="UniformToFill" />
-                                        <Polygon
-                                            Fill="{x:Bind ehentai:EHApi.GetCatColorBrush(Category)}"
-                                            VerticalAlignment="Top"
-                                            HorizontalAlignment="Right"
-                                            Points="40,40,0,0,40,0" />
-                                        <TextBlock
-                                            FontWeight="SemiBold" Padding="2"
-                                            Text="{x:Bind ehentai:EHApi.GetLanguageTag(Title)}"
-                                            VerticalAlignment="Top"
-                                            HorizontalAlignment="Right" RequestedTheme="Dark" />
-                                    </Grid>
-                                </controls2:AspectRatioView>
+                                <controls2:CardView Margin="12">
+                                    <controls2:AspectRatioView
+                                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                        ToolTipService.ToolTip="{x:Bind Title}"
+                                        Tag="{x:Bind}"
+                                        Tapped="AspectRatioView_Tapped"
+                                        WidthRequest="{x:Bind ThumbWidth}"
+                                        HeightRequest="{x:Bind ThumbHeight}">
+                                        <Grid>
+                                            <controls1:ImageEx
+                                                Source="{x:Bind Thumb}" IsCacheEnabled="True"
+                                                Stretch="UniformToFill" />
+                                            <Polygon
+                                                Fill="{x:Bind ehentai:EHApi.GetCatColorBrush(Category)}"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Right"
+                                                Points="40,40,0,0,40,0" />
+                                            <TextBlock
+                                                FontWeight="SemiBold" Padding="2"
+                                                Text="{x:Bind ehentai:EHApi.GetLanguageTag(Title)}"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Right" RequestedTheme="Dark" />
+                                        </Grid>
+                                    </controls2:AspectRatioView>
+                                </controls2:CardView>
                             </DataTemplate>
                         </controls:ItemsRepeater.ItemTemplate>
                     </controls:ItemsRepeater>

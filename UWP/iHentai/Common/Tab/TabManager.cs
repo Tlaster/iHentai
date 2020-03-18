@@ -44,6 +44,7 @@ namespace iHentai.Common.Tab
 
     public interface IHistoricalTabItem
     {
+        bool CanGoBack { get; }
         void GoBack();
     }
 
