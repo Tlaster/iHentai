@@ -27,7 +27,8 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid x:Name="RootGrid" HorizontalAlignment="Center" Padding="{TemplateBinding Padding}" VerticalAlignment="Center">
+                        <Grid x:Name="RootGrid" HorizontalAlignment="Center" Padding="{TemplateBinding Padding}"
+                              VerticalAlignment="Center">
                             <controls:DropShadowPanel x:Name="ShadowPanel" HorizontalContentAlignment="Stretch"
                                                       VerticalContentAlignment="Stretch"
                                                       ShadowOpacity="0.6"
@@ -53,44 +54,9 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <RichTextBlock Name="RichTextContent" TextWrapping="Wrap" IsTextSelectionEnabled="{TemplateBinding IsTextSelectionEnabled}" />
+                        <RichTextBlock Name="RichTextContent" TextWrapping="Wrap"
+                                       IsTextSelectionEnabled="{TemplateBinding IsTextSelectionEnabled}" />
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <Style TargetType="book:BookView">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="book:BookView">
-                    <Grid Name="RootGrid">
-                        <Grid.Resources>
-                            <book:PageTemplateSelector x:Key="PageTemplateSelector" />
-                            <book:IndexConverter x:Key="IndexConverter"/>
-                        </Grid.Resources>
-                        <FlipView Name="ContentFlipView" SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Converter={StaticResource IndexConverter}, Mode=TwoWay}">
-                            <FlipView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <ContentControl Content="{Binding [0]}" VerticalContentAlignment="Stretch"
-                                                        HorizontalContentAlignment="Stretch"
-                                                        Grid.Column="0"
-                                                        ContentTemplateSelector="{StaticResource PageTemplateSelector}" />
-                                        <ContentControl Content="{Binding [1]}" VerticalContentAlignment="Stretch"
-                                                        HorizontalContentAlignment="Stretch"
-                                                        Grid.Column="1"
-                                                        ContentTemplateSelector="{StaticResource PageTemplateSelector}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </FlipView.ItemTemplate>
-                        </FlipView>
-                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -126,7 +126,7 @@
                 <controls2:ItemsRepeater HorizontalAlignment="Center" Grid.Row="1"
                                          ItemsSource="{x:Bind ViewModel.Detail.NormalImages, Mode=OneWay}">
                     <controls2:ItemsRepeater.Layout>
-                        <controls2:UniformGridLayout />
+                        <controls2:UniformGridLayout ItemsJustification="Center"/>
                     </controls2:ItemsRepeater.Layout>
                     <controls2:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="model:EHGalleryPageNormalImage">

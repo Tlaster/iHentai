@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using iHentai.Common.Helpers;
+using Microsoft.Toolkit.Helpers;
 using PropertyChanged;
 
 namespace iHentai.ViewModels
@@ -70,13 +72,27 @@ namespace iHentai.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
+    internal enum ReadingViewMode
+    {
+        Book,
+        Flip
+    }
     internal abstract class ReadingViewModel : TabViewModelBase
     {
         public int SelectedIndex { get; set; }
         public List<IReadingImage> Images { get; protected set; }
         [DependsOn(nameof(Images))]
         public int Count => (Images?.Count ?? 1) - 1;
+        
+        public ReadingViewMode ViewMode
+        {
+            get => Singleton<Settings>.Instance.Get("reading_mode", ReadingViewMode.Flip);
+            set
+            {
+                Singleton<Settings>.Instance.Set("reading_mode", value);
+                OnPropertyChanged(nameof(ViewMode));
+            }
+        }
 
         public void ReloadCurrent()
         {

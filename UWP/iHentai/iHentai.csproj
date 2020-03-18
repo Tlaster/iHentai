@@ -159,7 +159,9 @@
     <Compile Include="Common\Tab\TabManager.cs" />
     <Compile Include="Common\UI\StaggeredLayout2.cs" />
     <Compile Include="Controls\AspectRatioView.cs" />
-    <Compile Include="Controls\Book\BookView.cs" />
+    <Compile Include="Controls\Book\BookView.xaml.cs">
+      <DependentUpon>BookView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CardView.cs" />
     <Compile Include="Controls\HtmlTextBlock.cs" />
     <Compile Include="Controls\ImageEx2.cs" />
@@ -219,7 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp">
-      <Version>0.14.0-alpha-802</Version>
+      <Version>0.14.0-alpha-805</Version>
     </PackageReference>
     <PackageReference Include="Bug10.Icon">
       <Version>1.0.12</Version>
@@ -263,6 +265,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Activities\ReadingActivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Book\BookView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

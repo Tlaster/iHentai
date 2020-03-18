@@ -1,23 +1,35 @@
-﻿using Windows.Devices.Input;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Windows.Devices.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using iHentai.Common.Tab;
 using iHentai.ViewModels;
+using Microsoft.Toolkit.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace iHentai.Activities
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
+    class ReadingModeTemplateSelector : DataTemplateSelector
+    {
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            return base.SelectTemplateCore(item, container);
+        }
+    }
+
     internal partial class ReadingActivity
     {
         public ReadingActivity()
         {
             InitializeComponent();
         }
+
 
         public override ITabViewModel TabViewModel => ViewModel;
         public ReadingViewModel ViewModel { get; private set; }
