@@ -178,7 +178,12 @@ namespace iHentai.Controls.Book
                 return Selector.SelectTemplate(item, container);
             }
 
-            return Template;
+            if (item != null)
+            {
+                return Template;
+            }
+
+            return base.SelectTemplateCore(item, container);
         }
     }
     class BookViewItem : INotifyPropertyChanged
