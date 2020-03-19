@@ -47,7 +47,7 @@
                         <TextBlock Margin="0,8,0,0" TextWrapping="Wrap"
                                    Text="{x:Bind ViewModel.Detail.NameJP, Mode=OneWay}" IsTextSelectionEnabled="True" />
                         <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind ViewModel.Uploader, Mode=OneWay}" VerticalAlignment="Center" />
+                            <Button Click="UploaderClicked" Style="{StaticResource TextBlockButtonStyle}" Content="{x:Bind ViewModel.Uploader, Mode=OneWay}" VerticalAlignment="Center" />
                             <TextBlock Text="·" Margin="8,0" VerticalAlignment="Center" />
                             <Border RequestedTheme="Dark" Padding="8,4"
                                     Background="{x:Bind ehentai:EHApi.GetCatColorBrush(ViewModel.Gallery.Category)}">
@@ -80,8 +80,8 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="model:EHGalleryTag">
-                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked" Style="{ThemeResource TextBlockButtonStyle}">
-                                                        <TextBlock Text="{x:Bind Name}" Padding="4" />
+                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked">
+                                                        <TextBlock Text="{x:Bind Name}" Padding="4, 2" />
                                                     </Button>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

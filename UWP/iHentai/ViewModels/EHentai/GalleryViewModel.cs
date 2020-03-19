@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Common.Collection;
-using iHentai.Services.Core;
 using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
 using Microsoft.Toolkit.Collections;
@@ -32,6 +31,14 @@ namespace iHentai.ViewModels.EHentai
             Source = new LoadingCollection<IIncrementalSource<EHGallery>, EHGallery>(this);
         }
 
+        public GalleryViewModel(EHApi api, string title, string link)
+        {
+            Api = api;
+            Title = "EHentai";
+            ResetLink(title, link);
+            Source = new LoadingCollection<IIncrementalSource<EHGallery>, EHGallery>(this);
+        }
+
         public SearchOption SearchOption { get; private set; } = new SearchOption();
         public bool AdvSearchEnabled { get; private set; } = true;
         public EHApi Api { get; }
@@ -42,6 +49,15 @@ namespace iHentai.ViewModels.EHentai
             CancellationToken cancellationToken = new CancellationToken())
         {
             return _loadTask.Invoke(pageIndex);
+        }
+
+        private void ResetLink(string title, string link)
+        {
+            AdvSearchEnabled = true;
+            SearchOption = new SearchOption {Keyword = title};
+            _currentBaseUrl = Api.Host;
+            _loadTask = page => Api.Tag(link, page, Source.LastOrDefault()?.Id ?? 0);
+            Source?.Refresh();
         }
 
         private void ResetTag(EHGalleryTag tag)

@@ -29,9 +29,15 @@ namespace iHentai.Common.Helpers
         {
             return visible ? Visibility.Visible : Visibility.Collapsed;
         }
+
         public static Visibility InvertBoolToVisibility(bool collapsed)
         {
             return BoolToVisibility(!collapsed);
+        }
+
+        public static bool IsEqual(object item, object any)
+        {
+            return item == any;
         }
     }
 }

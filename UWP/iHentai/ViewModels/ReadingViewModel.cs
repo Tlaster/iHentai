@@ -27,7 +27,7 @@ namespace iHentai.ViewModels
         {
             get
             {
-                if (_source == null && !IsLoading)
+                if (_source == null)
                 {
                     Reload(false);
                 }
@@ -40,6 +40,10 @@ namespace iHentai.ViewModels
 
         private async Task Reload(bool removeCache)
         {
+            if (IsLoading)
+            {
+                return;
+            }
             IsLoading = true;
             _source = await LoadImage(removeCache, _cancellationTokenSource.Token);
             IsLoading = false;
@@ -83,7 +87,7 @@ namespace iHentai.ViewModels
         public List<IReadingImage> Images { get; protected set; }
         [DependsOn(nameof(Images))]
         public int Count => (Images?.Count ?? 1) - 1;
-        
+
         public ReadingViewMode ViewMode
         {
             get => Singleton<Settings>.Instance.Get("reading_mode", ReadingViewMode.Flip);
@@ -93,16 +97,24 @@ namespace iHentai.ViewModels
                 OnPropertyChanged(nameof(ViewMode));
             }
         }
+        
+        [DependsOn(nameof(ViewMode))]
+        public bool IsBookMode => ViewMode == ReadingViewMode.Book;
+        [DependsOn(nameof(ViewMode))]
+        public bool IsFlipMode => ViewMode == ReadingViewMode.Flip;
 
         public void ReloadCurrent()
         {
-            var item = Images?.ElementAtOrDefault(SelectedIndex); 
-            if (item == null)
+            if (ViewMode == ReadingViewMode.Flip)
             {
-                return;
+                Images?.ElementAtOrDefault(SelectedIndex)?.Reload();
+            }
+            else if (ViewMode == ReadingViewMode.Book)
+            {
+                Images?.ElementAtOrDefault(SelectedIndex)?.Reload();
+                Images?.ElementAtOrDefault(SelectedIndex + 1)?.Reload();
             }
 
-            item.Reload();
         }
     }
 }

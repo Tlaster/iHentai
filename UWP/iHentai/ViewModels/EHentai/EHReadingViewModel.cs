@@ -58,7 +58,7 @@ namespace iHentai.ViewModels.EHentai
 
         protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
         {
-            if (removeCache)
+            if (removeCache && _imageData != null)
             {
                 await ImageCache.Instance.RemoveAsync(new[] {new Uri(_imageData.Source)});
             }

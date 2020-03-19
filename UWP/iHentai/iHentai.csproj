@@ -165,6 +165,7 @@
     <Compile Include="Controls\CardView.cs" />
     <Compile Include="Controls\HtmlTextBlock.cs" />
     <Compile Include="Controls\ImageEx2.cs" />
+    <Compile Include="Controls\Optional.cs" />
     <Compile Include="Controls\Paging\Activity.cs" />
     <Compile Include="Controls\Paging\ActivityContainer.cs" />
     <Compile Include="Controls\Paging\ActivityModel.cs" />

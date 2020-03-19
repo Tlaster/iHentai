@@ -18,20 +18,26 @@
               SelectedIndex="{x:Bind SelectedIndex, Converter={StaticResource IndexConverter}, Mode=TwoWay}">
         <FlipView.ItemTemplate>
             <DataTemplate x:DataType="local:BookViewItem">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <ContentControl Content="{x:Bind Left, Mode=OneWay}" VerticalContentAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    Grid.Column="0"
-                                    ContentTemplateSelector="{StaticResource LeftPageTemplateSelector}" />
-                    <ContentControl Content="{x:Bind Right, Mode=OneWay}" VerticalContentAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    Grid.Column="1"
-                                    ContentTemplateSelector="{StaticResource RightPageTemplateSelector}" />
-                </Grid>
+                <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
+                    <Grid
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
+                        MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Content="{x:Bind Left, Mode=OneWay}" VerticalContentAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Grid.Column="0"
+                                        ContentTemplateSelector="{StaticResource LeftPageTemplateSelector}" />
+                        <ContentControl Content="{x:Bind Right, Mode=OneWay}" VerticalContentAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Grid.Column="1"
+                                        ContentTemplateSelector="{StaticResource RightPageTemplateSelector}" />
+                    </Grid>
+                </ScrollViewer>
             </DataTemplate>
         </FlipView.ItemTemplate>
     </FlipView>

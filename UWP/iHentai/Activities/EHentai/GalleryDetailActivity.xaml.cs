@@ -1,29 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Imaging;
 using AngleSharp.Common;
 using iHentai.Common;
 using iHentai.Common.Tab;
 using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
 using iHentai.ViewModels.EHentai;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -71,12 +56,12 @@ namespace iHentai.Activities.EHentai
             return base.OnBackRequest();
         }
 
-        void OpenInBrowser()
+        private void OpenInBrowser()
         {
             Launcher.LaunchUriAsync(new Uri(ViewModel.Gallery.Link));
         }
 
-        void OpenRead()
+        private void OpenRead()
         {
             StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link));
         }
@@ -87,7 +72,6 @@ namespace iHentai.Activities.EHentai
             {
                 StartActivity<GalleryActivity>(tag, Intent);
             }
-
         }
 
         private void GalleryImageTapped(object sender, TappedRoutedEventArgs e)
@@ -98,7 +82,11 @@ namespace iHentai.Activities.EHentai
                 StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link, image));
             }
         }
+
+        private void UploaderClicked(object sender, RoutedEventArgs e)
+        {
+            StartActivity<GalleryActivity>("https://exhentai.org/uploader/" + ViewModel.Uploader,
+                Intent.Also(it => it.Add("title", "uploader:" + ViewModel.Uploader)));
+        }
     }
-
-
 }

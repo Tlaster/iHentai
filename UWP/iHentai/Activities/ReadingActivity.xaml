@@ -12,76 +12,79 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:extensions1="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:icon="using:Bug10.Icon"
-    xmlns:book="using:iHentai.Controls.Book"
+    xmlns:book="using:iHentai.Controls.Book" xmlns:controls1="using:iHentai.Controls"
     mc:Ignorable="d">
 
     <Grid>
-        <!--<FlipView ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}"
-                  Visibility="Collapsed"
-                  SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}">
-            <FlipView.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:IReadingImage">
-                    <Grid Tapped="UIElement_OnTapped">
-                        <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
-                            <Image 
+        <controls1:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsBookMode, Mode=OneWay}">
+            <controls1:Optional.ContentTemplate>
+                <DataTemplate x:DataType="viewModels:ReadingViewModel">
+                    <book:BookView ItemsSource="{x:Bind Images, Mode=OneWay}"
+                       SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
+                        <book:BookView.LeftTemplate>
+                            <DataTemplate x:DataType="viewModels:IReadingImage">
+                                <Grid Tapped="UIElement_OnTapped">
+                                    <Image 
+                            HorizontalAlignment="Right"
+                            Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
+                                    <StackPanel
+                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </book:BookView.LeftTemplate>
+                        <book:BookView.RightTemplate>
+                            <DataTemplate x:DataType="viewModels:IReadingImage">
+                                <Grid Tapped="UIElement_OnTapped">
+                                    <Image 
+                            HorizontalAlignment="Left"
+                            Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
+                                    <StackPanel
+                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </book:BookView.RightTemplate>
+                    </book:BookView>
+                </DataTemplate>
+            </controls1:Optional.ContentTemplate>
+        </controls1:Optional>
+        <controls1:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}">
+            <controls1:Optional.ContentTemplate>
+                <DataTemplate x:DataType="viewModels:ReadingViewModel">
+                    <FlipView ItemsSource="{x:Bind Images, Mode=OneWay}"
+                  SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
+                        <FlipView.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:IReadingImage">
+                                <Grid Tapped="UIElement_OnTapped">
+                                    <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
+                                        <Image 
                                 MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
                                 MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
                                 Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
-                        </ScrollViewer>
-                        <StackPanel
+                                    </ScrollViewer>
+                                    <StackPanel
                             Visibility="{x:Bind IsLoading, Mode=OneWay}"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                        <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                        Style="{ThemeResource TitleTextBlockStyle}" />
-                            <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
-                        </StackPanel>
-                    </Grid>
+                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
                 </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>-->
-        <book:BookView ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}"
-                       SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}">
-            <book:BookView.LeftTemplate>
-                <DataTemplate x:DataType="viewModels:IReadingImage">
-                    <Grid Tapped="UIElement_OnTapped">
-                        <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
-                            <Image 
-                                HorizontalAlignment="Right"
-                                MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
-                                MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
-                                Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
-                        </ScrollViewer>
-                        <StackPanel
-                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                            HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                       Style="{ThemeResource TitleTextBlockStyle}" />
-                            <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </book:BookView.LeftTemplate>
-            <book:BookView.RightTemplate>
-                <DataTemplate x:DataType="viewModels:IReadingImage">
-                    <Grid Tapped="UIElement_OnTapped">
-                        <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
-                            <Image 
-                                HorizontalAlignment="Left"
-                                MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
-                                MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
-                                Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
-                        </ScrollViewer>
-                        <StackPanel
-                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                            HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                       Style="{ThemeResource TitleTextBlockStyle}" />
-                            <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </book:BookView.RightTemplate>
-        </book:BookView>
+            </controls1:Optional.ContentTemplate>
+        </controls1:Optional>
         <Grid Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
             <Grid Background="Transparent"
                   Height="40"
@@ -93,12 +96,28 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Click="RefreshClicked" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Margin="8,0,0,0">
                     <icon:IconView Icon="Refresh"/>
                 </Button>
                 <Slider Grid.Column="1" Margin="16,8" Maximum="{x:Bind ViewModel.Count, Mode=OneWay}"
                         Value="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}" />
+                <Button Grid.Column="2" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Margin="0,0,8,0">
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <controls:RadioMenuFlyoutItem
+                                Tag="Book"
+                                Click="RadioMenuFlyoutItem_Click"
+                                IsChecked="{x:Bind ViewModel.IsBookMode, Mode=OneWay}" Text="Book" GroupName="ReadingViewMode"/>
+                            <controls:RadioMenuFlyoutItem 
+                                Tag="Flip"
+                                Click="RadioMenuFlyoutItem_Click"
+                                IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}" Text="Flip" GroupName="ReadingViewMode"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                    <icon:IconView Icon="TabletMode"/>
+                </Button>
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 40, 0" To="0" Duration="0:0:0.3" />

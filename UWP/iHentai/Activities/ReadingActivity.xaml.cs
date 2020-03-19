@@ -76,5 +76,23 @@ namespace iHentai.Activities
         {
             ViewModel.ReloadCurrent();
         }
+
+        private void RadioMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                switch (element.Tag)
+                {
+                    case "Book":
+                        ViewModel.ViewMode = ReadingViewMode.Book;
+                        break;
+                    case "Flip":
+                        ViewModel.ViewMode = ReadingViewMode.Flip;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

@@ -37,7 +37,8 @@ namespace iHentai.Services.EHentai
 
         public void Handle(HttpRequestMessage message)
         {
-            message.Headers.Add("Cookie", GetCookie());
+            var cookie = GetCookie();
+            message.Headers.Add("Cookie", cookie);
         }
 
         private string GetCookie()
