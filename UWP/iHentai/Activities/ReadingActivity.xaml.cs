@@ -30,7 +30,6 @@ namespace iHentai.Activities
             InitializeComponent();
         }
 
-
         public override ITabViewModel TabViewModel => ViewModel;
         public ReadingViewModel ViewModel { get; private set; }
 
@@ -41,6 +40,25 @@ namespace iHentai.Activities
             {
                 ViewModel = viewModel;
             }
+            SizeChanged += ReadingActivity_SizeChanged;
+        }
+
+        private void ReadingActivity_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Height / e.NewSize.Width >= 1)
+            {
+                ViewModel.ViewMode = ReadingViewMode.Flip;
+            } 
+            else
+            {
+                ViewModel.ViewMode = ReadingViewMode.Book;
+            }
+        }
+
+        protected internal override void OnDestroy()
+        {
+            base.OnDestroy();
+            SizeChanged -= ReadingActivity_SizeChanged;
         }
 
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
