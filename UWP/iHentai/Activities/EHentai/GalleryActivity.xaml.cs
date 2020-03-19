@@ -13,6 +13,7 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
 using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
+using iHentai.Common.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -59,12 +60,7 @@ namespace iHentai.Activities.EHentai
 
         private async void AspectRatioView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
-            {
-                e.Handled = true;
-                _animationImageElement = element.FindDescendant<ImageEx>();
-                StartActivity<GalleryDetailActivity>(gallery, Intent);
-            }
+            OpenGallery(sender);
         }
 
         protected override void OnPrepareConnectedAnimation(ConnectedAnimationService service)
@@ -114,6 +110,28 @@ namespace iHentai.Activities.EHentai
         {
             typeof(GalleryViewModel).GetMethod("Reset" + args.SelectedItemContainer.Tag)
                 ?.Invoke(ViewModel, new object[0]);
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenGallery(sender);
+        }
+
+        private void OpenGallery(object sender)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
+            {
+                _animationImageElement = element.FindDescendant<ImageEx>();
+                StartActivity<GalleryDetailActivity>(gallery, Intent);
+            }
+        }
+
+        private void OpenInNewTabClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
+            {
+                StartNewTab<GalleryDetailActivity>(gallery, Intent);
+            }
         }
     }
 }

@@ -63,7 +63,7 @@
         x:Name="GalleryNavigation"
         SelectionChanged="GalleryNavigation_OnSelectionChanged"
         IsPaneToggleButtonVisible="False"
-        IsSettingsVisible="True"
+        IsSettingsVisible="False"
         IsBackButtonVisible="Collapsed"
         IsBackEnabled="False"
         AlwaysShowHeader="False"
@@ -110,6 +110,14 @@
                                         Tapped="AspectRatioView_Tapped"
                                         WidthRequest="{x:Bind ThumbWidth}"
                                         HeightRequest="{x:Bind ThumbHeight}">
+                                        <controls2:AspectRatioView.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="{x:Bind Title}"/>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Open" Click="MenuFlyoutItem_Click"/>
+                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Open in new tab" Click="OpenInNewTabClicked"/>
+                                            </MenuFlyout>
+                                        </controls2:AspectRatioView.ContextFlyout>
                                         <Grid>
                                             <controls1:ImageEx
                                                 Source="{x:Bind Thumb}" IsCacheEnabled="True"

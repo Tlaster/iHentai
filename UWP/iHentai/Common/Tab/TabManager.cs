@@ -6,9 +6,27 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Activities;
 using iHentai.Controls.Paging;
+using System.Collections.Generic;
+using iHentai.Activities.EHentai;
+using iHentai.Common.Helpers;
+using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.Common.Tab
 {
+    internal class NewTabArgs
+    {
+        public NewTabArgs(Type activity, object parameter = null, Dictionary<string, object> intent = null)
+        {
+            Activity = activity;
+            Parameter = parameter;
+            Intent = intent;
+        }
+
+        public Type Activity { get; }
+        public object Parameter { get; }
+        public Dictionary<string, object> Intent { get; }
+    }
+
     internal class TabManager
     {
         public TabManager()
@@ -33,6 +51,11 @@ namespace iHentai.Common.Tab
         public void AddDefault()
         {
             TabItems.Add(new ActivityTabItem(typeof(NewTabActivity)));
+        }
+
+        public void Add(NewTabArgs args)
+        {
+            TabItems.Add(new ActivityTabItem(args.Activity, args.Parameter, args.Intent));
         }
     }
 
@@ -70,12 +93,14 @@ namespace iHentai.Common.Tab
 
     public class ActivityTabItem : ITabItem, INotifyPropertyChanged
     {
-        public ActivityTabItem(Type targetActivity, object parameter = null)
+        public ActivityTabItem(Type targetActivity, object parameter = null, Dictionary<string, object> intent = null)
         {
             TargetActivity = targetActivity;
             Parameter = parameter;
+            Intent = intent;
         }
-
+        
+        public Dictionary<string, object> Intent { get; }
         public Type TargetActivity { get; }
         public object Parameter { get; }
 
@@ -129,7 +154,7 @@ namespace iHentai.Common.Tab
         {
             newValue?.Also(it =>
             {
-                Navigate(it.TargetActivity, it.Parameter);
+                Navigate(it.TargetActivity, it.Parameter, it.Intent);
             });
             OnNavigated(this, EventArgs.Empty);
         }
@@ -146,5 +171,10 @@ namespace iHentai.Common.Tab
     internal class TabActivity : Activity
     {
         public virtual ITabViewModel TabViewModel { get; }
+
+        protected void StartNewTab<T>(object parameter = null, Dictionary<string, object> intent = null)
+        {
+            Singleton<BroadcastCenter>.Instance.Send(this, "open_new_tab", new NewTabArgs(typeof(T), parameter, intent));
+        }
     }
 }

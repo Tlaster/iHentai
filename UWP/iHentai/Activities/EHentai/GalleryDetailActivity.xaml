@@ -80,7 +80,13 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="model:EHGalleryTag">
-                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked">
+                                                    <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked" >
+                                                        <!--<Button.Flyout>
+                                                            <MenuFlyout>
+                                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Open in new tab" Click="TagOpenInNewTabClicked"/>
+                                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Wiki" Click="TagWikiClicked"/>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>-->
                                                         <TextBlock Text="{x:Bind Name}" Padding="4, 2" />
                                                     </Button>
                                                 </DataTemplate>

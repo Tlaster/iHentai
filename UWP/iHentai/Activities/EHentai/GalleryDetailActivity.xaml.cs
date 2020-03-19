@@ -88,5 +88,21 @@ namespace iHentai.Activities.EHentai
             StartActivity<GalleryActivity>("https://exhentai.org/uploader/" + ViewModel.Uploader,
                 Intent.Also(it => it.Add("title", "uploader:" + ViewModel.Uploader)));
         }
+
+        private void TagOpenInNewTabClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGalleryTag tag)
+            {
+                StartNewTab<GalleryActivity>(tag, Intent);
+            }
+        }
+
+        private void TagWikiClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGalleryTag tag)
+            {
+                Launcher.LaunchUriAsync(new Uri("https://ehwiki.org/wiki/" + tag.Name));
+            }
+        }
     }
 }

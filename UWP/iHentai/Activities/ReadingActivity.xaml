@@ -125,16 +125,6 @@
                                 </controls:RadioButtons>
                             </StackPanel>
                         </Flyout>
-                        <!--<MenuFlyout>
-                            <controls:RadioMenuFlyoutItem
-                                Tag="Book"
-                                Click="RadioMenuFlyoutItem_Click"
-                                IsChecked="{x:Bind ViewModel.IsBookMode, Mode=OneWay}" Text="Book" GroupName="ReadingViewMode"/>
-                            <controls:RadioMenuFlyoutItem 
-                                Tag="Flip"
-                                Click="RadioMenuFlyoutItem_Click"
-                                IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}" Text="Flip" GroupName="ReadingViewMode"/>
-                        </MenuFlyout>-->
                     </Button.Flyout>
                     <icon:IconView Icon="Settings"/>
                 </Button>

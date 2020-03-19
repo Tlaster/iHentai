@@ -69,6 +69,16 @@ namespace iHentai
             FlurlHttp.Configure(it => { it.HttpClientFactory = new HentaiHttpClientFactory(); });
 
             Singleton<BroadcastCenter>.Instance.Subscribe("tab_toggle_visible", (o, o1) => { ToggleTabBar(); });
+            Singleton<BroadcastCenter>.Instance.Subscribe("open_new_tab", (sender, args) =>
+            {
+                if (args is NewTabArgs item)
+                {
+                    _isUpdatingTab = true;
+                    TabManager.Add(item);
+                    _isUpdatingTab = false;
+                    SelectedTabIndex = TabManager.Count - 1;
+                }
+            });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
         }
 
@@ -244,6 +254,10 @@ namespace iHentai
                 _isUpdatingTab = true;
                 TabManager.Remove(index);
                 _isUpdatingTab = false;
+            }
+            if (TabManager.Count == 1)
+            {
+                SelectedTabIndex = 0;
             }
         }
 
