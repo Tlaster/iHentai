@@ -38,9 +38,9 @@ namespace iHentai.Activities
             this.InitializeComponent();
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (e.ClickedItem is KeyValuePair<string, Type> item)
+            if (sender is FrameworkElement element && element.Tag is KeyValuePair<string, Type> item)
             {
                 //TODO: a better way
                 if (item.Key == "exHentai")

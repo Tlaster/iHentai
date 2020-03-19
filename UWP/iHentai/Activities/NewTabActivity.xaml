@@ -7,15 +7,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tab="using:iHentai.Common.Tab"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
-    <Grid>
-        <ListView SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" ItemsSource="{x:Bind ViewModel.Services}">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <ItemsControl
+            ItemsSource="{x:Bind ViewModel.Services}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Key}"/>
+                    <Button Tag="{Binding}" Padding="16,8" Margin="4" Click="Button_Click">
+                        <TextBlock Text="{Binding Key}"/>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ListView>
-    </Grid>
+        </ItemsControl>
+        <TextBlock Margin="4" Text="More coming soon!"/>
+    </StackPanel>
 </tab:TabActivity>
