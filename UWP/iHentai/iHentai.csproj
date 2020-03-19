@@ -127,6 +127,9 @@
     <Compile Include="Activities\EHentai\LoginActivity.xaml.cs">
       <DependentUpon>LoginActivity.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Activities\Manhuagui\ManhuaguiUpdateActivity.xaml.cs">
+      <DependentUpon>ManhuaguiUpdateActivity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Activities\NewTabActivity.xaml.cs">
       <DependentUpon>NewTabActivity.xaml</DependentUpon>
     </Compile>
@@ -189,9 +192,12 @@
     <Compile Include="Services\EHentai\ExApi.cs" />
     <Compile Include="Services\EHentai\Model\EHGallery.cs" />
     <Compile Include="Services\EHentai\SearchOption.cs" />
+    <Compile Include="Services\Manhuagui\ManhuaguiApi.cs" />
+    <Compile Include="Services\Manhuagui\Model\ManhuaguiGallery.cs" />
     <Compile Include="ViewModels\EHentai\EHReadingViewModel.cs" />
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Manhuagui\ManhuaguiUpdateViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
@@ -302,6 +308,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Activities\EHentai\LoginActivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Activities\Manhuagui\ManhuaguiUpdateActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

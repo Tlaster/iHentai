@@ -10,9 +10,12 @@
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
-        <ItemsControl
-            ItemsSource="{x:Bind ViewModel.Services}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ItemsControl ItemsSource="{x:Bind ViewModel.Services}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <controls:WrapPanel/>
@@ -26,6 +29,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <TextBlock Margin="4" Text="More coming soon!"/>
-    </StackPanel>
+        <TextBlock Grid.Row="1" Margin="4" Text="More coming soon!"/>
+    </Grid>
 </tab:TabActivity>

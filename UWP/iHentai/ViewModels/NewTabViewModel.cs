@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using iHentai.Activities;
 using iHentai.Activities.EHentai;
+using iHentai.Activities.Manhuagui;
 
 namespace iHentai.ViewModels
 {
@@ -18,7 +19,8 @@ namespace iHentai.ViewModels
         public Dictionary<string, Type> Services { get; } = new Dictionary<string, Type>
         {
             { "E-Hentai", typeof(GalleryActivity) },
-            { "exHentai", typeof(LoginActivity) }
+            { "exHentai", typeof(LoginActivity) },
+            { "Manhuagui", typeof(ManhuaguiUpdateActivity) }
         };
     }
 }
