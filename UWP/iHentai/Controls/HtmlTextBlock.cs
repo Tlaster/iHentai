@@ -200,8 +200,9 @@ namespace iHentai.Controls
             var link = element.GetAttribute("src");
             var img = new ImageEx
             {
-                Source = new BitmapImage(new Uri(link)),
-                MaxWidth = 200,
+                Source = link,
+                Width = 200,
+                Height = 200,
                 IsCacheEnabled = true,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,

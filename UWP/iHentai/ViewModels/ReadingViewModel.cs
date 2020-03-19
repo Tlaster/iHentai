@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media;
 using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Helpers;
 using PropertyChanged;
+using Windows.UI.Xaml;
 
 namespace iHentai.ViewModels
 {
@@ -83,10 +84,33 @@ namespace iHentai.ViewModels
     }
     internal abstract class ReadingViewModel : TabViewModelBase
     {
-        public int SelectedIndex { get; set; }
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        { 
+            get => _selectedIndex; 
+            set
+            {
+                if (Images != null)
+                {
+                    _selectedIndex = value; 
+                    OnPropertyChanged(nameof(SelectedIndex));
+                }
+            }
+        }
         public List<IReadingImage> Images { get; protected set; }
         [DependsOn(nameof(Images))]
         public int Count => (Images?.Count ?? 1) - 1;
+
+        public FlowDirection FlowDirection
+        {
+            get => Singleton<Settings>.Instance.Get("reading_flow_direction", FlowDirection.LeftToRight);
+            set
+            {
+                Singleton<Settings>.Instance.Set("reading_flow_direction", value);
+                OnPropertyChanged(nameof(FlowDirection));
+            }
+        }
 
         public ReadingViewMode ViewMode
         {
@@ -97,7 +121,12 @@ namespace iHentai.ViewModels
                 OnPropertyChanged(nameof(ViewMode));
             }
         }
-        
+
+        [DependsOn(nameof(FlowDirection))]
+        public bool IsLTR => FlowDirection == FlowDirection.LeftToRight;
+        [DependsOn(nameof(FlowDirection))]
+        public bool IsRTL => FlowDirection == FlowDirection.RightToLeft;
+
         [DependsOn(nameof(ViewMode))]
         public bool IsBookMode => ViewMode == ReadingViewMode.Book;
         [DependsOn(nameof(ViewMode))]

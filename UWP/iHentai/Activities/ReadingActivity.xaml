@@ -12,11 +12,11 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:extensions1="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:icon="using:Bug10.Icon"
-    xmlns:book="using:iHentai.Controls.Book" xmlns:controls1="using:iHentai.Controls"
+    xmlns:book="using:iHentai.Controls.Book" xmlns:controls1="using:iHentai.Controls" xmlns:controls2="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
-        <controls1:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsBookMode, Mode=OneWay}">
+        <controls1:Optional FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}" Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsBookMode, Mode=OneWay}">
             <controls1:Optional.ContentTemplate>
                 <DataTemplate x:DataType="viewModels:ReadingViewModel">
                     <book:BookView ItemsSource="{x:Bind Images, Mode=OneWay}"
@@ -57,7 +57,7 @@
                 </DataTemplate>
             </controls1:Optional.ContentTemplate>
         </controls1:Optional>
-        <controls1:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}">
+        <controls1:Optional FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}" Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}">
             <controls1:Optional.ContentTemplate>
                 <DataTemplate x:DataType="viewModels:ReadingViewModel">
                     <FlipView ItemsSource="{x:Bind Images, Mode=OneWay}"
@@ -105,7 +105,27 @@
                         Value="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}" />
                 <Button Grid.Column="2" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Margin="0,0,8,0">
                     <Button.Flyout>
-                        <MenuFlyout>
+                        <Flyout>
+                            <StackPanel Orientation="Vertical">
+                                <controls:RadioButtons Header="View Mode" MaxColumns="2">
+                                    <RadioButton
+                                        IsChecked="{x:Bind ViewModel.IsBookMode, Mode=OneWay}"
+                                        Content="Book" Tag="Book" Click="RadioMenuFlyoutItem_Click"/>
+                                    <RadioButton
+                                        IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}"
+                                        Content="Flip" Tag="Flip" Click="RadioMenuFlyoutItem_Click"/>
+                                </controls:RadioButtons>
+                                <controls:RadioButtons Header="View Direction" MaxColumns="2">
+                                    <RadioButton
+                                        IsChecked="{x:Bind ViewModel.IsLTR, Mode=OneWay}"
+                                        Content="Left to right" Tag="LTR" Click="RadioButton_Click"/>
+                                    <RadioButton
+                                        IsChecked="{x:Bind ViewModel.IsRTL, Mode=OneWay}"
+                                        Content="Right to left" Tag="RTL" Click="RadioButton_Click"/>
+                                </controls:RadioButtons>
+                            </StackPanel>
+                        </Flyout>
+                        <!--<MenuFlyout>
                             <controls:RadioMenuFlyoutItem
                                 Tag="Book"
                                 Click="RadioMenuFlyoutItem_Click"
@@ -114,9 +134,9 @@
                                 Tag="Flip"
                                 Click="RadioMenuFlyoutItem_Click"
                                 IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}" Text="Flip" GroupName="ReadingViewMode"/>
-                        </MenuFlyout>
+                        </MenuFlyout>-->
                     </Button.Flyout>
-                    <icon:IconView Icon="TabletMode"/>
+                    <icon:IconView Icon="Settings"/>
                 </Button>
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />

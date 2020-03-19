@@ -9,6 +9,7 @@ using iHentai.Common.Helpers;
 using iHentai.Common.Tab;
 using iHentai.ViewModels;
 using Microsoft.Toolkit.Helpers;
+using Windows.System.Display;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,8 @@ namespace iHentai.Activities
 
     internal partial class ReadingActivity
     {
+        private DisplayRequest _display;
+
         public ReadingActivity()
         {
             InitializeComponent();
@@ -41,10 +44,27 @@ namespace iHentai.Activities
                 ViewModel = viewModel;
             }
             SizeChanged += ReadingActivity_SizeChanged;
+            _display = new DisplayRequest();
+        }
+
+        protected internal override void OnResume()
+        {
+            base.OnResume();
+            _display.RequestActive();
+        }
+
+        protected internal override void OnPause()
+        {
+            base.OnPause();
+            _display.RequestRelease();
         }
 
         private void ReadingActivity_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (ViewModel.Images == null)
+            {
+                return;
+            }
             if (e.NewSize.Height / e.NewSize.Width >= 1)
             {
                 ViewModel.ViewMode = ReadingViewMode.Flip;
@@ -106,6 +126,24 @@ namespace iHentai.Activities
                         break;
                     case "Flip":
                         ViewModel.ViewMode = ReadingViewMode.Flip;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                switch (element.Tag)
+                {
+                    case "LTR":
+                        ViewModel.FlowDirection = FlowDirection.LeftToRight;
+                        break;
+                    case "RTL":
+                        ViewModel.FlowDirection = FlowDirection.RightToLeft;
                         break;
                     default:
                         break;
