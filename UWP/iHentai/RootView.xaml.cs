@@ -245,11 +245,15 @@ namespace iHentai
 
         private void RemoveTab(int index)
         {
+            if (index > TabManager.Count || index < 0)
+            {
+                return;
+            }
             if (TabManager.Count > 1)
             {
                 if (SelectedTabIndex == index)
                 {
-                    SelectedTabIndex = Math.Min(SelectedTabIndex + 1, TabManager.Count - 1);
+                    SelectedTabIndex = Math.Min(SelectedTabIndex + 1, TabManager.Count - 2);
                 }
                 _isUpdatingTab = true;
                 TabManager.Remove(index);
