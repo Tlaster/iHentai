@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,7 @@ using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Helpers;
 using PropertyChanged;
 using Windows.UI.Xaml;
+using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.ViewModels
 {
@@ -18,6 +20,27 @@ namespace iHentai.ViewModels
         int Index { get; }
         bool IsLoading { get; }
         Task Reload();
+    }
+
+    
+    class ReadingImage : ReadingImageBase
+    {
+        public ReadingImage(string url, int index)
+        {
+            Url = url;
+            Index = index;
+        }
+
+        public string Url { get; }
+        protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
+        {
+            if (removeCache)
+            {
+                await ImageCache.Instance.RemoveAsync(new[] {new Uri(Url)});
+            }
+            //TODO: check if image already downloaded
+            return await ImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token);
+        }
     }
 
     internal abstract class ReadingImageBase : IReadingImage

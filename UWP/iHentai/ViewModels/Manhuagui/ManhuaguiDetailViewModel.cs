@@ -1,4 +1,5 @@
-﻿using iHentai.Services.Manhuagui;
+﻿using System.Linq;
+using iHentai.Services.Manhuagui;
 using iHentai.Services.Manhuagui.Model;
 using Microsoft.Toolkit.Helpers;
 using PropertyChanged;

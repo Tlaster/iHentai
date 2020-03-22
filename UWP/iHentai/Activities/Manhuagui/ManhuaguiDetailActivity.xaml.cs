@@ -59,7 +59,11 @@ namespace iHentai.Activities.Manhuagui
 
         private void OpenRead()
         {
-            //StartActivity<ReadingActivity>(new EHReadingViewModel(ViewModel.Api, ViewModel.Link));
+            if (ViewModel.Detail == null)
+            {
+                return;
+            }
+            StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault()?.Link));
         }
         protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)
         {

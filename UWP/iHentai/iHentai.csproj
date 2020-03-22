@@ -149,6 +149,7 @@
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
+    <Compile Include="Common\ScriptEngine.cs" />
     <Compile Include="Common\UI\FadeActivityTransition.cs" />
     <Compile Include="Common\Helpers\HtmlCache.cs" />
     <Compile Include="Common\Helpers\HentaiHttpMessageHandler.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
     <Compile Include="ViewModels\Manhuagui\ManhuaguiDetailViewModel.cs" />
+    <Compile Include="ViewModels\Manhuagui\ManhuaguiReadingViewModel.cs" />
     <Compile Include="ViewModels\Manhuagui\ManhuaguiUpdateViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
@@ -281,6 +283,9 @@
     <PackageReference Include="Bug10.Icon">
       <Version>1.0.12</Version>
     </PackageReference>
+    <PackageReference Include="ChakraHosting">
+      <Version>1.0.6</Version>
+    </PackageReference>
     <PackageReference Include="Flurl.Http">
       <Version>3.0.0-pre3</Version>
     </PackageReference>
@@ -288,6 +293,9 @@
       <Version>6.1.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="LZStringCSharp">
+      <Version>1.4.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.10</Version>
