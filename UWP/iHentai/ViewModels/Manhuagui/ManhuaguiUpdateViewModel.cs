@@ -13,30 +13,18 @@ using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ViewModels.Manhuagui
 {
-    class ManhuaguiUpdateViewModel : TabViewModelBase
+    class ManhuaguiUpdateViewModel : TabViewModelBase, IIncrementalSource<ManhuaguiGallery>
     {
-        public List<ManhuaguiGallery> Source { get; private set; }
+        public LoadingCollection<IIncrementalSource<ManhuaguiGallery>, ManhuaguiGallery> Source { get; }
 
         public ManhuaguiUpdateViewModel()
         {
-            Init();
+            Source = new LoadingCollection<IIncrementalSource<ManhuaguiGallery>, ManhuaguiGallery>(this);
         }
 
-        private async void Init()
+        public async Task<IEnumerable<ManhuaguiGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = new CancellationToken())
         {
-            await Refresh();
-        }
-
-
-        public async Task Refresh()
-        {
-            if (IsLoading)
-            {
-                return;
-            }
-            IsLoading = true;
-            Source = await Singleton<ManhuaguiApi>.Instance.Update();
-            IsLoading = false;
+            return await Singleton<ManhuaguiApi>.Instance.Update(pageIndex + 1);
         }
     }
 }

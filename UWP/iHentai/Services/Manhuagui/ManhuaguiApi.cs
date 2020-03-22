@@ -11,11 +11,21 @@ namespace iHentai.Services.Manhuagui
 {
     class ManhuaguiApi
     {
-        public virtual string Host => "https://www.manhuagui.com/";
-        public async Task<List<ManhuaguiGallery>> Update()
+        public virtual string Host => "https://m.manhuagui.com";
+        public async Task<List<ManhuaguiGallery>> Update(int page = 1)
         {
-            var result = await new Url($"{Host}update/").GetHtmlAsync<ManhuaguiGalleryUpdate>();
-            return result.Items;
+            return await $"{Host}/update/".SetQueryParams(new
+            {
+                page,
+                ajax = 1,
+                order = 1
+            }).GetHtmlAsync<List<ManhuaguiGallery>>();
+        }
+
+        public async Task<ManhuaguiGalleryDetail> Detail(string path)
+        {
+            return await new Url($"{Host}{path}")
+                .GetHtmlAsync<ManhuaguiGalleryDetail>();
         }
     }
 }

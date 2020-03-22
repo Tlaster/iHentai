@@ -24,28 +24,28 @@ namespace iHentai.Common.Html
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
-            return (T) DeserializeObject(doc, typeof(T));
+            return (T) DeserializeObject(doc.Body, typeof(T));
         }
 
         public static object DeserializeObject(string html, Type type)
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
-            return DeserializeObject(doc, type);
+            return DeserializeObject(doc.Body, type);
         }
 
         public static T DeserializeObject<T>(Stream html)
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
-            return (T) DeserializeObject(doc, typeof(T));
+            return (T) DeserializeObject(doc.Body, typeof(T));
         }
 
         public static object DeserializeObject(Stream html, Type type)
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
-            return DeserializeObject(doc, type);
+            return DeserializeObject(doc.Body, type);
         }
 
         private static object DeserializeObject(IParentNode element, Type type)
@@ -55,35 +55,54 @@ namespace iHentai.Common.Html
                 return null;
             }
 
-            var properties =
-                type.GetProperties()
-                    .Where(item => item.CanWrite && item.CanRead);
-            var instance = CreateInstance(type);
-            foreach (var propertyInfo in properties)
+            object instance;
+
+            if (ReflectionHelper.ImplementsGenericDefinition(type, typeof(IList<>), out _))
             {
-                var isHtmlItem = Attribute.IsDefined(propertyInfo, typeof(HtmlItemAttribute));
-                var isHtmlMultiItems = Attribute.IsDefined(propertyInfo, typeof(HtmlMultiItemsAttribute));
-                if (!isHtmlMultiItems && !isHtmlItem)
+                var itemType = ReflectionHelper.GetCollectionItemType(type);
+                var result = element.Children.Select(it => DeserializeObject(it, itemType));
+                var targetEnumerable = typeof(Enumerable)
+                    .GetMethod("Cast", new[] {typeof(IEnumerable)})
+                    ?.MakeGenericMethod(itemType)
+                    .Invoke(null, new object[] {result});
+                instance =  typeof(Enumerable)
+                    .GetMethod("ToList")
+                    ?.MakeGenericMethod(itemType)
+                    .Invoke(null, new[] {targetEnumerable});
+            }
+            else
+            {
+                instance = CreateInstance(type);
+                var properties =
+                    type.GetProperties()
+                        .Where(item => item.CanWrite && item.CanRead);
+                foreach (var propertyInfo in properties)
                 {
-                    continue;
-                }
+                    var isHtmlItem = Attribute.IsDefined(propertyInfo, typeof(HtmlItemAttribute));
+                    var isHtmlMultiItems = Attribute.IsDefined(propertyInfo, typeof(HtmlMultiItemsAttribute));
+                    if (!isHtmlMultiItems && !isHtmlItem)
+                    {
+                        continue;
+                    }
 
-                object propertyValue = null;
+                    object propertyValue = null;
 
-                if (isHtmlItem)
-                {
-                    propertyValue = DeserializeHtmlItem(propertyInfo, element);
-                }
-                else if (isHtmlMultiItems)
-                {
-                    propertyValue = DeserializeHtmlMultiItems(propertyInfo, element);
-                }
+                    if (isHtmlItem)
+                    {
+                        propertyValue = DeserializeHtmlItem(propertyInfo, element);
+                    }
+                    else if (isHtmlMultiItems)
+                    {
+                        propertyValue = DeserializeHtmlMultiItems(propertyInfo, element);
+                    }
 
-                if (propertyValue != null)
-                {
-                    propertyInfo.SetValue(instance, propertyValue);
+                    if (propertyValue != null)
+                    {
+                        propertyInfo.SetValue(instance, propertyValue);
+                    }
                 }
             }
+
 
             return instance;
         }

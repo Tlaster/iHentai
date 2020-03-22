@@ -13,12 +13,13 @@
     xmlns:model="using:iHentai.Services.Manhuagui.Model"
     xmlns:controls1="using:iHentai.Controls"
     xmlns:controls2="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:iHentai.Common.Extensions"
     mc:Ignorable="d">
 
     <Grid>
-        <RefreshContainer RefreshRequested="{x:Bind ViewModel.Refresh}">
-            <ScrollViewer>
-                <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+        <RefreshContainer extensions:RefreshContainerExtension.ItemsSource="{x:Bind ViewModel.Source}">
+            <ScrollViewer extensions:ScrollViewerExtension.ItemsSource="{x:Bind ViewModel.Source}">
+                <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}">
                     <controls:ItemsRepeater.Layout>
                         <ui:StaggeredLayout2 DesiredColumnWidth="150"/>
                     </controls:ItemsRepeater.Layout>
@@ -62,7 +63,7 @@
             </ScrollViewer>
         </RefreshContainer>
 
-        <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+        <ProgressRing IsActive="{x:Bind ViewModel.Source.IsLoading, Mode=OneWay}"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Width="50"

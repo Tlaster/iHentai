@@ -12,9 +12,6 @@
     xmlns:controls2="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:iHentai.Services.EHentai.Model"
     mc:Ignorable="d">
-    <tab:TabActivity.Resources>
-        <x:Double x:Key="ContentMaxWidth">1200</x:Double>
-    </tab:TabActivity.Resources>
     <Grid>
         <ScrollViewer>
             <Grid>
