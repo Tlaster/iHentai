@@ -78,5 +78,13 @@ namespace iHentai.Activities.Manhuagui
             });
             return base.OnBackRequest();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is ManhuaguGalleryChapter chapter)
+            {
+                StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(chapter.Link));
+            }
+        }
     }
 }

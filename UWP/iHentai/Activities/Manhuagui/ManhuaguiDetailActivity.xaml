@@ -65,7 +65,7 @@
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="model:ManhuaguGalleryChapter">
-                            <Button Padding="4">
+                            <Button Padding="4" Tag="{x:Bind}" Click="Button_Click">
                                 <TextBlock Text="{x:Bind Title}"/>
                             </Button>
                         </DataTemplate>
