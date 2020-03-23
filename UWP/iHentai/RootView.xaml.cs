@@ -134,7 +134,7 @@ namespace iHentai
         {
             RootTabView.Visibility = RootTabView.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
             SecondaryTitleBar.Visibility = RootTabView.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
-            Window.Current.SetTitleBar(RootTabView.IsVisible() ? _titleBarGrid : SecondaryTitleBar);
+            Window.Current.SetTitleBar(RootTabView.IsVisible() ? _titleBarGrid : SecondaryTitleBarDrag);
         }
 
         private void OnCoreTitleBarOnLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)

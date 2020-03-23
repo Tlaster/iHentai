@@ -137,7 +137,11 @@
             </Grid.ColumnDefinitions>
             <Grid x:Name="SecondaryTitleBarInset" />
             <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset"/>
-            <TextBlock Grid.Column="1" Text="iHentai" VerticalAlignment="Center" Padding="8"/>
+            <TextBlock Grid.Column="1" Text="iHentai" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="8"/>
+            <Grid Background="Transparent" x:Name="SecondaryTitleBarDrag" Grid.ColumnSpan="3"/>
+            <Button Grid.Column="1" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Right" Click="{x:Bind AddTab}">
+                <SymbolIcon Symbol="Add" />
+            </Button>
             <animations:Implicit.ShowAnimations>
                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                 <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
