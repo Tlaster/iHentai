@@ -148,8 +148,9 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
-    <Compile Include="Common\Helpers\CacheBase2.cs" />
-    <Compile Include="Common\Helpers\ImageCache2.cs" />
+    <Compile Include="Common\Helpers\DownloadBase.cs" />
+    <Compile Include="Common\Helpers\DownloadManager.cs" />
+    <Compile Include="Common\Helpers\ImageDownload.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\ScriptEngine.cs" />
     <Compile Include="Common\UI\FadeActivityTransition.cs" />

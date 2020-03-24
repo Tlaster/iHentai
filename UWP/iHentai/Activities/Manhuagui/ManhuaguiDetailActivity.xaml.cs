@@ -63,7 +63,7 @@ namespace iHentai.Activities.Manhuagui
             {
                 return;
             }
-            StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault()?.Link));
+            StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault()?.Link, ViewModel.Detail));
         }
         protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)
         {
@@ -83,7 +83,7 @@ namespace iHentai.Activities.Manhuagui
         {
             if (sender is FrameworkElement element && element.Tag is ManhuaguGalleryChapter chapter)
             {
-                StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(chapter.Link));
+                StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(chapter.Link, ViewModel.Detail));
             }
         }
     }

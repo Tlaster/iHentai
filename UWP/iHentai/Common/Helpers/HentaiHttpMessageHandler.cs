@@ -33,6 +33,8 @@ namespace iHentai.Common.Helpers
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             }
+
+            MaxConnectionsPerServer = 20;
         }
         public void RegisterHandler(ICustomHttpHandler handler)
         {

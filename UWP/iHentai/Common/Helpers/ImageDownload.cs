@@ -12,28 +12,14 @@ using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Common.Helpers
 {
-    class ImageCache2 : CacheBase2<BitmapImage>
+    class ImageDownload : DownloadBase<BitmapImage>
     {
 
         private const string DateAccessedProperty = "System.DateAccessed";
 
-        /// <summary>
-        /// Private singleton field.
-        /// </summary>
-        [ThreadStatic]
-        private static ImageCache2 _instance;
-
         private List<string> _extendedPropertyNames = new List<string>();
 
-        /// <summary>
-        /// Gets public singleton property.
-        /// </summary>
-        public static ImageCache2 Instance => _instance ?? (_instance = new ImageCache2());
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageCache"/> class.
-        /// </summary>
-        public ImageCache2()
+        public ImageDownload()
         {
             _extendedPropertyNames.Add(DateAccessedProperty);
         }
@@ -91,42 +77,6 @@ namespace iHentai.Common.Helpers
             {
                 return await InitializeTypeAsync(stream, initializerKeyValues).ConfigureAwait(false);
             }
-        }
-
-        /// <summary>
-        /// Override-able method that checks whether file is valid or not.
-        /// </summary>
-        /// <param name="file">storage file</param>
-        /// <param name="duration">cache duration</param>
-        /// <param name="treatNullFileAsOutOfDate">option to mark uninitialized file as expired</param>
-        /// <returns>bool indicate whether file has expired or not</returns>
-        protected override async Task<bool> IsFileOutOfDateAsync(StorageFile file, TimeSpan duration, bool treatNullFileAsOutOfDate = true)
-        {
-            if (file == null)
-            {
-                return treatNullFileAsOutOfDate;
-            }
-
-            // Get extended properties.
-            IDictionary<string, object> extraProperties =
-                await file.Properties.RetrievePropertiesAsync(_extendedPropertyNames).AsTask().ConfigureAwait(false);
-
-            // Get date-accessed property.
-            var propValue = extraProperties[DateAccessedProperty];
-
-            if (propValue != null)
-            {
-                var lastAccess = propValue as DateTimeOffset?;
-
-                if (lastAccess.HasValue)
-                {
-                    return DateTime.Now.Subtract(lastAccess.Value.DateTime) > duration;
-                }
-            }
-
-            var properties = await file.GetBasicPropertiesAsync().AsTask().ConfigureAwait(false);
-
-            return properties.Size == 0 || DateTime.Now.Subtract(properties.DateModified.DateTime) > duration;
         }
     }
 }
