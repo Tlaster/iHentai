@@ -32,6 +32,9 @@ namespace iHentai.Services.EHentai.Model
 
         [HtmlItem("#loadfail", Attr = "onclick", RegexPattern = "\\('(.*)'\\)", RegexGroup = 1)] 
         public string LoadFailed { get; set; }
+
+        [HtmlItem("#i1>h1")]
+        public string GalleryName { get; set; }
     }
 
     internal class EHGalleryDetail

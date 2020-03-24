@@ -95,7 +95,7 @@ namespace iHentai.Controls
                     new KeyValuePair<string, object>("ImageWidth", newValue.ThumbWidth),
                     new KeyValuePair<string, object>("ImageHeight", newValue.ThumbHeight)
                 };
-                var img = await ImageCache2.Instance.GetFromCacheAsync(new Uri(newValue.Source), true,
+                var img = await WriteableImageCache.Instance.GetFromCacheAsync(new Uri(newValue.Source), true,
                     _tokenSource2.Token,
                     props);
                 var source = await CropImageAsync(img, Convert.ToInt32(Math.Abs(newValue.OffsetX)),
@@ -118,17 +118,17 @@ namespace iHentai.Controls
             }
         }
 
-        internal class ImageCache2 : CacheBase<WriteableBitmap>
+        internal class WriteableImageCache : CacheBase<WriteableBitmap>
         {
             private const string DateAccessedProperty = "System.DateAccessed";
             private readonly List<string> _extendedPropertyNames = new List<string>();
 
-            public ImageCache2()
+            public WriteableImageCache()
             {
                 _extendedPropertyNames.Add(DateAccessedProperty);
             }
 
-            public static ImageCache2 Instance { get; } = new ImageCache2();
+            public static WriteableImageCache Instance { get; } = new WriteableImageCache();
 
             protected override async Task<WriteableBitmap> InitializeTypeAsync(Stream stream,
                 List<KeyValuePair<string, object>> initializerKeyValues = null)

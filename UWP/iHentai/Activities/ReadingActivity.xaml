@@ -85,6 +85,8 @@
                 </DataTemplate>
             </controls1:Optional.ContentTemplate>
         </controls1:Optional>
+
+
         <Grid Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
             <Grid Background="Transparent"
                   Height="40"

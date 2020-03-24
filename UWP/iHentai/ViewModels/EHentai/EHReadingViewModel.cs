@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using iHentai.Services.Core;
 using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
 using Microsoft.Toolkit.Uwp.UI;

@@ -23,7 +23,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid MaxHeight="400" MaxWidth="400" VerticalAlignment="Top">
                         <controls1:AspectRatioView
@@ -41,19 +40,20 @@
                     <StackPanel Margin="8,0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
                         <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.GalleryTitle,Mode=OneWay}"
                                    Style="{ThemeResource TitleTextBlockStyle}" IsTextSelectionEnabled="True" />
-                        <TextBlock Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap"/>
-                    </StackPanel>
-                    <StackPanel Width="200" Grid.Column="2" Orientation="Vertical">
-                        <Button Margin="4" HorizontalAlignment="Stretch" Content="Open"
-                                Click="{x:Bind OpenRead}"
-                                Style="{ThemeResource AccentButtonStyle}" />
-                        <controls:SplitButton Margin="4" Content="Download" HorizontalAlignment="Stretch">
-                            <controls:SplitButton.Flyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="Open in browser" Click="{x:Bind OpenInBrowser}" />
-                                </MenuFlyout>
-                            </controls:SplitButton.Flyout>
-                        </controls:SplitButton>
+                        <TextBlock Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" MaxLines="10"/>
+                        <controls2:WrapPanel>
+                            <Button Margin="4" HorizontalAlignment="Stretch" Content="Open" MaxWidth="200"
+                                    Padding="8"
+                                    Click="{x:Bind OpenRead}"
+                                    Style="{ThemeResource AccentButtonStyle}" />
+                            <controls:SplitButton Padding="8" Margin="4" Content="Download" MaxWidth="200" HorizontalAlignment="Stretch">
+                                <controls:SplitButton.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Open in browser" Click="{x:Bind OpenInBrowser}" />
+                                    </MenuFlyout>
+                                </controls:SplitButton.Flyout>
+                            </controls:SplitButton>
+                        </controls2:WrapPanel>
                     </StackPanel>
                 </Grid>
                 <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
@@ -61,7 +61,7 @@
                                          Margin="16"
                                          HorizontalAlignment="Center">
                     <controls:ItemsRepeater.Layout>
-                        <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8" ItemsJustification="Center"/>
+                        <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8" />
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="model:ManhuaguGalleryChapter">

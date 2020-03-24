@@ -96,9 +96,10 @@
                     </StackPanel>
                     <StackPanel Width="200" Grid.Column="2" Orientation="Vertical">
                         <Button Margin="4" HorizontalAlignment="Stretch" Content="Open"
+                                Padding="8"
                                 Click="{x:Bind OpenRead}"
                                 Style="{ThemeResource AccentButtonStyle}" />
-                        <controls2:SplitButton Margin="4" Content="Download" HorizontalAlignment="Stretch">
+                        <controls2:SplitButton Padding="8" Margin="4" Content="Download" HorizontalAlignment="Stretch">
                             <controls2:SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="Open in browser" Click="{x:Bind OpenInBrowser}" />

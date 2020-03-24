@@ -5,12 +5,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Helpers;
-using PropertyChanged;
-using Windows.UI.Xaml;
 using Microsoft.Toolkit.Uwp.UI;
+using PropertyChanged;
 
 namespace iHentai.ViewModels
 {
@@ -22,22 +22,27 @@ namespace iHentai.ViewModels
         Task Reload();
     }
 
-    
-    class ReadingImage : ReadingImageBase
+
+    internal class ReadingImage : ReadingImageBase
     {
-        public ReadingImage(string url, int index)
+        private readonly string _name;
+
+        public ReadingImage(string url, int index, string name)
         {
             Url = url;
+            _name = name;
             Index = index;
         }
 
         public string Url { get; }
+
         protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
         {
             if (removeCache)
             {
                 await ImageCache.Instance.RemoveAsync(new[] {new Uri(Url)});
             }
+
             //TODO: check if image already downloaded
             return await ImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token);
         }
@@ -45,8 +50,9 @@ namespace iHentai.ViewModels
 
     internal abstract class ReadingImageBase : IReadingImage
     {
-        private ImageSource _source;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private ImageSource _source;
+
         public ImageSource Source
         {
             get
@@ -62,12 +68,25 @@ namespace iHentai.ViewModels
 
         public int Index { get; protected set; }
 
+        public bool IsLoading { get; protected set; }
+
+        public async Task Reload()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
+            await Reload(true);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private async Task Reload(bool removeCache)
         {
             if (IsLoading)
             {
                 return;
             }
+
             IsLoading = true;
             _source = await LoadImage(removeCache, _cancellationTokenSource.Token);
             IsLoading = false;
@@ -83,47 +102,40 @@ namespace iHentai.ViewModels
 
         protected abstract Task<ImageSource> LoadImage(bool removeCache, CancellationToken token);
 
-        public bool IsLoading { get; protected set; }
-
-        public async Task Reload()
-        {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
-            await Reload(true);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
     internal enum ReadingViewMode
     {
         Book,
         Flip
     }
+
     internal abstract class ReadingViewModel : TabViewModelBase
     {
         private int _selectedIndex;
 
         public int SelectedIndex
-        { 
-            get => _selectedIndex; 
+        {
+            get => _selectedIndex;
             set
             {
                 if (Images != null)
                 {
-                    _selectedIndex = value; 
+                    _selectedIndex = value;
                     OnPropertyChanged(nameof(SelectedIndex));
                 }
             }
         }
+
         public List<IReadingImage> Images { get; protected set; }
-        [DependsOn(nameof(Images))]
-        public int Count => (Images?.Count ?? 1) - 1;
+
+        [DependsOn(nameof(Images))] public int Count => (Images?.Count ?? 1) - 1;
+
+        public bool CanSwitchChapter { get; protected set; } = true;
 
         public FlowDirection FlowDirection
         {
@@ -145,15 +157,13 @@ namespace iHentai.ViewModels
             }
         }
 
-        [DependsOn(nameof(FlowDirection))]
-        public bool IsLTR => FlowDirection == FlowDirection.LeftToRight;
-        [DependsOn(nameof(FlowDirection))]
-        public bool IsRTL => FlowDirection == FlowDirection.RightToLeft;
+        [DependsOn(nameof(FlowDirection))] public bool IsLTR => FlowDirection == FlowDirection.LeftToRight;
 
-        [DependsOn(nameof(ViewMode))]
-        public bool IsBookMode => ViewMode == ReadingViewMode.Book;
-        [DependsOn(nameof(ViewMode))]
-        public bool IsFlipMode => ViewMode == ReadingViewMode.Flip;
+        [DependsOn(nameof(FlowDirection))] public bool IsRTL => FlowDirection == FlowDirection.RightToLeft;
+
+        [DependsOn(nameof(ViewMode))] public bool IsBookMode => ViewMode == ReadingViewMode.Book;
+
+        [DependsOn(nameof(ViewMode))] public bool IsFlipMode => ViewMode == ReadingViewMode.Flip;
 
         public void ReloadCurrent()
         {
@@ -166,7 +176,6 @@ namespace iHentai.ViewModels
                 Images?.ElementAtOrDefault(SelectedIndex)?.Reload();
                 Images?.ElementAtOrDefault(SelectedIndex + 1)?.Reload();
             }
-
         }
     }
 }
