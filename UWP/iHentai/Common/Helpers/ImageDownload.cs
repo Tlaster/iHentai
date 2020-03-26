@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
@@ -77,6 +78,11 @@ namespace iHentai.Common.Helpers
             {
                 return await InitializeTypeAsync(stream, initializerKeyValues).ConfigureAwait(false);
             }
+        }
+
+        protected override Task<StorageFile> GetFromCache(Uri uri, CancellationToken cancellationToken)
+        {
+            return ImageCache.Instance.GetFileFromCacheAsync(uri);
         }
     }
 }

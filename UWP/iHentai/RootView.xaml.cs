@@ -7,6 +7,8 @@ using Windows.ApplicationModel.Core;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Core.Preview;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -64,6 +66,10 @@ namespace iHentai
                     AppViewBackButtonVisibility.Visible;
                 it.BackRequested += OnBackRequested;
             });
+            SystemNavigationManagerPreview.GetForCurrentView().Also(it =>
+            {
+                it.CloseRequested += WindowOnCloseRequested;
+            });
             ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
             ImageEx2.WriteableImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
             FlurlHttp.Configure(it => { it.HttpClientFactory = new HentaiHttpClientFactory(); });
@@ -80,6 +86,22 @@ namespace iHentai
                 }
             });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
+        }
+
+        private async void WindowOnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            if (Singleton<DownloadManager>.Instance.IsBusy)
+            {
+                e.Handled = true;
+                var dialog = new MessageDialog("Exit will stop the download", "Downloading books now, exit anyway?");
+                dialog.Commands.Add(new UICommand("Yes", null));
+                dialog.Commands.Add(new UICommand("No", null));
+                var result = await dialog.ShowAsync();
+                if (result.Label == "Yes")
+                {
+                    App.Current.Exit();
+                }
+            }
         }
 
         private void OnTitleBarIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
@@ -157,11 +179,6 @@ namespace iHentai
             ShellTitlebarEndInset.Height = ShellTitlebarInset.Height = SecondaryTitleBar.Height = sender.Height;
         }
 
-        private void RootTabView_AddTabButtonClick(TabView sender, object args)
-        {
-            AddTab();
-        }
-        
         private void RootTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             var index = sender.TabItems.IndexOf(args.Item);

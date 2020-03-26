@@ -139,7 +139,7 @@ namespace iHentai.ViewModels
 
         public FlowDirection FlowDirection
         {
-            get => Singleton<Settings>.Instance.Get("reading_flow_direction", FlowDirection.LeftToRight);
+            get => Singleton<Settings>.Instance.Get("reading_flow_direction", FlowDirection.RightToLeft);
             set
             {
                 Singleton<Settings>.Instance.Set("reading_flow_direction", value);

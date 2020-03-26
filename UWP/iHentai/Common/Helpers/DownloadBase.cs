@@ -13,8 +13,6 @@ namespace iHentai.Common.Helpers
 {
     public abstract class DownloadBase<T>
     {
-        private StorageFolder _baseFolder;
-
         private readonly ConcurrentDictionary<string, ConcurrentRequest> _concurrentTasks =
             new ConcurrentDictionary<string, ConcurrentRequest>();
 
@@ -49,10 +47,8 @@ namespace iHentai.Common.Helpers
             }
         }
 
-        public virtual void Initialize(StorageFolder folder = null,
-            HttpMessageHandler httpMessageHandler = null)
+        public virtual void Initialize(HttpMessageHandler httpMessageHandler = null)
         {
-            _baseFolder = folder;
             if (httpMessageHandler != null)
             {
                 _httpClient = new HttpClient(httpMessageHandler);
@@ -63,21 +59,19 @@ namespace iHentai.Common.Helpers
         ///     Clears all files in the cache
         /// </summary>
         /// <returns>awaitable task</returns>
-        public async Task ClearAsync()
+        public async Task ClearAsync(StorageFolder folder)
         {
-            var folder = await GetDownloadFolderAsync(string.Empty).ConfigureAwait(false);
             var files = await folder.GetFilesAsync().AsTask().ConfigureAwait(false);
             await InternalClearAsync(files).ConfigureAwait(false);
         }
 
-        public async Task RemoveAsync(string path, params string[] downloadKeys)
+        public async Task RemoveAsync(StorageFolder folder, params string[] downloadKeys)
         {
             if (downloadKeys == null || !downloadKeys.Any())
             {
                 return;
             }
 
-            var folder = await GetDownloadFolderAsync(path).ConfigureAwait(false);
             var files = await folder.GetFilesAsync().AsTask().ConfigureAwait(false);
 
             var filesToDelete = new List<StorageFile>();
@@ -97,24 +91,21 @@ namespace iHentai.Common.Helpers
             await InternalClearAsync(filesToDelete).ConfigureAwait(false);
         }
 
-        public Task PreDownloadAsync(Uri uri, string path, string key, bool throwOnError = false,
+        public Task PreDownloadAsync(Uri uri, StorageFolder folder, string key, bool throwOnError = false,
             CancellationToken cancellationToken = default)
         {
-            return GetItemAsync(uri, path, key, throwOnError, false, cancellationToken, null);
+            return GetItemAsync(uri, folder, key, throwOnError, false, cancellationToken, null);
         }
 
-        public Task<T> GetFromDownloadAsync(Uri uri, string path, string key, bool throwOnError = false,
+        public Task<T> GetFromDownloadAsync(Uri uri, StorageFolder folder, string key, bool throwOnError = false,
             CancellationToken cancellationToken = default,
             List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
-            return GetItemAsync(uri, path, key, throwOnError, false, cancellationToken, initializerKeyValues);
+            return GetItemAsync(uri, folder, key, throwOnError, false, cancellationToken, initializerKeyValues);
         }
 
-        public async Task<StorageFile> GetFileFromDownloadedAsync(string path, string key)
+        public async Task<StorageFile> GetFileFromDownloadedAsync(StorageFolder folder, string key)
         {
-            var folder = await GetDownloadFolderAsync(path).ConfigureAwait(false);
-
-
             var item = await folder.TryGetItemAsync(key).AsTask().ConfigureAwait(false);
 
             return item as StorageFile;
@@ -139,7 +130,7 @@ namespace iHentai.Common.Helpers
             List<KeyValuePair<string, object>> initializerKeyValues = null);
 
 
-        private async Task<T> GetItemAsync(Uri uri, string path, string key, bool throwOnError, bool preDownloadOnly,
+        private async Task<T> GetItemAsync(Uri uri, StorageFolder folder, string key, bool throwOnError, bool preDownloadOnly,
             CancellationToken cancellationToken, List<KeyValuePair<string, object>> initializerKeyValues)
         {
             var instance = default(T);
@@ -159,7 +150,7 @@ namespace iHentai.Common.Helpers
             {
                 request = new ConcurrentRequest
                 {
-                    Task = GetFromDownloadedOrDownloadAsync(uri, path, fileName, preDownloadOnly, cancellationToken,
+                    Task = GetFromDownloadedOrDownloadAsync(uri, folder, fileName, preDownloadOnly, cancellationToken,
                         initializerKeyValues),
                     EnsureDownloadedCopy = preDownloadOnly
                 };
@@ -188,7 +179,7 @@ namespace iHentai.Common.Helpers
             return instance;
         }
 
-        private async Task<T> GetFromDownloadedOrDownloadAsync(Uri uri, string path, string fileName,
+        private async Task<T> GetFromDownloadedOrDownloadAsync(Uri uri, StorageFolder folder, string fileName,
             bool preDownloadOnly, CancellationToken cancellationToken,
             List<KeyValuePair<string, object>> initializerKeyValues)
         {
@@ -201,8 +192,8 @@ namespace iHentai.Common.Helpers
                 return instance;
             }
 
-            var folder = await GetDownloadFolderAsync(path).ConfigureAwait(false);
             baseFile = await folder.TryGetItemAsync(fileName).AsTask(cancellationToken).ConfigureAwait(false) as StorageFile;
+
 
             var downloadDataFile = baseFile == null;
 
@@ -211,8 +202,14 @@ namespace iHentai.Common.Helpers
                 baseFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting).AsTask(cancellationToken)
                     .ConfigureAwait(false);
             }
+            
+            var cacheFile = await GetFromCache(uri, cancellationToken);
 
-            if (downloadDataFile)
+            if (cacheFile != null && downloadDataFile)
+            {
+                await cacheFile.CopyAndReplaceAsync(baseFile);
+            } 
+            else if (downloadDataFile)
             {
                 uint retries = 0;
                 try
@@ -250,6 +247,8 @@ namespace iHentai.Common.Helpers
 
             return instance;
         }
+
+        protected abstract Task<StorageFile> GetFromCache(Uri uri, CancellationToken cancellationToken);
 
         private async Task<T> DownloadFileAsync(Uri uri, StorageFile baseFile, bool preDownloadOnly,
             CancellationToken cancellationToken, List<KeyValuePair<string, object>> initializerKeyValues)
@@ -298,17 +297,17 @@ namespace iHentai.Common.Helpers
             }
         }
 
-        private async Task<StorageFolder> GetDownloadFolderAsync(string sub)
-        {
-            if (string.IsNullOrEmpty(sub))
-            {
-                return _baseFolder;
-            }
+        //private async Task<StorageFolder> GetDownloadFolderAsync(string sub)
+        //{
+        //    if (string.IsNullOrEmpty(sub))
+        //    {
+        //        return _baseFolder;
+        //    }
 
-            var subFolder = await _baseFolder.GetFolderAsync(sub);
-            return subFolder;
+        //    var subFolder = await _baseFolder.GetFolderAsync(sub);
+        //    return subFolder;
 
-        }
+        //}
 
         private class ConcurrentRequest
         {
