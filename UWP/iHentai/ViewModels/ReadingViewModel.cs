@@ -5,10 +5,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Helpers;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
 using PropertyChanged;
 
@@ -19,6 +21,7 @@ namespace iHentai.ViewModels
         ImageSource Source { get; }
         int Index { get; }
         bool IsLoading { get; }
+        float Progress { get; }
         Task Reload();
     }
 
@@ -40,15 +43,15 @@ namespace iHentai.ViewModels
         {
             if (removeCache)
             {
-                await ImageCache.Instance.RemoveAsync(new[] {new Uri(Url)});
+                await Singleton<ProgressImageCache>.Instance.RemoveAsync(new[] {new Uri(Url)});
             }
 
             //TODO: check if image already downloaded
-            return await ImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token);
+            return await Singleton<ProgressImageCache>.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token, progress: this);
         }
     }
 
-    internal abstract class ReadingImageBase : IReadingImage
+    internal abstract class ReadingImageBase : IReadingImage, IProgress<float>
     {
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private ImageSource _source;
@@ -69,6 +72,8 @@ namespace iHentai.ViewModels
         public int Index { get; protected set; }
 
         public bool IsLoading { get; protected set; }
+
+        public float Progress { get; protected set; }
 
         public async Task Reload()
         {
@@ -105,6 +110,11 @@ namespace iHentai.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Report(float value)
+        {
+            DispatcherHelper.ExecuteOnUIThreadAsync(() => Progress = value, CoreDispatcherPriority.High);
         }
     }
 

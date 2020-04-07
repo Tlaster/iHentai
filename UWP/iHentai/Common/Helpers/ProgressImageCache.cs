@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Common.Helpers
 {
-    class ImageDownload : DownloadBase<BitmapImage>
+    class ProgressImageCache : ProgressCacheBase<ImageSource>
     {
-
         private const string DateAccessedProperty = "System.DateAccessed";
 
         private List<string> _extendedPropertyNames = new List<string>();
 
-        public ImageDownload()
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageCache"/> class.
+        /// </summary>
+        public ProgressImageCache()
         {
             _extendedPropertyNames.Add(DateAccessedProperty);
         }
@@ -32,7 +32,7 @@ namespace iHentai.Common.Helpers
         /// <param name="stream">input stream</param>
         /// <param name="initializerKeyValues">key value pairs used when initializing instance of generic type</param>
         /// <returns>awaitable task</returns>
-        protected override async Task<BitmapImage> InitializeTypeAsync(Stream stream, List<KeyValuePair<string, object>> initializerKeyValues = null)
+        protected override async Task<ImageSource> InitializeTypeAsync(Stream stream, List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
             if (stream.Length == 0)
             {
@@ -73,7 +73,7 @@ namespace iHentai.Common.Helpers
         /// <param name="baseFile">storage file</param>
         /// <param name="initializerKeyValues">key value pairs used when initializing instance of generic type</param>
         /// <returns>awaitable task</returns>
-        protected override async Task<BitmapImage> InitializeTypeAsync(StorageFile baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
+        protected override async Task<ImageSource> InitializeTypeAsync(StorageFile baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
             using (var stream = await baseFile.OpenStreamForReadAsync().ConfigureAwait(false))
             {
@@ -81,9 +81,40 @@ namespace iHentai.Common.Helpers
             }
         }
 
-        protected override async Task<StorageFile> GetFromCache(Uri uri, CancellationToken cancellationToken)
+        /// <summary>
+        /// Override-able method that checks whether file is valid or not.
+        /// </summary>
+        /// <param name="file">storage file</param>
+        /// <param name="duration">cache duration</param>
+        /// <param name="treatNullFileAsOutOfDate">option to mark uninitialized file as expired</param>
+        /// <returns>bool indicate whether file has expired or not</returns>
+        protected override async Task<bool> IsFileOutOfDateAsync(StorageFile file, TimeSpan duration, bool treatNullFileAsOutOfDate = true)
         {
-            return await ImageCache.Instance.GetFileFromCacheAsync(uri) ?? await Singleton<ProgressImageCache>.Instance.GetFileFromCacheAsync(uri);
+            if (file == null)
+            {
+                return treatNullFileAsOutOfDate;
+            }
+
+            // Get extended properties.
+            IDictionary<string, object> extraProperties =
+                await file.Properties.RetrievePropertiesAsync(_extendedPropertyNames).AsTask().ConfigureAwait(false);
+
+            // Get date-accessed property.
+            var propValue = extraProperties[DateAccessedProperty];
+
+            if (propValue != null)
+            {
+                var lastAccess = propValue as DateTimeOffset?;
+
+                if (lastAccess.HasValue)
+                {
+                    return DateTime.Now.Subtract(lastAccess.Value.DateTime) > duration;
+                }
+            }
+
+            var properties = await file.GetBasicPropertiesAsync().AsTask().ConfigureAwait(false);
+
+            return properties.Size == 0 || DateTime.Now.Subtract(properties.DateModified.DateTime) > duration;
         }
     }
 }

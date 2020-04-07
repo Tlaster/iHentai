@@ -39,5 +39,14 @@ namespace iHentai.Common.Helpers
         {
             return item == any;
         }
+        
+        public static bool IsZero(float number)
+        {
+            return number == 0f;
+        }
+        public static bool IsNonZero(float number)
+        {
+            return number != 0f;
+        }
     }
 }

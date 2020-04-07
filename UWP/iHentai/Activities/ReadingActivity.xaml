@@ -12,6 +12,7 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:extensions1="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:icon="using:Bug10.Icon"
+    Name="ReadingRoot"
     xmlns:book="using:iHentai.Controls.Book" xmlns:controls1="using:iHentai.Controls" xmlns:controls2="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
@@ -23,7 +24,7 @@
                        SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                         <book:BookView.LeftTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped">
+                                <Grid Tapped="UIElement_OnTapped" Background="Transparent" FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
                                     <Image 
                             HorizontalAlignment="Right"
                             Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
@@ -32,14 +33,14 @@
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                        Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                        <controls:ProgressRing IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}" Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </book:BookView.LeftTemplate>
                         <book:BookView.RightTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped">
+                                <Grid Tapped="UIElement_OnTapped" Background="Transparent" FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
                                     <Image 
                             HorizontalAlignment="Left"
                             Source="{x:Bind Source, Mode=OneWay}" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}"/>
@@ -48,7 +49,7 @@
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                        Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                        <controls:ProgressRing IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}" Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -64,7 +65,7 @@
                   SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped">
+                                <Grid Tapped="UIElement_OnTapped" Background="Transparent" FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
                                     <ScrollViewer x:Name="Scroll" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
                                         <Image 
                                 MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
@@ -76,7 +77,7 @@
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                        Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressBar IsIndeterminate="{x:Bind IsLoading, Mode=OneWay}" Width="100" />
+                                        <controls:ProgressRing IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}" Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>

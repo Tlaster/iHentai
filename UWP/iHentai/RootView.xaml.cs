@@ -70,9 +70,10 @@ namespace iHentai
             {
                 it.CloseRequested += WindowOnCloseRequested;
             });
-            ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
-            ImageEx2.WriteableImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance);
+            ImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance).FireAndForget();
+            ImageEx2.WriteableImageCache.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance).FireAndForget();
             FlurlHttp.Configure(it => { it.HttpClientFactory = new HentaiHttpClientFactory(); });
+            Singleton<ProgressImageCache>.Instance.InitializeAsync(httpMessageHandler: Singleton<HentaiHttpMessageHandler>.Instance).FireAndForget();
 
             Singleton<BroadcastCenter>.Instance.Subscribe("tab_toggle_visible", (o, o1) => { ToggleTabBar(); });
             Singleton<BroadcastCenter>.Instance.Subscribe("open_new_tab", (sender, args) =>

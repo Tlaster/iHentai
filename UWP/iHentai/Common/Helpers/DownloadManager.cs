@@ -63,7 +63,7 @@ namespace iHentai.Common.Helpers
     {
         private readonly ConcurrentQueue<IDownloadItem> _items = new ConcurrentQueue<IDownloadItem>();
         private readonly ConcurrentDictionary<string, StorageFolder> _library = new ConcurrentDictionary<string, StorageFolder>();
-        public bool IsBusy { get; private set; } = true;
+        public bool IsBusy { get; private set; } = false;
 
         public async Task InitializationAsync()
         {

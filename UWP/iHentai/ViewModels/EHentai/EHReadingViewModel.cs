@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using iHentai.Common.Helpers;
 using iHentai.Services.Core;
 using iHentai.Services.EHentai;
 using iHentai.Services.EHentai.Model;
+using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.ViewModels.EHentai
@@ -61,11 +63,11 @@ namespace iHentai.ViewModels.EHentai
         {
             if (removeCache && _imageData != null)
             {
-                await ImageCache.Instance.RemoveAsync(new[] {new Uri(_imageData.Source)});
+                await Singleton<ProgressImageCache>.Instance.RemoveAsync(new[] {new Uri(_imageData.Source)});
             }
             //TODO: check if image already downloaded
             _imageData = await _api.GetImage(Data.Link, _imageData?.LoadFailed, removeCache, token);
-            return await ImageCache.Instance.GetFromCacheAsync(new Uri(_imageData.Source), cancellationToken: token);
+            return await Singleton<ProgressImageCache>.Instance.GetFromCacheAsync(new Uri(_imageData.Source), cancellationToken: token, progress: this);
         }
     }
 }

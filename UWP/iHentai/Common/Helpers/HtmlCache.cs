@@ -11,7 +11,6 @@ using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Common.Helpers
 {
-
     class HtmlCache<T> : CacheBase<T>
     {
         public HtmlCache()
