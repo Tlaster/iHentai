@@ -8,6 +8,7 @@
     xmlns:tab="using:iHentai.Common.Tab"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
+    xmlns:services="using:iHentai.Services"
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -22,9 +23,9 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Tag="{Binding}" Padding="16,8" Margin="4" Click="Button_Click">
-                        <TextBlock Text="{Binding Key}"/>
+                <DataTemplate x:DataType="services:IServiceModel">
+                    <Button Tag="{x:Bind}" Padding="16,8" Margin="4" Click="Button_Click">
+                        <TextBlock Text="{x:Bind Name}"/>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

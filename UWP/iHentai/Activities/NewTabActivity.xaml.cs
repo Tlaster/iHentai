@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Navigation;
 using iHentai.Activities.EHentai;
 using iHentai.Common;
 using iHentai.Common.Tab;
+using iHentai.Controls.Paging;
+using iHentai.Services;
 using iHentai.Services.EHentai;
 using iHentai.ViewModels;
 using Microsoft.Toolkit.Helpers;
@@ -40,27 +42,9 @@ namespace iHentai.Activities
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is FrameworkElement element && element.Tag is KeyValuePair<string, Type> item)
+            if (sender is FrameworkElement element && element.Tag is IServiceModel item)
             {
-                //TODO: a better way
-                if (item.Key == "exHentai")
-                {
-                    if (Singleton<ExApi>.Instance.RequireLogin)
-                    {
-                        StartActivity<LoginActivity>();
-                    }
-                    else
-                    {
-                        StartActivity<GalleryActivity>(intent: new Dictionary<string, object>
-                        {
-                            { "api", Singleton<ExApi>.Instance}
-                        });
-                    }
-                }
-                else
-                {
-                    StartActivity(item.Value);
-                }
+                StartActivity(item.StartActivity, intent: item.Intent);
                 Finish();
             }
         }

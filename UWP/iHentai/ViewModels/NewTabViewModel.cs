@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using iHentai.Activities;
 using iHentai.Activities.EHentai;
 using iHentai.Activities.Manhuagui;
+using iHentai.Services;
+using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ViewModels
 {
@@ -16,11 +18,6 @@ namespace iHentai.ViewModels
             Title = "New Tab";
         }
 
-        public Dictionary<string, Type> Services { get; } = new Dictionary<string, Type>
-        {
-            { "E-Hentai", typeof(GalleryActivity) },
-            { "exHentai", typeof(LoginActivity) },
-            { "Manhuagui", typeof(ManhuaguiUpdateActivity) }
-        };
+        public List<IServiceModel> Services => Singleton<ServiceManager>.Instance.Services;
     }
 }
