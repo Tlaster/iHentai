@@ -184,17 +184,20 @@ namespace iHentai.Common.Html
             }
 
             var (elements, htmlItem) = GetFirstOfDefaultNode(element, attributes);
+            object targetValue;
             if (elements == null || htmlItem == null)
             {
-                return null;
+                targetValue = null;
             }
-
-            if (htmlItem is HtmlItemAttribute attribute && attribute.RawHtml)
+            else
             {
-                return elements.InnerHtml;
+                if (htmlItem is HtmlItemAttribute attribute && attribute.RawHtml)
+                {
+                    return elements.InnerHtml;
+                }
+                targetValue = GetTargetValue(htmlItem, elements, propertyInfo.PropertyType);
             }
             var converter = CheckForConverter(propertyInfo);
-            var targetValue = GetTargetValue(htmlItem, elements, propertyInfo.PropertyType);
             if (converter != null)
             {
                 targetValue = converter.ReadHtml(elements, propertyInfo.PropertyType, targetValue);
@@ -262,7 +265,7 @@ namespace iHentai.Common.Html
             return value;
         }
 
-        private static IHtmlConverter CheckForConverter(MemberInfo propertyInfo)
+        private static IHtmlConverter? CheckForConverter(MemberInfo propertyInfo)
         {
             if (!Attribute.IsDefined(propertyInfo, typeof(HtmlConverterAttribute)))
             {
@@ -322,6 +325,6 @@ namespace iHentai.Common.Html
 
     public interface IHtmlConverter
     {
-        object ReadHtml(INode node, Type targetType, object existingValue);
+        object ReadHtml(INode? node, Type targetType, object? existingValue);
     }
 }

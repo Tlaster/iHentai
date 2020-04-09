@@ -9,7 +9,7 @@ using iHentai.Common.Tab;
 using iHentai.Services.Core;
 using iHentai.Services.Manhuagui;
 using iHentai.Services.Manhuagui.Model;
-using iHentai.ViewModels.Manhuagui;
+using iHentai.ViewModels.Generic;
 using Microsoft.Toolkit.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -22,7 +22,7 @@ namespace iHentai.Activities.Generic
     partial class MangaDetailActivity
     {
         public override ITabViewModel TabViewModel => ViewModel;
-        public ManhuaguiDetailViewModel ViewModel { get; private set; }
+        public MangaDetailViewModel ViewModel { get; private set; }
 
         public MangaDetailActivity()
         {
@@ -40,14 +40,14 @@ namespace iHentai.Activities.Generic
             switch (parameter)
             {
                 case ManhuaguiGallery gallery:
-                    ViewModel = new ManhuaguiDetailViewModel(api, gallery);
+                    ViewModel = new MangaDetailViewModel(api, gallery);
                     break;
                     break;
             }
         }
         private void OpenInBrowser()
         {
-            Launcher.LaunchUriAsync(new Uri(Singleton<ManhuaguiApi>.Instance.Host + ViewModel.Gallery.Link));
+            //Launcher.LaunchUriAsync(new Uri(Singleton<ManhuaguiApi>.Instance.Host + ViewModel.Gallery.Link));
         }
 
         private void OpenRead()
@@ -56,7 +56,7 @@ namespace iHentai.Activities.Generic
             {
                 return;
             }
-            StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault()?.Link, ViewModel.Detail));
+            StartActivity<ReadingActivity>(new MangaReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault(), ViewModel.Detail, ViewModel.Api));
         }
         protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)
         {
@@ -74,9 +74,9 @@ namespace iHentai.Activities.Generic
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is FrameworkElement element && element.Tag is ManhuaguGalleryChapter chapter)
+            if (sender is FrameworkElement element && element.Tag is IMangaChapter chapter)
             {
-                StartActivity<ReadingActivity>(new ManhuaguiReadingViewModel(chapter.Link, ViewModel.Detail));
+                StartActivity<ReadingActivity>(new MangaReadingViewModel(chapter, ViewModel.Detail, ViewModel.Api));
             }
         }
     }

@@ -12,5 +12,7 @@ namespace iHentai.Services.Core
         Task<IEnumerable<IMangaGallery>> Search(string keyword, int page);
 
         Task<IMangaDetail> Detail(IMangaGallery gallery);
+
+        Task<List<string>> ChapterImages(IMangaChapter chapter);
     }
 }

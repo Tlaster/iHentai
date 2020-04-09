@@ -116,7 +116,7 @@
                     </Button>
                     <AutoSuggestBox Grid.Column="1"
                                         Margin="8,0"
-                                        extensions:AutoSuggestBoxExtension.SuggestionName="manhuiagui"
+                                        extensions:AutoSuggestBoxExtension.SuggestionName="{x:Bind ViewModel.Api.Name}"
                                         QuerySubmitted="AutoSuggestBox_QuerySubmitted">
                         <AutoSuggestBox.QueryIcon>
                             <SymbolIcon Symbol="Find" />

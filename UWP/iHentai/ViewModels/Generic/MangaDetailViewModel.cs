@@ -1,23 +1,18 @@
-﻿using System.Linq;
-using iHentai.Services.Core;
-using iHentai.Services.Manhuagui;
-using iHentai.Services.Manhuagui.Model;
-using Microsoft.Toolkit.Helpers;
+﻿using iHentai.Services.Core;
 using PropertyChanged;
 
-namespace iHentai.ViewModels.Manhuagui
+namespace iHentai.ViewModels.Generic
 {
-    internal class ManhuaguiDetailViewModel : TabViewModelBase
+    internal class MangaDetailViewModel : TabViewModelBase
     {
-        private readonly IMangaApi _api;
-        public ManhuaguiDetailViewModel(IMangaApi api, IMangaGallery gallery)
+        public MangaDetailViewModel(IMangaApi api, IMangaGallery gallery)
         {
-            _api = api;
+            Api = api;
             Gallery = gallery;
             Init();
         }
 
-
+        public IMangaApi Api { get; }
         public IMangaGallery Gallery { get; }
         public IMangaDetail Detail { get; private set; }
 
@@ -31,7 +26,7 @@ namespace iHentai.ViewModels.Manhuagui
         {
             IsLoading = true;
             Title = GalleryTitle;
-            Detail = await _api.Detail(Gallery);
+            Detail = await Api.Detail(Gallery);
             IsLoading = false;
         }
     }

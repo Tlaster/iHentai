@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -211,9 +211,9 @@
     <Compile Include="ViewModels\EHentai\EHReadingViewModel.cs" />
     <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
-    <Compile Include="ViewModels\Manhuagui\ManhuaguiDetailViewModel.cs" />
-    <Compile Include="ViewModels\Manhuagui\ManhuaguiReadingViewModel.cs" />
-    <Compile Include="ViewModels\Manhuagui\MangaGalleryViewModel.cs" />
+    <Compile Include="ViewModels\Generic\MangaDetailViewModel.cs" />
+    <Compile Include="ViewModels\Generic\MangaReadingViewModel.cs" />
+    <Compile Include="ViewModels\Generic\MangaGalleryViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />

@@ -44,14 +44,21 @@ namespace iHentai.Services.Manhuagui.Model
         
         [HtmlMultiItems("#chapterList>ul>li")]
         public List<ManhuaguGalleryChapter> Chapters { get; set; }
+
+        IEnumerable<IMangaChapter> IMangaDetail.Chapters => Chapters;
     }
 
-    class ManhuaguGalleryChapter
+    class ManhuaguGalleryChapter : IMangaChapter
     {
         [HtmlItem("a", Attr = "href")]
         public string Link { get; set; }
 
         [HtmlItem("a > b")]
         public string Title { get; set; }
+
+        [HtmlItem(".new-icon")]
+        [HtmlConverter(typeof(NullToBoolHtmlConverter))]
+        public bool Updated { get; set; }
     }
+
 }

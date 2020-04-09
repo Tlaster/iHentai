@@ -65,6 +65,16 @@ namespace iHentai.Services.Manhuagui
             throw new ArgumentException();
         }
 
+        public Task<List<string>> ChapterImages(IMangaChapter chapter)
+        {
+            if (chapter is ManhuaguGalleryChapter item)
+            {
+                return Images(item.Link);
+            }
+
+            throw new ArgumentException();
+        }
+
         private async Task<List<ManhuaguiGallery>> SearchFirstPage(string keyword)
         {
             var result = await new Url($"{Host}/s/{keyword}.html").GetHtmlAsync<ManhuaguiGalleryList>();

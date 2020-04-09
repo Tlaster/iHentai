@@ -7,7 +7,7 @@ using iHentai.Common;
 using iHentai.Common.Tab;
 using iHentai.Services.Core;
 using iHentai.Services.Manhuagui.Model;
-using iHentai.ViewModels.Manhuagui;
+using iHentai.ViewModels.Generic;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 
