@@ -141,7 +141,7 @@
                 </ScrollViewer>
             </RefreshContainer>
 
-            <ProgressRing IsActive="{x:Bind ViewModel.Source.IsLoading, Mode=OneWay}"
+            <ProgressRing IsActive="True"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           Width="50"

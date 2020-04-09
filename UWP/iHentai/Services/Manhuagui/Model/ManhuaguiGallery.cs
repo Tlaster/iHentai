@@ -8,7 +8,13 @@ using iHentai.Services.Core;
 
 namespace iHentai.Services.Manhuagui.Model
 {
-    class ManhuaguiGallery : IGallery
+    class ManhuaguiGalleryList
+    {
+        [HtmlMultiItems("#detail > li")]
+        public List<ManhuaguiGallery> List { get; set; }
+    }
+
+    class ManhuaguiGallery : IMangaGallery
     {
         [HtmlItem("h3")]
         public string Title { get; set; }
@@ -20,16 +26,18 @@ namespace iHentai.Services.Manhuagui.Model
         public string Link { get; set; }
 
         [HtmlItem("dl:last-child > :last-child")]
-        public string Date { get; set; }
+        public string UpdateAt { get; set; }
+     
+        public string Chapter { get; set; }
     }
 
-    class ManhuaguiGalleryDetail
+    class ManhuaguiGalleryDetail : IMangaDetail
     {
         [HtmlItem(".main-bar > h1")]
         public string Title { get; set; }
 
         [HtmlItem(".thumb > img", Attr = "src")]
-        public string Image { get; set; }
+        public string Thumb { get; set; }
 
         [HtmlItem("#bookIntro")]
         public string Desc { get; set; }

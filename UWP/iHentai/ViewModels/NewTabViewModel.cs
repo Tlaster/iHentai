@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using iHentai.Activities;
 using iHentai.Activities.EHentai;
-using iHentai.Activities.Manhuagui;
 using iHentai.Services;
 using Microsoft.Toolkit.Helpers;
 

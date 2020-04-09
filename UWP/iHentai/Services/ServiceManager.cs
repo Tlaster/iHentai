@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using iHentai.Activities.EHentai;
-using iHentai.Activities.Manhuagui;
+using iHentai.Activities.Generic;
+using iHentai.Services.Core;
 using iHentai.Services.EHentai;
+using iHentai.Services.Manhuagui;
 using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.Services
 {
-    interface IServiceModel
+    internal interface IServiceModel
     {
         string Name { get; }
         Type StartActivity { get; }
         Dictionary<string, object> Intent { get; }
     }
 
-    class ServiceModel<T> : IServiceModel
+    internal class ServiceModel<T> : IServiceModel
     {
         public ServiceModel(string name, Dictionary<string, object> intent = null)
         {
@@ -30,7 +29,16 @@ namespace iHentai.Services
         public Dictionary<string, object> Intent { get; }
     }
 
-    class ExHentaiServiceModel : IServiceModel
+    internal class MangaServiceModel<TApi> : ServiceModel<MangaGalleryActivity>
+        where TApi : IMangaApi, new()
+    {
+        public MangaServiceModel() : base(Singleton<TApi>.Instance.Name,
+            new Dictionary<string, object> {{"api", Singleton<TApi>.Instance}})
+        {
+        }
+    }
+
+    internal class ExHentaiServiceModel : IServiceModel
     {
         public string Name { get; } = "ExHentai";
 
@@ -38,15 +46,12 @@ namespace iHentai.Services
         {
             get
             {
-                
                 if (Singleton<ExApi>.Instance.RequireLogin)
                 {
                     return typeof(LoginActivity);
                 }
-                else
-                {
-                    return typeof(GalleryActivity);
-                }
+
+                return typeof(GalleryActivity);
             }
         }
 
@@ -56,15 +61,15 @@ namespace iHentai.Services
         };
     }
 
-    class ServiceManager
+    internal class ServiceManager
     {
-        public List<IServiceModel> Services { get; } = new List<IServiceModel>();
-
         public ServiceManager()
         {
             Services.Add(new ServiceModel<GalleryActivity>("E-Hentai"));
             Services.Add(new ExHentaiServiceModel());
-            Services.Add(new ServiceModel<ManhuaguiUpdateActivity>("Manhuagui"));
+            Services.Add(new MangaServiceModel<ManhuaguiApi>());
         }
+
+        public List<IServiceModel> Services { get; } = new List<IServiceModel>();
     }
 }

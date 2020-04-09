@@ -127,11 +127,11 @@
     <Compile Include="Activities\EHentai\LoginActivity.xaml.cs">
       <DependentUpon>LoginActivity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Activities\Manhuagui\ManhuaguiDetailActivity.xaml.cs">
-      <DependentUpon>ManhuaguiDetailActivity.xaml</DependentUpon>
+    <Compile Include="Activities\Generic\MangaDetailActivity.xaml.cs">
+      <DependentUpon>MangaDetailActivity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Activities\Manhuagui\ManhuaguiUpdateActivity.xaml.cs">
-      <DependentUpon>ManhuaguiUpdateActivity.xaml</DependentUpon>
+    <Compile Include="Activities\Generic\MangaGalleryActivity.xaml.cs">
+      <DependentUpon>MangaGalleryActivity.xaml</DependentUpon>
     </Compile>
     <Compile Include="Activities\NewTabActivity.xaml.cs">
       <DependentUpon>NewTabActivity.xaml</DependentUpon>
@@ -142,6 +142,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Extensions\AutoSuggestBoxExtension.cs" />
     <Compile Include="Common\Extensions\LoadingExtension.cs" />
     <Compile Include="Common\Helpers\BroadcastCenter.cs" />
     <Compile Include="Common\Collection\LoadingCollection.cs" />
@@ -193,6 +194,8 @@
     <Compile Include="Services\Core\Attributes\EnumValueAttribute.cs" />
     <Compile Include="Services\Core\IGallery.cs" />
     <Compile Include="Services\Core\Attributes\IntValueAttribute.cs" />
+    <Compile Include="Services\Core\IMangaApi.cs" />
+    <Compile Include="Services\Core\IMangaGallery.cs" />
     <Compile Include="Services\Core\ISearchOption.cs" />
     <Compile Include="Services\Core\Attributes\IValueAttribute.cs" />
     <Compile Include="Services\Core\Attributes\StringValueAttribute.cs" />
@@ -210,7 +213,7 @@
     <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
     <Compile Include="ViewModels\Manhuagui\ManhuaguiDetailViewModel.cs" />
     <Compile Include="ViewModels\Manhuagui\ManhuaguiReadingViewModel.cs" />
-    <Compile Include="ViewModels\Manhuagui\ManhuaguiUpdateViewModel.cs" />
+    <Compile Include="ViewModels\Manhuagui\MangaGalleryViewModel.cs" />
     <Compile Include="ViewModels\NewTabViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
@@ -336,11 +339,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\Manhuagui\ManhuaguiDetailActivity.xaml">
+    <Page Include="Activities\Generic\MangaDetailActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\Manhuagui\ManhuaguiUpdateActivity.xaml">
+    <Page Include="Activities\Generic\MangaGalleryActivity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

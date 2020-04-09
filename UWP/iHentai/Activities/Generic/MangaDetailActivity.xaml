@@ -1,8 +1,7 @@
 ﻿<tab:TabActivity
-    x:Class="iHentai.Activities.Manhuagui.ManhuaguiDetailActivity"
+    x:Class="iHentai.Activities.Generic.MangaDetailActivity"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:iHentai.Activities.Manhuagui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tab="using:iHentai.Common.Tab"
@@ -75,7 +74,7 @@
         </ScrollViewer>
 
         <ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-                      IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+                               Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                               IsActive="True" />
     </Grid>
 </tab:TabActivity>

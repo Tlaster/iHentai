@@ -5,10 +5,13 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
+using AngleSharp.Text;
 using Flurl;
 using Flurl.Http;
 using iHentai.Common;
 using iHentai.Common.Helpers;
+using iHentai.Services.Core;
 using iHentai.Services.EHentai;
 using iHentai.Services.Manhuagui.Model;
 using LZStringCSharp;
@@ -18,16 +21,21 @@ using Newtonsoft.Json.Linq;
 
 namespace iHentai.Services.Manhuagui
 {
-    class ManhuaguiApi : ICustomHttpHandler
+    /// order: 0: Add time
+    ///        1: Update time
+    ///        2: View count
+
+    class ManhuaguiApi : IMangaApi, ICustomHttpHandler
     {
         public virtual string Host => "https://m.manhuagui.com";
+        public string Name { get; } = "Manhuagui";
 
         public ManhuaguiApi()
         {
             Singleton<HentaiHttpMessageHandler>.Instance.RegisterHandler(this);
         }
 
-        public async Task<List<ManhuaguiGallery>> Update(int page = 1)
+        private async Task<List<ManhuaguiGallery>> Update(int page = 1)
         {
             return await $"{Host}/update/".SetQueryParams(new
             {
@@ -35,6 +43,47 @@ namespace iHentai.Services.Manhuagui
                 ajax = 1,
                 order = 1
             }).GetHtmlAsync<List<ManhuaguiGallery>>();
+        }
+
+        public async Task<IEnumerable<IMangaGallery>> Home(int page)
+        {
+            return await Update(page + 1);
+        }
+
+        async Task<IEnumerable<IMangaGallery>> IMangaApi.Search(string keyword, int page)
+        {
+            return await Search(keyword, page + 1);
+        }
+
+        public async Task<IMangaDetail> Detail(IMangaGallery gallery)
+        {
+            if (gallery is ManhuaguiGallery item)
+            {
+                return await Detail(item.Link);
+            }
+
+            throw new ArgumentException();
+        }
+
+        private async Task<List<ManhuaguiGallery>> SearchFirstPage(string keyword)
+        {
+            var result = await new Url($"{Host}/s/{keyword}.html").GetHtmlAsync<ManhuaguiGalleryList>();
+            return result.List;
+        }
+
+        private async Task<List<ManhuaguiGallery>> Search(string keyword, int page = 1)
+        {
+            if (page == 1)
+            {
+                return await SearchFirstPage(keyword);
+            }
+            return await $"{Host}/s/{keyword}.html".PostUrlEncodedAsync(new
+            {
+                page,
+                ajax = 1,
+                order = 0,
+                key = keyword
+            }).ReceiveHtml<List<ManhuaguiGallery>>();
         }
 
         public async Task<ManhuaguiGalleryDetail> Detail(string path)

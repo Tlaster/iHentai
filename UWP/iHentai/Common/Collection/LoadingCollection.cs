@@ -10,6 +10,8 @@ namespace iHentai.Common.Collection
 {
     public interface IStatusReport
     {
+        Action OnEndLoading { get; set; }
+        Action OnStartLoading { get; set; }
         bool IsLoading { get; }
     }
     public interface ISupportRefresh

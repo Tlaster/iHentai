@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tab="using:iHentai.Common.Tab"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -17,7 +18,7 @@
             <Button Margin="4" HorizontalAlignment="Stretch" Content="Login" Click="{x:Bind Login}" />
         </StackPanel>
         <ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-                      IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+                                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                                IsActive="True" />
     </Grid>
 </tab:TabActivity>

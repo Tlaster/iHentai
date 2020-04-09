@@ -1,40 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
+using AngleSharp.Common;
 using iHentai.Common;
 using iHentai.Common.Tab;
+using iHentai.Services.Core;
 using iHentai.Services.Manhuagui;
 using iHentai.Services.Manhuagui.Model;
-using iHentai.ViewModels.EHentai;
 using iHentai.ViewModels.Manhuagui;
 using Microsoft.Toolkit.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace iHentai.Activities.Manhuagui
+namespace iHentai.Activities.Generic
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    partial class ManhuaguiDetailActivity
+    partial class MangaDetailActivity
     {
         public override ITabViewModel TabViewModel => ViewModel;
         public ManhuaguiDetailViewModel ViewModel { get; private set; }
 
-        public ManhuaguiDetailActivity()
+        public MangaDetailActivity()
         {
             this.InitializeComponent();
         }
@@ -42,13 +32,16 @@ namespace iHentai.Activities.Manhuagui
         protected internal override void OnCreate(object parameter)
         {
             base.OnCreate(parameter);
+            if (!Intent.ContainsKey("api"))
+            {
+                Finish();
+            }
+            var api = Intent.TryGet("api") as IMangaApi;
             switch (parameter)
             {
                 case ManhuaguiGallery gallery:
-                    ViewModel = new ManhuaguiDetailViewModel(gallery);
+                    ViewModel = new ManhuaguiDetailViewModel(api, gallery);
                     break;
-                case string link:
-                    ViewModel = new ManhuaguiDetailViewModel(link);
                     break;
             }
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using iHentai.Common.Collection;
 using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace iHentai.Common.Extensions
@@ -34,11 +35,19 @@ namespace iHentai.Common.Extensions
 
             element.SetValue(ItemsSourceProperty, value);
             
+            if (value is IStatusReport statusReport)
+            {
+                statusReport.OnEndLoading += () =>
+                {
+                    Task.Delay(100).ContinueWith(it => DispatcherHelper.ExecuteOnUIThreadAsync(() => TryLoadIfNotFill(scrollViewer)));
+                };
+            }
             if (value is ISupportIncrementalLoading loading)
             {
                 scrollViewer.ViewChanged += ScrollViewerOnViewChanged;
                 Task.Delay(100).ContinueWith(it => DispatcherHelper.ExecuteOnUIThreadAsync(() => TryLoadIfNotFill(scrollViewer)));
             }
+
         }
 
         private static async void TryLoadIfNotFill(ScrollViewer scrollViewer)
@@ -61,16 +70,15 @@ namespace iHentai.Common.Extensions
             SetIsLoading(scrollViewer, true);
             await loading.LoadMoreItemsAsync(20);
             SetIsLoading(scrollViewer, false);
-            Task.Delay(100).ContinueWith(it => DispatcherHelper.ExecuteOnUIThreadAsync(() => TryLoadIfNotFill(scrollViewer)));
         }
 
         private static async void ScrollViewerOnViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (!(sender is DependencyObject dependencyObject))
+            if (!(sender is ScrollViewer dependencyObject))
             {
                 return;
             }
-            if (!e.IsIntermediate && !GetIsLoading(dependencyObject))
+            if (e.IsIntermediate && !GetIsLoading(dependencyObject))
             {
                 var scroller = (ScrollViewer) sender;
                 var distanceToEnd = scroller.ExtentHeight - (scroller.VerticalOffset + scroller.ViewportHeight);

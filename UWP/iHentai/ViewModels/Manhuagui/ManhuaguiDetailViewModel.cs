@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using iHentai.Services.Core;
 using iHentai.Services.Manhuagui;
 using iHentai.Services.Manhuagui.Model;
 using Microsoft.Toolkit.Helpers;
@@ -8,43 +9,29 @@ namespace iHentai.ViewModels.Manhuagui
 {
     internal class ManhuaguiDetailViewModel : TabViewModelBase
     {
-        public ManhuaguiDetailViewModel(ManhuaguiGallery gallery)
+        private readonly IMangaApi _api;
+        public ManhuaguiDetailViewModel(IMangaApi api, IMangaGallery gallery)
         {
+            _api = api;
             Gallery = gallery;
             Init();
         }
 
-        public ManhuaguiDetailViewModel(string link)
-        {
-            Init(link);
-        }
 
-        public ManhuaguiGallery Gallery { get; }
-        public string Link { get; private set; }
-        public ManhuaguiGalleryDetail Detail { get; private set; }
+        public IMangaGallery Gallery { get; }
+        public IMangaDetail Detail { get; private set; }
 
         [DependsOn(nameof(Gallery), nameof(Detail))]
         public string GalleryTitle => Gallery?.Title ?? Detail?.Title;
 
         [DependsOn(nameof(Gallery), nameof(Detail))]
-        public string Thumb => Detail?.Image ?? Gallery?.Thumb;
-
-
-        private async void Init(string gallery)
-        {
-            IsLoading = true;
-            Link = gallery;
-            Detail = await Singleton<ManhuaguiApi>.Instance.Detail(gallery);
-            Title = GalleryTitle;
-            IsLoading = false;
-        }
+        public string Thumb => Detail?.Thumb ?? Gallery?.Thumb;
 
         private async void Init()
         {
             IsLoading = true;
-            Link = Gallery.Link;
             Title = GalleryTitle;
-            Detail = await Singleton<ManhuaguiApi>.Instance.Detail(Gallery.Link);
+            Detail = await _api.Detail(Gallery);
             IsLoading = false;
         }
     }

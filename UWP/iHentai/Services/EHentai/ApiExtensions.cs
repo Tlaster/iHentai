@@ -17,7 +17,6 @@ namespace iHentai.Services.EHentai
             return new FlurlRequest(url).GetHtmlAsync<T>(cancellationToken, completionOption);
         }
 
-
         public static Task<T> GetHtmlAsync<T>(
             this IFlurlRequest request,
             CancellationToken cancellationToken = default,
