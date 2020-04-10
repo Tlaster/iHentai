@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer.DragDrop.Core;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -19,6 +20,7 @@ using iHentai.Common;
 using iHentai.Common.Helpers;
 using iHentai.Common.Tab;
 using iHentai.Controls;
+using iHentai.Services;
 using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
@@ -87,6 +89,17 @@ namespace iHentai
                 }
             });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
+            Singleton<ServiceManager>.Instance.Services.ForEach(service =>
+            {
+                RootMenuFlyout.Items.Insert(0, new MenuFlyoutItem().Also(it =>
+                {
+                    it.Text = service.Name;
+                    it.Click += (sender, args) =>
+                        {
+                            AddTabActivity(new ActivityTabItem(service.StartActivity, intent: service.Intent));
+                        };
+                }));
+            });
         }
 
         private async void WindowOnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
@@ -254,6 +267,16 @@ namespace iHentai
         {
             _isUpdatingTab = true;
             TabManager.AddDefault();
+            _isUpdatingTab = false;
+            if (TabManager.Count > 0)
+            {
+                SelectedTabIndex = TabManager.Count - 1;
+            }
+        }
+        private void AddTabActivity(ITabItem item)
+        {
+            _isUpdatingTab = true;
+            TabManager.Add(item);
             _isUpdatingTab = false;
             if (TabManager.Count > 0)
             {
