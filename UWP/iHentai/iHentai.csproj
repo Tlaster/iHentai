@@ -200,6 +200,8 @@
     <Compile Include="Services\Core\Attributes\IValueAttribute.cs" />
     <Compile Include="Services\Core\Attributes\StringValueAttribute.cs" />
     <Compile Include="Services\Core\Attributes\ValueAttributeExtension.cs" />
+    <Compile Include="Services\dm5\DM5Api.cs" />
+    <Compile Include="Services\dm5\Model\DM5Response.cs" />
     <Compile Include="Services\EHentai\ApiExtensions.cs" />
     <Compile Include="Services\EHentai\EHApi.cs" />
     <Compile Include="Services\EHentai\ExApi.cs" />

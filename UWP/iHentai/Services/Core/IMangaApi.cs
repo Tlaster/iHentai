@@ -7,8 +7,19 @@ namespace iHentai.Services.Core
     {
         string Name { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page">From 0</param>
+        /// <returns></returns>
         Task<IEnumerable<IMangaGallery>> Home(int page);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="page">From 0</param>
+        /// <returns></returns>
         Task<IEnumerable<IMangaGallery>> Search(string keyword, int page);
 
         Task<IMangaDetail> Detail(IMangaGallery gallery);

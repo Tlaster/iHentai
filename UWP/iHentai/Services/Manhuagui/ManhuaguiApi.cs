@@ -27,7 +27,7 @@ namespace iHentai.Services.Manhuagui
 
     class ManhuaguiApi : IMangaApi, ICustomHttpHandler
     {
-        public virtual string Host => "https://m.manhuagui.com";
+        private string Host => "https://m.manhuagui.com";
         public string Name { get; } = "Manhuagui";
 
         public ManhuaguiApi()

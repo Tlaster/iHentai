@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using iHentai.Activities.EHentai;
 using iHentai.Activities.Generic;
 using iHentai.Services.Core;
@@ -37,6 +38,16 @@ namespace iHentai.Services
         {
         }
     }
+    internal class MangaServiceModel : ServiceModel<MangaGalleryActivity>
+    {
+        private IMangaApi _instance;
+
+        public MangaServiceModel(IMangaApi instance) : base(instance.Name,
+            new Dictionary<string, object> {{"api", instance}})
+        {
+            _instance = instance;
+        }
+    }
 
     internal class ExHentaiServiceModel : IServiceModel
     {
@@ -67,7 +78,16 @@ namespace iHentai.Services
         {
             Services.Add(new ServiceModel<GalleryActivity>("E-Hentai"));
             Services.Add(new ExHentaiServiceModel());
-            Services.Add(new MangaServiceModel<ManhuaguiApi>());
+
+            var apis = typeof(IMangaApi).Assembly.DefinedTypes.Where(it =>
+                typeof(IMangaApi).IsAssignableFrom(it) && it.IsClass && !it.IsAbstract);
+            foreach (var item in apis)
+            {
+                if (Activator.CreateInstance(item) is IMangaApi api)
+                {
+                    Services.Add(new MangaServiceModel(api));
+                }
+            }
         }
 
         public List<IServiceModel> Services { get; } = new List<IServiceModel>();

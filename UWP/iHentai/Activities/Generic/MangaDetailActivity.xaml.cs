@@ -39,9 +39,8 @@ namespace iHentai.Activities.Generic
             var api = Intent.TryGet("api") as IMangaApi;
             switch (parameter)
             {
-                case ManhuaguiGallery gallery:
+                case IMangaGallery gallery:
                     ViewModel = new MangaDetailViewModel(api, gallery);
-                    break;
                     break;
             }
         }
