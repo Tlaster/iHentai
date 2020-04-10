@@ -246,8 +246,12 @@ namespace iHentai.Services.EHentai.Model
 
     internal class RatingConverter : IHtmlConverter
     {
-        public object ReadHtml(INode node, Type targetType, object existingValue)
+        public object ReadHtml(INode? node, Type targetType, object? existingValue)
         {
+            if (node == null)
+            {
+                return existingValue;
+            }
             var match = Regex.Match((node as IElement).GetAttribute("style"),
                 "background-position:-?(\\d+)px -?(\\d+)px");
             var num1 = Convert.ToInt32(match.Groups[1].Value);
