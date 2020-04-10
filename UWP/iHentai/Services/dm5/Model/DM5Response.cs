@@ -93,7 +93,7 @@ namespace iHentai.Services.dm5.Model
         [JsonProperty("Title")]
         public string Title { get; set; }
 
-        public string Thumb => ShowConver;
+        public string Thumb => ShowPicUrlB;
 
         [JsonProperty("UrlKey")]
         public string UrlKey { get; set; }
