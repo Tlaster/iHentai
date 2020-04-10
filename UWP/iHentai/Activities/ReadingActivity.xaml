@@ -102,6 +102,36 @@
                 </DataTemplate>
             </controls1:Optional.ContentTemplate>
         </controls1:Optional>
+        <controls1:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}">
+            <controls1:Optional.ContentTemplate>
+                <DataTemplate x:DataType="viewModels:ReadingViewModel">
+                    <ScrollViewer ZoomMode="Enabled" >
+                        <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}">
+                            <controls:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="viewModels:IReadingImage">
+                                    <Grid Tapped="UIElement_OnTapped" Background="Transparent" >
+                                        <Image
+                                            MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
+                                            MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
+                                            Source="{x:Bind Source, Mode=OneWay}"
+                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                        <StackPanel
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                            <controls:ProgressRing
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </controls:ItemsRepeater.ItemTemplate>
+                        </controls:ItemsRepeater>
+                    </ScrollViewer>
+                </DataTemplate>
+            </controls1:Optional.ContentTemplate>
+        </controls1:Optional>
 
 
         <Grid Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
@@ -133,6 +163,9 @@
                                     <RadioButton
                                         IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}"
                                         Content="Flip" Tag="Flip" Click="RadioMenuFlyoutItem_Click" />
+                                    <RadioButton
+                                        IsChecked="{x:Bind ViewModel.IsListMode, Mode=OneWay}"
+                                        Content="List" Tag="List" Click="RadioMenuFlyoutItem_Click" />
                                 </controls:RadioButtons>
                                 <controls:RadioButtons Header="View Direction" MaxColumns="2">
                                     <RadioButton

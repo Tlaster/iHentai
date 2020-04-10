@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.Devices.Input;
 using Windows.UI.Xaml;
@@ -119,16 +120,9 @@ namespace iHentai.Activities
         {
             if (sender is FrameworkElement element)
             {
-                switch (element.Tag)
+                if (Enum.TryParse<ReadingViewMode>(element.Tag.ToString(), out var mode))
                 {
-                    case "Book":
-                        ViewModel.ViewMode = ReadingViewMode.Book;
-                        break;
-                    case "Flip":
-                        ViewModel.ViewMode = ReadingViewMode.Flip;
-                        break;
-                    default:
-                        break;
+                    ViewModel.ViewMode = mode;
                 }
             }
         }

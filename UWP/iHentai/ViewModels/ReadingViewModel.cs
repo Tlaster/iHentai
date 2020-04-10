@@ -121,7 +121,8 @@ namespace iHentai.ViewModels
     internal enum ReadingViewMode
     {
         Book,
-        Flip
+        Flip,
+        List
     }
 
     internal abstract class ReadingViewModel : TabViewModelBase
@@ -174,6 +175,7 @@ namespace iHentai.ViewModels
         [DependsOn(nameof(ViewMode))] public bool IsBookMode => ViewMode == ReadingViewMode.Book;
 
         [DependsOn(nameof(ViewMode))] public bool IsFlipMode => ViewMode == ReadingViewMode.Flip;
+        [DependsOn(nameof(ViewMode))] public bool IsListMode => ViewMode == ReadingViewMode.List;
 
         public void ReloadCurrent()
         {
