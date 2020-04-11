@@ -163,11 +163,16 @@ namespace iHentai.Services.dm5.Model
     {
         [HtmlItem("a", Attr = "href")]
         public string Link { get; set; }
+        [HtmlItem(".detail-list-2-info-title")]
         [HtmlItem("a")]
         public string Title { get; set; }
+        [HtmlItem(".detail-list-2-info-subtitle")]
+        public string SubTitle { get; set; }
         public bool Updated { get; set; }
         [HtmlItem(".detail-list-2-info-right")]
         [HtmlConverter(typeof(NullToBoolHtmlConverter))]
         public bool IsLocked { get; set; }
+        [HtmlItem(".detail-list-2-cover-img", Attr = "src")]
+        public string Thumb { get; set; }
     }
 }

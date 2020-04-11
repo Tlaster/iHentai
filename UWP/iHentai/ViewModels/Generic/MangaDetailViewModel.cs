@@ -29,5 +29,15 @@ namespace iHentai.ViewModels.Generic
             Detail = await Api.Detail(Gallery);
             IsLoading = false;
         }
+
+        public bool CheckCanOpenChapter(IMangaChapter chapter)
+        {
+            return Api.CheckCanOpenChapter(chapter);
+        }
+
+        public string GetGalleryLink()
+        {
+            return Api.GetGalleryLink(Gallery);
+        }
     }
 }

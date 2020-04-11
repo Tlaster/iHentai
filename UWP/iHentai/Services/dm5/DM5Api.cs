@@ -6,10 +6,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Flurl;
 using Flurl.Http;
 using iHentai.Common;
 using iHentai.Common.Helpers;
+using iHentai.Common.UI;
 using iHentai.Services.Core;
 using iHentai.Services.dm5.Model;
 using iHentai.Services.EHentai;
@@ -42,6 +44,7 @@ namespace iHentai.Services.dm5
         public DM5Api()
         {
             Singleton<HentaiHttpMessageHandler>.Instance.RegisterHandler(this);
+            GalleryChapterSelector.AddMapping(App.Current.Resources["DM5ChapterTemplate"] as DataTemplate, typeof(DM5GalleryChapter));
         }
 
         public async Task<IEnumerable<IMangaGallery>> Home(int page)
@@ -80,6 +83,27 @@ namespace iHentai.Services.dm5
             }
 
             throw new ArgumentException();
+        }
+
+        public bool CheckCanOpenChapter(IMangaChapter chapter)
+        {
+            if (chapter is DM5GalleryChapter item)
+            {
+                return !item.IsLocked;
+            }
+
+            return true;
+        }
+
+        public string GetGalleryLink(IMangaGallery gallery)
+        {
+            var urlKey = gallery switch
+            {
+                DM5Gallery item => item.UrlKey,
+                DM5SearchGallery searchItem => searchItem.Url.TrimEnd('/').TrimEnd('/'),
+                _ => throw new ArgumentException()
+            };
+            return $"{Host}/{urlKey}/";
         }
 
         public async Task<List<DM5Gallery>> Update(int page = 1)

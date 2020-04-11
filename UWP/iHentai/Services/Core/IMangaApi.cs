@@ -25,5 +25,14 @@ namespace iHentai.Services.Core
         Task<IMangaDetail> Detail(IMangaGallery gallery);
 
         Task<List<string>> ChapterImages(IMangaChapter chapter);
+
+        bool CheckCanOpenChapter(IMangaChapter chapter);
+        string GetGalleryLink(IMangaGallery gallery);
+    }
+
+    interface IHentaiApi
+    {
+        string Name { get; }
+
     }
 }

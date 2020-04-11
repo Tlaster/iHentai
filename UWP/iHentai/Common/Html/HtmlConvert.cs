@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Windows.ApplicationModel.Activation;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using iHentai.Common.Helpers;
@@ -229,7 +230,22 @@ namespace iHentai.Common.Html
                 case TypeCode.UInt64:
                     try
                     {
-                        targetValue = Convert.ChangeType(GetValue(htmlItem, element), targetType);
+                        var value = GetValue(htmlItem, element);
+                        if (value == null)
+                        {
+                            if (targetType.IsValueType)
+                            {
+                                targetValue = Activator.CreateInstance(targetType);
+                            }
+                            else
+                            {
+                                targetValue = null;
+                            }
+                        }
+                        else
+                        {
+                            targetValue = Convert.ChangeType(value, targetType);
+                        }
                     }
                     catch
                     {
@@ -248,7 +264,7 @@ namespace iHentai.Common.Html
             return targetValue;
         }
 
-        private static string GetValue(IHtmlItem htmlItem, IElement element)
+        private static string? GetValue(IHtmlItem htmlItem, IElement element)
         {
             var value = (string.IsNullOrEmpty(htmlItem.Attr)
                 ? element.TextContent

@@ -10,6 +10,8 @@
     xmlns:controls2="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:model="using:iHentai.Services.Manhuagui.Model"
     xmlns:core="using:iHentai.Services.Core"
+    xmlns:ui="using:iHentai.Common.UI"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d">
 
     <Grid>
@@ -61,16 +63,19 @@
                                         Margin="16"
                                         HorizontalAlignment="Center">
                     <controls:ItemsRepeater.Layout>
-                        <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8" MinItemWidth="100" />
+                        <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8"/>
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="core:IMangaChapter">
-                            <Button Padding="4" Tag="{x:Bind}" Click="Button_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
-                                <StackPanel Orientation="Horizontal">
-                                    <Ellipse Width="10" Height="10" Margin="0,0,8,0" Fill="Red" Visibility="{x:Bind Updated}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{x:Bind Title}"/>
-                                </StackPanel>
-                            </Button>
+                            <Grid Background="{ThemeResource SystemChromeLowColor}"
+                                  CornerRadius="{ThemeResource ControlCornerRadius}"
+                                  extensions:Mouse.Cursor="Hand"
+                                  Tapped="ContentPresenter_Tapped"
+                                  Tag="{x:Bind}">
+                                <ContentControl VerticalContentAlignment="Center"
+                                                HorizontalContentAlignment="Center"
+                                                Content="{x:Bind}" Padding="8" ContentTemplateSelector="{StaticResource GalleryChapterSelector}" />
+                            </Grid>
                         </DataTemplate>
                     </controls:ItemsRepeater.ItemTemplate>
                 </controls:ItemsRepeater>

@@ -75,6 +75,21 @@ namespace iHentai.Services.Manhuagui
             throw new ArgumentException();
         }
 
+        public bool CheckCanOpenChapter(IMangaChapter chapter)
+        {
+            return true;
+        }
+
+        public string GetGalleryLink(IMangaGallery gallery)
+        {
+            if (gallery is ManhuaguiGallery item)
+            {
+                return $"{Host}{item.Link}";
+            }
+
+            throw new ArgumentException();
+        }
+
         private async Task<List<ManhuaguiGallery>> SearchFirstPage(string keyword)
         {
             var result = await new Url($"{Host}/s/{keyword}.html").GetHtmlAsync<ManhuaguiGalleryList>();

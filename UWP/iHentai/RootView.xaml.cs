@@ -89,17 +89,18 @@ namespace iHentai
                 }
             });
             TabManager.TabItems.CollectionChanged += TabItemsOnCollectionChanged;
-            Singleton<ServiceManager>.Instance.Services.ForEach(service =>
+            for (var i = 0; i < Singleton<ServiceManager>.Instance.Services.Count; i++)
             {
-                RootMenuFlyout.Items.Insert(0, new MenuFlyoutItem().Also(it =>
+                var service = Singleton<ServiceManager>.Instance.Services[i];
+                RootMenuFlyout.Items.Insert(i, new MenuFlyoutItem().Also(it =>
                 {
                     it.Text = service.Name;
                     it.Click += (sender, args) =>
-                        {
-                            AddTabActivity(new ActivityTabItem(service.StartActivity, intent: service.Intent));
-                        };
+                    {
+                        AddTabActivity(new ActivityTabItem(service.StartActivity, intent: service.Intent));
+                    };
                 }));
-            });
+            }
         }
 
         private async void WindowOnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)

@@ -46,7 +46,7 @@ namespace iHentai.Activities.Generic
         }
         private void OpenInBrowser()
         {
-            //Launcher.LaunchUriAsync(new Uri(Singleton<ManhuaguiApi>.Instance.Host + ViewModel.Gallery.Link));
+            Launcher.LaunchUriAsync(new Uri(ViewModel.GetGalleryLink()));
         }
 
         private void OpenRead()
@@ -55,7 +55,7 @@ namespace iHentai.Activities.Generic
             {
                 return;
             }
-            StartActivity<ReadingActivity>(new MangaReadingViewModel(ViewModel.Detail.Chapters?.LastOrDefault(), ViewModel.Detail, ViewModel.Api));
+            OpenChapter(ViewModel.Detail.Chapters?.FirstOrDefault());
         }
         protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)
         {
@@ -71,11 +71,19 @@ namespace iHentai.Activities.Generic
             return base.OnBackRequest();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OpenChapter(IMangaChapter chapter)
+        {
+            if (ViewModel.CheckCanOpenChapter(chapter))
+            {
+                StartActivity<ReadingActivity>(new MangaReadingViewModel(chapter, ViewModel.Detail, ViewModel.Api));
+            }
+        }
+
+        private void ContentPresenter_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             if (sender is FrameworkElement element && element.Tag is IMangaChapter chapter)
             {
-                StartActivity<ReadingActivity>(new MangaReadingViewModel(chapter, ViewModel.Detail, ViewModel.Api));
+                OpenChapter(chapter);
             }
         }
     }
