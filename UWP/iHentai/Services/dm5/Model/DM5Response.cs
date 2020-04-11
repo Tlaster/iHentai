@@ -166,5 +166,8 @@ namespace iHentai.Services.dm5.Model
         [HtmlItem("a")]
         public string Title { get; set; }
         public bool Updated { get; set; }
+        [HtmlItem(".detail-list-2-info-right")]
+        [HtmlConverter(typeof(NullToBoolHtmlConverter))]
+        public bool IsLocked { get; set; }
     }
 }
