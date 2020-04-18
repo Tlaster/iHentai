@@ -1,0 +1,129 @@
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
+using AngleSharp.Common;
+using iHentai.Common;
+using iHentai.Common.Tab;
+using iHentai.Services.EHentai;
+using iHentai.Services.EHentai.Model;
+using iHentai.ViewModels.EHentai;
+using Microsoft.Toolkit.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
+using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
+using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
+using iHentai.Common.Helpers;
+using Microsoft.Toolkit.Uwp.Helpers;
+
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace iHentai.Activities.EHentai
+{
+    /// <summary>
+    ///     An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    internal partial class GalleryActivity
+    {
+        private FrameworkElement _animationImageElement;
+
+        public GalleryActivity()
+        {
+            InitializeComponent();
+        }
+
+        public override ITabViewModel TabViewModel => ViewModel;
+
+        private GalleryViewModel ViewModel { get; set; }
+
+        protected internal override void OnCreate(object parameter)
+        {
+            base.OnCreate(parameter);
+            if (!Intent.ContainsKey("api"))
+            {
+                Intent.Add("api", EHApi.Instance);
+            }
+
+            var api = Intent.TryGet("api") as EHApi;
+            if (parameter is EHGalleryTag tag)
+            {
+                ViewModel = new GalleryViewModel(api, tag);
+            }
+            else if (parameter is string link)
+            {
+                ViewModel = new GalleryViewModel(api, Intent.TryGet("title") as string, link);
+            }
+            else
+            {
+                ViewModel = new GalleryViewModel(api);
+            }
+        }
+
+        public static Brush GetCatColorBrush(EHCategory category)
+        {
+            return new SolidColorBrush(EHApi.GetCatColorBrush(category).ToColor());
+        }
+
+        private void AspectRatioView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            OpenGallery(sender);
+        }
+
+        protected override void OnPrepareConnectedAnimation(ConnectedAnimationService service)
+        {
+            if (_animationImageElement == null)
+            {
+                return;
+            }
+
+            service.PrepareToAnimate("image", _animationImageElement)?.Also(it =>
+            {
+                it.Configuration = new DirectConnectedAnimationConfiguration();
+            });
+        }
+
+        protected override void OnUsingConnectedAnimation(ConnectedAnimationService service)
+        {
+            service.GetAnimation("image")?.Also(it =>
+            {
+                it.TryStart(_animationImageElement);
+                _animationImageElement = null;
+            });
+        }
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.Search();
+        }
+
+        private void GalleryNavigation_OnSelectionChanged(NavigationView sender,
+            NavigationViewSelectionChangedEventArgs args)
+        {
+            typeof(GalleryViewModel).GetMethod("Reset" + args.SelectedItemContainer.Tag)
+                ?.Invoke(ViewModel, new object[0]);
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenGallery(sender);
+        }
+
+        private void OpenGallery(object sender)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
+            {
+                _animationImageElement = element.FindDescendant<ImageEx>();
+                StartActivity<GalleryDetailActivity>(gallery, Intent);
+            }
+        }
+
+        private void OpenInNewTabClicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is EHGallery gallery)
+            {
+                StartNewTab<GalleryDetailActivity>(gallery, Intent);
+            }
+        }
+    }
+}
