@@ -144,7 +144,9 @@ namespace iHentai.ViewModels
 
         public List<IReadingImage> Images { get; protected set; }
 
-        [DependsOn(nameof(Images))] public int Count => (Images?.Count ?? 1) - 1;
+        [DependsOn(nameof(Images))]
+        [AlsoNotifyFor(nameof(ViewMode))]
+        public int Count => (Images?.Count ?? 1) - 1;
 
         public bool CanSwitchChapter { get; protected set; } = true;
 
@@ -160,7 +162,14 @@ namespace iHentai.ViewModels
 
         public ReadingViewMode ViewMode
         {
-            get => Singleton<Settings>.Instance.Get("reading_mode", ReadingViewMode.Flip);
+            get
+            {
+                if (Images?.Count == 1)
+                {
+                    return ReadingViewMode.Flip;
+                }
+                return Singleton<Settings>.Instance.Get("reading_mode", ReadingViewMode.Flip);
+            }
             set
             {
                 Singleton<Settings>.Instance.Set("reading_mode", value);
