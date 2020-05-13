@@ -69,12 +69,12 @@
             </ScrollViewer>
         </RefreshContainer>
 
-        <ProgressRing IsActive="True"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Width="50"
-                                Height="50"
-                                Visibility="{x:Bind helper:XamlHelper.IsEmptyToVisibility(ViewModel.Source), Mode=OneWay}" />
+        <controls:ProgressRing IsActive="True"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="50"
+                               Height="50"
+                               Visibility="{x:Bind helper:XamlHelper.IsEmptyToVisibility(ViewModel.Source), Mode=OneWay}" />
         <Grid
                 x:Name="HeaderContainer">
             <Grid Name="DockShadowContainer">

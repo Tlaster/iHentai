@@ -37,7 +37,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                                    Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressRing
+                                        <controls:ProgressBar
                                             IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
                                             Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
@@ -57,7 +57,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                                    Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressRing
+                                        <controls:ProgressBar
                                             IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
                                             Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
@@ -91,7 +91,7 @@
                                         HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                                    Style="{ThemeResource TitleTextBlockStyle}" />
-                                        <controls:ProgressRing
+                                        <controls:ProgressBar
                                             IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
                                             Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                     </StackPanel>
@@ -120,7 +120,7 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
                                                        Style="{ThemeResource TitleTextBlockStyle}" />
-                                            <controls:ProgressRing
+                                            <controls:ProgressBar
                                                 IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
                                                 Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                         </StackPanel>
@@ -190,8 +190,8 @@
                 </animations:Implicit.HideAnimations>
             </Grid>
         </Grid>
-        <ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-                      IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"
-                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <controls:ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                               IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </tab:TabActivity>

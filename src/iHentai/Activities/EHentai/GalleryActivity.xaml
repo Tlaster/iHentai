@@ -141,7 +141,7 @@
                 </ScrollViewer>
             </RefreshContainer>
 
-            <ProgressRing IsActive="True"
+            <controls:ProgressRing IsActive="True"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           Width="50"

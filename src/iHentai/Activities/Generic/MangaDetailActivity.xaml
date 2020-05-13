@@ -82,7 +82,7 @@
             </Grid>
         </ScrollViewer>
 
-        <ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <controls:ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                IsActive="True" />
     </Grid>

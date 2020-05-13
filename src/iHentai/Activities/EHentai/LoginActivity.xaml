@@ -17,8 +17,8 @@
                          Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button Margin="4" HorizontalAlignment="Stretch" Content="Login" Click="{x:Bind Login}" />
         </StackPanel>
-        <ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-                                IsActive="True" />
+        <controls:ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                               IsActive="True" />
     </Grid>
 </tab:TabActivity>

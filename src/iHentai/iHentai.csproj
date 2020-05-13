@@ -11,7 +11,7 @@
     <AssemblyName>iHentai</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -264,7 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp">
-      <Version>0.14.0</Version>
+      <Version>1.0.0-alpha-822</Version>
     </PackageReference>
     <PackageReference Include="Bug10.Icon">
       <Version>1.0.12</Version>
@@ -281,7 +281,7 @@
       <Version>3.0.0-beta-1778</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
-      <Version>5.0.5</Version>
+      <Version>5.0.7</Version>
     </PackageReference>
     <PackageReference Include="LZStringCSharp">
       <Version>1.4.0</Version>
@@ -290,16 +290,16 @@
       <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>6.0.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.0.0</Version>
+      <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.0-prerelease.200322001</Version>
+      <Version>2.4.0</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
-      <Version>3.2.7</Version>
+      <Version>3.2.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
