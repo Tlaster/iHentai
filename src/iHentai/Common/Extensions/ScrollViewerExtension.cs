@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using iHentai.Common.Collection;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
+using Microsoft.UI.Xaml.Controls;
 
 namespace iHentai.Common.Extensions
 {
@@ -35,20 +37,21 @@ namespace iHentai.Common.Extensions
 
             element.SetValue(ItemsSourceProperty, value);
             
-            if (value is IStatusReport statusReport)
-            {
-                statusReport.OnEndLoading += () =>
-                {
-                    Task.Delay(100).ContinueWith(it => DispatcherHelper.ExecuteOnUIThreadAsync(() => TryLoadIfNotFill(scrollViewer)));
-                };
-            }
             if (value is ISupportIncrementalLoading loading)
             {
+                if (scrollViewer.GetContentControl() is FrameworkElement childElement)
+                {
+                    childElement.SizeChanged += (sender, args) => TryLoadIfNotFill(scrollViewer);
+                }
+                //scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ScrollableHeightProperty,
+                //    OnScrollableHeightChanged);
+                //scrollViewer.SizeChanged += ScrollViewerOnSizeChanged;
                 scrollViewer.ViewChanged += ScrollViewerOnViewChanged;
                 Task.Delay(100).ContinueWith(it => DispatcherHelper.ExecuteOnUIThreadAsync(() => TryLoadIfNotFill(scrollViewer)));
             }
 
         }
+
 
         private static async void TryLoadIfNotFill(ScrollViewer scrollViewer)
         {

@@ -96,7 +96,7 @@
                     <interactivity:Interaction.Behaviors>
                         <ui:QuickReturnHeaderBehavior2 HeaderElement="{x:Bind HeaderContainer}" />
                     </interactivity:Interaction.Behaviors>
-                    <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}">
+                    <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}" VerticalAlignment="Top">
                         <controls:ItemsRepeater.Layout>
                             <ui:StaggeredLayout2 DesiredColumnWidth="200" VerticalOffset="75" />
                         </controls:ItemsRepeater.Layout>
