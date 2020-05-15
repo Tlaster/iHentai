@@ -19,6 +19,10 @@
     <Grid.Resources>
         <MenuFlyout x:Key="RootMenuFlyout" x:Name="RootMenuFlyout">
             <MenuFlyoutSeparator/>
+            <controls:RadioMenuFlyoutItem GroupName="Theme" IsChecked="{x:Bind ThemeManager.IsDefaultTheme, Mode=TwoWay}" Text="Default"/>
+            <controls:RadioMenuFlyoutItem GroupName="Theme" IsChecked="{x:Bind ThemeManager.IsLightTheme, Mode=TwoWay}" Text="Light"/>
+            <controls:RadioMenuFlyoutItem GroupName="Theme" IsChecked="{x:Bind ThemeManager.IsDarkTheme, Mode=TwoWay}" Text="Dark"/>
+            <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Download" >
                 <MenuFlyoutItem.KeyboardAccelerators>
                     <KeyboardAccelerator Key="D"/>
@@ -45,7 +49,7 @@
             </MenuFlyoutItem>
         </MenuFlyout>
     </Grid.Resources>
-    <Pivot x:Name="ContentPivot" IsLocked="True" Loaded="ContentPivot_Loaded"
+    <Pivot x:Name="ContentPivot" Background="{ThemeResource SystemControlAcrylicWindowBrush}" IsLocked="True" Loaded="ContentPivot_Loaded"
            ItemsSource="{x:Bind TabManager.TabItems}" SelectedIndex="{x:Bind SelectedTabIndex, Mode=TwoWay}">
         <Pivot.ItemContainerStyle>
             <Style TargetType="PivotItem">
@@ -56,7 +60,7 @@
             <tab1:TabItemTemplateSelector>
                 <tab1:TabItemTemplateSelector.ActivityTabItemTemplate>
                     <DataTemplate x:DataType="tab1:ActivityTabItem">
-                        <tab1:TabActivityContainer ActivityTabItem="{x:Bind}">
+                        <tab1:TabActivityContainer Background="Transparent" ActivityTabItem="{x:Bind}">
                             <tab1:TabActivityContainer.ActivityTransition>
                                 <ui:FadeActivityTransition />
                             </tab1:TabActivityContainer.ActivityTransition>
@@ -105,19 +109,6 @@
             <controls:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="tab1:ITabItem">
                     <controls:TabViewItem Header="{Binding TabViewModel.Title, Mode=OneWay}" Padding="0">
-                        <!--<controls:TabViewItem.HeaderTemplate>
-                        <DataTemplate x:DataType="tab1:ITabItem">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <ProgressRing Padding="2" IsActive="{Binding IsLoading, Mode=OneWay}"/>
-                                <Image Source="{Binding Icon,Mode=OneWay}" Height="14" Width="14"/>
-                                <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title, Mode=OneWay}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </controls:TabViewItem.HeaderTemplate>-->
                     </controls:TabViewItem>
                 </DataTemplate>
             </controls:TabView.TabItemTemplate>
@@ -138,9 +129,7 @@
                     FontWeight="SemiLight"
                     FontSize="12"
                     AutomationProperties.AccessibilityView="Control">
-                        <!-- U+E710 is the fancy plus icon. -->
                         <controls:SplitButton.Resources>
-                            <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
                                     <ResourceDictionary x:Key="Light">
@@ -197,12 +186,20 @@
                     <x:Double x:Key="TabViewItemScrollButtonHeight">32</x:Double>
                     <ResourceDictionary.ThemeDictionaries>
                         <ResourceDictionary x:Key="Light">
-                            <StaticResource x:Key="TabViewBackground"
-                                        ResourceKey="SystemControlAcrylicElementBrush" />
+                            <media:AcrylicBrush
+                                x:Key="TabViewBackground"
+                                BackgroundSource="Backdrop"
+                                TintColor="{ThemeResource SystemChromeAltHighColor}"
+                                TintOpacity="0.8" 
+                                FallbackColor="{ThemeResource SystemChromeMediumColor}" />
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
-                            <StaticResource x:Key="TabViewBackground"
-                                        ResourceKey="SystemControlAcrylicElementBrush" />
+                            <media:AcrylicBrush
+                                x:Key="TabViewBackground"
+                                BackgroundSource="Backdrop"
+                                TintColor="{ThemeResource SystemChromeAltHighColor}"
+                                TintOpacity="0.8" 
+                                FallbackColor="{ThemeResource SystemChromeMediumColor}" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
@@ -264,9 +261,7 @@
                 FontWeight="SemiLight"
                 FontSize="12"
                 AutomationProperties.AccessibilityView="Control">
-                    <!-- U+E710 is the fancy plus icon. -->
                     <controls:SplitButton.Resources>
-                        <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
                         <ResourceDictionary>
                             <ResourceDictionary.ThemeDictionaries>
                                 <ResourceDictionary x:Key="Light">
@@ -321,7 +316,8 @@
                     <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
                 </animations:Implicit.HideAnimations>
             </Grid>
-
         </Grid>
     </Grid>
+    <Button HorizontalAlignment="Left" Name="BackButton" Click="{x:Bind OnBackRequested}" MinWidth="75" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}">
+    </Button>
 </Grid>

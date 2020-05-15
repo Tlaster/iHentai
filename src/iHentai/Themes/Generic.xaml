@@ -7,18 +7,6 @@
     xmlns:paging="using:iHentai.Controls.Paging"
     xmlns:book="using:iHentai.Controls.Book">
 
-    <Style TargetType="paging:ActivityContainer">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="paging:ActivityContainer">
-                    <ContentPresenter x:Name="InternalContentPresenter" Background="{TemplateBinding Background}"
-                                      Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
-                                      ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="controls1:CardView">
         <Setter Property="Template">
             <Setter.Value>

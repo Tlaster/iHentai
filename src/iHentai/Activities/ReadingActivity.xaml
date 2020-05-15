@@ -12,6 +12,7 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:extensions1="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:icon="using:Bug10.Icon"
+    Tapped="UIElement_OnTapped"
     Name="ReadingRoot"
     xmlns:book="using:iHentai.Controls.Book" xmlns:controls1="using:iHentai.Controls"
     xmlns:controls2="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -26,7 +27,7 @@
                                    SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                         <book:BookView.LeftTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped" Background="Transparent">
+                                <Grid Background="Transparent">
                                     <Image
                                         HorizontalAlignment="Right"
                                         Source="{x:Bind Source, Mode=OneWay}"
@@ -46,7 +47,7 @@
                         </book:BookView.LeftTemplate>
                         <book:BookView.RightTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped" Background="Transparent">
+                                <Grid Background="Transparent">
                                     <Image
                                         HorizontalAlignment="Left"
                                         Source="{x:Bind Source, Mode=OneWay}"
@@ -76,7 +77,7 @@
                               SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="viewModels:IReadingImage">
-                                <Grid Tapped="UIElement_OnTapped" Background="Transparent"
+                                <Grid Background="Transparent"
                                       FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
                                     <ScrollViewer x:Name="Scroll" ZoomMode="Enabled"
                                                   HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
@@ -109,7 +110,7 @@
                         <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}">
                             <controls:ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="viewModels:IReadingImage">
-                                    <Grid Tapped="UIElement_OnTapped" Background="Transparent" >
+                                    <Grid Background="Transparent" >
                                         <Image
                                             MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
                                             MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"

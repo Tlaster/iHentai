@@ -50,14 +50,15 @@ namespace iHentai
         private Grid _titleBarGrid;
         private int _selectedTabIndex;
         TabManager TabManager { get; } = new TabManager();
+        ThemeManager ThemeManager { get; }
         public RootView()
         {
             this.InitializeComponent();
+            ThemeManager = new ThemeManager(this);
             CoreApplication.GetCurrentView().TitleBar.Also(it =>
             {
                 it.ExtendViewIntoTitleBar = true;
                 it.LayoutMetricsChanged += OnCoreTitleBarOnLayoutMetricsChanged;
-                it.IsVisibleChanged += OnTitleBarIsVisibleChanged;
             });
             ApplicationView.GetForCurrentView().TitleBar.Also(it =>
             {
@@ -67,8 +68,8 @@ namespace iHentai
             SystemNavigationManager.GetForCurrentView().Also(it =>
             {
                 it.AppViewBackButtonVisibility =
-                    AppViewBackButtonVisibility.Visible;
-                it.BackRequested += OnBackRequested;
+                    AppViewBackButtonVisibility.Collapsed;
+                it.BackRequested += OnSystemBackRequested;
             });
             SystemNavigationManagerPreview.GetForCurrentView().Also(it =>
             {
@@ -144,19 +145,12 @@ namespace iHentai
             }
         }
 
-        private void OnTitleBarIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        private void OnSystemBackRequested(object sender, BackRequestedEventArgs e)
         {
-            //if (sender.IsVisible)
-            //{
-            //    SecondaryTitleBarContainer.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    SecondaryTitleBarContainer.Visibility = Visibility.Collapsed;
-            //}
+            e.Handled = OnBackRequested();
         }
 
-        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        private bool OnBackRequested()
         {
             var handled = false;
             var container = ContentPivot.ContainerFromIndex(ContentPivot.SelectedIndex);
@@ -171,7 +165,7 @@ namespace iHentai
                 handled = TabManager.Count > 1;
             }
 
-            e.Handled = handled;
+            return handled;
         }
 
         private void TabItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -206,19 +200,19 @@ namespace iHentai
             if (FlowDirection == FlowDirection.LeftToRight)
             {
                 ShellTitlebarEndInset.MinWidth = sender.SystemOverlayRightInset;
-                ShellTitlebarInset.MinWidth = sender.SystemOverlayLeftInset;
+                ShellTitlebarInset.MinWidth = BackButton.ActualWidth;
                 SecondaryTitleBarEndInset.MinWidth = sender.SystemOverlayRightInset;
-                SecondaryTitleBarInset.MinWidth = sender.SystemOverlayLeftInset;
+                SecondaryTitleBarInset.MinWidth = BackButton.ActualWidth;
             }
             else
             {
                 ShellTitlebarEndInset.MinWidth = sender.SystemOverlayLeftInset;
-                ShellTitlebarInset.MinWidth = sender.SystemOverlayRightInset;
+                ShellTitlebarInset.MinWidth = BackButton.ActualWidth;
                 SecondaryTitleBarEndInset.MinWidth = sender.SystemOverlayLeftInset;
-                SecondaryTitleBarInset.MinWidth = sender.SystemOverlayRightInset;
+                SecondaryTitleBarInset.MinWidth = BackButton.ActualWidth;
             }
 
-            TitleBarContainer.Height = TransparentTitleBar.Height = ShellTitlebarEndInset.Height = ShellTitlebarInset.Height = SecondaryTitleBar.Height = sender.Height;
+            BackButton.Height = TitleBarContainer.Height = TransparentTitleBar.Height = ShellTitlebarEndInset.Height = ShellTitlebarInset.Height = SecondaryTitleBar.Height = sender.Height;
         }
 
         private void RootTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)

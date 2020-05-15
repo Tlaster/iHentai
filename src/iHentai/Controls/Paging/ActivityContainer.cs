@@ -10,11 +10,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace iHentai.Controls.Paging
 {
-    public class ActivityContainer : Control, INavigate
+    public class ActivityContainer : Grid, INavigate
     {
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
-            nameof(Content), typeof(object), typeof(ActivityContainer), new PropertyMetadata(default));
-
         public static readonly DependencyProperty ContentTransitionsProperty = DependencyProperty.Register(
             nameof(ContentTransitions), typeof(TransitionCollection), typeof(ActivityContainer),
             new PropertyMetadata(default, OnContentTransitionsChanged));
@@ -27,16 +24,12 @@ namespace iHentai.Controls.Paging
 
         public ActivityContainer()
         {
-            HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            VerticalContentAlignment = VerticalAlignment.Stretch;
-
             HorizontalAlignment = HorizontalAlignment.Stretch;
             VerticalAlignment = VerticalAlignment.Stretch;
 
             Loaded += delegate { Window.Current.VisibilityChanged += OnVisibilityChanged; };
             Unloaded += delegate { Window.Current.VisibilityChanged -= OnVisibilityChanged; };
             _activityStackManager.BackStackChanged += ActivityStackManagerOnBackStackChanged;
-            DefaultStyleKey = typeof(ActivityContainer);
         }
 
         private void ActivityStackManagerOnBackStackChanged()
@@ -45,8 +38,6 @@ namespace iHentai.Controls.Paging
         }
 
         public bool DisableCache { get; set; }
-
-        public ContentPresenter InternalContentPresenter { get; private set; }
 
         private ActivityModel CurrentActivityModel => _activityStackManager?.CurrentActivity;
 
@@ -74,22 +65,6 @@ namespace iHentai.Controls.Paging
             }
         }
 
-        private Grid ContentRoot
-        {
-            get
-            {
-                if (Content == null)
-                    Content = new Grid();
-                return (Grid) Content;
-            }
-        }
-
-        public object Content
-        {
-            get => GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
-        }
-
         public TransitionCollection ContentTransitions
         {
             get => (TransitionCollection) GetValue(ContentTransitionsProperty);
@@ -115,7 +90,7 @@ namespace iHentai.Controls.Paging
 
         private void OnContentTransitionsChanged(object newValue)
         {
-            ContentRoot.ChildrenTransitions = newValue as TransitionCollection;
+            ChildrenTransitions = newValue as TransitionCollection;
         }
 
         public event EventHandler<EventArgs> Navigated;
@@ -194,7 +169,6 @@ namespace iHentai.Controls.Paging
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            InternalContentPresenter = (ContentPresenter) GetTemplateChild(nameof(ActivityContainer));
         }
 
         private Task<bool> NavigateWithMode(ActivityModel newActivity, NavigationMode navigationMode)
@@ -250,7 +224,7 @@ namespace iHentai.Controls.Paging
         private async Task NavigateImplAsync(NavigationMode navigationMode,
             ActivityModel currentActivity, ActivityModel nextActivity, int nextIndex)
         {
-            ContentRoot.IsHitTestVisible = false;
+            IsHitTestVisible = false;
 
             InvokeLifecycleBeforeContentChanged(navigationMode, currentActivity, nextActivity);
 
@@ -264,7 +238,7 @@ namespace iHentai.Controls.Paging
 
             InvokeLifecycleAfterContentChanged(navigationMode, currentActivity, nextActivity);
 
-            ContentRoot.IsHitTestVisible = true;
+            IsHitTestVisible = true;
 
             ReleaseActivity(currentActivity);
 
@@ -278,11 +252,11 @@ namespace iHentai.Controls.Paging
             {
                 case NavigationMode.New when insertionMode == ActivityInsertionMode.NewAbove:
                 case NavigationMode.Back when insertionMode == ActivityInsertionMode.NewBelow:
-                    ContentRoot.Children.Add(next);
+                    Children.Add(next);
                     break;
                 case NavigationMode.Back when insertionMode == ActivityInsertionMode.NewAbove:
                 case NavigationMode.New when insertionMode == ActivityInsertionMode.NewBelow:
-                    ContentRoot.Children.Insert(0, next);
+                    Children.Insert(0, next);
                     break;
             }
         }
@@ -310,14 +284,14 @@ namespace iHentai.Controls.Paging
                         throw new ArgumentOutOfRangeException(nameof(navigationMode), navigationMode, null);
                 }
 
-                ContentRoot.Children.Remove(current);
+                Children.Remove(current);
             }
             else
             {
-                if (ContentRoot.Children.Any())
-                    ContentRoot.Children[0] = next;
+                if (Children.Any())
+                    Children[0] = next;
                 else
-                    ContentRoot.Children.Add(next);
+                    Children.Add(next);
                 nextActivity?.GetActivity(this)?.UsingConnectedAnimation();
             }
         }
