@@ -28,7 +28,7 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem Text="Settings" >
-                <MenuFlyoutItem.KeyboardAccelerators>
+                <MenuFlyoutItem.KeyboardAccelerators>   
                     <KeyboardAccelerator Key="S"/>
                 </MenuFlyoutItem.KeyboardAccelerators>
                 <MenuFlyoutItem.Icon>
@@ -45,159 +45,7 @@
             </MenuFlyoutItem>
         </MenuFlyout>
     </Grid.Resources>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <controls:TabView x:Name="RootTabView"
-                      Loaded="RootTabView_Loaded"
-                      SelectedIndex="{x:Bind SelectedTabIndex, Mode=TwoWay}"
-                      TabItemsSource="{x:Bind TabManager.TabItems}"
-                      IsAddTabButtonVisible="False"
-                      TabCloseRequested="RootTabView_TabCloseRequested"
-                      AllowDropTabs="True"
-                      CanDragTabs="False"
-                      CanReorderTabs="False">
-        <controls:TabView.KeyboardAccelerators>
-            <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number1" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number2" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number3" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number4" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number5" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number6" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number7" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number8" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number9" Modifiers="Control"
-                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        </controls:TabView.KeyboardAccelerators>
-        <controls:TabView.TabItemTemplate>
-            <DataTemplate x:DataType="tab1:ITabItem">
-                <controls:TabViewItem Header="{Binding TabViewModel.Title, Mode=OneWay}" Padding="0">
-                    <!--<controls:TabViewItem.HeaderTemplate>
-                        <DataTemplate x:DataType="tab1:ITabItem">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <ProgressRing Padding="2" IsActive="{Binding IsLoading, Mode=OneWay}"/>
-                                <Image Source="{Binding Icon,Mode=OneWay}" Height="14" Width="14"/>
-                                <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title, Mode=OneWay}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </controls:TabViewItem.HeaderTemplate>-->
-                </controls:TabViewItem>
-            </DataTemplate>
-        </controls:TabView.TabItemTemplate>
-        <controls:TabView.TabStripHeader>
-            <Grid x:Name="ShellTitlebarInset" />
-        </controls:TabView.TabStripHeader>
-        <controls:TabView.TabStripFooter>
-            <Grid x:Name="ShellTitlebarEndInset">
-                <controls:SplitButton
-                    Flyout="{StaticResource RootMenuFlyout}"
-                    x:Uid="NewTabSplitButton"
-                    Click="{x:Bind AddTab}"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Left"
-                    Content="&#xE710;"
-                    UseLayoutRounding="true"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontWeight="SemiLight"
-                    FontSize="12"
-                    AutomationProperties.AccessibilityView="Control">
-                    <!-- U+E710 is the fancy plus icon. -->
-                    <controls:SplitButton.Resources>
-                        <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Light">
-                                    <StaticResource x:Key="SplitButtonBackground"
-                                                    ResourceKey="TabViewItemHeaderBackground" />
-                                    <StaticResource x:Key="SplitButtonForeground"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                    <StaticResource x:Key="SplitButtonForegroundPressed"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                </ResourceDictionary>
-                                <ResourceDictionary x:Key="Dark">
-                                    <StaticResource x:Key="SplitButtonBackground"
-                                                    ResourceKey="TabViewItemHeaderBackground" />
-                                    <StaticResource x:Key="SplitButtonForeground"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                    <StaticResource x:Key="SplitButtonForegroundPressed"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                </ResourceDictionary>
-                                <ResourceDictionary x:Key="HighContrast">
-                                    <StaticResource x:Key="SplitButtonBackground"
-                                                    ResourceKey="TabViewItemHeaderBackground" />
-                                    <StaticResource x:Key="SplitButtonForeground"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                    <StaticResource x:Key="SplitButtonForegroundPressed"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
-                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
-                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                </ResourceDictionary>
-                            </ResourceDictionary.ThemeDictionaries>
-                        </ResourceDictionary>
-                    </controls:SplitButton.Resources>
-                </controls:SplitButton>
-            </Grid>
-        </controls:TabView.TabStripFooter>
-        <controls:TabView.Resources>
-            <ResourceDictionary>
-                <Thickness x:Key="TabViewHeaderPadding">0</Thickness>
-                <x:Double x:Key="TabViewItemScrollButtonHeight">32</x:Double>
-                <ResourceDictionary.ThemeDictionaries>
-                    <ResourceDictionary x:Key="Light">
-                        <media:AcrylicBrush x:Key="TabViewBackground" BackgroundSource="HostBackdrop"
-                                            TintOpacity="0.8" TintColor="{ThemeResource SystemChromeMediumColor}"
-                                            FallbackColor="{ThemeResource SystemChromeMediumColor}" />
-                    </ResourceDictionary>
-                    <ResourceDictionary x:Key="Dark">
-                        <media:AcrylicBrush x:Key="TabViewBackground" BackgroundSource="HostBackdrop"
-                                            TintOpacity="0.8" TintColor="{ThemeResource SystemChromeMediumColor}"
-                                            FallbackColor="{ThemeResource SystemChromeMediumColor}" />
-                    </ResourceDictionary>
-                </ResourceDictionary.ThemeDictionaries>
-            </ResourceDictionary>
-        </controls:TabView.Resources>
-        <animations:Implicit.ShowAnimations>
-            <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-            <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
-        </animations:Implicit.ShowAnimations>
-        <animations:Implicit.HideAnimations>
-            <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-            <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
-        </animations:Implicit.HideAnimations>
-    </controls:TabView>
-    <Pivot Grid.Row="1" x:Name="ContentPivot" IsLocked="True" Loaded="ContentPivot_Loaded"
+    <Pivot x:Name="ContentPivot" IsLocked="True" Loaded="ContentPivot_Loaded"
            ItemsSource="{x:Bind TabManager.TabItems}" SelectedIndex="{x:Bind SelectedTabIndex, Mode=TwoWay}">
         <Pivot.ItemContainerStyle>
             <Style TargetType="PivotItem">
@@ -218,42 +66,192 @@
             </tab1:TabItemTemplateSelector>
         </Pivot.ItemTemplateSelector>
     </Pivot>
-    <Grid Grid.Row="0" Name="SecondaryTitleBarContainer" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-        <Grid.KeyboardAccelerators>
-            <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number1" Modifiers="Control"
+    <Grid Name="TransparentTitleBar" Background="Transparent" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+    <Grid Name="TitleBarContainer" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <controls:TabView x:Name="RootTabView"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch"
+                      Loaded="RootTabView_Loaded"
+                      SelectedIndex="{x:Bind SelectedTabIndex, Mode=TwoWay}"
+                      TabItemsSource="{x:Bind TabManager.TabItems}"
+                      IsAddTabButtonVisible="False"
+                      TabCloseRequested="RootTabView_TabCloseRequested"
+                      AllowDropTabs="True"
+                      CanDragTabs="False"
+                      CanReorderTabs="False">
+            <controls:TabView.KeyboardAccelerators>
+                <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number1" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number2" Modifiers="Control"
+                <KeyboardAccelerator Key="Number2" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number3" Modifiers="Control"
+                <KeyboardAccelerator Key="Number3" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number4" Modifiers="Control"
+                <KeyboardAccelerator Key="Number4" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number5" Modifiers="Control"
+                <KeyboardAccelerator Key="Number5" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number6" Modifiers="Control"
+                <KeyboardAccelerator Key="Number6" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number7" Modifiers="Control"
+                <KeyboardAccelerator Key="Number7" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number8" Modifiers="Control"
+                <KeyboardAccelerator Key="Number8" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-            <KeyboardAccelerator Key="Number9" Modifiers="Control"
+                <KeyboardAccelerator Key="Number9" Modifiers="Control"
                                  Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
-        </Grid.KeyboardAccelerators>
-        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" x:Name="SecondaryTitleBar"
+            </controls:TabView.KeyboardAccelerators>
+            <controls:TabView.TabItemTemplate>
+                <DataTemplate x:DataType="tab1:ITabItem">
+                    <controls:TabViewItem Header="{Binding TabViewModel.Title, Mode=OneWay}" Padding="0">
+                        <!--<controls:TabViewItem.HeaderTemplate>
+                        <DataTemplate x:DataType="tab1:ITabItem">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ProgressRing Padding="2" IsActive="{Binding IsLoading, Mode=OneWay}"/>
+                                <Image Source="{Binding Icon,Mode=OneWay}" Height="14" Width="14"/>
+                                <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{Binding Title, Mode=OneWay}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:TabViewItem.HeaderTemplate>-->
+                    </controls:TabViewItem>
+                </DataTemplate>
+            </controls:TabView.TabItemTemplate>
+            <controls:TabView.TabStripHeader>
+                <Grid x:Name="ShellTitlebarInset" />
+            </controls:TabView.TabStripHeader>
+            <controls:TabView.TabStripFooter>
+                <Grid x:Name="ShellTitlebarEndInset">
+                    <controls:SplitButton
+                    Flyout="{StaticResource RootMenuFlyout}"
+                    x:Uid="NewTabSplitButton"
+                    Click="{x:Bind AddTab}"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Content="&#xE710;"
+                    UseLayoutRounding="true"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontWeight="SemiLight"
+                    FontSize="12"
+                    AutomationProperties.AccessibilityView="Control">
+                        <!-- U+E710 is the fancy plus icon. -->
+                        <controls:SplitButton.Resources>
+                            <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Light">
+                                        <StaticResource x:Key="SplitButtonBackground"
+                                                    ResourceKey="TabViewItemHeaderBackground" />
+                                        <StaticResource x:Key="SplitButtonForeground"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
+                                        <StaticResource x:Key="SplitButtonForegroundPressed"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
+                                        <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <StaticResource x:Key="SplitButtonBackground"
+                                                    ResourceKey="TabViewItemHeaderBackground" />
+                                        <StaticResource x:Key="SplitButtonForeground"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
+                                        <StaticResource x:Key="SplitButtonForegroundPressed"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
+                                        <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                    </ResourceDictionary>
+                                    <ResourceDictionary x:Key="HighContrast">
+                                        <StaticResource x:Key="SplitButtonBackground"
+                                                    ResourceKey="TabViewItemHeaderBackground" />
+                                        <StaticResource x:Key="SplitButtonForeground"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPressed" />
+                                        <StaticResource x:Key="SplitButtonForegroundPressed"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                        <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                                    ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
+                                        <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                                    ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </controls:SplitButton.Resources>
+                    </controls:SplitButton>
+                </Grid>
+            </controls:TabView.TabStripFooter>
+            <controls:TabView.Resources>
+                <ResourceDictionary>
+                    <Thickness x:Key="TabViewHeaderPadding">0</Thickness>
+                    <x:Double x:Key="TabViewItemScrollButtonHeight">32</x:Double>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Light">
+                            <StaticResource x:Key="TabViewBackground"
+                                        ResourceKey="SystemControlAcrylicElementBrush" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Dark">
+                            <StaticResource x:Key="TabViewBackground"
+                                        ResourceKey="SystemControlAcrylicElementBrush" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </controls:TabView.Resources>
+            <animations:Implicit.ShowAnimations>
+                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
+            </animations:Implicit.HideAnimations>
+        </controls:TabView>
+        <Grid Name="SecondaryTitleBarContainer" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Grid.KeyboardAccelerators>
+                <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Tab" Modifiers="Control" Invoked="SwitchTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number1" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number2" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number3" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number4" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number5" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number6" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number7" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number8" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+                <KeyboardAccelerator Key="Number9" Modifiers="Control"
+                                 Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+            </Grid.KeyboardAccelerators>
+            <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" x:Name="SecondaryTitleBar"
               Visibility="Visible">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="SecondaryTitleBarInset" />
-            <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset" />
-            <TextBlock Grid.Column="1" Text="iHentai" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="8" />
-            <Grid Background="Transparent" x:Name="SecondaryTitleBarDrag" Grid.ColumnSpan="3" />
-            <controls:SplitButton
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="SecondaryTitleBarInset" />
+                <Grid Grid.Column="2" x:Name="SecondaryTitleBarEndInset" />
+                <TextBlock Grid.Column="1" Text="iHentai" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="8" />
+                <Grid Background="Transparent" x:Name="SecondaryTitleBarDrag" Grid.ColumnSpan="3" />
+                <controls:SplitButton
                 Flyout="{StaticResource RootMenuFlyout}"
                 Grid.Column="1"
                 x:Uid="NewTabSplitButton"
@@ -266,63 +264,64 @@
                 FontWeight="SemiLight"
                 FontSize="12"
                 AutomationProperties.AccessibilityView="Control">
-                <!-- U+E710 is the fancy plus icon. -->
-                <controls:SplitButton.Resources>
-                    <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
-                    <ResourceDictionary>
-                        <ResourceDictionary.ThemeDictionaries>
-                            <ResourceDictionary x:Key="Light">
-                                <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
-                                <StaticResource x:Key="SplitButtonForeground"
+                    <!-- U+E710 is the fancy plus icon. -->
+                    <controls:SplitButton.Resources>
+                        <!-- Override the SplitButton* resources to match the tab view's button's styles. -->
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Light">
+                                    <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
+                                    <StaticResource x:Key="SplitButtonForeground"
                                                 ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
                                                 ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                <StaticResource x:Key="SplitButtonForegroundPressed"
+                                    <StaticResource x:Key="SplitButtonForegroundPressed"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
                                                 ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                            </ResourceDictionary>
-                            <ResourceDictionary x:Key="Dark">
-                                <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
-                                <StaticResource x:Key="SplitButtonForeground"
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Dark">
+                                    <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
+                                    <StaticResource x:Key="SplitButtonForeground"
                                                 ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
                                                 ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                <StaticResource x:Key="SplitButtonForegroundPressed"
+                                    <StaticResource x:Key="SplitButtonForegroundPressed"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
                                                 ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                            </ResourceDictionary>
-                            <ResourceDictionary x:Key="HighContrast">
-                                <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
-                                <StaticResource x:Key="SplitButtonForeground"
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="HighContrast">
+                                    <StaticResource x:Key="SplitButtonBackground" ResourceKey="TabViewItemHeaderBackground" />
+                                    <StaticResource x:Key="SplitButtonForeground"
                                                 ResourceKey="SystemControlBackgroundBaseMediumBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPressed"
+                                    <StaticResource x:Key="SplitButtonBackgroundPressed"
                                                 ResourceKey="TabViewItemHeaderBackgroundPressed" />
-                                <StaticResource x:Key="SplitButtonForegroundPressed"
+                                    <StaticResource x:Key="SplitButtonForegroundPressed"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                                <StaticResource x:Key="SplitButtonBackgroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonBackgroundPointerOver"
                                                 ResourceKey="TabViewItemHeaderBackgroundPointerOver" />
-                                <StaticResource x:Key="SplitButtonForegroundPointerOver"
+                                    <StaticResource x:Key="SplitButtonForegroundPointerOver"
                                                 ResourceKey="SystemControlBackgroundBaseMediumHighBrush" />
-                            </ResourceDictionary>
-                        </ResourceDictionary.ThemeDictionaries>
-                    </ResourceDictionary>
-                </controls:SplitButton.Resources>
-            </controls:SplitButton>
-            <animations:Implicit.ShowAnimations>
-                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
-                <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
-                <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
-            </animations:Implicit.HideAnimations>
-        </Grid>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </controls:SplitButton.Resources>
+                </controls:SplitButton>
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+                    <animations:TranslationAnimation From="0, -40, 0" To="0" Duration="0:0:0.3" />
+                </animations:Implicit.ShowAnimations>
+                <animations:Implicit.HideAnimations>
+                    <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+                    <animations:TranslationAnimation To="0, -40, 0" From="0" Duration="0:0:0.2" />
+                </animations:Implicit.HideAnimations>
+            </Grid>
 
+        </Grid>
     </Grid>
 </Grid>

@@ -60,6 +60,7 @@
         </VisualStateGroup>
     </VisualStateManager.VisualStateGroups>
     <controls:NavigationView
+        IsTitleBarAutoPaddingEnabled="False"
         x:Name="GalleryNavigation"
         SelectionChanged="GalleryNavigation_OnSelectionChanged"
         IsPaneToggleButtonVisible="False"
@@ -98,7 +99,7 @@
                     </interactivity:Interaction.Behaviors>
                     <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}" VerticalAlignment="Top">
                         <controls:ItemsRepeater.Layout>
-                            <ui:StaggeredLayout2 DesiredColumnWidth="200" VerticalOffset="75" />
+                            <ui:StaggeredLayout2 DesiredColumnWidth="200" VerticalOffset="{x:Bind ScrollVerticalOffset}" />
                         </controls:ItemsRepeater.Layout>
                         <controls:ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="model:EHGallery">
@@ -149,6 +150,7 @@
                           Visibility="{x:Bind helper:XamlHelper.IsEmptyToVisibility(ViewModel.Source), Mode=OneWay}" />
 
             <Grid
+                Margin="{x:Bind TitleBarThickness}"
                 x:Name="HeaderContainer">
                 <Grid Name="DockShadowContainer">
                     <controls1:DropShadowPanel

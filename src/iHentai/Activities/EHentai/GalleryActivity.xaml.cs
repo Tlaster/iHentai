@@ -34,7 +34,7 @@ namespace iHentai.Activities.EHentai
         }
 
         public override ITabViewModel TabViewModel => ViewModel;
-
+        public double ScrollVerticalOffset => 75 + TitleBarTop;
         private GalleryViewModel ViewModel { get; set; }
 
         protected internal override void OnCreate(object parameter)

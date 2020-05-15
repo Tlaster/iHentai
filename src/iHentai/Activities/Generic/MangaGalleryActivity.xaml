@@ -27,7 +27,7 @@
                 </interactivity:Interaction.Behaviors>
                 <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Source}" VerticalAlignment="Top">
                     <controls:ItemsRepeater.Layout>
-                        <ui:StaggeredLayout2 DesiredColumnWidth="150" VerticalOffset="75" />
+                        <ui:StaggeredLayout2 DesiredColumnWidth="150" VerticalOffset="{x:Bind ScrollVerticalOffset}" />
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="core:IMangaGallery">
@@ -76,7 +76,8 @@
                                Height="50"
                                Visibility="{x:Bind helper:XamlHelper.IsEmptyToVisibility(ViewModel.Source), Mode=OneWay}" />
         <Grid
-                x:Name="HeaderContainer">
+            Margin="{x:Bind TitleBarThickness}"
+            x:Name="HeaderContainer">
             <Grid Name="DockShadowContainer">
                 <controls2:DropShadowPanel
                         x:Name="DockShadow"

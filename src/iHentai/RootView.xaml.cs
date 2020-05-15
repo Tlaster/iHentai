@@ -42,6 +42,7 @@ namespace iHentai
                 if (!_isUpdatingTab)
                 {
                     _selectedTabIndex = value;
+                    SetTitlebarVisibility(Visibility.Visible);
                 }
             }
         }
@@ -78,6 +79,13 @@ namespace iHentai
             FlurlHttp.Configure(it => { it.HttpClientFactory = new HentaiHttpClientFactory(); });
             Singleton<ProgressImageCache>.Instance.InitializeAsync(httpMessageHandler: HentaiHttpMessageHandler.Instance).FireAndForget();
             iHentaiService.Register<IPreferences>(Singleton<Settings>.Instance);
+            Singleton<BroadcastCenter>.Instance.Subscribe("set_title_bar_visibility", ((sender, args) =>
+            {
+                if (args is Visibility visibility)
+                {
+                    SetTitlebarVisibility(visibility);
+                }
+            }));
             Singleton<BroadcastCenter>.Instance.Subscribe("tab_toggle_visible", (o, o1) => { ToggleTabBar(); });
             Singleton<BroadcastCenter>.Instance.Subscribe("open_new_tab", (sender, args) =>
             {
@@ -104,6 +112,22 @@ namespace iHentai
             }
         }
 
+        private void SetTitlebarVisibility(Visibility visibility)
+        {
+            if (visibility == Visibility.Collapsed)
+            {
+                TitleBarContainer.Visibility = Visibility.Collapsed;
+                TransparentTitleBar.Visibility = Visibility.Visible;
+                Window.Current.SetTitleBar(TransparentTitleBar);
+            }
+            else
+            {
+                TitleBarContainer.Visibility = Visibility.Visible;
+                TransparentTitleBar.Visibility = Visibility.Collapsed;
+                Window.Current.SetTitleBar((TitleBarContainer.Tag as Grid) ?? SecondaryTitleBarDrag);
+            }
+        }
+
         private async void WindowOnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
             if (Singleton<DownloadManager>.Instance.IsBusy)
@@ -122,14 +146,14 @@ namespace iHentai
 
         private void OnTitleBarIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            if (sender.IsVisible)
-            {
-                SecondaryTitleBarContainer.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                SecondaryTitleBarContainer.Visibility = Visibility.Collapsed;
-            }
+            //if (sender.IsVisible)
+            //{
+            //    SecondaryTitleBarContainer.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    SecondaryTitleBarContainer.Visibility = Visibility.Collapsed;
+            //}
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
@@ -172,7 +196,9 @@ namespace iHentai
         {
             RootTabView.Visibility = RootTabView.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
             SecondaryTitleBar.Visibility = RootTabView.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
-            Window.Current.SetTitleBar(RootTabView.IsVisible() ? _titleBarGrid : SecondaryTitleBarDrag);
+            var currentTitleBar = RootTabView.IsVisible() ? _titleBarGrid : SecondaryTitleBarDrag;
+            Window.Current.SetTitleBar(currentTitleBar);
+            TitleBarContainer.Tag = currentTitleBar;
         }
 
         private void OnCoreTitleBarOnLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
@@ -192,7 +218,7 @@ namespace iHentai
                 SecondaryTitleBarInset.MinWidth = sender.SystemOverlayRightInset;
             }
 
-            ShellTitlebarEndInset.Height = ShellTitlebarInset.Height = SecondaryTitleBar.Height = sender.Height;
+            TitleBarContainer.Height = TransparentTitleBar.Height = ShellTitlebarEndInset.Height = ShellTitlebarInset.Height = SecondaryTitleBar.Height = sender.Height;
         }
 
         private void RootTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)

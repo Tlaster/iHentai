@@ -14,7 +14,7 @@
     mc:Ignorable="d">
     <Grid>
         <ScrollViewer>
-            <Grid>
+            <Grid Padding="{x:Bind TitleBarThickness}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

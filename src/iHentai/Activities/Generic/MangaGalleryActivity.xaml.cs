@@ -22,6 +22,7 @@ namespace iHentai.Activities.Generic
     {
         private ImageEx _animationImageElement;
         public override ITabViewModel TabViewModel => ViewModel;
+        public double ScrollVerticalOffset => 75 + TitleBarTop;
         public MangaGalleryViewModel ViewModel { get; private set; }
         public MangaGalleryActivity()
         {

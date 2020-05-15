@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Controls;
 using iHentai.Activities;
 using iHentai.Controls.Paging;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using iHentai.Activities.EHentai;
 using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Helpers;
@@ -176,5 +178,8 @@ namespace iHentai.Common.Tab
         {
             Singleton<BroadcastCenter>.Instance.Send(this, "open_new_tab", new NewTabArgs(typeof(T), parameter, intent));
         }
+
+        public double TitleBarTop => CoreApplication.GetCurrentView().TitleBar.Height;
+        public Thickness TitleBarThickness => new Thickness(0d, TitleBarTop, 0d, 0d);
     }
 }

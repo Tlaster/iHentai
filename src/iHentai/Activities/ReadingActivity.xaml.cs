@@ -46,7 +46,9 @@ namespace iHentai.Activities
             }
             SizeChanged += ReadingActivity_SizeChanged;
             _display = new DisplayRequest();
+            Singleton<BroadcastCenter>.Instance.Send(this, "set_title_bar_visibility", Visibility.Collapsed);
         }
+
 
         protected internal override void OnResume()
         {
@@ -80,12 +82,14 @@ namespace iHentai.Activities
         {
             base.OnDestroy();
             SizeChanged -= ReadingActivity_SizeChanged;
+            Singleton<BroadcastCenter>.Instance.Send(this, "set_title_bar_visibility", Visibility.Visible);
         }
 
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             e.Handled = true;
             ReadingControl.Visibility = ReadingControl.IsVisible() ? Visibility.Collapsed : Visibility.Visible;
+            Singleton<BroadcastCenter>.Instance.Send(this, "set_title_bar_visibility", ReadingControl.Visibility);
         }
 
         private void ReadingControl_OnPointerEntered(object sender, PointerRoutedEventArgs e)
