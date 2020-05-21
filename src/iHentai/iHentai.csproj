@@ -282,7 +282,7 @@
       <Version>3.0.0-beta-1778</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
-      <Version>5.0.7</Version>
+      <Version>5.0.8</Version>
     </PackageReference>
     <PackageReference Include="LZStringCSharp">
       <Version>1.4.0</Version>
@@ -297,7 +297,7 @@
       <Version>7.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.0</Version>
+      <Version>2.4.2</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.8</Version>
