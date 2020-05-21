@@ -19,42 +19,42 @@ namespace iHentai.Html
             return new HtmlParser();
         }
         
-        public static T DeserializeObject<T>(string html)
+        public static T? DeserializeObject<T>(string html) where T: class
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
-            return (T) DeserializeObject(doc.Body, typeof(T));
+            return DeserializeObject(doc.Body, typeof(T)) as T;
         }
 
-        public static object DeserializeObject(string html, Type type)
-        {
-            var parser = GetParser();
-            var doc = parser.ParseDocument(html);
-            return DeserializeObject(doc.Body, type);
-        }
-
-        public static T DeserializeObject<T>(Stream html)
-        {
-            var parser = GetParser();
-            var doc = parser.ParseDocument(html);
-            return (T) DeserializeObject(doc.Body, typeof(T));
-        }
-
-        public static object DeserializeObject(Stream html, Type type)
+        public static object? DeserializeObject(string html, Type type)
         {
             var parser = GetParser();
             var doc = parser.ParseDocument(html);
             return DeserializeObject(doc.Body, type);
         }
 
-        private static object DeserializeObject(IParentNode element, Type type)
+        public static T? DeserializeObject<T>(Stream html) where T: class
+        {
+            var parser = GetParser();
+            var doc = parser.ParseDocument(html);
+            return DeserializeObject(doc.Body, typeof(T)) as T;
+        }
+
+        public static object? DeserializeObject(Stream html, Type type)
+        {
+            var parser = GetParser();
+            var doc = parser.ParseDocument(html);
+            return DeserializeObject(doc.Body, type);
+        }
+
+        private static object? DeserializeObject(IParentNode element, Type type)
         {
             if (!type.IsClass)
             {
                 return null;
             }
 
-            object instance;
+            object? instance;
 
             if (ReflectionHelper.ImplementsGenericDefinition(type, typeof(IList<>), out _))
             {
@@ -84,7 +84,7 @@ namespace iHentai.Html
                         continue;
                     }
 
-                    object propertyValue = null;
+                    object? propertyValue = null;
 
                     if (isHtmlItem)
                     {
@@ -113,7 +113,7 @@ namespace iHentai.Html
             ).Compile()();
         }
 
-        private static object DeserializeHtmlMultiItems(PropertyInfo propertyInfo, IParentNode element)
+        private static object? DeserializeHtmlMultiItems(PropertyInfo propertyInfo, IParentNode element)
         {
             var attributes = propertyInfo.GetCustomAttributes<HtmlMultiItemsAttribute>().Cast<IHtmlItem>().ToList();
             if (attributes?.Any() != true)
@@ -174,7 +174,7 @@ namespace iHentai.Html
             return null;
         }
 
-        private static object DeserializeHtmlItem(PropertyInfo propertyInfo, IParentNode element)
+        private static object? DeserializeHtmlItem(PropertyInfo propertyInfo, IParentNode element)
         {
             var attributes = propertyInfo.GetCustomAttributes<HtmlItemAttribute>().Cast<IHtmlItem>().ToList();
             if (attributes.Any() != true)
@@ -183,7 +183,7 @@ namespace iHentai.Html
             }
 
             var (elements, htmlItem) = GetFirstOfDefaultNode(element, attributes);
-            object targetValue;
+            object? targetValue;
             if (elements == null || htmlItem == null)
             {
                 targetValue = null;
@@ -206,9 +206,9 @@ namespace iHentai.Html
         }
 
 
-        private static object GetTargetValue(IHtmlItem htmlItem, IElement element, Type targetType)
+        private static object? GetTargetValue(IHtmlItem htmlItem, IElement element, Type targetType)
         {
-            object targetValue = null;
+            object? targetValue = null;
             switch (Type.GetTypeCode(targetType))
             {
                 case TypeCode.Boolean:
@@ -295,11 +295,11 @@ namespace iHentai.Html
             return null;
         }
 
-        private static (IElement Element, IHtmlItem HtmlItem) GetFirstOfDefaultNode(IParentNode element,
+        private static (IElement? Element, IHtmlItem? HtmlItem) GetFirstOfDefaultNode(IParentNode element,
             IEnumerable<IHtmlItem> attributes)
         {
-            IElement node = null;
-            IHtmlItem htmlItem = null;
+            IElement? node = null;
+            IHtmlItem? htmlItem = null;
             foreach (var attribute in attributes)
             {
                 node = element.QuerySelector(attribute.Selector);
@@ -316,11 +316,11 @@ namespace iHentai.Html
         }
 
 
-        private static (IHtmlCollection<IElement> Elements, IHtmlItem HtmlItem) GetFirstOfDefaultNodes(
+        private static (IHtmlCollection<IElement>? Elements, IHtmlItem? HtmlItem) GetFirstOfDefaultNodes(
             IParentNode element, IEnumerable<IHtmlItem> attributes)
         {
-            IHtmlCollection<IElement> node = null;
-            IHtmlItem htmlItem = null;
+            IHtmlCollection<IElement>? node = null;
+            IHtmlItem? htmlItem = null;
             foreach (var attribute in attributes)
             {
                 node = element.QuerySelectorAll(attribute.Selector);
@@ -339,6 +339,6 @@ namespace iHentai.Html
 
     public interface IHtmlConverter
     {
-        object ReadHtml(INode? node, Type targetType, object? existingValue);
+        object? ReadHtml(INode? node, Type targetType, object? existingValue);
     }
 }

@@ -221,9 +221,13 @@ namespace iHentai.Services.EHentai.Model
 
     public class CategoryConverter : IHtmlConverter
     {
-        public object ReadHtml(INode node, Type targetType, object existingValue)
+        public object? ReadHtml(INode? node, Type targetType, object? existingValue)
         {
-            return node.TextContent.Trim() switch
+            if (node == null)
+            {
+                return existingValue;
+            }
+            return node?.TextContent?.Trim() switch
             {
                 "Doujinshi" => EHCategory.Doujinshi,
                 "Manga" => EHCategory.Manga,
@@ -235,24 +239,20 @@ namespace iHentai.Services.EHentai.Model
                 "Cosplay" => EHCategory.Cosplay,
                 "Asian Porn" => EHCategory.AsianPorn,
                 "Misc" => EHCategory.Misc,
-#if DEBUG
-                _ => throw new ArgumentOutOfRangeException(nameof(node.TextContent), node.TextContent, null)
-#else
                 _ => EHCategory.Doujinshi
-#endif
             };
         }
     }
 
     public class RatingConverter : IHtmlConverter
     {
-        public object ReadHtml(INode? node, Type targetType, object? existingValue)
+        public object? ReadHtml(INode? node, Type targetType, object? existingValue)
         {
-            if (node == null)
+            if (!(node is IElement element))
             {
                 return existingValue;
             }
-            var match = Regex.Match((node as IElement).GetAttribute("style"),
+            var match = Regex.Match(element.GetAttribute("style"),
                 "background-position:-?(\\d+)px -?(\\d+)px");
             var num1 = Convert.ToInt32(match.Groups[1].Value);
             var num2 = Convert.ToInt32(match.Groups[2].Value);
