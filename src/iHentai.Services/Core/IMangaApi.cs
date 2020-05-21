@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iHentai.Services.Core
@@ -31,7 +32,7 @@ namespace iHentai.Services.Core
     public interface IApi
     {
         string Name { get; }
-
+        bool CanHandle(Uri uri);
     }
 
     public interface IHentaiApi : IApi

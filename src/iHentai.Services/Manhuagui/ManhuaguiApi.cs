@@ -131,17 +131,20 @@ namespace iHentai.Services.Manhuagui
 
         public bool CanHandle(Uri uri)
         {
-            return uri.Host.Equals("i.hamreus.com", StringComparison.InvariantCultureIgnoreCase);
+            return uri.Host.Contains("manhuagui.com") || uri.Host.Equals("i.hamreus.com", StringComparison.InvariantCultureIgnoreCase);
         }
 
         public void Handle(HttpRequestMessage message)
         {
-            var url = new Url(message.RequestUri);
-            var bookId = url.QueryParams["bookId"];
-            var chapterId = url.QueryParams["cid"];
-            if (bookId != null && chapterId != null)
+            if (message.RequestUri.Host.Equals("i.hamreus.com", StringComparison.InvariantCultureIgnoreCase))
             {
-                message.Headers.Referrer = new Uri($"{Host}/comic/{bookId}/{chapterId}.html");
+                var url = new Url(message.RequestUri);
+                var bookId = url.QueryParams["bookId"];
+                var chapterId = url.QueryParams["cid"];
+                if (bookId != null && chapterId != null)
+                {
+                    message.Headers.Referrer = new Uri($"{Host}/comic/{bookId}/{chapterId}.html");
+                }   
             }
         }
     }

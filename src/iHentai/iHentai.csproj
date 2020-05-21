@@ -149,8 +149,6 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
-    <Compile Include="Common\Helpers\DownloadBase.cs" />
-    <Compile Include="Common\Helpers\DownloadManager.cs" />
     <Compile Include="Common\Helpers\ImageDownload.cs" />
     <Compile Include="Common\Helpers\ProgressCacheBase.cs" />
     <Compile Include="Common\Extensions\StreamExtensions.cs" />
@@ -346,6 +344,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iHentai.Downloader\iHentai.Downloader.csproj">
+      <Project>{7138B46D-46D9-491C-9768-5710FE6A58B0}</Project>
+      <Name>iHentai.Downloader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\iHentai.Services\iHentai.Services.csproj">
       <Project>{4266b09c-65e2-4966-b747-365ea1c57518}</Project>
       <Name>iHentai.Services</Name>

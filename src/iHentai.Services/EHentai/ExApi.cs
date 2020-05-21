@@ -21,7 +21,7 @@ namespace iHentai.Services.EHentai
         public override string Host => "https://exhentai.org/";
         public bool RequireLogin => string.IsNullOrEmpty(GetCookie());
 
-        public bool CanHandle(Uri uri)
+        public override bool CanHandle(Uri uri)
         {
             if (uri.Host.Equals("exhentai.org", StringComparison.InvariantCultureIgnoreCase))
             {

@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai", "iHentai\iHentai.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Services", "iHentai.Services\iHentai.Services.csproj", "{4266B09C-65E2-4966-B747-365EA1C57518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Html", "iHentai.Html\iHentai.Html.csproj", "{4CEBC8F7-F20F-44A7-8628-B49349F8C7AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iHentai.Html", "iHentai.Html\iHentai.Html.csproj", "{4CEBC8F7-F20F-44A7-8628-B49349F8C7AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Downloader", "iHentai.Downloader\iHentai.Downloader.csproj", "{7138B46D-46D9-491C-9768-5710FE6A58B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,26 @@ Global
 		{4CEBC8F7-F20F-44A7-8628-B49349F8C7AF}.Release|x64.Build.0 = Release|Any CPU
 		{4CEBC8F7-F20F-44A7-8628-B49349F8C7AF}.Release|x86.ActiveCfg = Release|Any CPU
 		{4CEBC8F7-F20F-44A7-8628-B49349F8C7AF}.Release|x86.Build.0 = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Debug|x86.Build.0 = Debug|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|ARM.Build.0 = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|ARM64.Build.0 = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|x64.Build.0 = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|x86.ActiveCfg = Release|Any CPU
+		{7138B46D-46D9-491C-9768-5710FE6A58B0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

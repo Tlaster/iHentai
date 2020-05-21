@@ -18,6 +18,11 @@ namespace iHentai.Services.EHentai
         public static EHApi Instance { get; } = new EHApi();
         public virtual string Host => "https://e-hentai.org/";
         public virtual string Name { get; } = "ehentai";
+        
+        public virtual bool CanHandle(Uri uri)
+        {
+            return uri.Host.Equals("e-hentai.org", StringComparison.InvariantCultureIgnoreCase);
+        }
 
         public async Task<IEnumerable<EHGallery>> Tag(string link, int page = 0, int from = 0)
         {

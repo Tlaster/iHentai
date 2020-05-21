@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
+using iHentai.Downloader;
 using Microsoft.Toolkit.Helpers;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
@@ -26,7 +27,7 @@ namespace iHentai.Common.Helpers
             _extendedPropertyNames.Add(DateAccessedProperty);
         }
 
-        /// <summary>
+        /// <summary> 
         /// Cache specific hooks to process items from HTTP response
         /// </summary>
         /// <param name="stream">input stream</param>
@@ -73,17 +74,16 @@ namespace iHentai.Common.Helpers
         /// <param name="baseFile">storage file</param>
         /// <param name="initializerKeyValues">key value pairs used when initializing instance of generic type</param>
         /// <returns>awaitable task</returns>
-        protected override async Task<BitmapImage> InitializeTypeAsync(StorageFile baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
+        protected override async Task<BitmapImage> InitializeTypeAsync(FileInfo baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
-            using (var stream = await baseFile.OpenStreamForReadAsync().ConfigureAwait(false))
-            {
-                return await InitializeTypeAsync(stream, initializerKeyValues).ConfigureAwait(false);
-            }
+            using var stream = baseFile.OpenRead();
+            return await InitializeTypeAsync(stream, initializerKeyValues).ConfigureAwait(false);
         }
 
-        protected override async Task<StorageFile> GetFromCache(Uri uri, CancellationToken cancellationToken)
+        protected override async Task<FileInfo> GetFromCache(Uri uri, CancellationToken cancellationToken)
         {
-            return await ImageCache.Instance.GetFileFromCacheAsync(uri) ?? await Singleton<ProgressImageCache>.Instance.GetFileFromCacheAsync(uri);
+            var file = await ImageCache.Instance.GetFileFromCacheAsync(uri) ?? await Singleton<ProgressImageCache>.Instance.GetFileFromCacheAsync(uri);
+            return new FileInfo(file.Path);
         }
     }
 }
