@@ -20,6 +20,7 @@ using iHentai.Common;
 using iHentai.Common.Helpers;
 using iHentai.Common.Tab;
 using iHentai.Controls;
+using iHentai.Downloader;
 using iHentai.Services;
 using iHentai.Services.Core;
 using Microsoft.Toolkit.Helpers;
@@ -131,7 +132,7 @@ namespace iHentai
 
         private async void WindowOnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
-            if (Singleton<DownloadManager>.Instance.IsBusy)
+            if (DownloadManager.Instance.IsBusy)
             {
                 e.Handled = true;
                 var dialog = new MessageDialog("Exit will stop the download", "Downloading books now, exit anyway?");
