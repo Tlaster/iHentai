@@ -8,7 +8,7 @@ namespace iHentai.Data
     public class SettingsDb
     {
         public static SettingsDb Instance { get; } = new SettingsDb();
-        private string DbFile => Path.Combine(HentaiApp.Instance.Resolve<IPlatformService>().LocalPath, "settings.db");
+        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "settings.db");
 
         public void Set(string key, string value)
         {

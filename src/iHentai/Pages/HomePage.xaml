@@ -10,9 +10,8 @@
         x:Name="RootNavigationView"
         SelectionChanged="NavigationView_SelectionChanged"
         IsBackEnabled="False"
-        OpenPaneLength="200"
-        MenuItemsSource="{x:Bind Menus}"
-        IsBackButtonVisible="Collapsed">
+        IsBackButtonVisible="Collapsed"
+        MenuItemsSource="{x:Bind Menus}">
         <Frame Name="RootFrame" />
     </controls:NavigationView>
 </Page>

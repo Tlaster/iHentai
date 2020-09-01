@@ -9,40 +9,46 @@ using iHentai.Platform;
 
 namespace iHentai
 {
-    public class HentaiApp
+    internal static class Ioc
     {
-        private readonly ConcurrentDictionary<Type, object> _container = new ConcurrentDictionary<Type, object>();
-        
-        private HentaiApp()
-        {
-            Register<HttpMessageHandler, HentaiHttpHandler>();
-            Register<IExtensionStorage, ExtensionDb>(() => ExtensionDb.Instance);
-            Register<IPlatformService, PlatformService>();
-        }
+        private readonly static ConcurrentDictionary<Type, object> _container = new ConcurrentDictionary<Type, object>();
 
-        public static HentaiApp Instance { get; } = new HentaiApp();
-        public ExtensionManager ExtensionManager { get; } = new ExtensionManager();
-
-
-        public void Register<T, V>(Func<V> generator) where V : T
+        public static void Register<T, V>(this object _, Func<V> generator) where V : T
         {
             _container.TryAdd(typeof(T), generator.Invoke());
         }
 
-        public void Register<T, V>() where V: T, new()
+        public static void Register<T, V>(this object _) where V : T, new()
         {
             _container.TryAdd(typeof(T), new V());
         }
 
-        public T Resolve<T>()
+        public static T Resolve<T>(this object _)
         {
             if (_container.TryGetValue(typeof(T), out var result))
             {
                 return (T)result;
-            } else
+            }
+            else
             {
                 return default;
             }
         }
+    }
+
+    public class HentaiApp
+    {
+        
+        private HentaiApp()
+        {
+            this.Register<HttpMessageHandler, HentaiHttpHandler>();
+            this.Register<IExtensionStorage, ExtensionDb>(() => ExtensionDb.Instance);
+            this.Register<IPlatformService, PlatformService>();
+            ExtensionManager = new ExtensionManager();
+        }
+
+        public static HentaiApp Instance { get; } = new HentaiApp();
+        public ExtensionManager ExtensionManager { get; }
+
     }
 }

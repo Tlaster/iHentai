@@ -33,10 +33,9 @@ namespace iHentai.Extensions
 
         private void Init()
         {
-            var extensionPath = SettingsDb.Instance.Get("extension_path", Path.Combine(Environment.CurrentDirectory, "Extensions"));
-            if (Directory.Exists(extensionPath))
+            if (Directory.Exists(ExtensionPath))
             {
-                foreach (var directory in Directory.GetDirectories(extensionPath))
+                foreach (var directory in Directory.GetDirectories(ExtensionPath))
                 {
                     var manifest = Path.Combine(directory, "manifest.json");
                     if (!File.Exists(manifest))

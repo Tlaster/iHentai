@@ -11,6 +11,7 @@ using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 using NavigationViewItemBase = Microsoft.UI.Xaml.Controls.NavigationViewItemBase;
 using NavigationViewItemSeparator = Microsoft.UI.Xaml.Controls.NavigationViewItemSeparator;
 using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,21 +31,21 @@ namespace iHentai.Pages
             RootNavigationView.SelectedItem = Menus[0];
         }
 
-        public NavigationViewItemBase[] Menus { get; } =
-        {
+        public ObservableCollection<NavigationViewItemBase> Menus { get; } =
+        new ObservableCollection<NavigationViewItemBase>(new[] {
             new NavigationViewItem
-                {Icon = new SymbolIcon(Symbol.Folder), Content = "本地库", Tag = "Local.LocalLibraryPage"},
+            { Icon = new SymbolIcon(Symbol.Folder), Content = "本地库", Tag = "Local.LocalLibraryPage" },
             new NavigationViewItem
-                {Icon = new SymbolIcon(Symbol.Globe), Content = "扩展源", SelectsOnInvoked = false}.Also(it =>
+            { Icon = new SymbolIcon(Symbol.Globe), Content = "扩展源", SelectsOnInvoked = false }.Also(it =>
             {
                 foreach (var (_, value) in HentaiApp.Instance.ExtensionManager.Extensions)
                 {
-                    it.MenuItems.Add(new NavigationViewItem {Content = value.Name, Tag = value});
+                    it.MenuItems.Add(new NavigationViewItem { Content = value.Name, Tag = value });
                 }
             }),
-            new NavigationViewItem {Icon = new SymbolIcon(Symbol.Favorite), Content = "收藏"},
-            new NavigationViewItem {Icon = new SymbolIcon(Symbol.Download), Content = "下载"},
-        };
+            new NavigationViewItem { Icon = new SymbolIcon(Symbol.Favorite), Content = "收藏" },
+            new NavigationViewItem { Icon = new SymbolIcon(Symbol.Download), Content = "下载" },
+        });
 
         private void NavigationView_SelectionChanged(NavigationView sender,
             NavigationViewSelectionChangedEventArgs args)
