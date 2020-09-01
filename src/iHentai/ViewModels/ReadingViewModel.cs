@@ -1,132 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-using iHentai.Common.Helpers;
-using Microsoft.Toolkit.Helpers;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Microsoft.Toolkit.Uwp.UI;
+using iHentai.Data;
 using PropertyChanged;
 
 namespace iHentai.ViewModels
 {
-    internal interface IReadingImage : INotifyPropertyChanged
+    internal abstract class ReadingViewModel : ViewModelBase
     {
-        ImageSource Source { get; }
-        int Index { get; }
-        bool IsLoading { get; }
-        float Progress { get; }
-        Task Reload();
-    }
-
-
-    internal class ReadingImage : ReadingImageBase
-    {
-        private readonly string _name;
-
-        public ReadingImage(string url, int index, string name)
-        {
-            Url = url;
-            _name = name;
-            Index = index;
-        }
-
-        public string Url { get; }
-
-        protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
-        {
-            if (removeCache)
-            {
-                await Singleton<ProgressImageCache>.Instance.RemoveAsync(new[] {new Uri(Url)});
-            }
-
-            //TODO: check if image already downloaded
-            return await Singleton<ProgressImageCache>.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token, progress: this);
-        }
-    }
-
-    internal abstract class ReadingImageBase : IReadingImage, IProgress<float>
-    {
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private ImageSource _source;
-
-        public ImageSource Source
-        {
-            get
-            {
-                if (_source == null)
-                {
-                    Reload(false);
-                }
-
-                return _source;
-            }
-        }
-
-        public int Index { get; protected set; }
-
+        public string? Title { get; protected set; }
         public bool IsLoading { get; protected set; }
-
-        public float Progress { get; protected set; }
-
-        public async Task Reload()
-        {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
-            await Reload(true);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private async Task Reload(bool removeCache)
-        {
-            if (IsLoading)
-            {
-                return;
-            }
-
-            IsLoading = true;
-            _source = await LoadImage(removeCache, _cancellationTokenSource.Token);
-            IsLoading = false;
-            if (_source != null)
-            {
-                OnPropertyChanged(nameof(Source));
-            }
-            else
-            {
-                Reload(true);
-            }
-        }
-
-        protected abstract Task<ImageSource> LoadImage(bool removeCache, CancellationToken token);
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Report(float value)
-        {
-            DispatcherHelper.ExecuteOnUIThreadAsync(() => Progress = value, CoreDispatcherPriority.High);
-        }
-    }
-
-    internal enum ReadingViewMode
-    {
-        Book,
-        Flip,
-        List
-    }
-
-    internal abstract class ReadingViewModel : TabViewModelBase
-    {
         private int _selectedIndex;
 
         public int SelectedIndex
@@ -142,20 +26,25 @@ namespace iHentai.ViewModels
             }
         }
 
-        public List<IReadingImage> Images { get; protected set; }
+        public IEnumerable<ReadingImages.IReadingImage>? Images { get; protected set; }
 
         [DependsOn(nameof(Images))]
         [AlsoNotifyFor(nameof(ViewMode))]
-        public int Count => (Images?.Count ?? 1) - 1;
+        public int Count => (Images?.Count() ?? 1) - 1;
 
         public bool CanSwitchChapter { get; protected set; } = true;
 
         public FlowDirection FlowDirection
         {
-            get => Singleton<Settings>.Instance.Get("reading_flow_direction", FlowDirection.RightToLeft);
+            get
+            {
+                var value = SettingsDb.Instance.Get("reading_flow_direction", FlowDirection.LeftToRight.ToString());
+                Enum.TryParse<FlowDirection>(value, out var result);
+                return result;
+            }
             set
             {
-                Singleton<Settings>.Instance.Set("reading_flow_direction", value);
+                SettingsDb.Instance.Set("reading_flow_direction", value.ToString());
                 OnPropertyChanged(nameof(FlowDirection));
             }
         }
@@ -164,27 +53,62 @@ namespace iHentai.ViewModels
         {
             get
             {
-                if (Images?.Count == 1)
+                if (Images?.Count() == 1)
                 {
                     return ReadingViewMode.Flip;
                 }
-                return Singleton<Settings>.Instance.Get("reading_mode", ReadingViewMode.Flip);
+                
+                var value = SettingsDb.Instance.Get("reading_mode", ReadingViewMode.Flip.ToString());
+                Enum.TryParse<ReadingViewMode>(value, out var result);
+                return result;
             }
             set
             {
-                Singleton<Settings>.Instance.Set("reading_mode", value);
+                SettingsDb.Instance.Set("reading_mode", value.ToString());
                 OnPropertyChanged(nameof(ViewMode));
             }
         }
 
-        [DependsOn(nameof(FlowDirection))] public bool IsLTR => FlowDirection == FlowDirection.LeftToRight;
+        public bool AutoHideUi
+        {
+            get => bool.Parse(SettingsDb.Instance.Get("reading_auto_hide_ui", false.ToString()) ?? false.ToString());
+            set
+            {
+                SettingsDb.Instance.Set("reading_auto_hide_ui", value.ToString());
+                OnPropertyChanged(nameof(AutoHideUi));
+            }
+        }
 
-        [DependsOn(nameof(FlowDirection))] public bool IsRTL => FlowDirection == FlowDirection.RightToLeft;
 
-        [DependsOn(nameof(ViewMode))] public bool IsBookMode => ViewMode == ReadingViewMode.Book;
+        [DependsOn(nameof(FlowDirection))] public bool IsLTR
+        {
+            get => FlowDirection == FlowDirection.LeftToRight;
+            set => FlowDirection = FlowDirection.LeftToRight;
+        }
 
-        [DependsOn(nameof(ViewMode))] public bool IsFlipMode => ViewMode == ReadingViewMode.Flip;
-        [DependsOn(nameof(ViewMode))] public bool IsListMode => ViewMode == ReadingViewMode.List;
+        [DependsOn(nameof(FlowDirection))] public bool IsRTL
+        {
+            get => FlowDirection == FlowDirection.RightToLeft;
+            set => FlowDirection = FlowDirection.RightToLeft;
+        }
+
+        [DependsOn(nameof(ViewMode))] public bool IsBookMode
+        {
+            get => ViewMode == ReadingViewMode.Book;
+            set => ViewMode = ReadingViewMode.Book;
+        }
+
+        [DependsOn(nameof(ViewMode))] public bool IsFlipMode
+        {
+            get => ViewMode == ReadingViewMode.Flip;
+            set => ViewMode = ReadingViewMode.Flip;
+        }
+
+        [DependsOn(nameof(ViewMode))] public bool IsListMode
+        {
+            get => ViewMode == ReadingViewMode.List;
+            set => ViewMode = ReadingViewMode.List;
+        }
 
         public void ReloadCurrent()
         {
@@ -198,5 +122,28 @@ namespace iHentai.ViewModels
                 Images?.ElementAtOrDefault(SelectedIndex + 1)?.Reload();
             }
         }
+
+        public void Next()
+        {
+            if (Images != null && SelectedIndex < Images.Count() - 1)
+            {
+                SelectedIndex++;
+            }
+        }
+
+        public void Previous()
+        {
+            if (Images != null && SelectedIndex > 0)
+            {
+                SelectedIndex--;
+            }
+        }
+    }
+    
+    public enum ReadingViewMode
+    {
+        Book,
+        Flip,
+        List
     }
 }

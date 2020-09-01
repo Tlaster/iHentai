@@ -52,7 +52,6 @@ namespace iHentai.Common.Extensions
 
         }
 
-
         private static async void TryLoadIfNotFill(ScrollViewer scrollViewer)
         {
             if (GetIsLoading(scrollViewer))

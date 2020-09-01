@@ -4,20 +4,17 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
-  xmlns:iot2="http://schemas.microsoft.com/appx/manifest/iot/windows10/2"  
-  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap mp desktop4 iot2 rescap">
+  IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="moe.tlaster.ihentai"
-    Publisher="CN=Tlaster"
+    Name="0c8533d9-a6e9-4fc5-8a83-57cabd4a14e9"
+    Publisher="CN=Asahi"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="cea240a5-8c2a-41dc-bee9-872cb8cf75b0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="0c8533d9-a6e9-4fc5-8a83-57cabd4a14e9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>iHentai</DisplayName>
+    <DisplayName>iComix</DisplayName>
     <PublisherDisplayName>Asahi</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -33,16 +30,14 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="iHentai.App"
-      desktop4:SupportsMultipleInstances="true"
-      iot2:SupportsMultipleInstances="true">
+      EntryPoint="iHentai.App">
       <uap:VisualElements
-        DisplayName="iHentai"
+        DisplayName="iComix"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="iHentai"
+        Description="iComix"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
@@ -50,6 +45,5 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <rescap:Capability Name="confirmAppClose"/>
   </Capabilities>
 </Package>

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Newtonsoft.Json;
 
 namespace iHentai.Common
 {
-    internal static class Extension
+    public static class Extension
     {
         // Kotlin: fun <T> T.also(block: (T) -> Unit): T
         public static T Also<T>(this T self, Action<T> block)
@@ -21,11 +20,6 @@ namespace iHentai.Common
         public static T FromJson<T>(this string value)
         {
             return JsonConvert.DeserializeObject<T>(value);
-        }
-
-        public static bool IsVisible(this UIElement element)
-        {
-            return element.Visibility == Visibility.Visible;
         }
 
         // Kotlin: fun <T, R> T.let(block: (T) -> R): R

@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="iHentai.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d mc">
+    <controls:NavigationView 
+        x:Name="RootNavigationView"
+        SelectionChanged="NavigationView_SelectionChanged"
+        IsBackEnabled="False"
+        OpenPaneLength="200"
+        MenuItemsSource="{x:Bind Menus}"
+        IsBackButtonVisible="Collapsed">
+        <Frame Name="RootFrame" />
+    </controls:NavigationView>
+</Page>

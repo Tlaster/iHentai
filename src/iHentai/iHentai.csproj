@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{917DD27A-4529-4134-9F2F-06558C336388}</ProjectGuid>
+    <ProjectGuid>{3403CAA6-1BFC-4953-8876-10361D91069F}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>iHentai</RootNamespace>
@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -118,82 +118,90 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Activities\EHentai\GalleryActivity.xaml.cs">
-      <DependentUpon>GalleryActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\EHentai\GalleryDetailActivity.xaml.cs">
-      <DependentUpon>GalleryDetailActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\EHentai\LoginActivity.xaml.cs">
-      <DependentUpon>LoginActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\Generic\MangaDetailActivity.xaml.cs">
-      <DependentUpon>MangaDetailActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\Generic\MangaGalleryActivity.xaml.cs">
-      <DependentUpon>MangaGalleryActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\NewTabActivity.xaml.cs">
-      <DependentUpon>NewTabActivity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\ReadingActivity.xaml.cs">
-      <DependentUpon>ReadingActivity.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Extensions\AutoSuggestBoxExtension.cs" />
-    <Compile Include="Common\Extensions\LoadingExtension.cs" />
-    <Compile Include="Common\Helpers\BroadcastCenter.cs" />
-    <Compile Include="Common\Collection\LoadingCollection.cs" />
     <Compile Include="Common\Extensions.cs" />
-    <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
-    <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
-    <Compile Include="Common\Helpers\ImageDownload.cs" />
-    <Compile Include="Common\Helpers\ProgressCacheBase.cs" />
-    <Compile Include="Common\Extensions\StreamExtensions.cs" />
-    <Compile Include="Common\Helpers\ProgressImageCache.cs" />
-    <Compile Include="Common\Helpers\ThemeManager.cs" />
+    <Compile Include="Common\Extensions\FolderPickerExtensions.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
-    <Compile Include="Common\UI\FadeActivityTransition.cs" />
-    <Compile Include="Common\Helpers\HtmlCache.cs" />
-    <Compile Include="Common\UI\FixedColumnLayout.cs" />
-    <Compile Include="Common\UI\GalleryChapterSelector.cs" />
-    <Compile Include="Common\UI\QuickReturnHeaderBehavior.cs" />
-    <Compile Include="Common\UI\StaggeredLayout.cs" />
-    <Compile Include="Common\Helpers\Settings.cs" />
-    <Compile Include="Common\Tab\TabManager.cs" />
-    <Compile Include="Common\UI\StaggeredLayout2.cs" />
-    <Compile Include="Controls\AspectRatioView.cs" />
-    <Compile Include="Controls\Book\BookView.xaml.cs">
-      <DependentUpon>BookView.xaml</DependentUpon>
+    <Compile Include="Common\HentaiHttpClient.cs" />
+    <Compile Include="Data\ExtensionDb.cs" />
+    <Compile Include="Data\LocalLibraryDb.cs" />
+    <Compile Include="Data\Models\ExtensionDbModel.cs" />
+    <Compile Include="Data\Models\LocalGalleryModel.cs" />
+    <Compile Include="Data\Models\LocalLibraryModel.cs" />
+    <Compile Include="Data\Models\SettingItemModel.cs" />
+    <Compile Include="Data\SettingsDb.cs" />
+    <Compile Include="Extensions\Common\JSValueExtensions.cs" />
+    <Compile Include="Extensions\Common\PathHelper.cs" />
+    <Compile Include="Extensions\ExtensionManager.cs" />
+    <Compile Include="Extensions\Models\ExtensionManifest.cs" />
+    <Compile Include="Extensions\Runtime\Fetch.cs" />
+    <Compile Include="Extensions\Runtime\Html\HtmlElement.cs" />
+    <Compile Include="Extensions\Runtime\LocalStorage.cs" />
+    <Compile Include="Extensions\Runtime\Log.cs" />
+    <Compile Include="Extensions\ScriptEngine.cs" />
+    <Compile Include="HentaiApp.cs" />
+    <Compile Include="Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CardView.cs" />
-    <Compile Include="Controls\HtmlTextBlock.cs" />
-    <Compile Include="Controls\ImageEx2.cs" />
-    <Compile Include="Controls\Optional.cs" />
-    <Compile Include="Controls\Paging\Activity.cs" />
-    <Compile Include="Controls\Paging\ActivityContainer.cs" />
-    <Compile Include="Controls\Paging\ActivityModel.cs" />
-    <Compile Include="Controls\Paging\ActivityStackManager.cs" />
-    <Compile Include="Controls\Paging\IActivityTransition.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Pages\Local\LocalLibraryPage.xaml.cs">
+      <DependentUpon>LocalLibraryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReadingPage.xaml.cs">
+      <DependentUpon>ReadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Script\ScriptGalleryPage.xaml.cs">
+      <DependentUpon>ScriptGalleryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Platform\FolderItem.cs" />
+    <Compile Include="Platform\IFolderItem.cs" />
+    <Compile Include="Platform\IPlatformService.cs" />
+    <Compile Include="Platform\PlatformService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadingImages\LocalReadingImage.cs" />
+    <Compile Include="ReadingImages\ReadingImageBase.cs" />
     <Compile Include="RootView.xaml.cs">
       <DependentUpon>RootView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\ServiceManager.cs" />
-    <Compile Include="ViewModels\EHentai\EHReadingViewModel.cs" />
-    <Compile Include="ViewModels\EHentai\GalleryDetailViewModel.cs" />
-    <Compile Include="ViewModels\EHentai\LoginViewModel.cs" />
-    <Compile Include="ViewModels\Generic\MangaDetailViewModel.cs" />
-    <Compile Include="ViewModels\Generic\MangaReadingViewModel.cs" />
-    <Compile Include="ViewModels\Generic\MangaGalleryViewModel.cs" />
-    <Compile Include="ViewModels\NewTabViewModel.cs" />
+    <Compile Include="Services\IMangaApi.cs" />
+    <Compile Include="Services\LocalLibraryManager.cs" />
+    <Compile Include="Services\Models\Core\IGallery.cs" />
+    <Compile Include="Services\Models\Core\IGalleryDetail.cs" />
+    <Compile Include="Services\Models\Core\IMangaChapter.cs" />
+    <Compile Include="Services\Models\GalleryModel.cs" />
+    <Compile Include="Services\Models\Script\ScriptGalleryDetailModel.cs" />
+    <Compile Include="Services\Models\Script\ScriptGalleryModel.cs" />
+    <Compile Include="Services\Models\Script\ScriptMangaChapter.cs" />
+    <Compile Include="Services\Models\Script\ScriptRequestModifier.cs" />
+    <Compile Include="Services\ScriptApi.cs" />
+    <Compile Include="ViewModels\Local\LocalLibraryReadingViewModel.cs" />
+    <Compile Include="ViewModels\Local\LocalLibraryViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
-    <Compile Include="ViewModels\TabViewModelBase.cs" />
-    <Compile Include="ViewModels\EHentai\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\RootViewModel.cs" />
+    <Compile Include="ViewModels\Script\ScriptGalleryDetailViewModel.cs" />
+    <Compile Include="ViewModels\Script\ScriptGalleryViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\BookView.xaml.cs">
+      <DependentUpon>BookView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalleryItemView.xaml.cs">
+      <DependentUpon>GalleryItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImageEx\CachingStrategy.cs" />
+    <Compile Include="Views\ImageEx\ImageEx.cs" />
+    <Compile Include="Views\ImageEx\ImageEx.Members.cs" />
+    <Compile Include="Views\ImageEx\ImageExBase.cs" />
+    <Compile Include="Views\ImageEx\ImageExBase.Members.cs" />
+    <Compile Include="Views\ImageEx\ImageExBase.Placeholder.cs" />
+    <Compile Include="Views\ImageEx\ImageExBase.Source.cs" />
+    <Compile Include="Views\ImageEx\ImageExFailedEventArgs.cs" />
+    <Compile Include="Views\ImageEx\ImageExOpenedEventArgs.cs" />
+    <Compile Include="Views\Optional.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -201,51 +209,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\LargeTile.scale-100.png" />
-    <Content Include="Assets\LargeTile.scale-125.png" />
-    <Content Include="Assets\LargeTile.scale-150.png" />
-    <Content Include="Assets\LargeTile.scale-200.png" />
-    <Content Include="Assets\LargeTile.scale-400.png" />
-    <Content Include="Assets\SmallTile.scale-100.png" />
-    <Content Include="Assets\SmallTile.scale-125.png" />
-    <Content Include="Assets\SmallTile.scale-150.png" />
-    <Content Include="Assets\SmallTile.scale-200.png" />
-    <Content Include="Assets\SmallTile.scale-400.png" />
-    <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\SplashScreen.scale-125.png" />
-    <Content Include="Assets\SplashScreen.scale-150.png" />
-    <Content Include="Assets\SplashScreen.scale-400.png" />
-    <Content Include="Assets\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\Square150x150Logo.scale-125.png" />
-    <Content Include="Assets\Square150x150Logo.scale-150.png" />
-    <Content Include="Assets\Square150x150Logo.scale-400.png" />
-    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
-    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
-    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
-    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
-    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
-    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
-    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
-    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
-    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
-    <Content Include="Assets\Square44x44Logo.scale-100.png" />
-    <Content Include="Assets\Square44x44Logo.scale-125.png" />
-    <Content Include="Assets\Square44x44Logo.scale-150.png" />
-    <Content Include="Assets\Square44x44Logo.scale-400.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-125.png" />
-    <Content Include="Assets\StoreLogo.scale-150.png" />
-    <Content Include="Assets\StoreLogo.scale-200.png" />
-    <Content Include="Assets\StoreLogo.scale-400.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -253,6 +216,7 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
@@ -260,77 +224,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AngleSharp">
-      <Version>1.0.0-alpha-822</Version>
-    </PackageReference>
-    <PackageReference Include="Bug10.Icon">
-      <Version>1.0.12</Version>
-    </PackageReference>
-    <PackageReference Include="Flurl.Http">
-      <Version>3.0.0-pre3</Version>
-    </PackageReference>
-    <PackageReference Include="Fody">
-      <Version>6.1.1</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Jint">
-      <Version>3.0.0-beta-1778</Version>
-    </PackageReference>
-    <PackageReference Include="LiteDB">
-      <Version>5.0.8</Version>
-    </PackageReference>
-    <PackageReference Include="LZStringCSharp">
-      <Version>1.4.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.10</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>7.0.0-preview1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>7.0.0-preview1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.4.2</Version>
-    </PackageReference>
-    <PackageReference Include="PropertyChanged.Fody">
-      <Version>3.2.8</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Activities\EHentai\GalleryActivity.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Activities\EHentai\GalleryDetailActivity.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\EHentai\LoginActivity.xaml">
+    <Page Include="Pages\Local\LocalLibraryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\Generic\MangaDetailActivity.xaml">
+    <Page Include="Pages\ReadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\Generic\MangaGalleryActivity.xaml">
+    <Page Include="Pages\Script\ScriptGalleryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Activities\NewTabActivity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Activities\ReadingActivity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Book\BookView.xaml">
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -338,20 +248,61 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Generic.xaml">
+    <Page Include="Views\BookView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GalleryItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImageEx\ImageEx.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iHentai.Downloader\iHentai.Downloader.csproj">
-      <Project>{7138B46D-46D9-491C-9768-5710FE6A58B0}</Project>
-      <Name>iHentai.Downloader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\iHentai.Services\iHentai.Services.csproj">
-      <Project>{4266b09c-65e2-4966-b747-365ea1c57518}</Project>
-      <Name>iHentai.Services</Name>
-    </ProjectReference>
+    <PackageReference Include="AngleSharp">
+      <Version>1.0.0-alpha-827</Version>
+    </PackageReference>
+    <PackageReference Include="Bug10.Icon">
+      <Version>1.0.12</Version>
+    </PackageReference>
+    <PackageReference Include="Fody">
+      <Version>6.2.4</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
+      <Version>7.0.0-preview2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>7.0.0-preview2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.5.0-prerelease.200812001</Version>
+    </PackageReference>
+    <PackageReference Include="MimeTypeMapOfficial">
+      <Version>1.0.11</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NiL.JS">
+      <Version>2.5.1466</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="SharpCompress">
+      <Version>0.26.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
