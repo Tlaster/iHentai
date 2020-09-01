@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <CommandBar OverflowButtonVisibility="Collapsed" VerticalContentAlignment="Center" Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
+        <CommandBar Margin="8" OverflowButtonVisibility="Collapsed" VerticalContentAlignment="Center" Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
             <AppBarElementContainer VerticalContentAlignment="Center">
                 <AutoSuggestBox PlaceholderText="搜索" Width="200">
                     <AutoSuggestBox.QueryIcon>

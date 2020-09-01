@@ -12,12 +12,12 @@ namespace iHentai.Platform
         public async Task<IFolderItem> GetFolder(string token)
         {
             var folder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(token);
-            return new FolderItem(folder, token);
+            return new PathFolderItem(folder.Path, token);
         }
 
         public async Task<IFolderItem> GetFolderFromPath(string path, string token)
         {
-            return new FolderItem(await StorageFolder.GetFolderFromPathAsync(path), token);
+            return new PathFolderItem(path, token);
         }
     }
 }
