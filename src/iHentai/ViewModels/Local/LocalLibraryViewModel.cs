@@ -14,7 +14,7 @@ namespace iHentai.ViewModels.Local
 {
     internal class LocalLibraryViewModel : ViewModelBase
     {
-        public bool Loading { get; private set; }
+        public bool IsLoading { get; private set; }
 
         public IEnumerable<LocalGalleryModel> Source => LocalLibraryManager.Instance.LocalGallery;
 
@@ -27,11 +27,18 @@ namespace iHentai.ViewModels.Local
             if (result != null)
             {
                 var token = StorageApplicationPermissions.FutureAccessList.Add(result);
-                Loading = true;
+                IsLoading = true;
                 var folder = await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(token);
                 await LocalLibraryManager.Instance.AddFolder(folder);
-                Loading = false;
+                IsLoading = false;
             }
+        }
+
+        public async void Refresh()
+        {
+            IsLoading = true;
+            await LocalLibraryManager.Instance.Refresh();
+            IsLoading = false;
         }
     }
 }

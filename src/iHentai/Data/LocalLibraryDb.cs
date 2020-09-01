@@ -52,9 +52,10 @@ namespace iHentai.Data
         {
             using var db = new LiteDatabase(DbFile);
             var galleryColumn = db.GetCollection<LocalGalleryModel>();
-            galleryColumn.DeleteMany(it => model.Id == it.LibraryId);
+            var deleted = galleryColumn.DeleteMany(it => !gallery.Select(g => g.Path).Any(g => g == it.Path));
             gallery.ForEach(it => it.LibraryId = model.Id);
-            galleryColumn.InsertBulk(gallery);
+            var news = gallery.Where(it => galleryColumn.FindOne(g => g.Path == it.Path) == null);
+            galleryColumn.InsertBulk(news);
         }
 
         public void RemoveLocalLibrary(LocalLibraryModel model)

@@ -22,13 +22,22 @@
                     </AutoSuggestBox.QueryIcon>
                 </AutoSuggestBox>
             </AppBarElementContainer>
+            <AppBarButton Label="过滤" >
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Filter"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton Label="刷新">
+            <AppBarButton Label="刷新" Click="{x:Bind ViewModel.Refresh}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Refresh"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarSeparator/>
             <AppBarButton Label="添加..." >
                 <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -39,14 +48,9 @@
                     <SymbolIcon Symbol="Add" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="管理" >
-                <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Library"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
         </CommandBar>
 
-        <ProgressBar IsIndeterminate="{x:Bind ViewModel.Loading, Mode=OneWay}" Visibility="{x:Bind ViewModel.Loading, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Top"/>
+        <ProgressBar IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Top"/>
         
         <GridView Grid.Row="1" Padding="8" ItemsSource="{x:Bind ViewModel.Source}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
             <GridView.ItemTemplate>
