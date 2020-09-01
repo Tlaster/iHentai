@@ -1,4 +1,5 @@
-﻿using iHentai.Services.Models.Core;
+﻿using System;
+using iHentai.Services.Models.Core;
 using LiteDB;
 
 namespace iHentai.Data.Models
@@ -11,6 +12,9 @@ namespace iHentai.Data.Models
         public string Path { get; set; }
         public string Token { get; set; }
         public long LibraryId { get; set; }
+        public DateTime CreationTime { get; set; }
+        public long TotalFiles { get; set; }
+        public long ReadFiles { get; set; }
         [BsonIgnore]
         public string? Title => Name;
         public string? Thumb { get; set; }

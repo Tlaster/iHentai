@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace iHentai.Platform
@@ -19,5 +20,6 @@ namespace iHentai.Platform
         string Name { get; }
         string Path { get; }
         string Token { get; }
+        DateTime CreationTime { get; }
     }
 }

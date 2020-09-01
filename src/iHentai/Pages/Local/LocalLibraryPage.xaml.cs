@@ -25,5 +25,18 @@ namespace iHentai.Pages.Local
                 this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), new LocalReadingViewModel(item));
             }
         }
+
+        private void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.Filter(args.QueryText);
+        }
+
+        private void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (sender.Text.Length == 0)
+            {
+                ViewModel.ClearFilter();
+            }
+        }
     }
 }

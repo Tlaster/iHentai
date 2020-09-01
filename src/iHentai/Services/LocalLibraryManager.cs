@@ -79,6 +79,9 @@ namespace iHentai.Services
                     Name = folder.Name,
                     Path = folder.Path,
                     Token = folder.Token,
+                    CreationTime = folder.CreationTime,
+                    TotalFiles = files.Count(it => MimeTypeMap.GetMimeType(it.Extension).StartsWith("image")),
+                    ReadFiles = 0,
                     Thumb = files.FirstOrDefault(it => MimeTypeMap.GetMimeType(it.Extension).StartsWith("image"))
                         ?.Path
                 });

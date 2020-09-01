@@ -1,41 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
-using iHentai.Common.Helpers;
 using static iHentai.Common.Helpers.NativeFindStorageItemHelper;
 using FileAttributes = System.IO.FileAttributes;
 
 namespace iHentai.Platform
 {
-
-    class PathFileItem : IFileItem
+    internal class PathFileItem : IFileItem
     {
-        public PathFileItem(string path, string token)
+        public PathFileItem(string path, string token, DateTime creationTime)
         {
             Path = path;
             Token = token;
+            CreationTime = creationTime;
         }
 
         public string Path { get; }
         public string Extension => System.IO.Path.GetExtension(Path);
         public string Name => System.IO.Path.GetFileName(Path);
         public string Token { get; }
+        public DateTime CreationTime { get; }
     }
 
-    class PathFolderItem : IFolderItem
+    internal class PathFolderItem : IFolderItem
     {
-        public PathFolderItem(string path, string token)
+        public PathFolderItem(string path, string token, DateTime creationTime)
         {
             Path = path;
             Token = token;
+            CreationTime = creationTime;
         }
+
         public string Path { get; }
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
         public string Token { get; }
+        public DateTime CreationTime { get; }
 
         public Task<IEnumerable<IFileItem>> GetFiles()
         {
@@ -56,10 +57,19 @@ namespace iHentai.Platform
                         if (((FileAttributes) findData.dwFileAttributes & FileAttributes.Hidden) !=
                             FileAttributes.Hidden &&
                             ((FileAttributes) findData.dwFileAttributes & FileAttributes.System) !=
-                            FileAttributes.System && ((FileAttributes) findData.dwFileAttributes & FileAttributes.Directory) !=
+                            FileAttributes.System &&
+                            ((FileAttributes) findData.dwFileAttributes & FileAttributes.Directory) !=
                             FileAttributes.Directory)
                         {
-                            result.Add(new PathFileItem(System.IO.Path.Combine(Path, findData.cFileName), Token));
+                            FileTimeToSystemTime(ref findData.ftCreationTime, out var systemCreatedDateOutput);
+                            var itemCreatedDate = new DateTime(
+                                systemCreatedDateOutput.Year, systemCreatedDateOutput.Month,
+                                systemCreatedDateOutput.Day,
+                                systemCreatedDateOutput.Hour, systemCreatedDateOutput.Minute,
+                                systemCreatedDateOutput.Second, systemCreatedDateOutput.Milliseconds,
+                                DateTimeKind.Utc);
+                            result.Add(new PathFileItem(System.IO.Path.Combine(Path, findData.cFileName), Token,
+                                itemCreatedDate));
                         }
                     } while (FindNextFile(hFile, out findData));
 
@@ -89,11 +99,19 @@ namespace iHentai.Platform
                         if (((FileAttributes) findData.dwFileAttributes & FileAttributes.Hidden) !=
                             FileAttributes.Hidden &&
                             ((FileAttributes) findData.dwFileAttributes & FileAttributes.System) !=
-                            FileAttributes.System && ((FileAttributes) findData.dwFileAttributes & FileAttributes.Directory) ==
+                            FileAttributes.System &&
+                            ((FileAttributes) findData.dwFileAttributes & FileAttributes.Directory) ==
                             FileAttributes.Directory && findData.cFileName != "." && findData.cFileName != "..")
                         {
+                            FileTimeToSystemTime(ref findData.ftCreationTime, out var systemCreatedDateOutput);
+                            var itemCreatedDate = new DateTime(
+                                systemCreatedDateOutput.Year, systemCreatedDateOutput.Month,
+                                systemCreatedDateOutput.Day,
+                                systemCreatedDateOutput.Hour, systemCreatedDateOutput.Minute,
+                                systemCreatedDateOutput.Second, systemCreatedDateOutput.Milliseconds,
+                                DateTimeKind.Utc);
                             result.Add(new PathFolderItem(System.IO.Path.Combine(Path, findData.cFileName),
-                                Token));
+                                Token, itemCreatedDate));
                         }
                     } while (FindNextFile(hFile, out findData));
 
@@ -105,7 +123,7 @@ namespace iHentai.Platform
         }
     }
 
-    class FileItem : IFileItem
+    internal class FileItem : IFileItem
     {
         private readonly StorageFile _file;
 
@@ -122,9 +140,10 @@ namespace iHentai.Platform
         public string Path => _file.Path;
 
         public string Token { get; }
+        public DateTime CreationTime => _file.DateCreated.DateTime;
     }
 
-    class FolderItem : IFolderItem
+    internal class FolderItem : IFolderItem
     {
         private readonly StorageFolder _folder;
 
@@ -139,6 +158,7 @@ namespace iHentai.Platform
         public string Path => _folder.Path;
 
         public string Token { get; }
+        public DateTime CreationTime => _folder.DateCreated.DateTime;
 
         public async Task<IEnumerable<IFileItem>> GetFiles()
         {
