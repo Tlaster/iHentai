@@ -8,7 +8,7 @@ namespace iHentai.ViewModels.Local
     class LocalReadingViewModel : ReadingViewModel
     {
         public LocalGalleryModel Gallery { get; }
-        public LocalReadingViewModel(LocalGalleryModel gallery)
+        public LocalReadingViewModel(LocalGalleryModel gallery) : base(gallery.Title)
         {
             Gallery = gallery;
             Init();
@@ -17,7 +17,6 @@ namespace iHentai.ViewModels.Local
         private async void Init()
         {
             IsLoading = true;
-            Title = Gallery.Title ?? "";
             var files = await LocalLibraryManager.Instance.GetGalleryImages(Gallery);
             Images = files.Select(it => new LocalReadingImage(it)).ToList();
             IsLoading = false;

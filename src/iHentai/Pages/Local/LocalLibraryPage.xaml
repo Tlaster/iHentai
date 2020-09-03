@@ -29,18 +29,18 @@
                     <SymbolIcon Symbol="Filter"/>
                 </AppBarButton.Icon>
                 <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        <controls1:RadioMenuFlyoutItem Text="默认" GroupName="Filter" >
+                    <MenuFlyout Placement="Bottom">
+                        <controls1:RadioMenuFlyoutItem Text="默认" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsDefault, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
                                 <icon:IconView Icon="DateTime"/>
                             </controls1:RadioMenuFlyoutItem.Icon>
                         </controls1:RadioMenuFlyoutItem>
-                        <controls1:RadioMenuFlyoutItem Text="最新" GroupName="Filter" >
+                        <controls1:RadioMenuFlyoutItem Text="最新" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsNewest, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
                                 <icon:IconView Icon="DateTime"/>
                             </controls1:RadioMenuFlyoutItem.Icon>
                         </controls1:RadioMenuFlyoutItem>
-                        <controls1:RadioMenuFlyoutItem Text="最旧" GroupName="Filter" >
+                        <controls1:RadioMenuFlyoutItem Text="最旧" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsOldest, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
                                 <icon:IconView Icon="DateTime"/>
                             </controls1:RadioMenuFlyoutItem.Icon>

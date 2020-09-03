@@ -10,5 +10,7 @@ namespace iHentai.Data.Models
         public string Path { get; set; }
 
         public string Token { get; set; }
+
+        public int Count { get; set; }
     }
 }

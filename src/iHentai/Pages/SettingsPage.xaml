@@ -5,16 +5,70 @@
     xmlns:local="using:iHentai.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:iHentai.Data.Models"
+    xmlns:icon="using:Bug10.Icon"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Pivot Title="设置">
-            <PivotItem Header="通用">
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical" Padding="16,0">
+                <TextBlock Text="设置" Style="{ThemeResource TitleTextBlockStyle}"/>
                 
-            </PivotItem>
-            <PivotItem Header="扩展">
-            </PivotItem>
-        </Pivot>
+                <Border Height="16"/>
+
+                <TextBlock Text="个人文件夹"/>
+                <Border Height="8"/>
+                <Button Width="200" Style="{ThemeResource AccentButtonStyle}" Content="添加" Click="{x:Bind ViewModel.AddLibraryFolder}"/>
+                <Border Height="8"/>
+                <controls:ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" HorizontalAlignment="Stretch"/>
+                <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.LocalLibrary}">
+                    <controls:ItemsRepeater.Layout>
+                        <controls:StackLayout/>
+                    </controls:ItemsRepeater.Layout>
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:LocalLibraryModel">
+                            <ListViewItem HorizontalContentAlignment="Stretch">
+                                <Grid VerticalAlignment="Center" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <icon:IconView Icon="Folder"/>
+                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{x:Bind Path}" />
+                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="2" Text="{x:Bind Count}" />
+                                    <Button DataContext="{x:Bind}" Grid.Column="3" Click="OnRemoveLibraryClicked" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                                        <icon:IconView Icon="Delete"/>
+                                    </Button>
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+                </controls:ItemsRepeater>
+
+                <Border Height="16"/>
+
+                <TextBlock Text="扩展安装文件夹"/>
+                <Border Height="8"/>
+
+
+                <Border Height="16"/>
+
+                <TextBlock Text="主题"/>
+                <Border Height="8"/>
+                <controls:RadioButtons MaxColumns="3" ItemsSource="{x:Bind Themes}" SelectedItem="{x:Bind ViewModel.Theme, Mode=OneWay}" SelectionChanged="OnThemeSelectionChanged" >
+                    <controls:RadioButtons.ItemTemplate>
+                        <DataTemplate x:DataType="ElementTheme">
+                            <RadioButton>
+                                <TextBlock Text="{x:Bind}"/>
+                            </RadioButton>
+                        </DataTemplate>
+                    </controls:RadioButtons.ItemTemplate>
+                </controls:RadioButtons>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -9,9 +9,14 @@ namespace iHentai.ViewModels
 {
     internal abstract class ReadingViewModel : ViewModelBase
     {
-        public string? Title { get; protected set; }
+        public string? Title { get; }
         public bool IsLoading { get; protected set; }
         private int _selectedIndex;
+
+        protected ReadingViewModel(string? title)
+        {
+            Title = title;
+        }
 
         public int SelectedIndex
         {

@@ -151,12 +151,10 @@
             <Grid Background="Transparent"
                   Height="40"
                   x:Name="TopBarPointerEnterRegion"
-                  PointerEntered="ReadingControl_OnPointerEntered" HorizontalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
                   VerticalAlignment="Top" />
-
             <Grid
                 Padding="8"
-                PointerExited="ReadingControl_OnPointerExited"
                 Visibility="{x:Bind ReadingControl.Visibility, Mode=OneWay}" x:Name="TopReadingControl"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top" Background="{ThemeResource SystemControlAcrylicElementBrush}">
@@ -165,12 +163,21 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.ColumnSpan="3" x:Name="TitleBarPlaceHolder"/>
 
-                <Button Click="BackClicked" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
-                    <SymbolIcon Symbol="Back" />
-                </Button>
-                
-                <CommandBar Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent" VerticalContentAlignment="Center" DefaultLabelPosition="Right">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                    <Button Click="BackClicked" x:Name="BackButton" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                        <SymbolIcon Symbol="Back" />
+                    </Button>
+                    <Grid Width="16"/>
+                    <TextBlock Text="{x:Bind ViewModel.Title}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent" VerticalContentAlignment="Center" DefaultLabelPosition="Right">
                     <AppBarButton Label="阅读模式">
                         <AppBarButton.Icon>
                             <icon:IconView Icon="Page"/>

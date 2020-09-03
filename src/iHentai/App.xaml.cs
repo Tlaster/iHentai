@@ -27,18 +27,12 @@ namespace iHentai
         public App()
         {
             this.InitializeComponent();
+            HentaiApp.Instance.Init();
             ImageCache.Instance.InitializeAsync(httpMessageHandler: new HentaiHttpHandler());
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationView.GetForCurrentView().TitleBar.Also(it =>
-            {
-                it.ButtonBackgroundColor = Colors.Transparent;
-            });
-
             if (!(Window.Current.Content is RootView rootView))
             {
                 rootView = new RootView();

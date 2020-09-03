@@ -47,6 +47,11 @@ namespace iHentai
             ExtensionManager = new ExtensionManager();
         }
 
+        public void Init()
+        {
+
+        }
+
         public static HentaiApp Instance { get; } = new HentaiApp();
         public ExtensionManager ExtensionManager { get; }
 

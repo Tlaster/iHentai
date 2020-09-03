@@ -40,9 +40,15 @@ namespace iHentai.Common.Helpers
         {
             return number == 0f;
         }
+        
         public static bool IsNonZero(float number)
         {
             return number != 0f;
+        }
+
+        public static string ElementThemeToString(ElementTheme theme)
+        {
+            return theme.ToString();
         }
     }
 }

@@ -9,21 +9,17 @@ namespace iHentai.Views
     public sealed partial class GalleryItemView : UserControl
     {
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
-            "Data", typeof(IGallery), typeof(GalleryItemView), new PropertyMetadata(default(IGallery)));
+            nameof(Data), typeof(IGallery), typeof(GalleryItemView), new PropertyMetadata(default(IGallery)));
+
+        public GalleryItemView()
+        {
+            InitializeComponent();
+        }
 
         public IGallery Data
         {
-            get { return (IGallery) GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
-        }
-        public GalleryItemView()
-        {
-            this.InitializeComponent();
-        }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
+            get => (IGallery) GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
     }
 }

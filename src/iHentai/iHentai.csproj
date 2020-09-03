@@ -126,6 +126,7 @@
     <Compile Include="Common\Helpers\NativeFindStorageItemHelper.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\HentaiHttpClient.cs" />
+    <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Data\ExtensionDb.cs" />
     <Compile Include="Data\LocalLibraryDb.cs" />
     <Compile Include="Data\Models\ExtensionDbModel.cs" />

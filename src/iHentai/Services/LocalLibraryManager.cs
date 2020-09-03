@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
 using iHentai.Data;
 using iHentai.Data.Models;
 using iHentai.Platform;
@@ -37,7 +39,16 @@ namespace iHentai.Services
             LocalLibraryDb.Instance.GetLocalGallery().ForEach(it => LocalGallery.Add(it));
         }
 
-
+        public async Task AddFolder(StorageFolder folder)
+        {
+            if (StorageApplicationPermissions.FutureAccessList.CheckAccess(folder))
+            {
+                return;
+            }
+            var token = StorageApplicationPermissions.FutureAccessList.Add(folder);
+            var folderItem = await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(token);
+            await AddFolder(folderItem);
+        }
 
         public async Task AddFolder(params IFolderItem[] paths)
         {
@@ -52,6 +63,7 @@ namespace iHentai.Services
 
         public void RemoveFolder(LocalLibraryModel model)
         {
+            StorageApplicationPermissions.FutureAccessList.Remove(model.Token);
             LocalLibraryDb.Instance.RemoveLocalLibrary(model);
             LocalLibrary.Remove(model);
             LocalGallery.Where(it => it.LibraryId == model.Id).ToList().ForEach(it => LocalGallery.Remove(it));

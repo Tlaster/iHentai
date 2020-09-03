@@ -34,6 +34,7 @@ namespace iHentai.Data
             {
                 Path = fodler.Path,
                 Token = fodler.Token,
+                Count = gallery.Count,
             });
             gallery.ForEach(model =>
             {
@@ -52,10 +53,12 @@ namespace iHentai.Data
         {
             using var db = new LiteDatabase(DbFile);
             var galleryColumn = db.GetCollection<LocalGalleryModel>();
-            var deleted = galleryColumn.DeleteMany(it => !gallery.Select(g => g.Path).Any(g => g == it.Path));
+            var deleted = galleryColumn.DeleteMany(it => gallery.Select(g => g.Path).All(g => g != it.Path));
             gallery.ForEach(it => it.LibraryId = model.Id);
             var news = gallery.Where(it => galleryColumn.FindOne(g => g.Path == it.Path) == null);
             galleryColumn.InsertBulk(news);
+            model.Count = gallery.Count;
+            db.GetCollection<LocalLibraryModel>().Update(model);
         }
 
         public void RemoveLocalLibrary(LocalLibraryModel model)

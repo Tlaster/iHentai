@@ -20,11 +20,12 @@ namespace iHentai.ViewModels.Local
     {
         public bool IsLoading { get; private set; }
 
-        public IEnumerable<LocalGalleryModel> Source => LocalLibraryManager.Instance.LocalGallery;
         public AdvancedCollectionView SourceView { get; } = new AdvancedCollectionView(LocalLibraryManager.Instance.LocalGallery);
+        public LocalFilterViewModel FilterViewModel { get; }
 
         public LocalLibraryViewModel()
         {
+            FilterViewModel = new LocalFilterViewModel(SourceView);
         }
 
         public async void SelectFolder()
@@ -35,16 +36,18 @@ namespace iHentai.ViewModels.Local
             var result = await picker.PickSingleFolderAsync();
             if (result != null)
             {
-                var token = StorageApplicationPermissions.FutureAccessList.Add(result);
                 IsLoading = true;
-                var folder = await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(token);
-                await LocalLibraryManager.Instance.AddFolder(folder);
+                await LocalLibraryManager.Instance.AddFolder(result);
                 IsLoading = false;
             }
         }
 
         public async void Refresh()
         {
+            if (IsLoading)
+            {
+                return;
+            }
             IsLoading = true;
             await LocalLibraryManager.Instance.Refresh();
             IsLoading = false;
@@ -59,6 +62,56 @@ namespace iHentai.ViewModels.Local
         {
             SourceView.Filter = o => true;
         }
+
+
+        internal class LocalFilterViewModel
+        {
+            private readonly AdvancedCollectionView _collection;
+            private SortDescription? _sortDescription;
+
+            public LocalFilterViewModel(AdvancedCollectionView collection)
+            {
+                _collection = collection;
+
+            }
+
+            public SortDescription? SortDescription
+            {
+                get => _sortDescription;
+                set
+                {
+                    _collection.SortDescriptions.Clear();
+                    if (value != null)
+                    {
+                        _collection.SortDescriptions.Add(value);
+                    }
+                    _sortDescription = value;
+                }
+            }
+
+            public bool IsDefault
+            {
+                get => SortDescription == null;
+                set => SortDescription = null;
+            }
+
+            public bool IsNewest
+            {
+                get =>
+                    SortDescription != null && SortDescription.PropertyName == nameof(LocalGalleryModel.CreationTime) &&
+                    SortDescription.Direction == SortDirection.Descending;
+                set => SortDescription = new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Descending);
+            }
+
+            public bool IsOldest
+            {
+                get =>
+                    SortDescription != null && SortDescription.PropertyName == nameof(LocalGalleryModel.CreationTime) &&
+                    SortDescription.Direction == SortDirection.Ascending;
+                set => SortDescription = new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Ascending);
+            }
+        }
     }
+
 
 }

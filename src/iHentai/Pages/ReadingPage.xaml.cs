@@ -20,15 +20,39 @@ namespace iHentai.Pages
     public sealed partial class ReadingPage : Page
     {
         private readonly DisplayRequest _display;
+        private CoreApplicationViewTitleBar _titleBar;
         internal ReadingViewModel ViewModel { get; private set; }
 
         public ReadingPage()
         {
             this.InitializeComponent();
             _display = new DisplayRequest();
-            var titleBarHeight = CoreApplication.GetCurrentView().TitleBar.Height;
-            TopBarPointerEnterRegion.Height += titleBarHeight;
-            TopReadingControl.Padding = new Thickness(8, 8 + titleBarHeight, 8, 8);
+            _titleBar = CoreApplication.GetCurrentView().TitleBar;
+            UpdateTitleBarHeight();
+            _titleBar.IsVisibleChanged += TitleBarOnIsVisibleChanged;
+        }
+
+        private void TitleBarOnIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            UpdateTitleBarHeight();
+        }
+
+        private void UpdateTitleBarHeight()
+        {
+            if (_titleBar.IsVisible)
+            {
+                var titleBarHeight = _titleBar.Height;
+                TitleBarPlaceHolder.Height = titleBarHeight;
+                TopBarPointerEnterRegion.Height = 40 + titleBarHeight;
+                BackButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                BackButton.Visibility = Visibility.Visible;
+                const int titleBarHeight = 0;
+                TitleBarPlaceHolder.Height = titleBarHeight;
+                TopBarPointerEnterRegion.Height = 40 + titleBarHeight;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,6 +70,7 @@ namespace iHentai.Pages
         {
             base.OnNavigatedFrom(e);
             _display.RequestRelease();
+            _titleBar.IsVisibleChanged -= TitleBarOnIsVisibleChanged;
         }
         
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
