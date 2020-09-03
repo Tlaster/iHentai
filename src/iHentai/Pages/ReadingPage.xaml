@@ -14,7 +14,7 @@
     xmlns:readingImages="using:iHentai.ReadingImages"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ReadingViewModel}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
         <Grid Tapped="UIElement_OnTapped">
@@ -239,10 +239,9 @@
                   Height="60"
                   Margin="8"
                   CornerRadius="8"
-                  PointerEntered="ReadingControl_OnPointerEntered" HorizontalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
                   VerticalAlignment="Bottom" />
-            <Grid PointerExited="ReadingControl_OnPointerExited"
-                  Margin="8"
+            <Grid Margin="8"
                   CornerRadius="8"
                   Padding="8"
                   Visibility="Collapsed" x:Name="ReadingControl" HorizontalAlignment="Stretch"
