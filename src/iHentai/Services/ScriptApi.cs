@@ -44,6 +44,18 @@ namespace iHentai.Services
             return await InvokeAsync<List<ScriptGalleryModel>>(functionName, new Arguments {keyword, page});
         }
 
+        public bool HasDetail()
+        {
+            const string functionName = "detail";
+            return _engine.HasMember(functionName);
+        }
+
+        public bool HasGalleryImages()
+        {
+            const string functionName = "loadGalleryImages";
+            return _engine.HasMember(functionName);
+        }
+
         public async Task<ScriptGalleryDetailModel> Detail(IGallery gallery)
         {
             const string functionName = "detail";

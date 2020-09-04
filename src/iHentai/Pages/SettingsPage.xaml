@@ -13,7 +13,7 @@
 
     <Grid>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical" Padding="16,0">
+            <StackPanel Orientation="Vertical" Padding="32,0">
                 <TextBlock Text="设置" Style="{ThemeResource TitleTextBlockStyle}"/>
                 
                 <Border Height="16"/>

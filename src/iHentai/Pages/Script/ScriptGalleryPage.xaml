@@ -15,15 +15,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Padding="8">
+        <StackPanel Orientation="Horizontal" Padding="32, 8">
             <AutoSuggestBox PlaceholderText="搜索" Width="200">
                 <AutoSuggestBox.QueryIcon>
                     <SymbolIcon Symbol="Find"/>
                 </AutoSuggestBox.QueryIcon>
             </AutoSuggestBox>
         </StackPanel>
-        <GridView animations:Connected.ListItemElementName="GalleryImage"
-                  animations:Connected.ListItemKey="image"
+        <GridView Padding="24,8"
                   Grid.Row="1" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="core:IGallery" >

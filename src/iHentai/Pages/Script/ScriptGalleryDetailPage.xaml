@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="iHentai.Pages.Script.ScriptGalleryDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:iHentai.Pages.Script"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:imageEx="using:iHentai.Views.ImageEx"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:core="using:iHentai.Services.Models.Core"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <CommandBar Grid.Row="0" OverflowButtonVisibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+            <AppBarElementContainer Width="32">
+            </AppBarElementContainer>
+            <AppBarButton Label="返回" Click="GoBackClicked">
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Back"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarElementContainer >
+                <TextBlock Padding="0, 12" Text="{x:Bind ViewModel.GalleryTitle, Mode=OneWay}"/>
+            </AppBarElementContainer>
+        </CommandBar>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="32,16,16,16">
+            <Border
+                CornerRadius="4">
+                <imageEx:ImageEx IsCacheEnabled="True" Source="{x:Bind ViewModel.Thumb, Mode=OneWay}"/>
+            </Border>
+            <Grid Height="32"/>
+            <Button HorizontalAlignment="Stretch" Content="阅读" Style="{ThemeResource AccentButtonStyle}" Click="ReadClicked"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Padding="16">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{x:Bind ViewModel.GalleryTitle, Mode=OneWay}" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.Detail.SubTitle, Mode=OneWay}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
+                <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
+                                        Margin="0,16,0,0"
+                                        HorizontalAlignment="Left">
+                    <controls:ItemsRepeater.Layout>
+                        <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8" />
+                    </controls:ItemsRepeater.Layout>
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="core:IMangaChapter">
+                            <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+                                  CornerRadius="{ThemeResource ControlCornerRadius}"
+                                  extensions:Mouse.Cursor="Hand"
+                                  Tapped="ContentPresenter_Tapped"
+                                  Padding="8"
+                                  Tag="{x:Bind}">
+                                <TextBlock Text="{x:Bind Title}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+                </controls:ItemsRepeater>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

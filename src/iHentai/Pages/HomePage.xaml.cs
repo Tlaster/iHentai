@@ -34,7 +34,7 @@ namespace iHentai.Pages
                 new NavigationViewItem
                     {Icon = new SymbolIcon(Symbol.Globe), Content = "扩展源", SelectsOnInvoked = false}.Also(it =>
                 {
-                    this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
+                    void UpdateMenuItems()
                     {
                         it.MenuItemsSource = this.Resolve<IExtensionManager>().Extensions
                             .Select(it => new NavigationViewItem
@@ -42,6 +42,11 @@ namespace iHentai.Pages
                                 Tag = it,
                                 Content = it.Name,
                             });
+                    }
+                    UpdateMenuItems();
+                    this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
+                    {
+                        UpdateMenuItems();
                     };
                 }),
                 new NavigationViewItem {Icon = new SymbolIcon(Symbol.Favorite), Content = "收藏"},

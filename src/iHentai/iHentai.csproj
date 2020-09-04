@@ -157,6 +157,9 @@
     <Compile Include="Pages\ReadingPage.xaml.cs">
       <DependentUpon>ReadingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Script\ScriptGalleryDetailPage.xaml.cs">
+      <DependentUpon>ScriptGalleryDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Script\ScriptGalleryPage.xaml.cs">
       <DependentUpon>ScriptGalleryPage.xaml</DependentUpon>
     </Compile>
@@ -246,6 +249,10 @@
     <Page Include="Pages\ReadingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Script\ScriptGalleryDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Script\ScriptGalleryPage.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Border Width="141" Height="236" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+    <Border CornerRadius="4" Width="141" Height="236" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

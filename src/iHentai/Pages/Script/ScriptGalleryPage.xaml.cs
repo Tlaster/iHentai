@@ -33,7 +33,14 @@ namespace iHentai.Pages.Script
         {
             if (e.ClickedItem is ScriptGalleryModel item && ViewModel.Api is ScriptApi api)
             {
-                var viewModel = new ScriptGalleryDetailViewModel(api, item);
+                if (api.HasDetail())
+                {
+                    Frame.Navigate(typeof(ScriptGalleryDetailPage), new ScriptGalleryDetailViewModel(api, item));
+                }
+                else if (api.HasGalleryImages())
+                {
+
+                }
             }
         }
     }

@@ -24,6 +24,7 @@
                     </AutoSuggestBox.QueryIcon>
                 </AutoSuggestBox>
             </AppBarElementContainer>
+            <AppBarElementContainer Width="8"/>
             <AppBarButton Label="排序" >
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Filter"/>
@@ -68,7 +69,9 @@
 
         <ProgressBar IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Top"/>
 
-        <GridView Grid.Row="1" Padding="8" ItemsSource="{x:Bind ViewModel.SourceView}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
+        <GridView Grid.Row="1" 
+                  Padding="16, 8"
+                  ItemsSource="{x:Bind ViewModel.SourceView}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="core:IGallery" >
                     <views:GalleryItemView Data="{x:Bind}"/>
