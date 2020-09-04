@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Storage;
 using iHentai.Extensions.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Extensions.Runtime.Html;
@@ -45,15 +46,16 @@ namespace iHentai.Extensions
                 throw new ArgumentNullException("Manifest should have entry");
             }
 
-            var entryFile =
-                File.ReadAllText(Path.Combine(Environment.CurrentDirectory, path, _manifest.Entry));
+            var filePath = Path.Combine(path, _manifest.Entry);
+            var file = await StorageFile.GetFileFromPathAsync(filePath);
+            var entryFile = await FileIO.ReadTextAsync(file);
             _module = new Module(_manifest.Entry, entryFile);
             if (_manifest.Modules != null && _manifest.Modules.Any())
             {
                 foreach (var item in _manifest.Modules)
                 {
                     var moduleFile =
-                        File.ReadAllText(Path.Combine(Environment.CurrentDirectory, path, item));
+                        await FileIO.ReadTextAsync(await StorageFile.GetFileFromPathAsync(Path.Combine(path, item)));
                     _modulesCache.Add(item.TrimStart('.'), new Module(moduleFile));
                 }
             }

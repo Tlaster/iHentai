@@ -6,9 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d mc">
-    <controls:NavigationView 
-        PaneTitle="iComix"
+    <controls:NavigationView
         x:Name="RootNavigationView"
+        PaneTitle=" "
+        OpenPaneLength="180"
         SelectionChanged="NavigationView_SelectionChanged"
         IsBackEnabled="False"
         IsBackButtonVisible="Collapsed"

@@ -16,4 +16,10 @@ namespace iHentai.Extensions.Models
         [JsonProperty("permissions")] public List<string>? Permissions { get; set; }
         [JsonProperty("homepage_url")] public string? HomepageUrl { get; set; }
     }
+
+    public class ExtensionFolderData
+    {
+        public string? Path { get; set; }
+        public string? Token { get; set; }
+    }
 }

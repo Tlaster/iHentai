@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Windows.UI.Xaml;
 using iHentai.Data;
+using iHentai.Extensions;
+using iHentai.Extensions.Models;
+using Newtonsoft.Json;
 
 namespace iHentai.Common
 {
-    class SettingsManager
+    internal class SettingsManager
     {
-        public event EventHandler<ElementTheme>? ThemeChanged; 
-
         public static SettingsManager Instance { get; } = new SettingsManager();
 
         public ElementTheme Theme
@@ -23,5 +21,19 @@ namespace iHentai.Common
                 ThemeChanged?.Invoke(this, value);
             }
         }
+
+        public ExtensionFolderData ExtensionFolder
+        {
+            get => JsonConvert.DeserializeObject<ExtensionFolderData>(
+                SettingsDb.Instance.Get("extension_folder", null) ?? JsonConvert.SerializeObject(new ExtensionFolderData
+                    {Path = Path.Combine(Environment.CurrentDirectory, "Extensions")}));
+            set
+            {
+                SettingsDb.Instance.Set("extension_folder", JsonConvert.SerializeObject(value));
+                this.Resolve<IExtensionManager>().Reload();
+            }
+        }
+
+        public event EventHandler<ElementTheme>? ThemeChanged;
     }
 }

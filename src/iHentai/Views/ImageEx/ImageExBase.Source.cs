@@ -196,7 +196,7 @@ namespace iHentai.Views.ImageEx
         {
             var file = await StorageFile.GetFileFromPathAsync(imageUri.LocalPath);
             using IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
-            var img = new BitmapImage();
+            var img = new BitmapImage {DecodePixelHeight = Convert.ToInt32(Height)};
             await img.SetSourceAsync(fileStream);
 
             lock (LockObj)

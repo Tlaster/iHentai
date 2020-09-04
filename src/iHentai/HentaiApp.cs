@@ -11,7 +11,7 @@ namespace iHentai
 {
     internal static class Ioc
     {
-        private readonly static ConcurrentDictionary<Type, object> _container = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object> _container = new ConcurrentDictionary<Type, object>();
 
         public static void Register<T, V>(this object _, Func<V> generator) where V : T
         {
@@ -36,24 +36,16 @@ namespace iHentai
         }
     }
 
-    public class HentaiApp
+    internal class HentaiApp
     {
-        
-        private HentaiApp()
+        public void Init()
         {
             this.Register<HttpMessageHandler, HentaiHttpHandler>();
             this.Register<IExtensionStorage, ExtensionDb>(() => ExtensionDb.Instance);
             this.Register<IPlatformService, PlatformService>();
-            ExtensionManager = new ExtensionManager();
-        }
-
-        public void Init()
-        {
-
+            this.Register<IExtensionManager, ExtensionManager>();
         }
 
         public static HentaiApp Instance { get; } = new HentaiApp();
-        public ExtensionManager ExtensionManager { get; }
-
     }
 }

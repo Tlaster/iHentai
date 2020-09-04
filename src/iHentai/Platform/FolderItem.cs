@@ -19,6 +19,13 @@ namespace iHentai.Platform
 
         public string Path { get; }
         public string Extension => System.IO.Path.GetExtension(Path);
+
+        public async Task<string> ReadAllTextAsync()
+        {
+            var file = await StorageFile.GetFileFromPathAsync(Path);
+            return await FileIO.ReadTextAsync(file);
+        }
+
         public string Name => System.IO.Path.GetFileName(Path);
         public string Token { get; }
         public DateTime CreationTime { get; }
@@ -131,6 +138,12 @@ namespace iHentai.Platform
         {
             _file = file;
             Token = token;
+        }
+
+        public async Task<string> ReadAllTextAsync()
+        {
+            var file = await StorageFile.GetFileFromPathAsync(Path);
+            return await FileIO.ReadTextAsync(file);
         }
 
         public string Extension => System.IO.Path.GetExtension(_file.Path);

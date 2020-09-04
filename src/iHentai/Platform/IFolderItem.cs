@@ -13,6 +13,7 @@ namespace iHentai.Platform
     public interface IFileItem : IStorageItem
     {
         string Extension { get; }
+        Task<string> ReadAllTextAsync();
     }
 
     public interface IStorageItem

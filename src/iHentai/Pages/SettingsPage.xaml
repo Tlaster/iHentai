@@ -53,7 +53,9 @@
 
                 <TextBlock Text="扩展安装文件夹"/>
                 <Border Height="8"/>
-
+                <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}">
+                    <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}"/>
+                </ListViewItem>
 
                 <Border Height="16"/>
 

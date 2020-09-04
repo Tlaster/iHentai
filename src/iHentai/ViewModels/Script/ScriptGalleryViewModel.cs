@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using iHentai.Extensions;
 using iHentai.Extensions.Models;
 using iHentai.Services;
 using iHentai.Services.Models.Core;
@@ -35,7 +36,7 @@ namespace iHentai.ViewModels.Script
 
         public async void SwitchTo(ExtensionManifest manifest)
         {
-            var api = await HentaiApp.Instance.ExtensionManager.GetApi(manifest);
+            var api = await this.Resolve<IExtensionManager>().GetApi(manifest);
             if (api != null && api != Api)
             {
                 Api = api;
