@@ -64,7 +64,11 @@ namespace iHentai
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
-            RootFrame.GoBack();
+            if (RootFrame.CanGoBack)
+            {
+                e.Handled = true;
+                RootFrame.GoBack();
+            }
         }
 
         private void RootFrame_OnNavigated(object sender, NavigationEventArgs e)

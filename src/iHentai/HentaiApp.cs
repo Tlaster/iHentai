@@ -2,10 +2,14 @@
 using System.Collections.Concurrent;
 using System.Net.Http;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using iHentai.Data;
 using iHentai.Extensions;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
+using Jint;
+using Microsoft.Toolkit.Uwp.UI;
+using NiL.JS.Core;
 
 namespace iHentai
 {
@@ -40,7 +44,7 @@ namespace iHentai
     {
         public void Init()
         {
-            this.Register<HttpMessageHandler, HentaiHttpHandler>();
+            this.Register<HttpMessageHandler, HentaiHttpHandler>(() => HentaiHttpHandler.Instance);
             this.Register<IExtensionStorage, ExtensionDb>(() => ExtensionDb.Instance);
             this.Register<IPlatformService, PlatformService>();
             this.Register<IExtensionManager, ExtensionManager>();

@@ -22,6 +22,16 @@ namespace iHentai.Views
             var rightSelector = Resources["RightPageTemplateSelector"] as PageTemplateSelector;
             rightSelector.Template = RightTemplate;
         }
+
+        public static readonly DependencyProperty CoverFirstProperty = DependencyProperty.Register(
+            "CoverFirst", typeof(bool), typeof(BookView), new PropertyMetadata(default(bool)));
+
+        public bool CoverFirst
+        {
+            get { return (bool) GetValue(CoverFirstProperty); }
+            set { SetValue(CoverFirstProperty, value); }
+        }
+
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
             "ItemsSource", typeof(object), typeof(BookView),
             new PropertyMetadata(default, OnItemsSourceChanged));
@@ -120,12 +130,18 @@ namespace iHentai.Views
                 FlipViewSource.Clear();
                 var resultIndex = -1;
                 var index = 0;
+                if (CoverFirst)
+                {
+                    index++;
+                    resultIndex++;
+                    FlipViewSource.Add(new BookViewItem { Left = null });
+                }
                 foreach (var item in enumerable)
                 {
                     if (index % 2 == 0)
                     {
                         resultIndex++;
-                        FlipViewSource.Add(new BookViewItem {Left = item});
+                        FlipViewSource.Add(new BookViewItem { Left = item });
                     }
                     else
                     {

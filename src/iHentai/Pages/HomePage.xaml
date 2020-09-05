@@ -6,14 +6,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d mc">
-    <controls:NavigationView
-        x:Name="RootNavigationView"
-        PaneTitle=" "
-        OpenPaneLength="180"
-        SelectionChanged="NavigationView_SelectionChanged"
-        IsBackEnabled="False"
-        IsBackButtonVisible="Collapsed"
-        MenuItemsSource="{x:Bind Menus}">
-        <Frame Name="RootFrame" />
-    </controls:NavigationView>
+    <Grid>
+        <controls:NavigationView
+            x:Name="RootNavigationView"
+            PaneTitle=" "
+            OpenPaneLength="180"
+            PaneOpening="NavigationViewControl_PaneOpened"
+            PaneClosing="NavigationViewControl_PaneClosing"
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            AlwaysShowHeader="True"
+            IsTitleBarAutoPaddingEnabled="False"
+            SelectionChanged="NavigationView_SelectionChanged"
+            IsBackEnabled="{x:Bind RootFrame.CanGoBack, Mode=OneWay}"
+            BackRequested="RootNavigationView_OnBackRequested"
+            IsBackButtonVisible="Visible"
+            MenuItemsSource="{x:Bind Menus}">
+            <Frame Name="RootFrame" />
+        </controls:NavigationView>
+
+        <Border x:Name="AppTitleBar"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Height="{Binding ElementName=RootNavigationView, Path=CompactPaneLength}">
+        </Border>
+    </Grid>
 </Page>

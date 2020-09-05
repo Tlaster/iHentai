@@ -124,7 +124,10 @@
     <Compile Include="Common\Converters\ExtensionManifestToNavigationViewItemConverter.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\FolderPickerExtensions.cs" />
+    <Compile Include="Common\Extensions\StreamExtensions.cs" />
     <Compile Include="Common\Helpers\NativeFindStorageItemHelper.cs" />
+    <Compile Include="Common\Helpers\ProgressCacheBase.cs" />
+    <Compile Include="Common\Helpers\ProgressImageCache.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\HentaiHttpClient.cs" />
     <Compile Include="Common\SettingsManager.cs" />
@@ -143,6 +146,7 @@
     <Compile Include="Extensions\Runtime\Html\HtmlElement.cs" />
     <Compile Include="Extensions\Runtime\LocalStorage.cs" />
     <Compile Include="Extensions\Runtime\Log.cs" />
+    <Compile Include="Extensions\Runtime\UnPacker.cs" />
     <Compile Include="Extensions\ScriptEngine.cs" />
     <Compile Include="HentaiApp.cs" />
     <Compile Include="Pages\Extensions\ExtensionsListPage.xaml.cs">
@@ -194,6 +198,7 @@
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryViewModel.cs" />
+    <Compile Include="ViewModels\Script\ScriptReadingViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BookView.xaml.cs">
@@ -290,6 +295,9 @@
       <Version>6.2.4</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Jint">
+      <Version>3.0.0-beta-1828</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>

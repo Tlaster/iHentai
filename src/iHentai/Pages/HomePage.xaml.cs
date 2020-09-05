@@ -1,18 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
-using iHentai.Common.Converters;
 using iHentai.Extensions;
 using iHentai.Extensions.Models;
 using iHentai.Pages.Script;
 using iHentai.ViewModels.Script;
 using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
+using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
+using NavigationViewDisplayMode = Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode;
+using NavigationViewDisplayModeChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs;
 using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 using NavigationViewItemBase = Microsoft.UI.Xaml.Controls.NavigationViewItemBase;
+using NavigationViewPaneClosingEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewPaneClosingEventArgs;
 using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -40,9 +43,10 @@ namespace iHentai.Pages
                             .Select(it => new NavigationViewItem
                             {
                                 Tag = it,
-                                Content = it.Name,
+                                Content = it.Name
                             });
                     }
+
                     UpdateMenuItems();
                     this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
                     {
@@ -54,11 +58,25 @@ namespace iHentai.Pages
             });
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            RootNavigationView.IsTitleBarAutoPaddingEnabled = true;
             RootNavigationView.SelectedItem = Menus[0];
+            CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
         }
 
         public ObservableCollection<NavigationViewItemBase> Menus { get; }
+
+        private void UpdateAppTitle(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            var currMargin = AppTitleBar.Margin;
+            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset,
+                currMargin.Bottom);
+            RootFrame.Margin = new Thickness(0, AppTitleBar.Height, 0, 0);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Window.Current.SetTitleBar(AppTitleBar);
+        }
 
         private void NavigationView_SelectionChanged(NavigationView sender,
             NavigationViewSelectionChangedEventArgs args)
@@ -78,6 +96,39 @@ namespace iHentai.Pages
                         RootFrame.Navigate(typeof(ScriptGalleryPage), new ScriptGalleryViewModel(value));
                         break;
                 }
+            }
+        }
+
+        private void RootNavigationView_OnBackRequested(NavigationView sender,
+            NavigationViewBackRequestedEventArgs args)
+        {
+            if (RootFrame.CanGoBack)
+            {
+                RootFrame.GoBack();
+            }
+        }
+
+        private void NavigationViewControl_PaneClosing(NavigationView sender, NavigationViewPaneClosingEventArgs args)
+        {
+        }
+
+        private void NavigationViewControl_PaneOpened(NavigationView sender, object args)
+        {
+        }
+
+        private void NavigationViewControl_DisplayModeChanged(NavigationView sender,
+            NavigationViewDisplayModeChangedEventArgs args)
+        {
+            var currMargin = AppTitleBar.Margin;
+            if (sender.DisplayMode == NavigationViewDisplayMode.Minimal)
+            {
+                AppTitleBar.Margin = new Thickness(sender.CompactPaneLength * 2, currMargin.Top, currMargin.Right,
+                    currMargin.Bottom);
+            }
+            else
+            {
+                AppTitleBar.Margin = new Thickness(sender.CompactPaneLength, currMargin.Top, currMargin.Right,
+                    currMargin.Bottom);
             }
         }
     }

@@ -30,6 +30,7 @@ namespace iHentai.Pages
             _titleBar = CoreApplication.GetCurrentView().TitleBar;
             UpdateTitleBarHeight();
             _titleBar.IsVisibleChanged += TitleBarOnIsVisibleChanged;
+            SharedShadow.Receivers.Add(ShadowBackgroundGrid);
         }
 
         private void TitleBarOnIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
@@ -42,6 +43,7 @@ namespace iHentai.Pages
             if (_titleBar.IsVisible)
             {
                 var titleBarHeight = _titleBar.Height;
+                TitleBarBorder.Height = titleBarHeight;
                 TitleBarPlaceHolder.Height = titleBarHeight;
                 TopBarPointerEnterRegion.Height = 40 + titleBarHeight;
                 BackButton.Visibility = Visibility.Collapsed;
@@ -50,6 +52,7 @@ namespace iHentai.Pages
             {
                 BackButton.Visibility = Visibility.Visible;
                 const int titleBarHeight = 0;
+                TitleBarBorder.Height = titleBarHeight;
                 TitleBarPlaceHolder.Height = titleBarHeight;
                 TopBarPointerEnterRegion.Height = 40 + titleBarHeight;
             }
@@ -64,6 +67,7 @@ namespace iHentai.Pages
                 ViewModel = readingViewModel;
             }
             _display.RequestActive();
+            Window.Current.SetTitleBar(TitleBarBorder);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -123,6 +127,30 @@ namespace iHentai.Pages
             {
                 e.Handled = true;
                 ViewModel.Next();
+            }
+        }
+
+        private void OnLeftClicked(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.FlowDirection == FlowDirection.LeftToRight)
+            {
+                ViewModel.Previous();
+            }
+            else
+            {
+                ViewModel.Next();
+            }
+        }
+
+        private void OnRightClicked(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.FlowDirection == FlowDirection.LeftToRight)
+            {
+                ViewModel.Next();
+            }
+            else
+            {
+                ViewModel.Previous();
             }
         }
     }

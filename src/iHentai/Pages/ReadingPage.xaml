@@ -12,34 +12,39 @@
     xmlns:helpers="using:iHentai.Common.Helpers"
     xmlns:viewModels="using:iHentai.ViewModels"
     xmlns:readingImages="using:iHentai.ReadingImages"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ReadingViewModel}"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
+        <Grid.Resources>
+            <Windows10version1903:ThemeShadow x:Name="SharedShadow" />
+        </Grid.Resources>
+
         <Grid Tapped="UIElement_OnTapped">
             <views:Optional FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}"
-                        Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsBookMode, Mode=OneWay}">
+                            Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsBookMode, Mode=OneWay}">
                 <views:Optional.ContentTemplate>
                     <DataTemplate x:DataType="viewModels:ReadingViewModel">
                         <views:BookView ItemsSource="{x:Bind Images, Mode=OneWay}"
-                                    SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
+                                        SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                             <views:BookView.LeftTemplate>
                                 <DataTemplate x:DataType="readingImages:IReadingImage">
                                     <Grid Background="Transparent">
                                         <Image
-                                        HorizontalAlignment="Right"
-                                        Source="{x:Bind Source, Mode=OneWay}"
-                                        Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                            HorizontalAlignment="Right"
+                                            Source="{x:Bind Source, Mode=OneWay}"
+                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
                                         <StackPanel
-                                        FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
-                                        Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                                   Style="{ThemeResource TitleTextBlockStyle}" />
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
                                             <controls:ProgressBar
-                                            IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
-                                            Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -48,18 +53,18 @@
                                 <DataTemplate x:DataType="readingImages:IReadingImage">
                                     <Grid Background="Transparent">
                                         <Image
-                                        HorizontalAlignment="Left"
-                                        Source="{x:Bind Source, Mode=OneWay}"
-                                        Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                            HorizontalAlignment="Left"
+                                            Source="{x:Bind Source, Mode=OneWay}"
+                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
                                         <StackPanel
-                                        FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
-                                        Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                                   Style="{ThemeResource TitleTextBlockStyle}" />
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
                                             <controls:ProgressBar
-                                            IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
-                                            Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -69,33 +74,84 @@
                 </views:Optional.ContentTemplate>
             </views:Optional>
             <views:Optional FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}"
-                        Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}">
+                            Content="{x:Bind ViewModel,Mode=OneWay}"
+                            When="{x:Bind ViewModel.IsBookCoverFirstMode, Mode=OneWay}">
+                <views:Optional.ContentTemplate>
+                    <DataTemplate x:DataType="viewModels:ReadingViewModel">
+                        <views:BookView CoverFirst="True" ItemsSource="{x:Bind Images, Mode=OneWay}"
+                                        SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
+                            <views:BookView.LeftTemplate>
+                                <DataTemplate x:DataType="readingImages:IReadingImage">
+                                    <Grid Background="Transparent">
+                                        <Image
+                                            HorizontalAlignment="Right"
+                                            Source="{x:Bind Source, Mode=OneWay}"
+                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                        <StackPanel
+                                            FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                            <controls:ProgressBar
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </views:BookView.LeftTemplate>
+                            <views:BookView.RightTemplate>
+                                <DataTemplate x:DataType="readingImages:IReadingImage">
+                                    <Grid Background="Transparent">
+                                        <Image
+                                            HorizontalAlignment="Left"
+                                            Source="{x:Bind Source, Mode=OneWay}"
+                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                        <StackPanel
+                                            FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}"
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                            <controls:ProgressBar
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </views:BookView.RightTemplate>
+                        </views:BookView>
+                    </DataTemplate>
+                </views:Optional.ContentTemplate>
+            </views:Optional>
+            <views:Optional FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}"
+                            Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsFlipMode, Mode=OneWay}">
                 <views:Optional.ContentTemplate>
                     <DataTemplate x:DataType="viewModels:ReadingViewModel">
                         <FlipView ItemsSource="{x:Bind Images, Mode=OneWay}"
-                              Background="Transparent"
-                              SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
+                                  Background="Transparent"
+                                  SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}">
                             <FlipView.ItemTemplate>
                                 <DataTemplate x:DataType="readingImages:IReadingImage">
                                     <Grid Background="Transparent"
-                                      FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
+                                          FlowDirection="{Binding ElementName=ReadingRoot, Path=FlowDirection}">
                                         <ScrollViewer x:Name="Scroll" ZoomMode="Enabled"
-                                                  MinZoomFactor="1"
-                                                  HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
+                                                      MinZoomFactor="1"
+                                                      HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
                                             <Image
-                                            MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
-                                            MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
-                                            Source="{x:Bind Source, Mode=OneWay}"
-                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                                MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
+                                                MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
+                                                Source="{x:Bind Source, Mode=OneWay}"
+                                                Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
                                         </ScrollViewer>
                                         <StackPanel
-                                        Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                                   Style="{ThemeResource TitleTextBlockStyle}" />
+                                                       Style="{ThemeResource TitleTextBlockStyle}" />
                                             <controls:ProgressBar
-                                            IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
-                                            Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -107,24 +163,26 @@
             <views:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}">
                 <views:Optional.ContentTemplate>
                     <DataTemplate x:DataType="viewModels:ReadingViewModel">
-                        <ScrollViewer ZoomMode="Enabled" MinZoomFactor="1">
+                        <ScrollViewer ZoomMode="Enabled" MinZoomFactor="1" HorizontalScrollMode="Auto"
+                                      HorizontalScrollBarVisibility="Auto">
                             <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}">
                                 <controls:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="readingImages:IReadingImage">
                                         <Grid Background="Transparent">
                                             <Image
-                                            MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
-                                            MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
-                                            Source="{x:Bind Source, Mode=OneWay}"
-                                            Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
+                                                MaxWidth="{Binding ElementName=Scroll, Path=ViewportWidth}"
+                                                MaxHeight="{Binding ElementName=Scroll, Path=ViewportHeight}"
+                                                Source="{x:Bind Source, Mode=OneWay}"
+                                                Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(IsLoading), Mode=OneWay}" />
                                             <StackPanel
-                                            Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock Text="{x:Bind Index, Mode=OneWay}" HorizontalAlignment="Center"
-                                                       Style="{ThemeResource TitleTextBlockStyle}" />
+                                                Visibility="{x:Bind IsLoading, Mode=OneWay}"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="{x:Bind Index, Mode=OneWay}"
+                                                           HorizontalAlignment="Center"
+                                                           Style="{ThemeResource TitleTextBlockStyle}" />
                                                 <controls:ProgressBar
-                                                IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
-                                                Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
+                                                    IsIndeterminate="{x:Bind helpers:XamlHelper.IsZero(Progress), Mode=OneWay}"
+                                                    Maximum="1" Value="{x:Bind Progress, Mode=OneWay}" Width="100" />
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
@@ -136,14 +194,24 @@
             </views:Optional>
         </Grid>
 
+
+        <Grid x:Name="ShadowBackgroundGrid" Visibility="{x:Bind ReadingControl.Visibility, Mode=OneWay}" >
+            <animations:Implicit.ShowAnimations>
+                <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:OpacityAnimation To="0" From="1" Duration="0:0:0.2" />
+            </animations:Implicit.HideAnimations>
+        </Grid>
+
         <Grid FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnPreviousClicked"/>
-            <Grid Grid.Column="2" Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnNextClicked"/>
+            <Grid Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnPreviousClicked" />
+            <Grid Grid.Column="2" Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnNextClicked" />
         </Grid>
 
 
@@ -155,6 +223,8 @@
                   VerticalAlignment="Top" />
             <Grid
                 Padding="8"
+                Windows10version1903:Translation="0,0,16"
+                Windows10version1903:Shadow="{StaticResource SharedShadow}"
                 Visibility="{x:Bind ReadingControl.Visibility, Mode=OneWay}" x:Name="TopReadingControl"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top" Background="{ThemeResource SystemControlAcrylicElementBrush}">
@@ -164,58 +234,71 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Grid.ColumnSpan="3" x:Name="TitleBarPlaceHolder"/>
+                <Border Grid.Row="0" Grid.ColumnSpan="3" x:Name="TitleBarPlaceHolder" />
 
-                <StackPanel Grid.Row="1" Orientation="Horizontal" >
-                    <Button Click="BackClicked" x:Name="BackButton" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button Click="BackClicked" x:Name="BackButton"
+                            Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
                         <SymbolIcon Symbol="Back" />
                     </Button>
-                    <Grid Width="16"/>
-                    <TextBlock Text="{x:Bind ViewModel.Title}" VerticalAlignment="Center"/>
+                    <Grid Width="16" />
+                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title}" VerticalAlignment="Center" />
                 </StackPanel>
 
-                <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent" VerticalContentAlignment="Center" DefaultLabelPosition="Right">
+                <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent"
+                            VerticalContentAlignment="Center" DefaultLabelPosition="Right">
                     <AppBarButton Label="阅读模式">
                         <AppBarButton.Icon>
-                            <icon:IconView Icon="Page"/>
+                            <icon:IconView Icon="Page" />
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <controls:RadioMenuFlyoutItem Text="双页" GroupName="ViewMode"
-                                                              IsChecked="{x:Bind ViewModel.IsBookMode, Mode=TwoWay}" >
+                                <controls:RadioMenuFlyoutItem Text="双页，第一页封面" GroupName="ViewMode"
+                                                              IsChecked="{x:Bind ViewModel.IsBookCoverFirstMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
-                                        <icon:IconView Icon="TwoPage"/>
+                                        <icon:IconView Icon="TwoPage" />
+                                    </controls:RadioMenuFlyoutItem.Icon>
+                                </controls:RadioMenuFlyoutItem>
+                                <controls:RadioMenuFlyoutItem Text="双页" GroupName="ViewMode"
+                                                              IsChecked="{x:Bind ViewModel.IsBookMode, Mode=TwoWay}">
+                                    <controls:RadioMenuFlyoutItem.Icon>
+                                        <icon:IconView Icon="TwoPage" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
                                 <controls:RadioMenuFlyoutItem Text="单页" GroupName="ViewMode"
-                                                              IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=TwoWay}" >
+                                                              IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
-                                        <icon:IconView Icon="Page"/>
+                                        <icon:IconView Icon="Page" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <!--<controls:RadioMenuFlyoutItem GroupName="ViewMode" IsChecked="{x:Bind ViewModel.IsListMode, Mode=OneWay}"></controls:RadioMenuFlyoutItem>-->
+                                <controls:RadioMenuFlyoutItem Text="条漫" GroupName="ViewMode"
+                                                              IsChecked="{x:Bind ViewModel.IsListMode, Mode=TwoWay}">
+                                    <controls:RadioMenuFlyoutItem.Icon>
+                                        <icon:IconView Icon="Page" />
+                                    </controls:RadioMenuFlyoutItem.Icon>
+                                </controls:RadioMenuFlyoutItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>
                     <AppBarButton Label="阅读方向">
                         <AppBarButton.Icon>
-                            <icon:IconView Icon="Directions"/>
+                            <icon:IconView Icon="Directions" />
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <controls:RadioMenuFlyoutItem Text="左→右" GroupName="ViewDirection"
-                                                              IsChecked="{x:Bind ViewModel.IsLTR, Mode=TwoWay}" >
+                                                              IsChecked="{x:Bind ViewModel.IsLTR, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
-                                        <icon:IconView Icon="PageRight"/>
+                                        <icon:IconView Icon="PageRight" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
                                 <controls:RadioMenuFlyoutItem Text="右→左" GroupName="ViewDirection"
-                                                              IsChecked="{x:Bind ViewModel.IsRTL, Mode=TwoWay}" >                                    
+                                                              IsChecked="{x:Bind ViewModel.IsRTL, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
-                                        <icon:IconView Icon="PageLeft"/>
+                                        <icon:IconView Icon="PageLeft" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
                             </MenuFlyout>
@@ -244,27 +327,41 @@
             <Grid Margin="8"
                   CornerRadius="8"
                   Padding="8"
+                  Windows10version1903:Translation="0,0,32"
+                  Windows10version1903:Shadow="{StaticResource SharedShadow}"
                   Visibility="Collapsed" x:Name="ReadingControl" HorizontalAlignment="Stretch"
                   VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicElementBrush}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Slider Maximum="{x:Bind ViewModel.Count, Mode=OneWay}"
                         Margin="8,0"
                         FlowDirection="{x:Bind ViewModel.FlowDirection, Mode=OneWay}"
                         Value="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}" />
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="{x:Bind ViewModel.Previous}">
-                        <icon:IconView Icon="ChevronLeft"/>
-                    </Button>
-                    <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
-                        <icon:IconView Icon="Play"/>
-                    </Button>
-                    <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="{x:Bind ViewModel.Next}">
-                        <icon:IconView Icon="ChevronRight"/>
-                    </Button>
-                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel  Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="OnLeftClicked">
+                            <icon:IconView Icon="ChevronLeft" />
+                        </Button>
+                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                            <icon:IconView Icon="Play" />
+                        </Button>
+                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="OnRightClicked">
+                            <icon:IconView Icon="ChevronRight" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" Padding="0,0,8,4">
+                        <TextBlock Text="{x:Bind ViewModel.SelectedIndex, Mode=OneWay}"/>
+                        <TextBlock Text="/"/>
+                        <TextBlock Text="{x:Bind ViewModel.Count, Mode=OneWay}"/>
+                    </StackPanel>
+                </Grid>
                 <animations:Implicit.ShowAnimations>
                     <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
                     <animations:TranslationAnimation From="0, 40, 0" To="0" Duration="0:0:0.3" />
@@ -275,6 +372,8 @@
                 </animations:Implicit.HideAnimations>
             </Grid>
         </Grid>
+        <Grid VerticalAlignment="Top" x:Name="TitleBarBorder" Background="Transparent"/>
+
         <controls:ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"
                                HorizontalAlignment="Center" VerticalAlignment="Center" />

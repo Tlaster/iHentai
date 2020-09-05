@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai
@@ -28,7 +29,8 @@ namespace iHentai
         {
             this.InitializeComponent();
             HentaiApp.Instance.Init();
-            ImageCache.Instance.InitializeAsync(httpMessageHandler: new HentaiHttpHandler());
+            ImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
+            ProgressImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)

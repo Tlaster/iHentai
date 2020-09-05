@@ -12,7 +12,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using iHentai.Services.Models.Script;
+using iHentai.ViewModels.Local;
 using iHentai.ViewModels.Script;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -49,9 +52,15 @@ namespace iHentai.Pages.Script
             
         }
 
-        private void ContentPresenter_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void ContentPresenter_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            if (sender is FrameworkElement element && element.Tag is ScriptGalleryChapter chapter && ViewModel.Detail != null)
+            {
+                if (await ViewModel.Api.CheckCanOpenChapter(chapter))
+                {
+                    this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), new ScriptReadingViewModel(ViewModel.Api, ViewModel.Detail, chapter));
+                }
+            }
         }
     }
 }

@@ -103,6 +103,13 @@ namespace iHentai.ViewModels
             set => ViewMode = ReadingViewMode.Book;
         }
 
+        [DependsOn(nameof(ViewMode))]
+        public bool IsBookCoverFirstMode
+        {
+            get => ViewMode == ReadingViewMode.BookCoverFirst;
+            set => ViewMode = ReadingViewMode.BookCoverFirst;
+        }
+
         [DependsOn(nameof(ViewMode))] public bool IsFlipMode
         {
             get => ViewMode == ReadingViewMode.Flip;
@@ -132,7 +139,14 @@ namespace iHentai.ViewModels
         {
             if (Images != null && SelectedIndex < Images.Count() - 1)
             {
-                SelectedIndex++;
+                if (IsBookMode || IsBookCoverFirstMode)
+                {
+                    SelectedIndex = Math.Min(SelectedIndex + 2, Images.Count() - 1);
+                }
+                else
+                {
+                    SelectedIndex++;
+                }
             }
         }
 
@@ -149,6 +163,7 @@ namespace iHentai.ViewModels
     {
         Book,
         Flip,
-        List
+        List,
+        BookCoverFirst,
     }
 }

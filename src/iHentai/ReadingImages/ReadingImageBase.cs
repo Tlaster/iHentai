@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
+using iHentai.Common.Helpers;
+using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ReadingImages
 {
@@ -32,14 +34,13 @@ namespace iHentai.ReadingImages
 
         protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
         {
-            throw new NotImplementedException();
-            // if (removeCache)
-            // {
-            //     await Singleton<ProgressImageCache>.Instance.RemoveAsync(new[] {new Uri(Url)});
-            // }
-            //
-            // //TODO: check if image already downloaded
-            // return await Singleton<ProgressImageCache>.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token, progress: this);
+            if (removeCache)
+            {
+                await ProgressImageCache.Instance.RemoveAsync(new[] { new Uri(Url) });
+            }
+
+            //TODO: check if image already downloaded
+            return await ProgressImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token, progress: this);
         }
     }
 

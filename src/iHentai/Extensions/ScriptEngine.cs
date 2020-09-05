@@ -68,6 +68,7 @@ namespace iHentai.Extensions
             _module.Context.DefineVariable("fetch")
                 .Assign(JSValue.Marshal(new Func<string, JSObject?, Task<JSValue>>(_fetch.fetch)));
             _module.Context.DefineVariable("parseHtml").Assign(JSValue.Marshal(new Func<string, JSValue>(s => JSValue.Marshal(HtmlElement.Parse(s)))));
+            _module.Context.DefineVariable("unpack").Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
             //_module.Context.DefineVariable("registerExtension")
             //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
             //    {
@@ -80,13 +81,12 @@ namespace iHentai.Extensions
         public async Task<T> InvokeFunctionAsync<T>(string name, Arguments arguments)
         {
             var result = _module.Context.GetVariable(name).As<Function>().Call(arguments);
-            var promise = result.As<Promise>();
-            if (promise != null)
+            if (result.Is<Promise>())
             {
+                var promise = result.As<Promise>();
                 var promiseResult = await promise.Task;
                 return promiseResult.As<T>();
             }
-
             return result.As<T>();
         }
 

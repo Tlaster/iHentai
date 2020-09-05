@@ -59,7 +59,7 @@ namespace iHentai.Extensions
             if (!string.IsNullOrEmpty(item.Key))
             {
                 var api = new ScriptApi(await GetScriptEngineAsync(item.Key), item.Key, manifest);
-                HentaiHttpHandler.RegisterHandler(api);
+                HentaiHttpHandler.Instance.RegisterHandler(api);
                 _cacheApis.Add(manifest, api);
                 return api;
             }

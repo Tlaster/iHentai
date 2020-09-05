@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using iHentai.Common;
 using iHentai.Extensions;
@@ -107,9 +108,37 @@ namespace iHentai.Services
         public bool CanHandle(Uri uri)
         {
             const string functionName = "canModifyRequest";
-            if (_manifest.Hosts != null && _manifest.Hosts.Contains(uri.Host) && _engine.HasMember(functionName))
+            if (_manifest.Hosts != null && MatchHost(uri) && _engine.HasMember(functionName))
             {
                 return _engine.InvokeFunction<bool>(functionName, new Arguments{uri.ToString()});
+            }
+
+            return false;
+        }
+
+        private bool MatchHost(Uri uri)
+        {
+            if (_manifest.Hosts == null)
+            {
+                return false;
+            }
+
+            foreach (var item in _manifest.Hosts)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (item == uri.Host)
+                {
+                    return true;
+                }
+
+                if (Regex.IsMatch(uri.Host, item))
+                {
+                    return true;
+                }
             }
 
             return false;
