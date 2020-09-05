@@ -18,13 +18,13 @@ namespace iHentai.Extensions
     {
         ObservableCollection<ExtensionManifest> Extensions { get; }
         void Reload();
-        Task<IMangaApi?> GetApi(ExtensionManifest manifest);
+        Task<ScriptApi?> GetApi(ExtensionManifest manifest);
     }
 
     public class ExtensionManager : IExtensionManager
     {
-        private readonly Dictionary<ExtensionManifest, IMangaApi> _cacheApis =
-            new Dictionary<ExtensionManifest, IMangaApi>();
+        private readonly Dictionary<ExtensionManifest, ScriptApi> _cacheApis =
+            new Dictionary<ExtensionManifest, ScriptApi>();
 
         private readonly Dictionary<string, ScriptEngine> _cacheEngines = new Dictionary<string, ScriptEngine>();
 
@@ -48,7 +48,7 @@ namespace iHentai.Extensions
             Init();
         }
 
-        public async Task<IMangaApi?> GetApi(ExtensionManifest manifest)
+        public async Task<ScriptApi?> GetApi(ExtensionManifest manifest)
         {
             if (_cacheApis.ContainsKey(manifest))
             {

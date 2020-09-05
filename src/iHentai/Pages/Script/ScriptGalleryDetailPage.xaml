@@ -38,11 +38,15 @@
                 <TextBlock Text="{x:Bind ViewModel.GalleryTitle, Mode=OneWay}"
                            Style="{StaticResource TitleTextBlockStyle}" />
                 <TextBlock Text="{x:Bind ViewModel.Detail.SubTitle, Mode=OneWay}"
+                           Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.SubTitle), Mode=OneWay}"
                            Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
-                <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
-                                        Margin="0,16,0,0"
-                                        HorizontalAlignment="Left">
+                <TextBlock Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Desc), Mode=OneWay}"
+                           Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
+                <controls:ItemsRepeater 
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Chapters), Mode=OneWay}"
+                    ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
+                    Margin="0,16,0,0"
+                    HorizontalAlignment="Left">
                     <controls:ItemsRepeater.Layout>
                         <controls:UniformGridLayout MinColumnSpacing="8" MinRowSpacing="8" />
                     </controls:ItemsRepeater.Layout>

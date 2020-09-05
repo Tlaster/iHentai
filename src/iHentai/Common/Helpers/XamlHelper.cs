@@ -50,5 +50,10 @@ namespace iHentai.Common.Helpers
         {
             return theme.ToString();
         }
+
+        public static Visibility NonNullToVisibility(object? obj)
+        {
+            return BoolToVisibility(obj != null);
+        }
     }
 }

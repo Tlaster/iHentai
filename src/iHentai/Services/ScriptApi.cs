@@ -39,6 +39,12 @@ namespace iHentai.Services
             return await InvokeAsync<List<ScriptGalleryModel>>(functionName, new Arguments {page});
         }
 
+        public bool HasSearch()
+        {
+            const string functionName = "search";
+            return _engine.HasMember(functionName);
+        }
+
         public async Task<IEnumerable<IGallery>> Search(string keyword, int page)
         {
             const string functionName = "search";

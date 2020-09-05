@@ -10,7 +10,7 @@ namespace iHentai.Data
     public class LocalLibraryDb
     {
         public static LocalLibraryDb Instance { get; } = new LocalLibraryDb();
-        private string DbFile => Path.Combine(HentaiApp.Instance.Resolve<IPlatformService>().LocalPath, "library.db");
+        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "library.db");
         private LocalLibraryDb()
         {
             
@@ -21,19 +21,19 @@ namespace iHentai.Data
             return GetAll<LocalLibraryModel>();
         }
 
-        public LocalLibraryModel AddLocalLibrary(IFolderItem fodler, List<LocalGalleryModel> gallery)
+        public LocalLibraryModel AddLocalLibrary(IFolderItem folder, List<LocalGalleryModel> gallery)
         {
             using var db = new LiteDatabase(DbFile);
             var column = db.GetCollection<LocalLibraryModel>();
-            if (column.Exists(it => it.Token == fodler.Token))
+            if (column.Exists(it => it.Token == folder.Token))
             {
-                return column.FindOne(it => it.Token == fodler.Token);
+                return column.FindOne(it => it.Token == folder.Token);
             }
 
             var id = column.Insert(new LocalLibraryModel
             {
-                Path = fodler.Path,
-                Token = fodler.Token,
+                Path = folder.Path,
+                Token = folder.Token,
                 Count = gallery.Count,
             });
             gallery.ForEach(model =>

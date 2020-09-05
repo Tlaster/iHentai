@@ -43,5 +43,18 @@ namespace iHentai.Pages.Script
                 }
             }
         }
+
+        private void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            ViewModel.Search(args.QueryText);
+        }
+
+        private void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (sender.Text.Length == 0)
+            {
+                ViewModel.Reset();
+            }
+        }
     }
 }

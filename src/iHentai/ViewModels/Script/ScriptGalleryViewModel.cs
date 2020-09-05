@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Extensions;
@@ -7,12 +8,13 @@ using iHentai.Services;
 using iHentai.Services.Models.Core;
 using Microsoft.Toolkit.Collections;
 using Microsoft.Toolkit.Uwp;
+using PropertyChanged;
 
 namespace iHentai.ViewModels.Script
 {
-    class ScriptGalleryViewModel : ViewModelBase, IIncrementalSource<IGallery>
+    internal class ScriptGalleryViewModel : ViewModelBase, IIncrementalSource<IGallery>
     {
-        public IMangaApi? Api { get; private set; }
+        private Func<int, Task<IEnumerable<IGallery>>> _loadFunc;
 
         public ScriptGalleryViewModel(ExtensionManifest manifest)
         {
@@ -21,17 +23,23 @@ namespace iHentai.ViewModels.Script
             SwitchTo(manifest);
         }
 
+        public ScriptApi? Api { get; private set; }
+
+        [DependsOn(nameof(Api))] public bool HasSearch => Api?.HasSearch() ?? false;
+
         public ExtensionManifest Manifest { get; }
 
         public IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery> Source { get; }
 
-        public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize,
+            CancellationToken cancellationToken = default)
         {
             if (Api == null)
             {
                 return new List<IGallery>();
             }
-            return await Api.Home(pageIndex);
+
+            return await _loadFunc.Invoke(pageIndex);
         }
 
         public async void SwitchTo(ExtensionManifest manifest)
@@ -40,9 +48,30 @@ namespace iHentai.ViewModels.Script
             if (api != null && api != Api)
             {
                 Api = api;
-                Source.Clear();
-                Source.RefreshAsync();
+                Reset();
             }
+        }
+
+        public void Search(string queryText)
+        {
+            if (Api == null || !Api.HasSearch())
+            {
+                return;
+            }
+            _loadFunc = page => Api.Search(queryText, page);
+            Source.Clear();
+            Source.RefreshAsync();
+        }
+
+        public void Reset()
+        {
+            if (Api == null)
+            {
+                return;
+            }
+            _loadFunc = page => Api.Home(page);
+            Source.Clear();
+            Source.RefreshAsync();
         }
     }
 }

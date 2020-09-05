@@ -124,6 +124,8 @@
     <Compile Include="Common\Converters\ExtensionManifestToNavigationViewItemConverter.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Common\Extensions\FolderPickerExtensions.cs" />
+    <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
+    <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\Extensions\StreamExtensions.cs" />
     <Compile Include="Common\Helpers\NativeFindStorageItemHelper.cs" />
     <Compile Include="Common\Helpers\ProgressCacheBase.cs" />
@@ -132,8 +134,10 @@
     <Compile Include="Common\HentaiHttpClient.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Data\ExtensionDb.cs" />
+    <Compile Include="Data\ScriptHistoryDb.cs" />
     <Compile Include="Data\LocalLibraryDb.cs" />
     <Compile Include="Data\Models\ExtensionDbModel.cs" />
+    <Compile Include="Data\Models\ScriptHistoryModel.cs" />
     <Compile Include="Data\Models\LocalGalleryModel.cs" />
     <Compile Include="Data\Models\LocalLibraryModel.cs" />
     <Compile Include="Data\Models\SettingItemModel.cs" />
@@ -188,7 +192,6 @@
     <Compile Include="Services\Models\GalleryModel.cs" />
     <Compile Include="Services\Models\Script\ScriptGalleryDetailModel.cs" />
     <Compile Include="Services\Models\Script\ScriptGalleryModel.cs" />
-    <Compile Include="Services\Models\Script\ScriptMangaChapter.cs" />
     <Compile Include="Services\Models\Script\ScriptRequestModifier.cs" />
     <Compile Include="Services\ScriptApi.cs" />
     <Compile Include="ViewModels\Extensions\ExtensionsListViewModel.cs" />

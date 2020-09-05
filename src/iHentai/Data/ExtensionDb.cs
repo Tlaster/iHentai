@@ -9,7 +9,7 @@ namespace iHentai.Data
     public class ExtensionDb : IExtensionStorage
     {
         public static ExtensionDb Instance { get; } = new ExtensionDb();
-        private string DbFile => Path.Combine(HentaiApp.Instance.Resolve<IPlatformService>().LocalPath, "extension.db");
+        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "extension.db");
 
         public void Set(string extensionKey, string key, string value)
         {

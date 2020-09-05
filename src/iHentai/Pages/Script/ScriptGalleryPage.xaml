@@ -16,14 +16,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <CommandBar Margin="8" OverflowButtonVisibility="Collapsed" VerticalContentAlignment="Center" Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarElementContainer VerticalContentAlignment="Center">
-                <AutoSuggestBox PlaceholderText="搜索" Width="200" >
+            <AppBarElementContainer Visibility="{x:Bind ViewModel.HasSearch, Mode=OneWay}" VerticalContentAlignment="Center">
+                <AutoSuggestBox PlaceholderText="搜索" Width="200" TextChanged="AutoSuggestBox_OnTextChanged" QuerySubmitted="AutoSuggestBox_OnQuerySubmitted">
                     <AutoSuggestBox.QueryIcon>
                         <SymbolIcon Symbol="Find"/>
                     </AutoSuggestBox.QueryIcon>
                 </AutoSuggestBox>
             </AppBarElementContainer>
             <AppBarElementContainer Width="8"/>
+            <AppBarButton Label="刷新" Click="{x:Bind ViewModel.Source.RefreshAsync}">
+                <AppBarButton.Icon>
+                    <SymbolIcon Symbol="Refresh"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </CommandBar>
         <GridView Padding="24,8"
                   Grid.Row="1" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
@@ -32,14 +37,10 @@
                     <views:GalleryItemView Data="{x:Bind}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="8, 8, 8, 8"/>
+                    <Setter Property="CornerRadius" Value="4"/>
+                    <Setter Property="Margin" Value="8"/>
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>
