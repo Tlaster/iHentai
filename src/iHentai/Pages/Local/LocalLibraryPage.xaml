@@ -4,12 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:views="using:iHentai.Views"
     xmlns:core="using:iHentai.Services.Models.Core"
     xmlns:controls1="using:Microsoft.UI.Xaml.Controls"
     xmlns:icon="using:Bug10.Icon"
-    xmlns:extensions="using:iHentai.Common.Extensions"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -17,46 +15,51 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <CommandBar Margin="8" OverflowButtonVisibility="Collapsed" VerticalContentAlignment="Center" Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
+        <CommandBar Margin="8" OverflowButtonVisibility="Collapsed" VerticalContentAlignment="Center"
+                    Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
             <AppBarElementContainer VerticalContentAlignment="Center">
-                <AutoSuggestBox PlaceholderText="搜索" Width="200" TextChanged="AutoSuggestBox_OnTextChanged" QuerySubmitted="AutoSuggestBox_OnQuerySubmitted">
+                <AutoSuggestBox PlaceholderText="搜索" Width="200" TextChanged="AutoSuggestBox_OnTextChanged"
+                                QuerySubmitted="AutoSuggestBox_OnQuerySubmitted">
                     <AutoSuggestBox.QueryIcon>
-                        <SymbolIcon Symbol="Find"/>
+                        <SymbolIcon Symbol="Find" />
                     </AutoSuggestBox.QueryIcon>
                 </AutoSuggestBox>
             </AppBarElementContainer>
-            <AppBarElementContainer Width="8"/>
-            <AppBarButton Label="排序" >
+            <AppBarElementContainer Width="8" />
+            <AppBarButton Label="排序">
                 <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Filter"/>
+                    <SymbolIcon Symbol="Filter" />
                 </AppBarButton.Icon>
                 <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <controls1:RadioMenuFlyoutItem Text="默认" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsDefault, Mode=TwoWay}">
+                        <controls1:RadioMenuFlyoutItem Text="默认" GroupName="Filter"
+                                                       IsChecked="{x:Bind ViewModel.FilterViewModel.IsDefault, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
-                                <icon:IconView Icon="DateTime"/>
+                                <icon:IconView Icon="DateTime" />
                             </controls1:RadioMenuFlyoutItem.Icon>
                         </controls1:RadioMenuFlyoutItem>
-                        <controls1:RadioMenuFlyoutItem Text="最新" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsNewest, Mode=TwoWay}">
+                        <controls1:RadioMenuFlyoutItem Text="最新" GroupName="Filter"
+                                                       IsChecked="{x:Bind ViewModel.FilterViewModel.IsNewest, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
-                                <icon:IconView Icon="DateTime"/>
+                                <icon:IconView Icon="DateTime" />
                             </controls1:RadioMenuFlyoutItem.Icon>
                         </controls1:RadioMenuFlyoutItem>
-                        <controls1:RadioMenuFlyoutItem Text="最旧" GroupName="Filter" IsChecked="{x:Bind ViewModel.FilterViewModel.IsOldest, Mode=TwoWay}">
+                        <controls1:RadioMenuFlyoutItem Text="最旧" GroupName="Filter"
+                                                       IsChecked="{x:Bind ViewModel.FilterViewModel.IsOldest, Mode=TwoWay}">
                             <controls1:RadioMenuFlyoutItem.Icon>
-                                <icon:IconView Icon="DateTime"/>
+                                <icon:IconView Icon="DateTime" />
                             </controls1:RadioMenuFlyoutItem.Icon>
                         </controls1:RadioMenuFlyoutItem>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarSeparator/>
+            <AppBarSeparator />
             <AppBarButton Label="刷新" Click="{x:Bind ViewModel.Refresh}">
                 <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Refresh"/>
+                    <SymbolIcon Symbol="Refresh" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="添加..." >
+            <AppBarButton Label="添加...">
                 <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem Text="添加本地文件夹" Click="{x:Bind ViewModel.SelectFolder}" />
@@ -68,20 +71,22 @@
             </AppBarButton>
         </CommandBar>
 
-        <ProgressBar IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Top"/>
+        <ProgressBar IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                     Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Grid.Row="1" VerticalAlignment="Top" />
 
-        <GridView Grid.Row="1" 
+        <GridView Grid.Row="1"
                   Padding="16, 8"
-                  ItemsSource="{x:Bind ViewModel.SourceView}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
+                  ItemsSource="{x:Bind ViewModel.SourceView}" SelectionMode="None" IsItemClickEnabled="True"
+                  ItemClick="ListViewBase_OnItemClick">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="core:IGallery" >
-                    <views:GalleryItemView Data="{x:Bind}"/>
+                <DataTemplate x:DataType="core:IGallery">
+                    <views:GalleryItemView Data="{x:Bind}" />
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="CornerRadius" Value="4"/>
-                    <Setter Property="Margin" Value="8"/>
+                    <Setter Property="CornerRadius" Value="4" />
+                    <Setter Property="Margin" Value="8" />
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>

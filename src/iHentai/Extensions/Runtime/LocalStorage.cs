@@ -25,7 +25,7 @@ namespace iHentai.Extensions.Runtime
         {
             _storage.Set(_extensionId, key, value);
         }
-        
+
         [DoNotDelete]
         public string? getItem(string key)
         {

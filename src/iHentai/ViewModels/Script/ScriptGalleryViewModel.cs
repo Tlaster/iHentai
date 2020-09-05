@@ -58,6 +58,7 @@ namespace iHentai.ViewModels.Script
             {
                 return;
             }
+
             _loadFunc = page => Api.Search(queryText, page);
             Source.Clear();
             Source.RefreshAsync();
@@ -69,6 +70,7 @@ namespace iHentai.ViewModels.Script
             {
                 return;
             }
+
             _loadFunc = page => Api.Home(page);
             Source.Clear();
             Source.RefreshAsync();

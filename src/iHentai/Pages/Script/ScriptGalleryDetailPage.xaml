@@ -31,7 +31,8 @@
                     Visibility="{x:Bind helper:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}"
                     Content="阅读" Style="{ThemeResource AccentButtonStyle}" Click="ReadClicked" />
         </StackPanel>
-        <controls:ProgressRing Width="50" Height="50" Grid.Row="1" Grid.Column="1" IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+        <controls:ProgressRing Width="50" Height="50" Grid.Row="1" Grid.Column="1"
+                               IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay}" />
         <ScrollViewer Grid.Row="1" Grid.Column="1" Padding="16">
             <StackPanel Orientation="Vertical">
@@ -40,9 +41,10 @@
                 <TextBlock Text="{x:Bind ViewModel.Detail.SubTitle, Mode=OneWay}"
                            Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.SubTitle), Mode=OneWay}"
                            Style="{StaticResource SubtitleTextBlockStyle}" />
-                <TextBlock Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Desc), Mode=OneWay}"
-                           Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
-                <controls:ItemsRepeater 
+                <TextBlock
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Desc), Mode=OneWay}"
+                    Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
+                <controls:ItemsRepeater
                     Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Chapters), Mode=OneWay}"
                     ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
                     Margin="0,16,0,0"

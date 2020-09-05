@@ -11,31 +11,31 @@ using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai.Common.Helpers
 {
-    class ProgressImageCache : ProgressCacheBase<ImageSource>
+    internal class ProgressImageCache : ProgressCacheBase<ImageSource>
     {
-
-        public static ProgressImageCache Instance { get; } = new ProgressImageCache();
-
         private const string DateAccessedProperty = "System.DateAccessed";
 
-        private List<string> _extendedPropertyNames = new List<string>();
+        private readonly List<string> _extendedPropertyNames = new List<string>();
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageCache"/> class.
+        ///     Initializes a new instance of the <see cref="ImageCache" /> class.
         /// </summary>
         public ProgressImageCache()
         {
             _extendedPropertyNames.Add(DateAccessedProperty);
         }
 
+        public static ProgressImageCache Instance { get; } = new ProgressImageCache();
+
         /// <summary>
-        /// Cache specific hooks to process items from HTTP response
+        ///     Cache specific hooks to process items from HTTP response
         /// </summary>
         /// <param name="stream">input stream</param>
         /// <param name="initializerKeyValues">key value pairs used when initializing instance of generic type</param>
         /// <returns>awaitable task</returns>
-        protected override async Task<ImageSource> InitializeTypeAsync(Stream stream, List<KeyValuePair<string, object>> initializerKeyValues = null)
+        protected override async Task<ImageSource> InitializeTypeAsync(Stream stream,
+            List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
             if (stream.Length == 0)
             {
@@ -55,7 +55,8 @@ namespace iHentai.Common.Helpers
                             continue;
                         }
 
-                        var propInfo = image.GetType().GetProperty(kvp.Key, BindingFlags.Public | BindingFlags.Instance);
+                        var propInfo = image.GetType()
+                            .GetProperty(kvp.Key, BindingFlags.Public | BindingFlags.Instance);
 
                         if (propInfo != null && propInfo.CanWrite)
                         {
@@ -71,12 +72,13 @@ namespace iHentai.Common.Helpers
         }
 
         /// <summary>
-        /// Cache specific hooks to process items from HTTP response
+        ///     Cache specific hooks to process items from HTTP response
         /// </summary>
         /// <param name="baseFile">storage file</param>
         /// <param name="initializerKeyValues">key value pairs used when initializing instance of generic type</param>
         /// <returns>awaitable task</returns>
-        protected override async Task<ImageSource> InitializeTypeAsync(StorageFile baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
+        protected override async Task<ImageSource> InitializeTypeAsync(StorageFile baseFile,
+            List<KeyValuePair<string, object>> initializerKeyValues = null)
         {
             using (var stream = await baseFile.OpenStreamForReadAsync().ConfigureAwait(false))
             {
@@ -85,13 +87,14 @@ namespace iHentai.Common.Helpers
         }
 
         /// <summary>
-        /// Override-able method that checks whether file is valid or not.
+        ///     Override-able method that checks whether file is valid or not.
         /// </summary>
         /// <param name="file">storage file</param>
         /// <param name="duration">cache duration</param>
         /// <param name="treatNullFileAsOutOfDate">option to mark uninitialized file as expired</param>
         /// <returns>bool indicate whether file has expired or not</returns>
-        protected override async Task<bool> IsFileOutOfDateAsync(StorageFile file, TimeSpan duration, bool treatNullFileAsOutOfDate = true)
+        protected override async Task<bool> IsFileOutOfDateAsync(StorageFile file, TimeSpan duration,
+            bool treatNullFileAsOutOfDate = true)
         {
             if (file == null)
             {

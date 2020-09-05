@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Jint;
+﻿using Jint;
 
 namespace iHentai.Extensions.Runtime
 {
-    class UnPacker
+    internal class UnPacker
     {
         public static string? Unpack(string script)
         {

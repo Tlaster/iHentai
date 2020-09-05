@@ -25,7 +25,7 @@ namespace iHentai.Data
                 column.Insert(new SettingItemModel
                 {
                     Key = key,
-                    Value = value,
+                    Value = value
                 });
             }
         }
@@ -39,11 +39,8 @@ namespace iHentai.Data
                 var item = column.FindOne(it => it.Key == key);
                 return item.Value;
             }
-            else
-            {
-                return defaultValue;
-            }
-        }
 
+            return defaultValue;
+        }
     }
 }

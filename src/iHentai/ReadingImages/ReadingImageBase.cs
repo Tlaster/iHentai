@@ -7,11 +7,9 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
 using iHentai.Common.Helpers;
-using Microsoft.Toolkit.Helpers;
 
 namespace iHentai.ReadingImages
 {
-
     public interface IReadingImage : INotifyPropertyChanged
     {
         ImageSource Source { get; }
@@ -36,11 +34,12 @@ namespace iHentai.ReadingImages
         {
             if (removeCache)
             {
-                await ProgressImageCache.Instance.RemoveAsync(new[] { new Uri(Url) });
+                await ProgressImageCache.Instance.RemoveAsync(new[] {new Uri(Url)});
             }
 
             //TODO: check if image already downloaded
-            return await ProgressImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token, progress: this);
+            return await ProgressImageCache.Instance.GetFromCacheAsync(new Uri(Url), cancellationToken: token,
+                progress: this);
         }
     }
 
@@ -48,6 +47,12 @@ namespace iHentai.ReadingImages
     {
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private ImageSource _source;
+
+        public void Report(float value)
+        {
+            CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                () => Progress = value);
+        }
 
         public ImageSource Source
         {
@@ -104,12 +109,5 @@ namespace iHentai.ReadingImages
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public void Report(float value)
-        {
-            CoreApplication.MainView.Dispatcher.RunAsync(priority: CoreDispatcherPriority.Normal,
-                () => Progress = value);
-        }
     }
-
 }

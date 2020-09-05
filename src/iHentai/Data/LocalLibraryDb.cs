@@ -9,12 +9,12 @@ namespace iHentai.Data
 {
     public class LocalLibraryDb
     {
-        public static LocalLibraryDb Instance { get; } = new LocalLibraryDb();
-        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "library.db");
         private LocalLibraryDb()
         {
-            
         }
+
+        public static LocalLibraryDb Instance { get; } = new LocalLibraryDb();
+        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "library.db");
 
         public List<LocalLibraryModel> GetLocalLibrary()
         {
@@ -34,7 +34,7 @@ namespace iHentai.Data
             {
                 Path = folder.Path,
                 Token = folder.Token,
-                Count = gallery.Count,
+                Count = gallery.Count
             });
             gallery.ForEach(model =>
             {
@@ -44,6 +44,7 @@ namespace iHentai.Data
                 {
                     return;
                 }
+
                 column.Insert(model);
             });
             return column.FindById(id);
@@ -82,6 +83,7 @@ namespace iHentai.Data
             {
                 return;
             }
+
             column.Insert(model);
         }
 

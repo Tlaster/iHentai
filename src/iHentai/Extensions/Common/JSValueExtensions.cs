@@ -13,11 +13,9 @@ namespace iHentai.Extensions.Common
                 result = property.As<T>();
                 return true;
             }
-            else
-            {
-                result = default;
-                return false;
-            }
+
+            result = default;
+            return false;
         }
     }
 }

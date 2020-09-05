@@ -17,13 +17,14 @@ namespace iHentai.Common.Helpers
     internal abstract class ProgressCacheBase<T>
     {
         private readonly SemaphoreSlim _cacheFolderSemaphore = new SemaphoreSlim(1);
+
+        private readonly ConcurrentDictionary<string, ConcurrentRequest> _concurrentTasks =
+            new ConcurrentDictionary<string, ConcurrentRequest>();
+
         private StorageFolder _baseFolder;
 
         private StorageFolder _cacheFolder;
         private string _cacheFolderName;
-
-        private readonly ConcurrentDictionary<string, ConcurrentRequest> _concurrentTasks =
-            new ConcurrentDictionary<string, ConcurrentRequest>();
 
         private HttpClient _httpClient;
         private InMemoryStorage<T> _inMemoryFileStorage;
@@ -326,7 +327,8 @@ namespace iHentai.Common.Helpers
         }
 
         private async Task<T> GetItemAsync(Uri uri, bool throwOnError, bool preCacheOnly,
-            CancellationToken cancellationToken, IProgress<float> progress, List<KeyValuePair<string, object>> initializerKeyValues)
+            CancellationToken cancellationToken, IProgress<float> progress,
+            List<KeyValuePair<string, object>> initializerKeyValues)
         {
             var instance = default(T);
 
@@ -375,7 +377,8 @@ namespace iHentai.Common.Helpers
         }
 
         private async Task<T> GetFromCacheOrDownloadAsync(Uri uri, string fileName, bool preCacheOnly,
-            CancellationToken cancellationToken, IProgress<float> progress, List<KeyValuePair<string, object>> initializerKeyValues)
+            CancellationToken cancellationToken, IProgress<float> progress,
+            List<KeyValuePair<string, object>> initializerKeyValues)
         {
             StorageFile baseFile = null;
             var instance = default(T);
@@ -395,14 +398,16 @@ namespace iHentai.Common.Helpers
             }
 
             var folder = await GetCacheFolderAsync().ConfigureAwait(false);
-            baseFile = await folder.TryGetItemAsync(fileName).AsTask(cancellationToken).ConfigureAwait(false) as StorageFile;
+            baseFile =
+                await folder.TryGetItemAsync(fileName).AsTask(cancellationToken).ConfigureAwait(false) as StorageFile;
 
             var downloadDataFile = baseFile == null ||
                                    await IsFileOutOfDateAsync(baseFile, CacheDuration).ConfigureAwait(false);
 
             if (baseFile == null)
             {
-                baseFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting).AsTask(cancellationToken)
+                baseFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting)
+                    .AsTask(cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -443,7 +448,8 @@ namespace iHentai.Common.Helpers
 
                 if (_inMemoryFileStorage.MaxItemCount > 0)
                 {
-                    var properties = await baseFile.GetBasicPropertiesAsync().AsTask(cancellationToken).ConfigureAwait(false);
+                    var properties = await baseFile.GetBasicPropertiesAsync().AsTask(cancellationToken)
+                        .ConfigureAwait(false);
 
                     var msi = new InMemoryStorageItem<T>(fileName, properties.DateModified.DateTime, instance);
                     _inMemoryFileStorage.SetItem(msi);
@@ -454,25 +460,29 @@ namespace iHentai.Common.Helpers
         }
 
         private async Task<T> DownloadFileAsync(Uri uri, StorageFile baseFile, bool preCacheOnly,
-            CancellationToken cancellationToken, IProgress<float> progress, List<KeyValuePair<string, object>> initializerKeyValues)
+            CancellationToken cancellationToken, IProgress<float> progress,
+            List<KeyValuePair<string, object>> initializerKeyValues)
         {
             var instance = default(T);
 
             using (var ms = new MemoryStream())
             {
-                using var response = await HttpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                using var response =
+                    await HttpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                 using (var stream = await response.Content.ReadAsStreamAsync())
                 {
                     var contentLength = response.Content.Headers.ContentLength;
                     if (contentLength != null && progress != null)
                     {
-                        var relativeProgress = new Progress<long>(totalBytes => progress.Report((float)totalBytes / contentLength.Value));
+                        var relativeProgress = new Progress<long>(totalBytes =>
+                            progress.Report((float) totalBytes / contentLength.Value));
                         await stream.CopyToAsync(ms, 81920, relativeProgress, cancellationToken);
                     }
                     else
                     {
                         await stream.CopyToAsync(ms, 81920, cancellationToken);
                     }
+
                     ms.Flush();
 
                     ms.Position = 0;

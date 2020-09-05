@@ -32,9 +32,12 @@ namespace iHentai.Services
         {
             foreach (var item in LocalLibrary)
             {
-                var gallery = await ScanForGalleryAsync(await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(item.Token));
+                var gallery =
+                    await ScanForGalleryAsync(
+                        await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(item.Token));
                 LocalLibraryDb.Instance.UpdateLocalLibrary(item, gallery);
             }
+
             LocalGallery.Clear();
             LocalLibraryDb.Instance.GetLocalGallery().ForEach(it => LocalGallery.Add(it));
         }
@@ -45,6 +48,7 @@ namespace iHentai.Services
             {
                 return;
             }
+
             var token = StorageApplicationPermissions.FutureAccessList.Add(folder);
             var folderItem = await HentaiApp.Instance.Resolve<IPlatformService>().GetFolder(token);
             await AddFolder(folderItem);
@@ -98,6 +102,7 @@ namespace iHentai.Services
                         ?.Path
                 });
             }
+
             var folders = await folder.GetFolders();
 
             foreach (var child in folders)

@@ -1,37 +1,35 @@
 ﻿using Windows.ApplicationModel.Core;
 using Windows.Devices.Input;
 using Windows.System.Display;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using iHentai.ViewModels;
-using Visibility = Windows.UI.Xaml.Visibility;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace iHentai.Pages
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ReadingPage : Page
     {
         private readonly DisplayRequest _display;
-        private CoreApplicationViewTitleBar _titleBar;
-        internal ReadingViewModel ViewModel { get; private set; }
+        private readonly CoreApplicationViewTitleBar _titleBar;
 
         public ReadingPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             _display = new DisplayRequest();
             _titleBar = CoreApplication.GetCurrentView().TitleBar;
             UpdateTitleBarHeight();
             _titleBar.IsVisibleChanged += TitleBarOnIsVisibleChanged;
             SharedShadow.Receivers.Add(ShadowBackgroundGrid);
         }
+
+        internal ReadingViewModel ViewModel { get; private set; }
 
         private void TitleBarOnIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
         {
@@ -66,6 +64,7 @@ namespace iHentai.Pages
             {
                 ViewModel = readingViewModel;
             }
+
             _display.RequestActive();
             Window.Current.SetTitleBar(TitleBarBorder);
         }
@@ -76,11 +75,13 @@ namespace iHentai.Pages
             _display.RequestRelease();
             _titleBar.IsVisibleChanged -= TitleBarOnIsVisibleChanged;
         }
-        
+
         private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             e.Handled = true;
-            ReadingControl.Visibility = ReadingControl.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            ReadingControl.Visibility = ReadingControl.Visibility == Visibility.Visible
+                ? Visibility.Collapsed
+                : Visibility.Visible;
         }
 
         private void ReadingControl_OnPointerEntered(object sender, PointerRoutedEventArgs e)
@@ -102,6 +103,7 @@ namespace iHentai.Pages
                 ReadingControl.Visibility = Visibility.Collapsed;
             }
         }
+
         private void RefreshClicked(object sender, RoutedEventArgs e)
         {
             ViewModel.ReloadCurrent();

@@ -4,8 +4,7 @@ namespace iHentai.Data.Models
 {
     public class LocalLibraryModel
     {
-        [BsonId]
-        public long Id {get;set;}
+        [BsonId] public long Id { get; set; }
 
         public string Path { get; set; }
 

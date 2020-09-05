@@ -7,38 +7,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Toolkit.Uwp.UI;
-using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace iHentai.Views.ImageEx
 {
     /// <summary>
-    /// Base code for ImageEx
+    ///     Base code for ImageEx
     /// </summary>
     public partial class ImageExBase
     {
         /// <summary>
-        /// Identifies the <see cref="Source"/> dependency property.
+        ///     Identifies the <see cref="Source" /> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(nameof(Source), typeof(object), typeof(ImageExBase), new PropertyMetadata(null, SourceChanged));
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(nameof(Source),
+            typeof(object), typeof(ImageExBase), new PropertyMetadata(null, SourceChanged));
+
+        private bool _isHttpSource;
+        private object _lazyLoadingSource;
+        private CancellationTokenSource _tokenSource;
 
         private Uri _uri;
-        private bool _isHttpSource;
-        private CancellationTokenSource _tokenSource = null;
-        private object _lazyLoadingSource;
 
         /// <summary>
-        /// Gets or sets the source used by the image
+        ///     Gets or sets the source used by the image
         /// </summary>
         public object Source
         {
-            get { return GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get => GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
         }
 
         private static void SourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -98,9 +100,9 @@ namespace iHentai.Views.ImageEx
                 return;
             }
 
-            this._tokenSource?.Cancel();
+            _tokenSource?.Cancel();
 
-            this._tokenSource = new CancellationTokenSource();
+            _tokenSource = new CancellationTokenSource();
 
             AttachSource(null);
 
@@ -156,16 +158,16 @@ namespace iHentai.Views.ImageEx
                         case ImageExCachingStrategy.Custom:
                         case ImageExCachingStrategy.Internal:
                         default:
+                        {
+                            if (imageUri.IsAbsoluteUri && imageUri.IsFile)
                             {
-                                if (imageUri.IsAbsoluteUri && imageUri.IsFile)
-                                {
-                                    await SetFileSource(imageUri);
-                                } 
-                                else
-                                {
-                                    AttachSource(new BitmapImage(imageUri));
-                                }
+                                await SetFileSource(imageUri);
                             }
+                            else
+                            {
+                                AttachSource(new BitmapImage(imageUri));
+                            }
+                        }
                             break;
                     }
                 }

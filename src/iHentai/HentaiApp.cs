@@ -2,20 +2,17 @@
 using System.Collections.Concurrent;
 using System.Net.Http;
 using iHentai.Common;
-using iHentai.Common.Helpers;
 using iHentai.Data;
 using iHentai.Extensions;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
-using Jint;
-using Microsoft.Toolkit.Uwp.UI;
-using NiL.JS.Core;
 
 namespace iHentai
 {
     internal static class Ioc
     {
-        private static readonly ConcurrentDictionary<Type, object> _container = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object>
+            _container = new ConcurrentDictionary<Type, object>();
 
         public static void Register<T, V>(this object _, Func<V> generator) where V : T
         {
@@ -31,17 +28,17 @@ namespace iHentai
         {
             if (_container.TryGetValue(typeof(T), out var result))
             {
-                return (T)result;
+                return (T) result;
             }
-            else
-            {
-                return default;
-            }
+
+            return default;
         }
     }
 
     internal class HentaiApp
     {
+        public static HentaiApp Instance { get; } = new HentaiApp();
+
         public void Init()
         {
             this.Register<HttpMessageHandler, HentaiHttpHandler>(() => HentaiHttpHandler.Instance);
@@ -49,7 +46,5 @@ namespace iHentai
             this.Register<IPlatformService, PlatformService>();
             this.Register<IExtensionManager, ExtensionManager>();
         }
-
-        public static HentaiApp Instance { get; } = new HentaiApp();
     }
 }

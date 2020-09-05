@@ -5,18 +5,18 @@
 namespace iHentai.Views.ImageEx
 {
     /// <summary>
-    /// The type of caching to be applied to <see cref="ImageEx"/>.
-    /// Default is <see cref="Custom"/>
+    ///     The type of caching to be applied to <see cref="ImageEx" />.
+    ///     Default is <see cref="Custom" />
     /// </summary>
     public enum ImageExCachingStrategy
     {
         /// <summary>
-        /// Caching is handled by <see cref="ImageEx"/>'s custom caching system.
+        ///     Caching is handled by <see cref="ImageEx" />'s custom caching system.
         /// </summary>
         Custom,
 
         /// <summary>
-        /// Caching is handled internally by UWP.
+        ///     Caching is handled internally by UWP.
         /// </summary>
         Internal
     }

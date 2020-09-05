@@ -5,19 +5,18 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using iHentai.Common;
 using iHentai.Common.Extensions;
-using iHentai.Data;
 using iHentai.Data.Models;
 using iHentai.Extensions.Models;
 using iHentai.Services;
 
 namespace iHentai.ViewModels
 {
-    class SettingsViewModel : ViewModelBase
+    internal class SettingsViewModel : ViewModelBase
     {
         public bool IsLoading { get; private set; }
         public IEnumerable<LocalLibraryModel> LocalLibrary => LocalLibraryManager.Instance.LocalLibrary;
         public string ExtensionFolder => SettingsManager.Instance.ExtensionFolder.Path ?? "";
-        
+
 
         public ElementTheme Theme
         {
@@ -60,6 +59,7 @@ namespace iHentai.ViewModels
                 {
                     return;
                 }
+
                 var token = StorageApplicationPermissions.FutureAccessList.Add(result);
                 var current = SettingsManager.Instance.ExtensionFolder;
                 if (current.Token != null)

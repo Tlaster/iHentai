@@ -27,7 +27,7 @@ namespace iHentai.Data
                 {
                     ExtensionKey = extensionKey,
                     Key = key,
-                    Value = value,
+                    Value = value
                 });
             }
         }
@@ -41,10 +41,8 @@ namespace iHentai.Data
                 var item = column.FindOne(it => it.Key == key && it.ExtensionKey == extensionKey);
                 return item.Value;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }

@@ -9,25 +9,25 @@ using iHentai.ViewModels.Script;
 namespace iHentai.Pages.Script
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ScriptGalleryPage : Page
     {
         public ScriptGalleryPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+
+        private ScriptGalleryViewModel ViewModel { get; set; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             if (e.Parameter is ScriptGalleryViewModel viewModel)
             {
-                this.ViewModel = viewModel;
+                ViewModel = viewModel;
             }
         }
-
-        private ScriptGalleryViewModel ViewModel { get; set; }
 
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
@@ -39,7 +39,6 @@ namespace iHentai.Pages.Script
                 }
                 else if (api.HasGalleryImages())
                 {
-
                 }
             }
         }

@@ -5,14 +5,15 @@ using iHentai.Services;
 
 namespace iHentai.ViewModels.Local
 {
-    class LocalReadingViewModel : ReadingViewModel
+    internal class LocalReadingViewModel : ReadingViewModel
     {
-        public LocalGalleryModel Gallery { get; }
         public LocalReadingViewModel(LocalGalleryModel gallery) : base(gallery.Title)
         {
             Gallery = gallery;
             Init();
         }
+
+        public LocalGalleryModel Gallery { get; }
 
         private async void Init()
         {

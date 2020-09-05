@@ -195,7 +195,7 @@
         </Grid>
 
 
-        <Grid x:Name="ShadowBackgroundGrid" Visibility="{x:Bind ReadingControl.Visibility, Mode=OneWay}" >
+        <Grid x:Name="ShadowBackgroundGrid" Visibility="{x:Bind ReadingControl.Visibility, Mode=OneWay}">
             <animations:Implicit.ShowAnimations>
                 <animations:OpacityAnimation From="0" To="1" Duration="0:0:0.3" />
             </animations:Implicit.ShowAnimations>
@@ -317,7 +317,8 @@
             </Grid>
         </Grid>
 
-        <Grid MaxWidth="600" Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
+        <Grid MaxWidth="600"
+              Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
             <Grid Background="Transparent"
                   Height="60"
                   Margin="8"
@@ -341,11 +342,11 @@
                         Value="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}" />
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel  Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="OnLeftClicked">
                             <icon:IconView Icon="ChevronLeft" />
                         </Button>
@@ -357,9 +358,9 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" Padding="0,0,8,4">
-                        <TextBlock Text="{x:Bind ViewModel.SelectedIndex, Mode=OneWay}"/>
-                        <TextBlock Text="/"/>
-                        <TextBlock Text="{x:Bind ViewModel.Count, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.SelectedIndex, Mode=OneWay}" />
+                        <TextBlock Text="/" />
+                        <TextBlock Text="{x:Bind ViewModel.Count, Mode=OneWay}" />
                     </StackPanel>
                 </Grid>
                 <animations:Implicit.ShowAnimations>
@@ -372,7 +373,7 @@
                 </animations:Implicit.HideAnimations>
             </Grid>
         </Grid>
-        <Grid VerticalAlignment="Top" x:Name="TitleBarBorder" Background="Transparent"/>
+        <Grid VerticalAlignment="Top" x:Name="TitleBarBorder" Background="Transparent" />
 
         <controls:ProgressRing Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" Width="50" Height="50"

@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp;
-
-namespace iHentai.Common.Extensions
+﻿namespace iHentai.Common.Extensions
 {
-    class RefreshContainerExtension
+    internal class RefreshContainerExtension
     {
         //public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.RegisterAttached(
         //    "ItemsSource", typeof(object), typeof(RefreshContainerExtension), new PropertyMetadata(default(object)));

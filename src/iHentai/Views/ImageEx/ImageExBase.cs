@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Media;
 namespace iHentai.Views.ImageEx
 {
     /// <summary>
-    /// Base Code for ImageEx
+    ///     Base Code for ImageEx
     /// </summary>
     [TemplateVisualState(Name = LoadingState, GroupName = CommonGroup)]
     [TemplateVisualState(Name = LoadedState, GroupName = CommonGroup)]
@@ -21,60 +21,45 @@ namespace iHentai.Views.ImageEx
     [TemplatePart(Name = PartProgress, Type = typeof(ProgressRing))]
     public abstract partial class ImageExBase : Control
     {
-        private bool _isInViewport;
-
         /// <summary>
-        /// Image name in template
+        ///     Image name in template
         /// </summary>
         protected const string PartImage = "Image";
 
         /// <summary>
-        /// ProgressRing name in template
+        ///     ProgressRing name in template
         /// </summary>
         protected const string PartProgress = "Progress";
 
         /// <summary>
-        /// VisualStates name in template
+        ///     VisualStates name in template
         /// </summary>
         protected const string CommonGroup = "CommonStates";
 
         /// <summary>
-        /// Loading state name in template
+        ///     Loading state name in template
         /// </summary>
         protected const string LoadingState = "Loading";
 
         /// <summary>
-        /// Loaded state name in template
+        ///     Loaded state name in template
         /// </summary>
         protected const string LoadedState = "Loaded";
 
         /// <summary>
-        /// Unloaded state name in template
+        ///     Unloaded state name in template
         /// </summary>
         protected const string UnloadedState = "Unloaded";
 
         /// <summary>
-        /// Failed name in template
+        ///     Failed name in template
         /// </summary>
         protected const string FailedState = "Failed";
 
-        /// <summary>
-        /// Gets the backing image object
-        /// </summary>
-        protected object Image { get; private set; }
+        private bool _isInViewport;
 
         /// <summary>
-        /// Gets backing object for the ProgressRing
-        /// </summary>
-        protected ProgressRing Progress { get; private set; }
-
-        /// <summary>
-        /// Gets object used for lock
-        /// </summary>
-        protected object LockObj { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageExBase"/> class.
+        ///     Initializes a new instance of the <see cref="ImageExBase" /> class.
         /// </summary>
         public ImageExBase()
         {
@@ -87,7 +72,22 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Attach image opened event handler
+        ///     Gets the backing image object
+        /// </summary>
+        protected object Image { get; private set; }
+
+        /// <summary>
+        ///     Gets backing object for the ProgressRing
+        /// </summary>
+        protected ProgressRing Progress { get; private set; }
+
+        /// <summary>
+        ///     Gets object used for lock
+        /// </summary>
+        protected object LockObj { get; }
+
+        /// <summary>
+        ///     Attach image opened event handler
         /// </summary>
         /// <param name="handler">Routed Event Handler</param>
         protected void AttachImageOpened(RoutedEventHandler handler)
@@ -106,7 +106,7 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Remove image opened handler
+        ///     Remove image opened handler
         /// </summary>
         /// <param name="handler">RoutedEventHandler</param>
         protected void RemoveImageOpened(RoutedEventHandler handler)
@@ -125,7 +125,7 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Attach image failed event handler
+        ///     Attach image failed event handler
         /// </summary>
         /// <param name="handler">Excpetion Routed Event Handler</param>
         protected void AttachImageFailed(ExceptionRoutedEventHandler handler)
@@ -144,7 +144,7 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Remove Image Failed handler
+        ///     Remove Image Failed handler
         /// </summary>
         /// <param name="handler">Excpetion Routed Event Handler</param>
         protected void RemoveImageFailed(ExceptionRoutedEventHandler handler)
@@ -163,14 +163,14 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Update the visual state of the control when its template is changed.
+        ///     Update the visual state of the control when its template is changed.
         /// </summary>
         protected override void OnApplyTemplate()
         {
             RemoveImageOpened(OnImageOpened);
             RemoveImageFailed(OnImageFailed);
 
-            Image = GetTemplateChild(PartImage) as object;
+            Image = GetTemplateChild(PartImage);
             Progress = GetTemplateChild(PartProgress) as ProgressRing;
 
             IsInitialized = true;
@@ -200,7 +200,7 @@ namespace iHentai.Views.ImageEx
             base.OnApplyTemplate();
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override Size ArrangeOverride(Size finalSize)
         {
             var newSquareSize = Math.Min(finalSize.Width, finalSize.Height) / 8.0;
@@ -225,7 +225,8 @@ namespace iHentai.Views.ImageEx
             VisualStateManager.GoToState(this, FailedState, true);
         }
 
-        private void ImageExBase_EffectiveViewportChanged(FrameworkElement sender, EffectiveViewportChangedEventArgs args)
+        private void ImageExBase_EffectiveViewportChanged(FrameworkElement sender,
+            EffectiveViewportChangedEventArgs args)
         {
             var bringIntoViewDistanceX = args.BringIntoViewDistanceX;
             var bringIntoViewDistanceY = args.BringIntoViewDistanceY;

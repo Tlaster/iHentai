@@ -1,22 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.ViewManagement;
+﻿using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
 using iHentai.Common.Helpers;
 using Microsoft.Toolkit.Uwp.UI;
@@ -27,7 +10,7 @@ namespace iHentai
     {
         public App()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             HentaiApp.Instance.Init();
             ImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
             ProgressImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);

@@ -8,21 +8,23 @@ using Microsoft.Toolkit.Uwp.UI.Extensions;
 namespace iHentai.Pages.Local
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class LocalLibraryPage : Page
     {
-        internal LocalLibraryViewModel ViewModel { get; } = new LocalLibraryViewModel();
         public LocalLibraryPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+
+        internal LocalLibraryViewModel ViewModel { get; } = new LocalLibraryViewModel();
 
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is LocalGalleryModel item)
             {
-                this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), new LocalReadingViewModel(item));
+                this.FindAscendant<RootView>().ContentFrame
+                    .Navigate(typeof(ReadingPage), new LocalReadingViewModel(item));
             }
         }
 

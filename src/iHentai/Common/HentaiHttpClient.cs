@@ -16,8 +16,6 @@ namespace iHentai.Common
 
     public class HentaiHttpHandler : HttpClientHandler
     {
-        public static HentaiHttpHandler Instance { get; } = new HentaiHttpHandler();
-
         private readonly List<ICustomHttpHandler> _handlers = new List<ICustomHttpHandler>();
 
         private HentaiHttpHandler()
@@ -29,6 +27,8 @@ namespace iHentai.Common
 
             MaxConnectionsPerServer = 20;
         }
+
+        public static HentaiHttpHandler Instance { get; } = new HentaiHttpHandler();
 
         public void RegisterHandler(ICustomHttpHandler handler)
         {

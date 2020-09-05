@@ -28,7 +28,6 @@
                 IsHitTestVisible="True"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                Height="{Binding ElementName=RootNavigationView, Path=CompactPaneLength}">
-        </Border>
+                Height="{Binding ElementName=RootNavigationView, Path=CompactPaneLength}" />
     </Grid>
 </Page>

@@ -7,11 +7,9 @@ namespace iHentai.Services.Models.Script
 {
     public class ScriptRequestContent
     {
-        [JsonProperty("header")]
-        public Dictionary<string, string> Header { get; set; }
+        [JsonProperty("header")] public Dictionary<string, string> Header { get; set; }
 
-        [JsonProperty("uri")]
-        public string Uri { get; set; }
+        [JsonProperty("uri")] public string Uri { get; set; }
 
         internal static ScriptRequestContent FromHttpRequestMessage(HttpRequestMessage message)
         {

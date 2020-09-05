@@ -14,33 +14,20 @@ namespace iHentai.Views
 {
     public sealed partial class BookView : UserControl
     {
-        public BookView()
-        {
-            this.InitializeComponent();
-            var leftSelector = Resources["LeftPageTemplateSelector"] as PageTemplateSelector;
-            leftSelector.Template = LeftTemplate;
-            var rightSelector = Resources["RightPageTemplateSelector"] as PageTemplateSelector;
-            rightSelector.Template = RightTemplate;
-        }
-
         public static readonly DependencyProperty CoverFirstProperty = DependencyProperty.Register(
             "CoverFirst", typeof(bool), typeof(BookView), new PropertyMetadata(default(bool)));
-
-        public bool CoverFirst
-        {
-            get { return (bool) GetValue(CoverFirstProperty); }
-            set { SetValue(CoverFirstProperty, value); }
-        }
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
             "ItemsSource", typeof(object), typeof(BookView),
             new PropertyMetadata(default, OnItemsSourceChanged));
 
         public static readonly DependencyProperty LeftTemplateProperty = DependencyProperty.Register(
-            "LeftTemplate", typeof(DataTemplate), typeof(BookView), new PropertyMetadata(default(DataTemplate), PropertyChangedCallback));
-        
+            "LeftTemplate", typeof(DataTemplate), typeof(BookView),
+            new PropertyMetadata(default(DataTemplate), PropertyChangedCallback));
+
         public static readonly DependencyProperty RightTemplateProperty = DependencyProperty.Register(
-            "RightTemplate", typeof(DataTemplate), typeof(BookView), new PropertyMetadata(default(DataTemplate), PropertyChangedCallback));
+            "RightTemplate", typeof(DataTemplate), typeof(BookView),
+            new PropertyMetadata(default(DataTemplate), PropertyChangedCallback));
 
         public static readonly DependencyProperty DataTemplateSelectorProperty = DependencyProperty.Register(
             "DataTemplateSelector", typeof(DataTemplateSelector), typeof(BookView),
@@ -48,6 +35,21 @@ namespace iHentai.Views
 
         public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register(
             "SelectedIndex", typeof(int), typeof(BookView), new PropertyMetadata(default));
+
+        public BookView()
+        {
+            InitializeComponent();
+            var leftSelector = Resources["LeftPageTemplateSelector"] as PageTemplateSelector;
+            leftSelector.Template = LeftTemplate;
+            var rightSelector = Resources["RightPageTemplateSelector"] as PageTemplateSelector;
+            rightSelector.Template = RightTemplate;
+        }
+
+        public bool CoverFirst
+        {
+            get => (bool) GetValue(CoverFirstProperty);
+            set => SetValue(CoverFirstProperty, value);
+        }
 
         public DataTemplate LeftTemplate
         {
@@ -80,7 +82,7 @@ namespace iHentai.Views
             get => GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
-        
+
         private static void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is BookView view)
@@ -134,14 +136,15 @@ namespace iHentai.Views
                 {
                     index++;
                     resultIndex++;
-                    FlipViewSource.Add(new BookViewItem { Left = null });
+                    FlipViewSource.Add(new BookViewItem {Left = null});
                 }
+
                 foreach (var item in enumerable)
                 {
                     if (index % 2 == 0)
                     {
                         resultIndex++;
-                        FlipViewSource.Add(new BookViewItem { Left = item });
+                        FlipViewSource.Add(new BookViewItem {Left = item});
                     }
                     else
                     {
@@ -157,9 +160,9 @@ namespace iHentai.Views
         {
             //TODO:
         }
-        
     }
-    class IndexConverter : IValueConverter
+
+    internal class IndexConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -172,7 +175,7 @@ namespace iHentai.Views
         }
     }
 
-    class PageTemplateSelector : DataTemplateSelector
+    internal class PageTemplateSelector : DataTemplateSelector
     {
         public DataTemplate Template { get; set; }
         public DataTemplateSelector Selector { get; set; }
@@ -192,7 +195,8 @@ namespace iHentai.Views
             return base.SelectTemplateCore(item, container);
         }
     }
-    class BookViewItem : INotifyPropertyChanged
+
+    internal class BookViewItem : INotifyPropertyChanged
     {
         public object Left { get; set; }
         public object Right { get; set; }

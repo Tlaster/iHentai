@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using iHentai.Data.Models;
 using iHentai.ViewModels;
 
@@ -20,23 +9,23 @@ using iHentai.ViewModels;
 namespace iHentai.Pages
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        SettingsViewModel ViewModel { get; } = new SettingsViewModel();
+        public SettingsPage()
+        {
+            InitializeComponent();
+        }
+
+        private SettingsViewModel ViewModel { get; } = new SettingsViewModel();
 
         public ElementTheme[] Themes { get; } =
         {
             ElementTheme.Default,
             ElementTheme.Light,
-            ElementTheme.Dark,
+            ElementTheme.Dark
         };
-
-        public SettingsPage()
-        {
-            this.InitializeComponent();
-        }
 
         private void OnRemoveLibraryClicked(object sender, RoutedEventArgs e)
         {

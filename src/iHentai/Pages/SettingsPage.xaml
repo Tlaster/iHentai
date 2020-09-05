@@ -2,7 +2,6 @@
     x:Class="iHentai.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:iHentai.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
@@ -14,34 +13,40 @@
     <Grid>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Padding="32,0">
-                <TextBlock Text="设置" Style="{ThemeResource TitleTextBlockStyle}"/>
-                
-                <Border Height="16"/>
+                <TextBlock Text="设置" Style="{ThemeResource TitleTextBlockStyle}" />
 
-                <TextBlock Text="个人文件夹"/>
-                <Border Height="8"/>
-                <Button Width="200" Style="{ThemeResource AccentButtonStyle}" Content="添加" Click="{x:Bind ViewModel.AddLibraryFolder}"/>
-                <Border Height="8"/>
-                <controls:ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" HorizontalAlignment="Stretch"/>
+                <Border Height="16" />
+
+                <TextBlock Text="个人文件夹" />
+                <Border Height="8" />
+                <Button Width="200" Style="{ThemeResource AccentButtonStyle}" Content="添加"
+                        Click="{x:Bind ViewModel.AddLibraryFolder}" />
+                <Border Height="8" />
+                <controls:ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                                      HorizontalAlignment="Stretch" />
                 <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.LocalLibrary}">
                     <controls:ItemsRepeater.Layout>
-                        <controls:StackLayout/>
+                        <controls:StackLayout />
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="models:LocalLibraryModel">
                             <ListViewItem HorizontalContentAlignment="Stretch">
-                                <Grid VerticalAlignment="Center" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}">
+                                <Grid VerticalAlignment="Center"
+                                      BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <icon:IconView Icon="Folder"/>
-                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1" Text="{x:Bind Path}" />
-                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="2" Text="{x:Bind Count}" />
-                                    <Button DataContext="{x:Bind}" Grid.Column="3" Click="OnRemoveLibraryClicked" Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
-                                        <icon:IconView Icon="Delete"/>
+                                    <icon:IconView Icon="Folder" />
+                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="1"
+                                               Text="{x:Bind Path}" />
+                                    <TextBlock Padding="8,0" VerticalAlignment="Center" Grid.Column="2"
+                                               Text="{x:Bind Count}" />
+                                    <Button DataContext="{x:Bind}" Grid.Column="3" Click="OnRemoveLibraryClicked"
+                                            Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                                        <icon:IconView Icon="Delete" />
                                     </Button>
                                 </Grid>
                             </ListViewItem>
@@ -49,23 +54,25 @@
                     </controls:ItemsRepeater.ItemTemplate>
                 </controls:ItemsRepeater>
 
-                <Border Height="16"/>
+                <Border Height="16" />
 
-                <TextBlock Text="扩展安装文件夹"/>
-                <Border Height="8"/>
+                <TextBlock Text="扩展安装文件夹" />
+                <Border Height="8" />
                 <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}">
-                    <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}" />
                 </ListViewItem>
 
-                <Border Height="16"/>
+                <Border Height="16" />
 
-                <TextBlock Text="主题"/>
-                <Border Height="8"/>
-                <controls:RadioButtons MaxColumns="3" ItemsSource="{x:Bind Themes}" SelectedItem="{x:Bind ViewModel.Theme, Mode=OneWay}" SelectionChanged="OnThemeSelectionChanged" >
+                <TextBlock Text="主题" />
+                <Border Height="8" />
+                <controls:RadioButtons MaxColumns="3" ItemsSource="{x:Bind Themes}"
+                                       SelectedItem="{x:Bind ViewModel.Theme, Mode=OneWay}"
+                                       SelectionChanged="OnThemeSelectionChanged">
                     <controls:RadioButtons.ItemTemplate>
                         <DataTemplate x:DataType="ElementTheme">
                             <RadioButton>
-                                <TextBlock Text="{x:Bind}"/>
+                                <TextBlock Text="{x:Bind}" />
                             </RadioButton>
                         </DataTemplate>
                     </controls:RadioButtons.ItemTemplate>

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage;
 using iHentai.Common;
-using iHentai.Extensions.Common;
 using iHentai.Extensions.Models;
 using iHentai.Platform;
 using iHentai.Services;
@@ -86,7 +83,7 @@ namespace iHentai.Extensions
                         {
                             continue;
                         }
-                        
+
                         var data = JsonConvert.DeserializeObject<ExtensionManifest>(
                             await manifest.ReadAllTextAsync());
                         _extensions.Add(directory.Path, data);

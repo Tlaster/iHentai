@@ -88,8 +88,10 @@ namespace iHentai.Extensions.Runtime
                                     content.Add(new StringContent(item.Value.ToString(), Encoding.UTF8), item.Key);
                                 }
                             }
+
                             return content;
                         }
+
                         HttpContent? content = bodyType switch
                         {
                             "FormData" => BuildMultipartFormDataContent(),
@@ -116,7 +118,7 @@ namespace iHentai.Extensions.Runtime
                 using var response = await _client.SendAsync(requestMessage);
                 tsc.SetResult(JSValue.Marshal(await FetchResponse.FromHttpResponseMessage(response)));
             });
-            
+
             return tsc.Task;
         }
     }
@@ -140,8 +142,8 @@ namespace iHentai.Extensions.Runtime
         public Dictionary<string, string> headers { get; }
         public bool ok { get; }
 
-        [Hidden]
-        public bool redirected { get; }
+        [Hidden] public bool redirected { get; }
+
         public int status { get; }
         public string statusText { get; }
         public string type { get; }
@@ -153,7 +155,7 @@ namespace iHentai.Extensions.Runtime
         {
             return new FetchResponse(
                 message.Headers.ToDictionary(x => x.Key, x => string.Join("", x.Value)),
-                message.IsSuccessStatusCode, false, (int)message.StatusCode,
+                message.IsSuccessStatusCode, false, (int) message.StatusCode,
                 message.StatusCode.ToString(), "basic", message.RequestMessage.RequestUri.ToString(),
                 await message.Content.ReadAsStringAsync(), "string");
         }

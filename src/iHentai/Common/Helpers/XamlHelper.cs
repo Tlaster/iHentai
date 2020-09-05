@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 
 namespace iHentai.Common.Helpers
 {
-    static class XamlHelper
+    internal static class XamlHelper
     {
         public static Visibility IsEmptyToVisibility(object any)
         {
@@ -35,12 +35,12 @@ namespace iHentai.Common.Helpers
         {
             return item == any;
         }
-        
+
         public static bool IsZero(float number)
         {
             return number == 0f;
         }
-        
+
         public static bool IsNonZero(float number)
         {
             return number != 0f;

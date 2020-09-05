@@ -6,7 +6,7 @@ using NiL.JS.Core.Interop;
 
 namespace iHentai.Extensions.Runtime.Html
 {
-    class HtmlElement
+    internal class HtmlElement
     {
         private readonly IElement? _element;
 

@@ -5,7 +5,7 @@ using Windows.Storage.AccessCache;
 
 namespace iHentai.Platform
 {
-    class PlatformService : IPlatformService
+    internal class PlatformService : IPlatformService
     {
         public string LocalPath => ApplicationData.Current.LocalFolder.Path;
 
@@ -16,6 +16,7 @@ namespace iHentai.Platform
             {
                 return null;
             }
+
             return new PathFolderItem(folder.Path, token, folder.DateCreated.DateTime);
         }
 
@@ -26,6 +27,7 @@ namespace iHentai.Platform
             {
                 return null;
             }
+
             return new PathFolderItem(path, token, folder.DateCreated.DateTime);
         }
 

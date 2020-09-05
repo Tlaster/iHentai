@@ -7,7 +7,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
-using iHentai.Data;
 using iHentai.Pages;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -16,10 +15,9 @@ namespace iHentai
 {
     public sealed partial class RootView
     {
-        internal Frame ContentFrame => RootFrame;
         public RootView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             RequestedTheme = SettingsManager.Instance.Theme;
             SettingsManager.Instance.ThemeChanged += InstanceOnThemeChanged;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -34,6 +32,8 @@ namespace iHentai
             RootFrame.SourcePageType = typeof(HomePage);
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
+
+        internal Frame ContentFrame => RootFrame;
 
         private void InstanceOnThemeChanged(object sender, ElementTheme e)
         {
@@ -51,10 +51,14 @@ namespace iHentai
             {
                 case ElementTheme.Default:
                 case ElementTheme.Light:
-                    ApplicationView.GetForCurrentView().TitleBar.Also(it => { it.ButtonForegroundColor = Colors.Black; });
+                    ApplicationView.GetForCurrentView().TitleBar
+                        .Also(it => { it.ButtonForegroundColor = Colors.Black; });
                     break;
                 case ElementTheme.Dark:
-                    ApplicationView.GetForCurrentView().TitleBar.Also(it => { it.ButtonForegroundColor = Colors.DarkGray; });
+                    ApplicationView.GetForCurrentView().TitleBar.Also(it =>
+                    {
+                        it.ButtonForegroundColor = Colors.DarkGray;
+                    });
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -73,7 +77,9 @@ namespace iHentai
 
         private void RootFrame_OnNavigated(object sender, NavigationEventArgs e)
         {
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
+                ? AppViewBackButtonVisibility.Visible
+                : AppViewBackButtonVisibility.Collapsed;
         }
     }
 }

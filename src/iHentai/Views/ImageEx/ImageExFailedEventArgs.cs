@@ -7,19 +7,19 @@ using System;
 namespace iHentai.Views.ImageEx
 {
     /// <summary>
-    /// A delegate for <see cref="ImageEx"/> failed.
+    ///     A delegate for <see cref="ImageEx" /> failed.
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event arguments.</param>
     public delegate void ImageExFailedEventHandler(object sender, ImageExFailedEventArgs e);
 
     /// <summary>
-    /// Provides data for the <see cref="ImageEx"/> ImageFailed event.
+    ///     Provides data for the <see cref="ImageEx" /> ImageFailed event.
     /// </summary>
     public class ImageExFailedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageExFailedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="ImageExFailedEventArgs" /> class.
         /// </summary>
         /// <param name="errorException">exception that caused the error condition</param>
         public ImageExFailedEventArgs(Exception errorException)
@@ -29,13 +29,13 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Gets the exception that caused the error condition.
+        ///     Gets the exception that caused the error condition.
         /// </summary>
-        public Exception ErrorException { get; private set; }
+        public Exception ErrorException { get; }
 
         /// <summary>
-        /// Gets the reason for the error condition.
+        ///     Gets the reason for the error condition.
         /// </summary>
-        public string ErrorMessage { get; private set; }
+        public string ErrorMessage { get; }
     }
 }

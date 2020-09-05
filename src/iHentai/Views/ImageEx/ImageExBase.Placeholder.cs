@@ -8,12 +8,12 @@ using Windows.UI.Xaml.Media;
 namespace iHentai.Views.ImageEx
 {
     /// <summary>
-    /// Base code for ImageEx
+    ///     Base code for ImageEx
     /// </summary>
     public partial class ImageExBase
     {
         /// <summary>
-        /// Identifies the <see cref="PlaceholderSource"/> dependency property.
+        ///     Identifies the <see cref="PlaceholderSource" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty PlaceholderSourceProperty = DependencyProperty.Register(
             nameof(PlaceholderSource),
@@ -22,7 +22,7 @@ namespace iHentai.Views.ImageEx
             new PropertyMetadata(default(ImageSource), PlaceholderSourceChanged));
 
         /// <summary>
-        /// Identifies the <see cref="PlaceholderStretch"/> dependency property.
+        ///     Identifies the <see cref="PlaceholderStretch" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty PlaceholderStretchProperty = DependencyProperty.Register(
             nameof(PlaceholderStretch),
@@ -31,15 +31,27 @@ namespace iHentai.Views.ImageEx
             new PropertyMetadata(default(Stretch)));
 
         /// <summary>
-        /// Gets or sets the placeholder source.
+        ///     Gets or sets the placeholder source.
         /// </summary>
         /// <value>
-        /// The placeholder source.
+        ///     The placeholder source.
         /// </value>
         public ImageSource PlaceholderSource
         {
-            get { return (ImageSource)GetValue(PlaceholderSourceProperty); }
-            set { SetValue(PlaceholderSourceProperty, value); }
+            get => (ImageSource) GetValue(PlaceholderSourceProperty);
+            set => SetValue(PlaceholderSourceProperty, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the placeholder stretch.
+        /// </summary>
+        /// <value>
+        ///     The placeholder stretch.
+        /// </value>
+        public Stretch PlaceholderStretch
+        {
+            get => (Stretch) GetValue(PlaceholderStretchProperty);
+            set => SetValue(PlaceholderStretchProperty, value);
         }
 
         private static void PlaceholderSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -51,23 +63,11 @@ namespace iHentai.Views.ImageEx
         }
 
         /// <summary>
-        /// Invoked when Placeholder source has changed
+        ///     Invoked when Placeholder source has changed
         /// </summary>
         /// <param name="e">Event args</param>
         protected virtual void OnPlaceholderSourceChanged(DependencyPropertyChangedEventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Gets or sets the placeholder stretch.
-        /// </summary>
-        /// <value>
-        /// The placeholder stretch.
-        /// </value>
-        public Stretch PlaceholderStretch
-        {
-            get { return (Stretch)GetValue(PlaceholderStretchProperty); }
-            set { SetValue(PlaceholderStretchProperty, value); }
         }
     }
 }

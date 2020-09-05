@@ -1,32 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.System;
-using Windows.UI.Popups;
-using Windows.UI.Xaml.Data;
 using iHentai.Common.Extensions;
 using iHentai.Data.Models;
-using iHentai.Platform;
 using iHentai.Services;
 using Microsoft.Toolkit.Uwp.UI;
-using PropertyChanged;
 
 namespace iHentai.ViewModels.Local
 {
     internal class LocalLibraryViewModel : ViewModelBase
     {
-        public bool IsLoading { get; private set; }
-
-        public AdvancedCollectionView SourceView { get; } = new AdvancedCollectionView(LocalLibraryManager.Instance.LocalGallery);
-        public LocalFilterViewModel FilterViewModel { get; }
-
         public LocalLibraryViewModel()
         {
             FilterViewModel = new LocalFilterViewModel(SourceView);
         }
+
+        public bool IsLoading { get; private set; }
+
+        public AdvancedCollectionView SourceView { get; } =
+            new AdvancedCollectionView(LocalLibraryManager.Instance.LocalGallery);
+
+        public LocalFilterViewModel FilterViewModel { get; }
 
         public async void SelectFolder()
         {
@@ -48,6 +41,7 @@ namespace iHentai.ViewModels.Local
             {
                 return;
             }
+
             IsLoading = true;
             await LocalLibraryManager.Instance.Refresh();
             IsLoading = false;
@@ -55,7 +49,8 @@ namespace iHentai.ViewModels.Local
 
         public void Filter(string queryText)
         {
-            SourceView.Filter = o => (o as LocalGalleryModel).Name.Contains(queryText, StringComparison.InvariantCultureIgnoreCase);
+            SourceView.Filter = o =>
+                (o as LocalGalleryModel).Name.Contains(queryText, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public void ClearFilter()
@@ -72,7 +67,6 @@ namespace iHentai.ViewModels.Local
             public LocalFilterViewModel(AdvancedCollectionView collection)
             {
                 _collection = collection;
-
             }
 
             public SortDescription? SortDescription
@@ -85,6 +79,7 @@ namespace iHentai.ViewModels.Local
                     {
                         _collection.SortDescriptions.Add(value);
                     }
+
                     _sortDescription = value;
                 }
             }
@@ -100,7 +95,8 @@ namespace iHentai.ViewModels.Local
                 get =>
                     SortDescription != null && SortDescription.PropertyName == nameof(LocalGalleryModel.CreationTime) &&
                     SortDescription.Direction == SortDirection.Descending;
-                set => SortDescription = new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Descending);
+                set => SortDescription =
+                    new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Descending);
             }
 
             public bool IsOldest
@@ -108,10 +104,9 @@ namespace iHentai.ViewModels.Local
                 get =>
                     SortDescription != null && SortDescription.PropertyName == nameof(LocalGalleryModel.CreationTime) &&
                     SortDescription.Direction == SortDirection.Ascending;
-                set => SortDescription = new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Ascending);
+                set => SortDescription =
+                    new SortDescription(nameof(LocalGalleryModel.CreationTime), SortDirection.Ascending);
             }
         }
     }
-
-
 }
