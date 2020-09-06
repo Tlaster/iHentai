@@ -49,10 +49,11 @@ namespace iHentai.Services
             const string functionName = "modifyRequest";
             if (_engine.HasMember(functionName))
             {
+                var arg = JSON.parse(JsonConvert.SerializeObject(ScriptRequestContent.FromHttpRequestMessage(message)));
                 var content = Invoke<ScriptRequestContent>(functionName,
                     new Arguments
                     {
-                        JSON.parse(JsonConvert.SerializeObject(ScriptRequestContent.FromHttpRequestMessage(message)))
+                        arg
                     });
                 content.ToHttpRequestMessage(message);
             }
@@ -79,6 +80,12 @@ namespace iHentai.Services
         async Task<IGalleryDetail> IDetailedApi.Detail(IGallery gallery)
         {
             return await Detail(gallery);
+        }
+
+        public bool HasCheckCanOpenChapter()
+        {
+            const string functionName = "canReadChapter";
+            return _engine.HasMember(functionName);
         }
 
         public async Task<bool> CheckCanOpenChapter(IMangaChapter chapter)

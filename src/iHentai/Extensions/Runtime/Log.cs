@@ -14,7 +14,6 @@ namespace iHentai.Extensions.Runtime
 
         public void log(JSValue value)
         {
-            var str = value.ToString();
             Debug.WriteLine(_extensionId + ":" + value);
         }
     }

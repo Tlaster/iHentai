@@ -45,7 +45,7 @@ namespace iHentai.Pages.Script
             if (sender is FrameworkElement element && element.Tag is ScriptGalleryChapter chapter &&
                 ViewModel.Detail != null)
             {
-                if (await ViewModel.Api.CheckCanOpenChapter(chapter))
+                if (await ViewModel.CheckCanOpenChapter(chapter))
                 {
                     this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
                         new ScriptReadingViewModel(ViewModel.Api, ViewModel.Detail, chapter));

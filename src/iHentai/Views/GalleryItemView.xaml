@@ -10,6 +10,7 @@
     d:DesignWidth="400">
 
     <Border CornerRadius="4" Width="141" Height="236"
+            ToolTipService.ToolTip="{x:Bind Data.Title, Mode=OneWay}"
             Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
         <Grid>
             <Grid.RowDefinitions>

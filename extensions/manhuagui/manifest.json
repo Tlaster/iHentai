@@ -1,0 +1,8 @@
+{
+    "name": "Manhuagui",
+    "entry": "index.js",
+    "hosts": [
+        "m.manhuagui.com",
+        "i.hamreus.com"
+    ]
+}

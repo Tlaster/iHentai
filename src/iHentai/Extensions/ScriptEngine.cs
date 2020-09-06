@@ -7,6 +7,7 @@ using Windows.Storage;
 using iHentai.Extensions.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Extensions.Runtime.Html;
+using LZStringCSharp;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
 using NiL.JS.Core;
@@ -72,6 +73,8 @@ namespace iHentai.Extensions
                 .Assign(JSValue.Marshal(new Func<string, JSValue>(s => JSValue.Marshal(HtmlElement.Parse(s)))));
             _module.Context.DefineVariable("unpack")
                 .Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
+            _module.Context.DefineVariable("decodeLzStringFromBase64")
+                .Assign(JSValue.Marshal(new Func<string, string>(LZString.DecompressFromBase64)));
             //_module.Context.DefineVariable("registerExtension")
             //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
             //    {
