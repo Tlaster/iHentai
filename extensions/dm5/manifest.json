@@ -1,0 +1,8 @@
+{
+    "name": "DM5",
+    "entry": "index.js",
+    "hosts": [
+        "m.dm5.com",
+        ".*\\.cdndm5\\.com"
+    ]
+}

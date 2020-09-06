@@ -1,0 +1,10 @@
+{
+    "name": "exHentai",
+    "entry": "index.js",
+    "hosts": [
+        "exhentai.org",
+        "forums.e-hentai.org",
+        ".*\\.e-hentai\\.org",
+        ".*\\.exhentai\\.org"
+    ]
+}
