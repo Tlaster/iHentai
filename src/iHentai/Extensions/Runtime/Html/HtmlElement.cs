@@ -50,6 +50,14 @@ namespace iHentai.Extensions.Runtime.Html
         [DoNotDelete]
         public string? attr(string attr)
         {
+            if (_element == null)
+            {
+                return null;
+            }
+            if (!_element.HasAttribute(attr))
+            {
+                return null;
+            }
             return _element?.GetAttribute(attr);
         }
     }

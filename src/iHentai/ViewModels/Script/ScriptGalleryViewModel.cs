@@ -16,45 +16,28 @@ namespace iHentai.ViewModels.Script
     {
         private Func<int, Task<IEnumerable<IGallery>>> _loadFunc;
 
-        public ScriptGalleryViewModel(ExtensionManifest manifest)
+        public ScriptGalleryViewModel(ScriptApi api)
         {
-            Manifest = manifest;
+            Api = api;
             Source = new IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery>(this);
-            SwitchTo(manifest);
+            Reset();
         }
 
-        public ScriptApi? Api { get; private set; }
+        public ScriptApi Api { get; private set; }
 
         [DependsOn(nameof(Api))] public bool HasSearch => Api?.HasSearch() ?? false;
-
-        public ExtensionManifest Manifest { get; }
 
         public IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery> Source { get; }
 
         public async Task<IEnumerable<IGallery>> GetPagedItemsAsync(int pageIndex, int pageSize,
             CancellationToken cancellationToken = default)
         {
-            if (Api == null)
-            {
-                return new List<IGallery>();
-            }
-
             return await _loadFunc.Invoke(pageIndex);
-        }
-
-        public async void SwitchTo(ExtensionManifest manifest)
-        {
-            var api = await this.Resolve<IExtensionManager>().GetApi(manifest);
-            if (api != null && api != Api)
-            {
-                Api = api;
-                Reset();
-            }
         }
 
         public void Search(string queryText)
         {
-            if (Api == null || !Api.HasSearch())
+            if (!Api.HasSearch())
             {
                 return;
             }
@@ -66,11 +49,6 @@ namespace iHentai.ViewModels.Script
 
         public void Reset()
         {
-            if (Api == null)
-            {
-                return;
-            }
-
             _loadFunc = page => Api.Home(page);
             Source.Clear();
             Source.RefreshAsync();

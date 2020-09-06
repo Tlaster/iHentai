@@ -3,9 +3,24 @@ using iHentai.Data.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
 using LiteDB;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace iHentai.Data
 {
+    public class ExtensionStorage : IExtensionStorage
+    {
+        private readonly LocalObjectStorageHelper _helper = new LocalObjectStorageHelper();
+        public void Set(string extensionId, string key, string value)
+        {
+            _helper.Save($"{extensionId}:{key}", value);
+        }
+
+        public string? Get(string extensionId, string key)
+        {
+            return _helper.Read<string>($"{extensionId}:{key}", null);
+        }
+    }
+
     public class ExtensionDb : IExtensionStorage
     {
         public static ExtensionDb Instance { get; } = new ExtensionDb();

@@ -8,6 +8,7 @@ using iHentai.Common;
 using iHentai.Extensions;
 using iHentai.Extensions.Models;
 using iHentai.Pages.Script;
+using iHentai.Services.Models.Script;
 using iHentai.ViewModels.Script;
 using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
 using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
@@ -78,12 +79,13 @@ namespace iHentai.Pages
             Window.Current.SetTitleBar(AppTitleBar);
         }
 
-        private void NavigationView_SelectionChanged(NavigationView sender,
+        private async void NavigationView_SelectionChanged(NavigationView sender,
             NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
                 RootFrame.Navigate(typeof(SettingsPage));
+                RootFrame.BackStack.Clear();
             }
             else if (args.SelectedItem is FrameworkElement element)
             {
@@ -91,9 +93,23 @@ namespace iHentai.Pages
                 {
                     case string value:
                         RootFrame.Navigate(GetType().Assembly.GetType(GetType().Namespace + "." + value));
+                        RootFrame.BackStack.Clear();
                         break;
                     case ExtensionManifest value:
-                        RootFrame.Navigate(typeof(ScriptGalleryPage), new ScriptGalleryViewModel(value));
+
+                        var api = await this.Resolve<IExtensionManager>().GetApi(value);
+                        if (api != null)
+                        {
+                            if (api.RequireLogin())
+                            {
+                                RootFrame.Navigate(typeof(ScriptLoginPage), new ScriptLoginViewModel(api));
+                            }
+                            else
+                            {
+                                RootFrame.Navigate(typeof(ScriptGalleryPage), new ScriptGalleryViewModel(api));
+                            }
+                            RootFrame.BackStack.Clear();
+                        }
                         break;
                 }
             }

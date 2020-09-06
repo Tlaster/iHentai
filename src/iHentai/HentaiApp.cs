@@ -42,7 +42,7 @@ namespace iHentai
         public void Init()
         {
             this.Register<HttpMessageHandler, HentaiHttpHandler>(() => HentaiHttpHandler.Instance);
-            this.Register<IExtensionStorage, ExtensionDb>(() => ExtensionDb.Instance);
+            this.Register<IExtensionStorage, ExtensionStorage>();
             this.Register<IPlatformService, PlatformService>();
             this.Register<IExtensionManager, ExtensionManager>();
         }

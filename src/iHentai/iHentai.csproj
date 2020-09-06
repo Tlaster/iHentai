@@ -171,6 +171,9 @@
     <Compile Include="Pages\Script\ScriptGalleryPage.xaml.cs">
       <DependentUpon>ScriptGalleryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Script\ScriptLoginPage.xaml.cs">
+      <DependentUpon>ScriptLoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,7 @@
     <Compile Include="Services\Models\GalleryModel.cs" />
     <Compile Include="Services\Models\Script\ScriptGalleryDetailModel.cs" />
     <Compile Include="Services\Models\Script\ScriptGalleryModel.cs" />
+    <Compile Include="Services\Models\Script\ScriptLoginViewModel.cs" />
     <Compile Include="Services\Models\Script\ScriptRequestModifier.cs" />
     <Compile Include="Services\ScriptApi.cs" />
     <Compile Include="ViewModels\Extensions\ExtensionsListViewModel.cs" />
@@ -309,6 +313,10 @@
     <Page Include="Pages\Script\ScriptGalleryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Script\ScriptLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>

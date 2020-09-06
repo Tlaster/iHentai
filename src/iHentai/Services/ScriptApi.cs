@@ -58,6 +58,24 @@ namespace iHentai.Services
             }
         }
 
+        public bool RequireLogin()
+        {
+            const string functionName = "requireLogin";
+            if (!_engine.HasMember(functionName))
+            {
+                return false;
+            }
+
+            return Invoke<bool>(functionName, new Arguments());
+        }
+
+        public async Task<int> Login(string userName, string password)
+        {
+            const string functionName = "login";
+            return await InvokeAsync<int>(functionName,
+                new Arguments {userName, password});
+        }
+
         async Task<IGalleryDetail> IDetailedApi.Detail(IGallery gallery)
         {
             return await Detail(gallery);
