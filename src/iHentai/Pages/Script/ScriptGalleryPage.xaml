@@ -18,7 +18,7 @@
                     Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
             <AppBarElementContainer Visibility="{x:Bind ViewModel.HasSearch, Mode=OneWay}"
                                     VerticalContentAlignment="Center">
-                <AutoSuggestBox PlaceholderText="搜索" Width="200" TextChanged="AutoSuggestBox_OnTextChanged"
+                <AutoSuggestBox x:Uid="SearchAutoSuggestBox" PlaceholderText="搜索" Width="200" TextChanged="AutoSuggestBox_OnTextChanged"
                                 QuerySubmitted="AutoSuggestBox_OnQuerySubmitted">
                     <AutoSuggestBox.QueryIcon>
                         <SymbolIcon Symbol="Find" />
@@ -26,7 +26,7 @@
                 </AutoSuggestBox>
             </AppBarElementContainer>
             <AppBarElementContainer Width="8" />
-            <AppBarButton Label="刷新" Click="{x:Bind ViewModel.Source.RefreshAsync}">
+            <AppBarButton x:Uid="RefreshAppBarButton" Label="刷新" Click="{x:Bind ViewModel.Source.RefreshAsync}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Refresh" />
                 </AppBarButton.Icon>

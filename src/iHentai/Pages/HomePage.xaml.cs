@@ -31,40 +31,26 @@ namespace iHentai.Pages
     {
         public HomePage()
         {
-            Menus = new ObservableCollection<NavigationViewItemBase>(new[]
-            {
-                new NavigationViewItem
-                    {Icon = new SymbolIcon(Symbol.Folder), Content = "本地库", Tag = "Local.LocalLibraryPage"},
-                new NavigationViewItem
-                    {Icon = new SymbolIcon(Symbol.Globe), Content = "扩展源", SelectsOnInvoked = false}.Also(it =>
-                {
-                    void UpdateMenuItems()
-                    {
-                        it.MenuItemsSource = this.Resolve<IExtensionManager>().Extensions
-                            .Select(it => new NavigationViewItem
-                            {
-                                Tag = it,
-                                Content = it.Name
-                            });
-                    }
-
-                    UpdateMenuItems();
-                    this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
-                    {
-                        UpdateMenuItems();
-                    };
-                }),
-                new NavigationViewItem {Icon = new SymbolIcon(Symbol.Favorite), Content = "收藏"},
-                new NavigationViewItem {Icon = new SymbolIcon(Symbol.Download), Content = "下载"}
-            });
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            RootNavigationView.SelectedItem = Menus[0];
+            this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
+            {
+                UpdateMenuItems();
+            };
+            UpdateMenuItems();
+            RootNavigationView.SelectedItem = RootNavigationView.MenuItems[0];
             CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
         }
 
-        public ObservableCollection<NavigationViewItemBase> Menus { get; }
-
+        void UpdateMenuItems()
+        {
+            ExtensionMenuItem.MenuItemsSource = this.Resolve<IExtensionManager>().Extensions
+                .Select(it => new NavigationViewItem
+                {
+                    Tag = it,
+                    Content = it.Name
+                });
+        }
         private void UpdateAppTitle(CoreApplicationViewTitleBar coreTitleBar)
         {
             var currMargin = AppTitleBar.Margin;

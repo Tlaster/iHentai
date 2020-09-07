@@ -14,10 +14,11 @@
         <StackPanel Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}"
                     Orientation="Vertical" VerticalAlignment="Center" MaxWidth="300">
             <TextBox Margin="4" Header="User Name"
+                     x:Uid="UserNameTextBox"
                      Text="{x:Bind ViewModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <PasswordBox Margin="4" Header="Password"
+            <PasswordBox x:Uid="PasswordTextInput" Margin="4" Header="Password"
                          Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Margin="4" HorizontalAlignment="Stretch" Content="Login" Click="{x:Bind Login}" />
+            <Button x:Uid="LoginButton" Margin="4" HorizontalAlignment="Stretch" Content="Login" Click="{x:Bind Login}" />
         </StackPanel>
         <controls:ProgressRing Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"

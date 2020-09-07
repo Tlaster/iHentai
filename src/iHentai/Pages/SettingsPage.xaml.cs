@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using iHentai.Data.Models;
@@ -13,19 +15,20 @@ namespace iHentai.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        public SettingsPage()
-        {
-            InitializeComponent();
-        }
-
-        private SettingsViewModel ViewModel { get; } = new SettingsViewModel();
-
-        public ElementTheme[] Themes { get; } =
+        private readonly List<ElementTheme> _themes = new List<ElementTheme>
         {
             ElementTheme.Default,
             ElementTheme.Light,
             ElementTheme.Dark
         };
+
+        public SettingsPage()
+        {
+            InitializeComponent();
+            ThemeRadio.SelectedIndex = _themes.IndexOf(ViewModel.Theme);
+        }
+
+        private SettingsViewModel ViewModel { get; } = new SettingsViewModel();
 
         private void OnRemoveLibraryClicked(object sender, RoutedEventArgs e)
         {
@@ -37,9 +40,12 @@ namespace iHentai.Pages
 
         private void OnThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.FirstOrDefault() is ElementTheme theme)
+            if (e.AddedItems.FirstOrDefault() is FrameworkElement element && element.Tag is string value)
             {
-                ViewModel.Theme = theme;
+                if (Enum.TryParse<ElementTheme>(value, out var result))
+                {
+                    ViewModel.Theme = result;
+                }
             }
         }
     }

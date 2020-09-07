@@ -250,52 +250,52 @@
 
                 <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent"
                             VerticalContentAlignment="Center" DefaultLabelPosition="Right">
-                    <AppBarButton Label="阅读模式">
+                    <AppBarButton x:Uid="ReadingModeAppBarButton" Label="阅读模式">
                         <AppBarButton.Icon>
                             <icon:IconView Icon="Page" />
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <controls:RadioMenuFlyoutItem Text="双页，第一页封面" GroupName="ViewMode"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeBookCoverFirst" Text="双页，第一页封面" GroupName="ViewMode"
                                                               IsChecked="{x:Bind ViewModel.IsBookCoverFirstMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="TwoPage" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <controls:RadioMenuFlyoutItem Text="双页" GroupName="ViewMode"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeBook" Text="双页" GroupName="ViewMode"
                                                               IsChecked="{x:Bind ViewModel.IsBookMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="TwoPage" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <controls:RadioMenuFlyoutItem Text="单页" GroupName="ViewMode"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeFlip" Text="单页" GroupName="ViewMode"
                                                               IsChecked="{x:Bind ViewModel.IsFlipMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="Page" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <controls:RadioMenuFlyoutItem Text="条漫" GroupName="ViewMode"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeList" Text="条漫" GroupName="ViewMode"
                                                               IsChecked="{x:Bind ViewModel.IsListMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
-                                        <icon:IconView Icon="Page" />
+                                        <icon:IconView Icon="List" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>
-                    <AppBarButton Label="阅读方向">
+                    <AppBarButton x:Uid="ReadingDirectionAppBarButton" Label="阅读方向">
                         <AppBarButton.Icon>
                             <icon:IconView Icon="Directions" />
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <controls:RadioMenuFlyoutItem Text="左→右" GroupName="ViewDirection"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionLTR" Text="左→右" GroupName="ViewDirection"
                                                               IsChecked="{x:Bind ViewModel.IsLTR, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="PageRight" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <controls:RadioMenuFlyoutItem Text="右→左" GroupName="ViewDirection"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionRTL" Text="右→左" GroupName="ViewDirection"
                                                               IsChecked="{x:Bind ViewModel.IsRTL, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="PageLeft" />

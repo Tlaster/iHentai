@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Services;
 using iHentai.Services.Models.Script;

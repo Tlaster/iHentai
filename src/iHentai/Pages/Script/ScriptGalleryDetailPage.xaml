@@ -28,6 +28,7 @@
             </Border>
             <Grid Height="32" />
             <Button HorizontalAlignment="Stretch"
+                    x:Uid="ReadButton"
                     Visibility="{x:Bind helper:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}"
                     Content="阅读" Style="{ThemeResource AccentButtonStyle}" Click="ReadClicked" />
         </StackPanel>

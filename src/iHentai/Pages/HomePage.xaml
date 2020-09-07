@@ -19,8 +19,13 @@
             SelectionChanged="NavigationView_SelectionChanged"
             IsBackEnabled="{x:Bind RootFrame.CanGoBack, Mode=OneWay}"
             BackRequested="RootNavigationView_OnBackRequested"
-            IsBackButtonVisible="Visible"
-            MenuItemsSource="{x:Bind Menus}">
+            IsBackButtonVisible="Visible">
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem x:Uid="LocalLibraryMenu" Icon="Folder" Tag="Local.LocalLibraryPage"/>
+                <controls:NavigationViewItem x:Uid="ExtensionLibraryMenu" Icon="Globe" SelectsOnInvoked="False" x:Name="ExtensionMenuItem"/>
+                <controls:NavigationViewItem x:Uid="FavoriteLibraryMenu" Icon="Favorite" />
+                <controls:NavigationViewItem x:Uid="DownloadLibraryMenu" Icon="Download" />
+            </controls:NavigationView.MenuItems>
             <Frame Name="RootFrame" />
         </controls:NavigationView>
 

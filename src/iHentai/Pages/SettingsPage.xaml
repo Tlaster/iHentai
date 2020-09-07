@@ -7,19 +7,20 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:iHentai.Data.Models"
     xmlns:icon="using:Bug10.Icon"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Padding="32,0">
-                <TextBlock Text="设置" Style="{ThemeResource TitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingsTitle" Text="设置" Style="{ThemeResource TitleTextBlockStyle}" />
 
                 <Border Height="16" />
 
-                <TextBlock Text="个人文件夹" />
+                <TextBlock x:Uid="LocalGalleryFolder" Text="本地漫画文件夹" />
                 <Border Height="8" />
-                <Button Width="200" Style="{ThemeResource AccentButtonStyle}" Content="添加"
+                <Button Width="200" Style="{ThemeResource AccentButtonStyle}" x:Uid="AddButton" Content="添加"
                         Click="{x:Bind ViewModel.AddLibraryFolder}" />
                 <Border Height="8" />
                 <controls:ProgressBar IsIndeterminate="True" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
@@ -56,27 +57,37 @@
 
                 <Border Height="16" />
 
-                <TextBlock Text="扩展安装文件夹" />
+                <TextBlock x:Uid="ExtensionFolder" Text="扩展安装文件夹" />
                 <Border Height="8" />
-                <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}">
+                <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}" 
+                              extensions:Mouse.Cursor="Hand">
                     <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}" />
                 </ListViewItem>
 
                 <Border Height="16" />
 
-                <TextBlock Text="主题" />
+                <TextBlock x:Uid="Theme" Text="主题" />
                 <Border Height="8" />
-                <controls:RadioButtons MaxColumns="3" ItemsSource="{x:Bind Themes}"
-                                       SelectedItem="{x:Bind ViewModel.Theme, Mode=OneWay}"
+                <controls:RadioButtons MaxColumns="3"
+                                       x:Name="ThemeRadio"
                                        SelectionChanged="OnThemeSelectionChanged">
-                    <controls:RadioButtons.ItemTemplate>
+                    <RadioButton Tag="Default" x:Uid="ThemeDefault"/>
+                    <RadioButton Tag="Light" x:Uid="ThemeLight"/>
+                    <RadioButton Tag="Dark" x:Uid="ThemeDark"/>
+                    <!--<controls:RadioButtons.ItemTemplate>
                         <DataTemplate x:DataType="ElementTheme">
                             <RadioButton>
                                 <TextBlock Text="{x:Bind}" />
                             </RadioButton>
                         </DataTemplate>
-                    </controls:RadioButtons.ItemTemplate>
+                    </controls:RadioButtons.ItemTemplate>-->
                 </controls:RadioButtons>
+
+                <Border Height="16" />
+
+                <TextBlock x:Uid="About" Text="关于" Style="{ThemeResource TitleTextBlockStyle}" />
+                <TextBlock x:Uid="AppDesc" Text="iHentai是在AGPL-3.0协议下的开源软件"/>
+                <HyperlinkButton NavigateUri="https://github.com/Tlaster/iHentai" Content="https://github.com/Tlaster/iHentai" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
