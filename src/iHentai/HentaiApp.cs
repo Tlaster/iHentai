@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using iHentai.Common;
 using iHentai.Data;
 using iHentai.Extensions;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
+using SevenZip;
 
 namespace iHentai
 {
@@ -45,6 +48,15 @@ namespace iHentai
             this.Register<IExtensionStorage, ExtensionStorage>();
             this.Register<IPlatformService, PlatformService>();
             this.Register<IExtensionManager, ExtensionManager>();
+            var sevenZipPath = (RuntimeInformation.ProcessArchitecture) switch
+            {
+                Architecture.X86 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x86", "7z.dll"),
+                Architecture.X64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x64", "7z.dll"),
+                Architecture.Arm => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm", "7z.dll"),
+                Architecture.Arm64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm64", "7z.dll"),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            SevenZipBase.SetLibraryPath(sevenZipPath);
         }
     }
 }

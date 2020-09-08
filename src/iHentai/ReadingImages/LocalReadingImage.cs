@@ -12,9 +12,10 @@ namespace iHentai.ReadingImages
     {
         private readonly string _path;
 
-        public LocalReadingImage(string path)
+        public LocalReadingImage(string path, int index)
         {
             _path = path;
+            Index = index;
         }
 
         protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)

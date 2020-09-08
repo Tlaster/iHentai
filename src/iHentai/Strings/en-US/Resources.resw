@@ -126,6 +126,9 @@
   <data name="AddButton.Content" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddLocalFileMenu.Text" xml:space="preserve">
+    <value>Open local file</value>
+  </data>
   <data name="AddLocalFolderMenu.Text" xml:space="preserve">
     <value>Add local folder</value>
   </data>

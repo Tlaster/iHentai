@@ -204,6 +204,7 @@
     <Compile Include="Services\Models\Script\ScriptLoginViewModel.cs" />
     <Compile Include="Services\Models\Script\ScriptRequestModifier.cs" />
     <Compile Include="Services\ScriptApi.cs" />
+    <Compile Include="ViewModels\Archive\ArchiveReadingViewModel.cs" />
     <Compile Include="ViewModels\Extensions\ExtensionsListViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryReadingViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryViewModel.cs" />
@@ -237,6 +238,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\7z\arm64\7z.dll" />
+    <Content Include="Assets\7z\arm\7z.dll" />
+    <Content Include="Assets\7z\x64\7z.dll" />
+    <Content Include="Assets\7z\x86\7z.dll" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -390,15 +395,18 @@
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.9</Version>
     </PackageReference>
-    <PackageReference Include="SharpCompress">
-      <Version>0.26.0</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SevenZipSharp\SevenZip\SevenZip.csproj">
+      <Project>{e1f6e5f2-d566-4670-8fc8-bb1ffaf68e70}</Project>
+      <Name>SevenZip</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

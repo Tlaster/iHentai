@@ -1,5 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.Storage.Pickers;
+using Windows.UI.Xaml.Controls;
 using iHentai.Data.Models;
+using iHentai.ViewModels.Archive;
 using iHentai.ViewModels.Local;
 using Microsoft.Toolkit.Uwp.UI.Extensions;
 
@@ -38,6 +41,17 @@ namespace iHentai.Pages.Local
             if (sender.Text.Length == 0)
             {
                 ViewModel.ClearFilter();
+            }
+        }
+
+        private async void SelectFile()
+        {
+            var picker = new FileOpenPicker();
+            picker.FileTypeFilter.Add("*");
+            var result = await picker.PickSingleFileAsync();
+            if (result != null)
+            {
+                this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), new ArchiveReadingViewModel(result));
             }
         }
     }

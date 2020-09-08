@@ -63,6 +63,7 @@
                 <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem x:Uid="AddLocalFolderMenu" Text="添加本地文件夹" Click="{x:Bind ViewModel.SelectFolder}" />
+                        <MenuFlyoutItem x:Uid="AddLocalFileMenu" Text="Open local file" Click="{x:Bind SelectFile}" />
                     </MenuFlyout>
                 </AppBarButton.Flyout>
                 <AppBarButton.Icon>

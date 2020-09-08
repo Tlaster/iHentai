@@ -19,7 +19,7 @@ namespace iHentai.ViewModels.Local
         {
             IsLoading = true;
             var files = await LocalLibraryManager.Instance.GetGalleryImages(Gallery);
-            Images = files.Select(it => new LocalReadingImage(it)).ToList();
+            Images = files.Select((it, index) => new LocalReadingImage(it, index)).ToList();
             IsLoading = false;
         }
     }

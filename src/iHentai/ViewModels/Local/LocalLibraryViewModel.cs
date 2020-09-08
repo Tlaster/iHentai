@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using iHentai.Common.Extensions;
 using iHentai.Data.Models;
 using iHentai.Services;
 using Microsoft.Toolkit.Uwp.UI;
+using SevenZip;
 
 namespace iHentai.ViewModels.Local
 {
