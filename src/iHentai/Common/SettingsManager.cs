@@ -25,13 +25,19 @@ namespace iHentai.Common
         public ExtensionFolderData ExtensionFolder
         {
             get => JsonConvert.DeserializeObject<ExtensionFolderData>(
-                SettingsDb.Instance.Get("extension_folder", null) ?? JsonConvert.SerializeObject(new ExtensionFolderData
+                SettingsDb.Instance.Get<string?>("extension_folder") ?? JsonConvert.SerializeObject(new ExtensionFolderData
                     {Path = Path.Combine(Environment.CurrentDirectory, "Extensions")}));
             set
             {
                 SettingsDb.Instance.Set("extension_folder", JsonConvert.SerializeObject(value));
                 this.Resolve<IExtensionManager>().Reload();
             }
+        }
+
+        public bool EnableExtension
+        {
+            get => SettingsDb.Instance.Get("enable_extension", false);
+            set => SettingsDb.Instance.Set("enable_extension", value);
         }
 
         public event EventHandler<ElementTheme>? ThemeChanged;

@@ -8,6 +8,7 @@
     xmlns:models="using:iHentai.Data.Models"
     xmlns:icon="using:Bug10.Icon"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:common="using:iHentai.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -57,15 +58,17 @@
 
                 <Border Height="16" />
 
-                <TextBlock x:Uid="ExtensionFolder" Text="扩展安装文件夹" />
-                <Border Height="8" />
-                <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}" 
-                              extensions:Mouse.Cursor="Hand">
-                    <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}" />
-                </ListViewItem>
+                <StackPanel Visibility="{x:Bind common:SettingsManager.Instance.EnableExtension}">
+                    <TextBlock x:Uid="ExtensionFolder" Text="扩展安装文件夹" />
+                    <Border Height="8" />
+                    <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}" 
+                                  extensions:Mouse.Cursor="Hand">
+                        <TextBlock Text="{x:Bind ViewModel.ExtensionFolder, Mode=OneWay}" />
+                    </ListViewItem>
 
-                <Border Height="16" />
-
+                    <Border Height="16" />
+                </StackPanel>
+                
                 <TextBlock x:Uid="Theme" Text="主题" />
                 <Border Height="8" />
                 <controls:RadioButtons MaxColumns="3"
@@ -85,7 +88,7 @@
 
                 <Border Height="16" />
 
-                <TextBlock x:Uid="About" Text="关于" Style="{ThemeResource TitleTextBlockStyle}" />
+                <TextBlock x:Uid="About" Tapped="UIElement_OnTapped" Text="关于" Style="{ThemeResource TitleTextBlockStyle}" />
                 <TextBlock x:Uid="AppDesc" Text="iHentai是在AGPL-3.0协议下的开源软件"/>
                 <HyperlinkButton NavigateUri="https://github.com/Tlaster/iHentai" Content="https://github.com/Tlaster/iHentai" />
             </StackPanel>

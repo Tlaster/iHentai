@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:common="using:iHentai.Common"
     mc:Ignorable="d mc">
     <Grid>
         <controls:NavigationView
@@ -21,10 +22,12 @@
             BackRequested="RootNavigationView_OnBackRequested"
             IsBackButtonVisible="Visible">
             <controls:NavigationView.MenuItems>
-                <controls:NavigationViewItem x:Uid="LocalLibraryMenu" Icon="Folder" Tag="Local.LocalLibraryPage"/>
-                <controls:NavigationViewItem x:Uid="ExtensionLibraryMenu" Icon="Globe" SelectsOnInvoked="False" x:Name="ExtensionMenuItem"/>
-                <controls:NavigationViewItem x:Uid="FavoriteLibraryMenu" Icon="Favorite" />
-                <controls:NavigationViewItem x:Uid="DownloadLibraryMenu" Icon="Download" />
+                <controls:NavigationViewItem x:Uid="LocalLibraryMenu" Icon="Folder" Tag="Local.LocalLibraryPage" />
+                <controls:NavigationViewItem Visibility="{x:Bind common:SettingsManager.Instance.EnableExtension}"
+                                             x:Uid="ExtensionLibraryMenu" Icon="Globe" SelectsOnInvoked="False"
+                                             x:Name="ExtensionMenuItem" />
+                <controls:NavigationViewItem Visibility="Collapsed" x:Uid="FavoriteLibraryMenu" Icon="Favorite" />
+                <controls:NavigationViewItem Visibility="Collapsed" x:Uid="DownloadLibraryMenu" Icon="Download" />
             </controls:NavigationView.MenuItems>
             <Frame Name="RootFrame" />
         </controls:NavigationView>

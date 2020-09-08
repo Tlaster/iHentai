@@ -2,45 +2,23 @@
 using iHentai.Data.Models;
 using iHentai.Platform;
 using LiteDB;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace iHentai.Data
 {
     public class SettingsDb
     {
+        private readonly LocalObjectStorageHelper _helper = new LocalObjectStorageHelper();
         public static SettingsDb Instance { get; } = new SettingsDb();
-        private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "settings.db");
 
-        public void Set(string key, string value)
+        public void Set<T>(string key, T value)
         {
-            using var db = new LiteDatabase(DbFile);
-            var column = db.GetCollection<SettingItemModel>();
-            if (column.Exists(it => it.Key == key))
-            {
-                var item = column.FindOne(it => it.Key == key);
-                item.Value = value;
-                column.Update(item);
-            }
-            else
-            {
-                column.Insert(new SettingItemModel
-                {
-                    Key = key,
-                    Value = value
-                });
-            }
+            _helper.Save(key, value);
         }
 
-        public string? Get(string key, string? defaultValue)
+        public T Get<T>(string key, T defaultValue = default)
         {
-            using var db = new LiteDatabase(DbFile);
-            var column = db.GetCollection<SettingItemModel>();
-            if (column.Exists(it => it.Key == key))
-            {
-                var item = column.FindOne(it => it.Key == key);
-                return item.Value;
-            }
-
-            return defaultValue;
+            return _helper.Read(key, defaultValue);
         }
     }
 }
