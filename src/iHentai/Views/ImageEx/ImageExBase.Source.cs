@@ -196,20 +196,38 @@ namespace iHentai.Views.ImageEx
 
         private async Task SetFileSource(Uri imageUri)
         {
-            var file = await StorageFile.GetFileFromPathAsync(imageUri.LocalPath);
-            using IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
-            var img = new BitmapImage {DecodePixelHeight = Convert.ToInt32(Height)};
-            await img.SetSourceAsync(fileStream);
-
-            lock (LockObj)
+            try
             {
-                // If you have many imageEx in a virtualized listview for instance
-                // controls will be recycled and the uri will change while waiting for the previous one to load
-                if (_uri == imageUri)
+                var file = await StorageFile.GetFileFromPathAsync(imageUri.LocalPath);
+                using IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
+                var img = new BitmapImage { DecodePixelHeight = Convert.ToInt32(Height) };
+                await img.SetSourceAsync(fileStream);
+
+                lock (LockObj)
                 {
-                    AttachSource(img);
-                    ImageExOpened?.Invoke(this, new ImageExOpenedEventArgs());
-                    VisualStateManager.GoToState(this, LoadedState, true);
+                    // If you have many imageEx in a virtualized listview for instance
+                    // controls will be recycled and the uri will change while waiting for the previous one to load
+                    if (_uri == imageUri)
+                    {
+                        AttachSource(img);
+                        ImageExOpened?.Invoke(this, new ImageExOpenedEventArgs());
+                        VisualStateManager.GoToState(this, LoadedState, true);
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // nothing to do as cancellation has been requested.
+            }
+            catch (Exception e)
+            {
+                lock (LockObj)
+                {
+                    if (_uri == imageUri)
+                    {
+                        ImageExFailed?.Invoke(this, new ImageExFailedEventArgs(e));
+                        VisualStateManager.GoToState(this, FailedState, true);
+                    }
                 }
             }
         }
