@@ -50,10 +50,10 @@ namespace iHentai
             this.Register<IExtensionManager, ExtensionManager>();
             var sevenZipPath = (RuntimeInformation.ProcessArchitecture) switch
             {
-                Architecture.X86 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x86", "7z.dll"),
-                Architecture.X64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x64", "7z.dll"),
-                Architecture.Arm => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm", "7z.dll"),
-                Architecture.Arm64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm64", "7z.dll"),
+                Architecture.X86 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x86", "7zUWP.dll"),
+                Architecture.X64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x64", "7zUWP.dll"),
+                Architecture.Arm => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm", "7zUWP.dll"),
+                Architecture.Arm64 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "arm64", "7zUWP.dll"),
                 _ => throw new ArgumentOutOfRangeException()
             };
             SevenZipBase.SetLibraryPath(sevenZipPath);

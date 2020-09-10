@@ -237,11 +237,19 @@
       <SubType>Designer</SubType>
     </AppxManifest>
   </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'ARM64'">
+    <Content Include="Assets\7z\arm64\7zUWP.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'ARM'">
+    <Content Include="Assets\7z\arm\7zUWP.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'x64'">
+    <Content Include="Assets\7z\x64\7zUWP.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'x86'">
+    <Content Include="Assets\7z\x86\7zUWP.dll" />
+  </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\7z\arm64\7z.dll" />
-    <Content Include="Assets\7z\arm\7z.dll" />
-    <Content Include="Assets\7z\x64\7z.dll" />
-    <Content Include="Assets\7z\x86\7z.dll" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
