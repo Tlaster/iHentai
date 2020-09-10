@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -33,8 +34,15 @@ namespace iHentai.Platform
 
         public async Task<IFolderItem?> GetFolderFromPath(string path)
         {
-            var folder = await StorageFolder.GetFolderFromPathAsync(path);
-            return new FolderItem(folder, "");
+            try
+            {
+                var folder = await StorageFolder.GetFolderFromPathAsync(path);
+                return new FolderItem(folder, "");
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
