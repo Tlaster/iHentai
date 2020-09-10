@@ -34,7 +34,6 @@ const updateCookie = async (cookie) => {
 
 const requireLogin = () => {
     const cookie = getCookies();
-    debug.log(cookie);
     return cookie === undefined || cookie === null;
 }
 
@@ -62,6 +61,76 @@ const home = async (page) => {
     });
 }
 
+const detail = async (gallery) => {
+    const extra = JSON.parse(gallery.extra);
+    const url = extra.link;
+    return await detailFromLink(url);
+}
+
+const loadGalleryImagePages = async (gallery) => {
+    const extra = JSON.parse(gallery.extra);
+    const pages = extra.pages;
+    const result = await awaitAll(pages.map(it => detailFromLink(it)));
+    debug.log(JSON.stringify(result));
+    return flatMap(result.map(it => it.images)).map(it => it.source);
+}
+
+const loadImageFromPage = async (page) => {
+
+}
+
+const detailFromLink = async (url) => {
+    const response = await fetch(url);
+    const html = await response.text();
+    const doc = parseHtml(html);
+    const large = doc.querySelectorAll('.gdtl');
+    const medium = doc.querySelectorAll('.gdtm');
+    let img = [];
+    if (large.length === 0) {
+        img = medium.map(it => {
+            return {
+                crop: true,
+                source: `${it.querySelector('div').attr('style')}`.match(/url\(([^\s]*)\)/)[1],
+                offset_x: `${it.querySelector('div').attr('style')}`.match(/url\(([^\s]*)\) ((-)?\d+)(px)?/)[2],
+                offset_y: `${it.querySelector('div').attr('style')}`.match(/url\(([^\s]*)\) ((-)?\d+)(px)? ((-)?\d+)(px)?/)[5],
+                thumb_height: parseInt(`${it.querySelector('img').attr('style')}`.match(/height:(\d+)/)[1]),
+                thumb_width: parseInt(`${it.querySelector('img').attr('style')}`.match(/width:(\d+)/)[1]),
+                text: it.querySelector('img').attr('alt'),
+            };
+        })
+    } else {
+        img = large.querySelectorAll('.gdtl').map(it => {
+            return {
+                source: it.querySelector('img').attr('src'),
+                text: it.querySelector('img').attr('alt'),
+            };
+        })
+    }
+    return {
+        title: doc.querySelector('#gn').text(),
+        sub_title: doc.querySelector('#gj').text(),
+        thumb: `${doc.querySelector('#gd1 > div').attr('style')}`.match(/url\(([^\s]*)\)/)[1],
+        has_rating: true,
+        max_rating: 5,
+        rating: parseFloat(doc.querySelector('#rating_label').text().match(/(\d+(\.\d+)?)/)[1]),
+        images: img,
+        tags: doc.querySelectorAll('#taglist > table > tbody > tr').map(it => {
+            return {
+                title: it.querySelector('.tc').text(),
+                values: it.querySelectorAll('td:nth-child(2) > div').map(v => {
+                    return {
+                        value: v.querySelector('a').text(),
+                        extra: v.querySelector('a').attr('href'),
+                    };
+                }),
+            };
+        }),
+        extra: JSON.stringify({
+            pages: [...doc.querySelectorAll('.ptt td:not(:first-child):not(:last-child) > a').map(it => it.attr('href'))],
+        })
+    }
+}
+
 const canModifyRequest = (uri) => {
     const cookie = getCookies();
     if (cookie === undefined || cookie === null) {
@@ -83,3 +152,5 @@ function getCookies() {
 function setCookie(cookie) {
     localStorage.setItem(cookie_key, cookie);
 }
+
+const flatMap = (f, arr) => arr.reduce((x, y) => [...x, ...f(y)], [])

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -205,16 +205,19 @@
     <Compile Include="ViewModels\ReadingViewModel.cs" />
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryDetailViewModel.cs" />
+    <Compile Include="ViewModels\Script\ScriptGalleryReadingViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryViewModel.cs" />
-    <Compile Include="ViewModels\Script\ScriptReadingViewModel.cs" />
+    <Compile Include="ViewModels\Script\ScriptChapterReadingViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AspectRatioView.cs" />
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GalleryItemView.xaml.cs">
       <DependentUpon>GalleryItemView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageEx2.cs" />
     <Compile Include="Views\ImageEx\CachingStrategy.cs" />
     <Compile Include="Views\ImageEx\ImageEx.cs" />
     <Compile Include="Views\ImageEx\ImageEx.Members.cs" />

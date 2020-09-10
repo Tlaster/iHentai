@@ -2,12 +2,13 @@
 using iHentai.ReadingImages;
 using iHentai.Services;
 using iHentai.Services.Models.Script;
+using iHentai.ViewModels.Local;
 
 namespace iHentai.ViewModels.Script
 {
-    internal class ScriptReadingViewModel : ReadingViewModel
+    internal class ScriptChapterReadingViewModel : ReadingViewModel
     {
-        public ScriptReadingViewModel(ScriptApi api, ScriptGalleryDetailModel detail,
+        public ScriptChapterReadingViewModel(ScriptApi api, ScriptGalleryDetailModel detail,
             ScriptGalleryChapter chapter) : base(
             detail.Title)
         {

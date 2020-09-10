@@ -9,6 +9,9 @@
     xmlns:core="using:iHentai.Services.Models.Core"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:helper="using:iHentai.Common.Helpers"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:script="using:iHentai.Services.Models.Script"
+    xmlns:views="using:iHentai.Views"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -35,18 +38,115 @@
         <controls:ProgressRing Width="50" Height="50" Grid.Row="1" Grid.Column="1"
                                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay}" />
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Padding="16">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Padding="16" >
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="{x:Bind ViewModel.GalleryTitle, Mode=OneWay}"
+                           IsTextSelectionEnabled="True"
                            Style="{StaticResource TitleTextBlockStyle}" />
                 <TextBlock Text="{x:Bind ViewModel.Detail.SubTitle, Mode=OneWay}"
-                           Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.SubTitle), Mode=OneWay}"
+                           IsTextSelectionEnabled="True"
+                           Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.SubTitle), Mode=OneWay, FallbackValue=Collapsed}"
                            Style="{StaticResource SubtitleTextBlockStyle}" />
+                <controls:RatingControl Margin="0,8,0,0" IsReadOnly="True" HorizontalAlignment="Left"
+                                        Visibility="{x:Bind ViewModel.Detail.HasRating, Mode=OneWay, FallbackValue=Collapsed}"
+                                        MaxRating="{x:Bind ViewModel.Detail.MaxRating, Mode=OneWay}"
+                                        Value="{x:Bind ViewModel.Detail.Rating, Mode=OneWay}" />
                 <TextBlock
-                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Desc), Mode=OneWay}"
+                    IsTextSelectionEnabled="True"
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Desc), Mode=OneWay, FallbackValue=Collapsed}"
                     Text="{x:Bind ViewModel.Detail.Desc, Mode=OneWay}" TextWrapping="Wrap" />
+
+                <ItemsControl
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Tags), Mode=OneWay, FallbackValue=Collapsed}"
+                    Margin="0,8,0,0" ItemsSource="{x:Bind ViewModel.Detail.Tags, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="script:ScriptGalleryTagGroup">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Opacity="0.66" Text="{x:Bind  Title}" Padding="4,8"
+                                           VerticalAlignment="Top" />
+                                <ItemsControl Grid.Column="1" ItemsSource="{x:Bind Values}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <controls1:WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="script:ScriptGalleryTag">
+                                            <Button Padding="0" Margin="4" Tag="{x:Bind}" Click="TagClicked">
+                                                <!--<Button.Flyout>
+                                                            <MenuFlyout>
+                                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Open in new tab" Click="TagOpenInNewTabClicked"/>
+                                                                <MenuFlyoutItem Tag="{x:Bind}" Text="Wiki" Click="TagWikiClicked"/>
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>-->
+                                                <TextBlock Text="{x:Bind  Value}" Padding="4, 2" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <controls:ItemsRepeater
-                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Chapters), Mode=OneWay}"
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Images), Mode=OneWay, FallbackValue=Collapsed}"
+                    ItemsSource="{x:Bind ViewModel.Detail.Images, Mode=OneWay}">
+                    <controls:ItemsRepeater.Layout>
+                        <controls:UniformGridLayout />
+                    </controls:ItemsRepeater.Layout>
+                    <controls:ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="script:ScriptGalleryThumb">
+                            <Grid Width="200" Tag="{x:Bind}" Tapped="GalleryImageTapped">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <views:AspectRatioView
+                                    Margin="4" WidthRequest="{x:Bind ThumbWidth}"
+                                    HeightRequest="{x:Bind ThumbHeight}">
+                                    <views:ImageEx2
+                                        ScriptGalleryThumb="{x:Bind}"
+                                        Stretch="UniformToFill" />
+                                </views:AspectRatioView>
+                                <!--<views:Optional Content="{x:Bind}" When="{x:Bind Crop}">
+                                    <views:Optional.ContentTemplate>
+                                        <DataTemplate x:DataType="script:ScriptGalleryThumb">
+                                            <views:AspectRatioView
+                                                Margin="4" WidthRequest="{x:Bind ThumbWidth}"
+                                                HeightRequest="{x:Bind ThumbHeight}">
+                                                <views:ImageEx2
+                                                    ScriptGalleryThumb="{x:Bind}"
+                                                    Stretch="UniformToFill" />
+                                            </views:AspectRatioView>
+                                        </DataTemplate>
+                                    </views:Optional.ContentTemplate>
+                                </views:Optional>
+                                <views:Optional Content="{x:Bind}" When="{x:Bind NonCrop}">
+                                    <views:Optional.ContentTemplate>
+                                        <DataTemplate x:DataType="script:ScriptGalleryThumb">
+                                            <views:ImageEx2
+                                                ScriptGalleryThumb="{x:Bind}"
+                                                Stretch="UniformToFill" />
+                                        </DataTemplate>
+                                    </views:Optional.ContentTemplate>
+                                </views:Optional>-->
+                                <TextBlock HorizontalAlignment="Center" Margin="2" Grid.Row="1" Text="{x:Bind Text}" />
+                            </Grid>
+                        </DataTemplate>
+                    </controls:ItemsRepeater.ItemTemplate>
+                </controls:ItemsRepeater>
+                <controls:ItemsRepeater
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Chapters), Mode=OneWay, FallbackValue=Collapsed}"
                     ItemsSource="{x:Bind ViewModel.Detail.Chapters, Mode=OneWay}"
                     Margin="0,16,0,0"
                     HorizontalAlignment="Left">

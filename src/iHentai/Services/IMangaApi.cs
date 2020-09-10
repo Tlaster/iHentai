@@ -33,6 +33,6 @@ namespace iHentai.Services
 
         //ReadingViewModel? GenerateReadingViewModel(IGalleryDetail detail, IMangaChapter gallery);
         Task<List<string>> ChapterImages(IMangaChapter chapter);
-        Task<List<string>> GalleryImages(IGalleryDetail detail);
+        Task<List<string>> GalleryImagePages(IGalleryDetail detail);
     }
 }

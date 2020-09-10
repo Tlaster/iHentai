@@ -28,11 +28,6 @@ namespace iHentai.Services
         }
 
 
-        //public ReadingViewModel? GenerateReadingViewModel(IGallery gallery)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public bool CanHandle(Uri uri)
         {
             const string functionName = "canModifyRequest";
@@ -95,18 +90,6 @@ namespace iHentai.Services
                 new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
         }
 
-        //public ReadingViewModel? GenerateReadingViewModel(IGalleryDetail detail, IMangaChapter gallery)
-        //{
-        //    if (gallery is ScriptMangaChapter item && detail is ScriptGalleryDetailModel detailModel)
-        //    {
-        //        return new ScriptReadingViewModel(detailModel, item, this);
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException();
-        //    }
-        //}
-
         public async Task<List<string>> ChapterImages(IMangaChapter chapter)
         {
             const string functionName = "loadChapterImages";
@@ -114,11 +97,17 @@ namespace iHentai.Services
                 new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
         }
 
-        public async Task<List<string>> GalleryImages(IGalleryDetail detail)
+        public async Task<List<string>> GalleryImagePages(IGalleryDetail detail)
         {
-            const string functionName = "loadGalleryImages";
+            const string functionName = "loadGalleryImagePages";
             return await InvokeAsync<List<string>>(functionName,
                 new Arguments {JSON.parse(JsonConvert.SerializeObject(detail))});
+        }
+
+        public async Task<string> GetImageFromImagePage(string page)
+        {
+            const string functionName = "loadImageFromPage";
+            return await InvokeAsync<string>(functionName, new Arguments { page });
         }
 
         public async Task<IEnumerable<IGallery>> Home(int page)

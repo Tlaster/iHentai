@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
@@ -36,8 +37,26 @@ namespace iHentai.Pages.Script
             Frame.GoBack();
         }
 
-        private void ReadClicked(object sender, RoutedEventArgs e)
+        private async void ReadClicked(object sender, RoutedEventArgs e)
         {
+            if (ViewModel.Detail != null)
+            {
+                if (ViewModel.Detail.Chapters != null && ViewModel.Detail.Chapters.Any())
+                {
+                    var firstChapter = ViewModel.Detail.Chapters.FirstOrDefault();
+                    if (firstChapter != null && await ViewModel.CheckCanOpenChapter(firstChapter))
+                    {
+                        this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
+                            new ScriptChapterReadingViewModel(ViewModel.Api, ViewModel.Detail, firstChapter));
+                    }
+                } 
+                else if (ViewModel.Detail.Images != null && ViewModel.Detail.Images.Any())
+                {
+                    var pages = await ViewModel.Api.GalleryImagePages(ViewModel.Detail);
+                    //this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
+                    //    new ScriptGalleryReadingViewModel(ViewModel.Api, ViewModel.Detail));
+                }
+            }
         }
 
         private async void ContentPresenter_Tapped(object sender, TappedRoutedEventArgs e)
@@ -48,9 +67,19 @@ namespace iHentai.Pages.Script
                 if (await ViewModel.CheckCanOpenChapter(chapter))
                 {
                     this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
-                        new ScriptReadingViewModel(ViewModel.Api, ViewModel.Detail, chapter));
+                        new ScriptChapterReadingViewModel(ViewModel.Api, ViewModel.Detail, chapter));
                 }
             }
+        }
+
+        private void TagClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GalleryImageTapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

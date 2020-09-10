@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using iHentai.Extensions.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Extensions.Runtime.Html;
 using LZStringCSharp;
+using Newtonsoft.Json;
 using NiL.JS;
 using NiL.JS.BaseLibrary;
 using NiL.JS.Core;
 using NiL.JS.Extensions;
+using Array = NiL.JS.BaseLibrary.Array;
 
 namespace iHentai.Extensions
 {
@@ -66,7 +70,8 @@ namespace iHentai.Extensions
             _module.Context.DefineVariable("localStorage")
                 .Assign(
                     JSValue.Marshal(new LocalStorage(_extensionId, HentaiApp.Instance.Resolve<IExtensionStorage>())));
-            _module.Context.DefineVariable("debug").Assign(JSValue.Marshal(new Log(_extensionId)));
+            _module.Context.DefineVariable("debug")
+                .Assign(JSValue.Marshal(new Log(_extensionId)));
             _module.Context.DefineVariable("fetch")
                 .Assign(JSValue.Marshal(new Func<string, JSObject?, Task<JSValue>>(_fetch.fetch)));
             _module.Context.DefineVariable("parseHtml")
@@ -75,6 +80,8 @@ namespace iHentai.Extensions
                 .Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
             _module.Context.DefineVariable("decodeLzStringFromBase64")
                 .Assign(JSValue.Marshal(new Func<string, string>(LZString.DecompressFromBase64)));
+            _module.Context.DefineVariable("awaitAll")
+                .Assign(JSValue.Marshal(new Func<JSValue, Task<JSValue>>(AwaitAll)));
             //_module.Context.DefineVariable("registerExtension")
             //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
             //    {
@@ -82,6 +89,33 @@ namespace iHentai.Extensions
             //        return true;
             //    })));
             _module.Run();
+        }
+
+        private async Task<JSValue> AwaitAll(JSValue arg)
+        {
+            if (!arg.Is<Array>())
+            {
+                return JSValue.Null;
+            }
+
+            var array = arg.As<Array>();
+            var result = new List<string>();
+            foreach (var (_, value) in array)
+            {
+                if (value.Is<Promise>())
+                {
+                    var task = value.As<Promise>().Task;
+                    var taskResult = await task;
+                    result.Add(JSON.stringify(taskResult));
+                }
+                else
+                {
+                    result.Add(JSON.stringify(value));
+                }
+            }
+
+            var res = JSON.parse(JsonConvert.SerializeObject(result));
+            return res;
         }
 
         public async Task<T> InvokeFunctionAsync<T>(string name, Arguments arguments)

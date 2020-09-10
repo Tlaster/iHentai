@@ -12,6 +12,7 @@ using iHentai.Common;
 using iHentai.Common.Helpers;
 using iHentai.Pages;
 using iHentai.ViewModels.Archive;
+using iHentai.Views;
 using Microsoft.Toolkit.Uwp.UI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -44,6 +45,7 @@ namespace iHentai
             HentaiApp.Instance.Init();
             await ImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
             await ProgressImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
+            await ImageEx2.WriteableImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
         }
 
         internal Frame ContentFrame => RootFrame;
