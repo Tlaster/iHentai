@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -7,7 +9,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
+using iHentai.Common.Helpers;
 using iHentai.Pages;
+using iHentai.ViewModels.Archive;
+using Microsoft.Toolkit.Uwp.UI;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -18,6 +23,7 @@ namespace iHentai
         public RootView()
         {
             InitializeComponent();
+            Init();
             RequestedTheme = SettingsManager.Instance.Theme;
             SettingsManager.Instance.ThemeChanged += InstanceOnThemeChanged;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -31,6 +37,13 @@ namespace iHentai
             ActualThemeChanged += OnActualThemeChanged;
             RootFrame.SourcePageType = typeof(HomePage);
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
+
+        private async Task Init()
+        {
+            HentaiApp.Instance.Init();
+            await ImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
+            await ProgressImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
         }
 
         internal Frame ContentFrame => RootFrame;
@@ -80,6 +93,11 @@ namespace iHentai
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = RootFrame.CanGoBack
                 ? AppViewBackButtonVisibility.Visible
                 : AppViewBackButtonVisibility.Collapsed;
+        }
+
+        public void ReadFile(StorageFile file)
+        {
+            ContentFrame.Navigate(typeof(ReadingPage), new ArchiveReadingViewModel(file));
         }
     }
 }

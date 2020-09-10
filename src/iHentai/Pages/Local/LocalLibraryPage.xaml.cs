@@ -47,7 +47,14 @@ namespace iHentai.Pages.Local
         private async void SelectFile()
         {
             var picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add("*");
+            picker.FileTypeFilter.Add(".epub");
+            picker.FileTypeFilter.Add(".cbz");
+            picker.FileTypeFilter.Add(".cbr");
+            picker.FileTypeFilter.Add(".cb7");
+            picker.FileTypeFilter.Add(".cbt");
+            picker.FileTypeFilter.Add(".zip");
+            picker.FileTypeFilter.Add(".rar");
+            picker.FileTypeFilter.Add(".7z");
             var result = await picker.PickSingleFileAsync();
             if (result != null)
             {
