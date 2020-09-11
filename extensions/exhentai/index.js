@@ -70,13 +70,24 @@ const detail = async (gallery) => {
 const loadGalleryImagePages = async (gallery) => {
     const extra = JSON.parse(gallery.extra);
     const pages = extra.pages;
-    const result = await awaitAll(pages.map(it => detailFromLink(it)));
-    debug.log(JSON.stringify(result));
-    return flatMap(result.map(it => it.images)).map(it => it.source);
+    const list = [];
+    const tasks = pages.map(it => detailFromLink(it));
+    const result = await Promise.all(tasks);
+    result.forEach(element => {
+        if (element) {
+            element.images.map(it => it.link).forEach(it => {
+                list.push(it);
+            });
+        }
+    });
+    return list;
 }
 
 const loadImageFromPage = async (page) => {
-
+    const response = await fetch(page);
+    const html = await response.text();
+    const doc = parseHtml(html);
+    return doc.querySelector('#img').attr('src');
 }
 
 const detailFromLink = async (url) => {
@@ -96,6 +107,7 @@ const detailFromLink = async (url) => {
                 thumb_height: parseInt(`${it.querySelector('img').attr('style')}`.match(/height:(\d+)/)[1]),
                 thumb_width: parseInt(`${it.querySelector('img').attr('style')}`.match(/width:(\d+)/)[1]),
                 text: it.querySelector('img').attr('alt'),
+                link: it.querySelector('a').attr('href'),
             };
         })
     } else {
@@ -103,6 +115,7 @@ const detailFromLink = async (url) => {
             return {
                 source: it.querySelector('img').attr('src'),
                 text: it.querySelector('img').attr('alt'),
+                link: it.querySelector('a').attr('href'),
             };
         })
     }

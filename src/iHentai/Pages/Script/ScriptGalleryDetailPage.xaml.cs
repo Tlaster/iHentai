@@ -52,9 +52,8 @@ namespace iHentai.Pages.Script
                 } 
                 else if (ViewModel.Detail.Images != null && ViewModel.Detail.Images.Any())
                 {
-                    var pages = await ViewModel.Api.GalleryImagePages(ViewModel.Detail);
-                    //this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
-                    //    new ScriptGalleryReadingViewModel(ViewModel.Api, ViewModel.Detail));
+                    this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage),
+                        new ScriptGalleryReadingViewModel(ViewModel.Api, ViewModel.Detail));
                 }
             }
         }

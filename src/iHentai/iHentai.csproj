@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -127,6 +127,7 @@
     <Compile Include="Common\Extensions\RefreshContainerExtension.cs" />
     <Compile Include="Common\Extensions\ScrollViewerExtension.cs" />
     <Compile Include="Common\Extensions\StreamExtensions.cs" />
+    <Compile Include="Common\Helpers\CacheBase2.cs" />
     <Compile Include="Common\Helpers\NativeFindStorageItemHelper.cs" />
     <Compile Include="Common\Helpers\ProgressCacheBase.cs" />
     <Compile Include="Common\Helpers\ProgressImageCache.cs" />

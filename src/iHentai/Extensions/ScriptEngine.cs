@@ -80,8 +80,6 @@ namespace iHentai.Extensions
                 .Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
             _module.Context.DefineVariable("decodeLzStringFromBase64")
                 .Assign(JSValue.Marshal(new Func<string, string>(LZString.DecompressFromBase64)));
-            _module.Context.DefineVariable("awaitAll")
-                .Assign(JSValue.Marshal(new Func<JSValue, Task<JSValue>>(AwaitAll)));
             //_module.Context.DefineVariable("registerExtension")
             //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
             //    {
@@ -91,40 +89,14 @@ namespace iHentai.Extensions
             _module.Run();
         }
 
-        private async Task<JSValue> AwaitAll(JSValue arg)
-        {
-            if (!arg.Is<Array>())
-            {
-                return JSValue.Null;
-            }
-
-            var array = arg.As<Array>();
-            var result = new List<string>();
-            foreach (var (_, value) in array)
-            {
-                if (value.Is<Promise>())
-                {
-                    var task = value.As<Promise>().Task;
-                    var taskResult = await task;
-                    result.Add(JSON.stringify(taskResult));
-                }
-                else
-                {
-                    result.Add(JSON.stringify(value));
-                }
-            }
-
-            var res = JSON.parse(JsonConvert.SerializeObject(result));
-            return res;
-        }
 
         public async Task<T> InvokeFunctionAsync<T>(string name, Arguments arguments)
         {
             var result = _module.Context.GetVariable(name).As<Function>().Call(arguments);
             if (result.Is<Promise>())
             {
-                var promise = result.As<Promise>();
-                var promiseResult = await promise.Task;
+                var task = result.As<Promise>().Task;
+                var promiseResult = await task;
                 return promiseResult.As<T>();
             }
 
