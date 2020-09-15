@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using iHentai.Scripting.Runtime;
 
 namespace iHentai.Common
 {
@@ -14,7 +15,7 @@ namespace iHentai.Common
         void Handle(HttpRequestMessage message);
     }
 
-    public class HentaiHttpHandler : HttpClientHandler
+    public class HentaiHttpHandler : HttpClientHandler, IScriptHttpInterceptor
     {
         private readonly List<ICustomHttpHandler> _handlers = new List<ICustomHttpHandler>();
 
@@ -38,18 +39,26 @@ namespace iHentai.Common
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            CookieContainer.GetCookies(request.RequestUri)
-                .Cast<Cookie>()
-                .ToList()
-                .ForEach(c => c.Expired = true);
-            _handlers.ForEach(it =>
-            {
-                if (it.CanHandle(request.RequestUri))
-                {
-                    it.Handle(request);
-                }
-            });
+            Handle(request);
             return base.SendAsync(request, cancellationToken);
+        }
+
+        public void Handle(IDisposable obj)
+        {
+            if (obj is HttpRequestMessage request)
+            {
+                CookieContainer.GetCookies(request.RequestUri)
+                    .Cast<Cookie>()
+                    .ToList()
+                    .ForEach(c => c.Expired = true);
+                _handlers.ForEach(it =>
+                {
+                    if (it.CanHandle(request.RequestUri))
+                    {
+                        it.Handle(request);
+                    }
+                });
+            }
         }
     }
 }

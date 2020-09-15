@@ -6,43 +6,30 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using iHentai.Common;
+using iHentai.Extensions.Hosting;
 using iHentai.Extensions.Models;
-using iHentai.Extensions.Runtime;
-using iHentai.Extensions.Runtime.Html;
+using iHentai.Scripting.Runtime;
 using LZStringCSharp;
 using Newtonsoft.Json;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Core;
-using NiL.JS.Extensions;
-using Array = NiL.JS.BaseLibrary.Array;
+using Console = iHentai.Scripting.Runtime.Console;
 
 namespace iHentai.Extensions
 {
-    public class ScriptEngine : IModuleResolver
+    public class ScriptEngine 
     {
         private readonly string _extensionId;
         private readonly ExtensionManifest _manifest;
-
-        private readonly StringMap<Module> _modulesCache = new StringMap<Module>();
-        private Fetch _fetch;
-        private Module _module;
+        private readonly ChakraHost _host;
 
         public ScriptEngine(string extensionId, ExtensionManifest manifest)
         {
             _extensionId = extensionId;
             _manifest = manifest;
+            _host = new ChakraHost();
+            _host.EnterContext();
         }
 
-        //public JSValue ExtensionModules { get; private set; }
-
-
-        public bool TryGetModule(ModuleRequest moduleRequest, out Module result)
-        {
-            var cacheKey = GetCacheKey(moduleRequest);
-
-            return _modulesCache.TryGetValue(cacheKey, out result);
-        }
 
         public async Task Init(string path)
         {
@@ -54,80 +41,50 @@ namespace iHentai.Extensions
             var filePath = Path.Combine(path, _manifest.Entry);
             var file = await StorageFile.GetFileFromPathAsync(filePath);
             var entryFile = await FileIO.ReadTextAsync(file);
-            _module = new Module(_manifest.Entry, entryFile);
-            if (_manifest.Modules != null && _manifest.Modules.Any())
-            {
-                foreach (var item in _manifest.Modules)
-                {
-                    var moduleFile =
-                        await FileIO.ReadTextAsync(await StorageFile.GetFileFromPathAsync(Path.Combine(path, item)));
-                    _modulesCache.Add(item.TrimStart('.'), new Module(moduleFile));
-                }
-            }
 
-            _module.ModuleResolversChain.Add(this);
-            _fetch = new Fetch(_manifest, HentaiApp.Instance.Resolve<HttpMessageHandler>());
-            _module.Context.DefineVariable("localStorage")
-                .Assign(
-                    JSValue.Marshal(new LocalStorage(_extensionId, HentaiApp.Instance.Resolve<IExtensionStorage>())));
-            _module.Context.DefineVariable("debug")
-                .Assign(JSValue.Marshal(new Log(_extensionId)));
-            _module.Context.DefineVariable("fetch")
-                .Assign(JSValue.Marshal(new Func<string, JSObject?, Task<JSValue>>(_fetch.fetch)));
-            _module.Context.DefineVariable("parseHtml")
-                .Assign(JSValue.Marshal(new Func<string, JSValue>(s => JSValue.Marshal(HtmlElement.Parse(s)))));
-            _module.Context.DefineVariable("unpack")
-                .Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
-            _module.Context.DefineVariable("decodeLzStringFromBase64")
-                .Assign(JSValue.Marshal(new Func<string, string>(LZString.DecompressFromBase64)));
-            //_module.Context.DefineVariable("registerExtension")
-            //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
-            //    {
-            //        ExtensionModules = value;
-            //        return true;
-            //    })));
-            _module.Run();
+            _host.DefineProperty("console", new Console());
+            _host.DefineProperty("localStorage", new LocalStorage(_extensionId, HentaiApp.Instance.Resolve<IExtensionStorage>()));
+            _host.DefineProperty("window", new RootRuntime(HentaiHttpHandler.Instance));
+
+            _host.RunScript(@"
+this.parseHtml = window.parseHtml;
+this.unpack = window.unpack;
+this.decodeLzStringFromBase64 = window.decodeLzStringFromBase64;
+this.fetch = window.fetch;
+");
+            _host.RunScript(entryFile);
+            _host.RunScript(@"debugger; window.fetch('https://www.baidu.com', {
+        method: 'POST',
+        bodyType: 'UrlEncoded'
+    });");
+
+            await Task.Delay(10000);
         }
 
 
-        public async Task<T> InvokeFunctionAsync<T>(string name, Arguments arguments)
+        public async Task<T> InvokeFunctionAsync<T>(string name, params object[] arguments)
         {
-            var result = _module.Context.GetVariable(name).As<Function>().Call(arguments);
-            if (result.Is<Promise>())
-            {
-                var task = result.As<Promise>().Task;
-                var promiseResult = await task;
-                return promiseResult.As<T>();
-            }
+            throw new NotImplementedException();
+            //var result = _module.Context.GetVariable(name).As<Function>().Call(arguments);
+            //if (result.Is<Promise>())
+            //{
+            //    var task = result.As<Promise>().Task;
+            //    var promiseResult = await task;
+            //    return promiseResult.As<T>();
+            //}
 
-            return result.As<T>();
+            //return result.As<T>();
         }
 
-        public T InvokeFunction<T>(string name, Arguments arguments)
+        public T InvokeFunction<T>(string name, params object[] arguments)
         {
-            return _module.Context.GetVariable(name).As<Function>().Call(arguments).As<T>();
+            throw new NotImplementedException();
+            //return _module.Context.GetVariable(name).As<Function>().Call(arguments).As<T>();
         }
 
         public bool HasMember(string name)
         {
-            var member = _module.Context.GetVariable(name);
-            return member != null && member.Exists;
-        }
-
-
-        public virtual string GetCacheKey(ModuleRequest moduleRequest)
-        {
-            return moduleRequest.AbsolutePath;
-        }
-
-        public void RemoveFromCache(string key)
-        {
-            _modulesCache.Remove(key);
-        }
-
-        public void ClearCache()
-        {
-            _modulesCache.Clear();
+            return _host.GlobalObject.HasProperty(JavaScriptPropertyId.FromString(name));
         }
     }
 }

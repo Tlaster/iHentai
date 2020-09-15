@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -146,9 +146,38 @@
     <Compile Include="Extensions\Common\JSValueExtensions.cs" />
     <Compile Include="Extensions\Common\PathHelper.cs" />
     <Compile Include="Extensions\ExtensionManager.cs" />
+    <Compile Include="Extensions\Hosting\ChakraHost.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptBackgroundWorkItemCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptBeforeCollectCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptContext.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptEngineException.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptErrorCode.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptException.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptFatalException.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptMemoryAllocationCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptMemoryEventType.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptNativeFunction.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptObjectBeforeCollectCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptObjectFinalizeCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptProjectionEnqueueCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptPromiseContinuationCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptPropertyId.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptPropertyIdType.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptRuntime.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptRuntimeAttributes.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptRuntimeVersion.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptScriptException.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptSerializedScriptLoadSourceCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptSerializedScriptUnloadCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptSourceContext.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptThreadServiceCallback.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptTypedArrayType.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptUsageException.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptValue.cs" />
+    <Compile Include="Extensions\Hosting\JavaScriptValueType.cs" />
+    <Compile Include="Extensions\Hosting\Native.cs" />
     <Compile Include="Extensions\Models\ExtensionManifest.cs" />
     <Compile Include="Extensions\Runtime\Fetch.cs" />
-    <Compile Include="Extensions\Runtime\Html\HtmlElement.cs" />
     <Compile Include="Extensions\Runtime\LocalStorage.cs" />
     <Compile Include="Extensions\Runtime\Log.cs" />
     <Compile Include="Extensions\Runtime\UnPacker.cs" />
@@ -394,9 +423,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
-    <PackageReference Include="NiL.JS">
-      <Version>2.5.1466</Version>
-    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.9</Version>
     </PackageReference>
@@ -408,10 +434,17 @@
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\iHentai.Scripting.Runtime\iHentai.Scripting.Runtime.csproj">
+      <Project>{68e7d1f4-98d3-4d4e-9582-e4916ed8569a}</Project>
+      <Name>iHentai.Scripting.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SevenZipSharp\SevenZip\SevenZip.csproj">
       <Project>{e1f6e5f2-d566-4670-8fc8-bb1ffaf68e70}</Project>
       <Name>SevenZip</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\Runtime\Html\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

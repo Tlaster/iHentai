@@ -2,11 +2,10 @@
 using System.Linq;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
-using NiL.JS.Core.Interop;
 
-namespace iHentai.Extensions.Runtime.Html
+namespace iHentai.Scripting.Runtime
 {
-    internal class HtmlElement
+    public sealed class HtmlElement
     {
         private readonly IElement? _element;
 
@@ -15,15 +14,13 @@ namespace iHentai.Extensions.Runtime.Html
             _element = element;
         }
 
-        [Hidden]
-        public static HtmlElement Parse(string content)
+        public static HtmlElement parse(string content)
         {
             var parser = new HtmlParser();
             var doc = parser.ParseDocument(content);
             return new HtmlElement(doc.DocumentElement);
         }
 
-        [DoNotDelete]
         public HtmlElement? querySelector(string selector)
         {
             if (_element == null)
@@ -35,19 +32,16 @@ namespace iHentai.Extensions.Runtime.Html
             return item == null ? null : new HtmlElement(item);
         }
 
-        [DoNotDelete]
-        public List<HtmlElement>? querySelectorAll(string selector)
+        public IReadOnlyList<HtmlElement>? querySelectorAll(string selector)
         {
             return _element?.QuerySelectorAll(selector)?.Select(it => new HtmlElement(it))?.ToList();
         }
 
-        [DoNotDelete]
         public string? text()
         {
             return _element?.Text();
         }
 
-        [DoNotDelete]
         public string? attr(string attr)
         {
             if (_element == null)

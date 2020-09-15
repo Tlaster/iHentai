@@ -8,6 +8,7 @@ using iHentai.Data;
 using iHentai.Extensions;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
+using iHentai.Scripting.Runtime;
 using SevenZip;
 
 namespace iHentai

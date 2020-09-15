@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai", "iHentai\iHentai.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SevenZip", "SevenZipSharp\SevenZip\SevenZip.csproj", "{E1F6E5F2-D566-4670-8FC8-BB1FFAF68E70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iHentai.Scripting.Runtime", "iHentai.Scripting.Runtime\iHentai.Scripting.Runtime.csproj", "{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,26 @@ Global
 		{E1F6E5F2-D566-4670-8FC8-BB1FFAF68E70}.Release|x64.Build.0 = Release|Any CPU
 		{E1F6E5F2-D566-4670-8FC8-BB1FFAF68E70}.Release|x86.ActiveCfg = Release|Any CPU
 		{E1F6E5F2-D566-4670-8FC8-BB1FFAF68E70}.Release|x86.Build.0 = Release|Any CPU
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|ARM.Build.0 = Debug|ARM
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|ARM64.Build.0 = Debug|ARM64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|x64.ActiveCfg = Debug|x64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|x64.Build.0 = Debug|x64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|x86.ActiveCfg = Debug|x86
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Debug|x86.Build.0 = Debug|x86
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|ARM.ActiveCfg = Release|ARM
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|ARM.Build.0 = Release|ARM
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|ARM64.ActiveCfg = Release|ARM64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|ARM64.Build.0 = Release|ARM64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|x64.ActiveCfg = Release|x64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|x64.Build.0 = Release|x64
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|x86.ActiveCfg = Release|x86
+		{68E7D1F4-98D3-4D4E-9582-E4916ED8569A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

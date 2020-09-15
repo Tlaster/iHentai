@@ -2,6 +2,7 @@
 using iHentai.Data.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Platform;
+using iHentai.Scripting.Runtime;
 using LiteDB;
 using Microsoft.Toolkit.Uwp.Helpers;
 
