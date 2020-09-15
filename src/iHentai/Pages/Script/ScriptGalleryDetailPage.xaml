@@ -12,9 +12,9 @@
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:script="using:iHentai.Services.Models.Script"
     xmlns:views="using:iHentai.Views"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -27,7 +27,13 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="32,16,16,16">
             <Border
                 CornerRadius="4">
-                <imageEx:ImageEx IsCacheEnabled="True" Source="{x:Bind ViewModel.Thumb, Mode=OneWay}" />
+                <views:AspectRatioView
+                    Tag="{x:Bind}"
+                    Margin="4" WidthRequest="141"
+                    HeightRequest="236">
+                    <imageEx:ImageEx
+                        animations:Connected.Key="listItem" IsCacheEnabled="True"  Source="{x:Bind ViewModel.Thumb, Mode=OneWay}" />
+                </views:AspectRatioView>
             </Border>
             <Grid Height="32" />
             <Button HorizontalAlignment="Stretch"

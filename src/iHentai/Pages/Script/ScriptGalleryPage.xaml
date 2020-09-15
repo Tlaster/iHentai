@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:iHentai.Views"
     xmlns:core="using:iHentai.Services.Models.Core"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -33,6 +34,8 @@
             </AppBarButton>
         </CommandBar>
         <GridView Padding="24,8"
+                  animations:Connected.ListItemElementName="GalleryImage"
+                  animations:Connected.ListItemKey="listItem"
                   Grid.Row="1" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}" SelectionMode="None"
                   IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick">
             <GridView.ItemTemplate>

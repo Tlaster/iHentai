@@ -100,6 +100,7 @@ namespace iHentai
         public void ReadFile(StorageFile file)
         {
             ContentFrame.Navigate(typeof(ReadingPage), new ArchiveReadingViewModel(file));
+            ContentFrame.BackStack.Clear();
         }
     }
 }

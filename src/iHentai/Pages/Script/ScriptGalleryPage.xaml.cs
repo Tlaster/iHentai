@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Services;
 using iHentai.Services.Models.Script;
 using iHentai.ViewModels.Script;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -36,7 +38,8 @@ namespace iHentai.Pages.Script
             if (e.ClickedItem is ScriptGalleryModel item && ViewModel.Api is ScriptApi api)
             {
                 if (api.HasDetail())
-                {
+                {    
+                    Frame.SetListDataItemForNextConnectedAnimation(item);
                     Frame.Navigate(typeof(ScriptGalleryDetailPage), new ScriptGalleryDetailViewModel(api, item));
                 }
                 else if (api.HasGalleryImages())
