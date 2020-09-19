@@ -33,16 +33,16 @@ namespace iHentai.Pages.Script
             }
         }
 
-        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
+        private async void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ScriptGalleryModel item && ViewModel.Api is ScriptApi api)
             {
-                if (api.HasDetail())
+                if (await api.HasDetail())
                 {    
                     Frame.SetListDataItemForNextConnectedAnimation(item);
                     Frame.Navigate(typeof(ScriptGalleryDetailPage), new ScriptGalleryDetailViewModel(api, item));
                 }
-                else if (api.HasGalleryImages())
+                else if (await api.HasGalleryImages())
                 {
                 }
             }

@@ -9,18 +9,18 @@ using Windows.Foundation;
 
 namespace iHentai.Scripting.Runtime
 {
-    public sealed class FetchInit
+    public interface IFetchInit
     {
-        public string? method { get; set; }
-        public string? referrer { get; set; }
-        public IDictionary<string, string>? headers { get; set; }
-        public string? bodyType { get; set; }
-        public IDictionary<string, string>? body { get; set; }
+        public string? Method { get; }
+        public string? Referrer { get; }
+        public IDictionary<string, string>? Headers { get; }
+        public string? BodyType { get; }
+        public IDictionary<string, string>? Body { get; }
     }
 
     public interface IScriptHttpInterceptor
     {
-        void Handle(IDisposable message);
+        IAsyncAction Handle(IDisposable message);
     }
 
     internal class ScriptHttpHandler : HttpClientHandler
@@ -48,7 +48,7 @@ namespace iHentai.Scripting.Runtime
             _client = new HttpClient(new ScriptHttpHandler(interceptor));
         }
 
-        public IAsyncOperation<FetchResponse> fetch(string input, FetchInit? init)
+        public IAsyncOperation<FetchResponse> fetch(string input, IFetchInit? init)
         {
             var tsc = new TaskCompletionSource<FetchResponse>();
 
@@ -69,26 +69,26 @@ namespace iHentai.Scripting.Runtime
                 }
 
                 using var requestMessage = new HttpRequestMessage { RequestUri = uri };
-                if (!string.IsNullOrEmpty(init.method))
+                if (!string.IsNullOrEmpty(init.Method))
                 {
-                    requestMessage.Method = new HttpMethod(init.method);
+                    requestMessage.Method = new HttpMethod(init.Method);
                 }
 
-                if (init.headers != null)
+                if (init.Headers != null)
                 {
-                    foreach (var (key, value) in init.headers)
+                    foreach (var (key, value) in init.Headers)
                     {
                         requestMessage.Headers.Add(key, value);
                     }
                 }
 
-                if (init.body != null)
+                if (init.Body != null)
                 {
-                    if (!string.IsNullOrEmpty(init.bodyType))
+                    if (!string.IsNullOrEmpty(init.BodyType))
                     {
-                        HttpContent? content = init.bodyType switch
+                        HttpContent? content = init.BodyType switch
                         {
-                            "UrlEncoded" => new FormUrlEncodedContent(init.body),
+                            "UrlEncoded" => new FormUrlEncodedContent(init.Body),
                             _ => null
                         };
                         if (content != null)
@@ -98,14 +98,14 @@ namespace iHentai.Scripting.Runtime
                     }
                     else
                     {
-                        requestMessage.Content = new StringContent(string.Join(";", init.body.Select(it => it.Key + "=" + it.Value)), Encoding.UTF8);
+                        requestMessage.Content = new StringContent(string.Join(";", init.Body.Select(it => it.Key + "=" + it.Value)), Encoding.UTF8);
                     }
                 }
 
 
-                if (!string.IsNullOrEmpty(init.referrer))
+                if (!string.IsNullOrEmpty(init.Referrer))
                 {
-                    requestMessage.Headers.Referrer = new Uri(init.referrer);
+                    requestMessage.Headers.Referrer = new Uri(init.Referrer);
                 }
 
                 using var response = await _client.SendAsync(requestMessage);

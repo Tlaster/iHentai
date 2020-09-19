@@ -12,12 +12,12 @@ namespace iHentai.Scripting.Runtime
 {
     public sealed class RootRuntime
     {
-        private readonly Fetch _fetch;
+        //private readonly Fetch _fetch;
 
-        public RootRuntime(IScriptHttpInterceptor interceptor)
-        {
-            _fetch = new Fetch(interceptor);
-        }
+        //public RootRuntime(IScriptHttpInterceptor interceptor)
+        //{
+        //    _fetch = new Fetch(interceptor);
+        //}
 
         public HtmlElement parseHtml(string content)
         {
@@ -36,14 +36,14 @@ namespace iHentai.Scripting.Runtime
             return LZString.DecompressFromBase64(content);
         }
 
-        public IAsyncOperation<FetchResponse> fetch(string input)
-        {
-            return _fetch.fetch(input, null);
-        }
+        //public IAsyncOperation<FetchResponse> fetch(string input)
+        //{
+        //    return _fetch.fetch(input, null);
+        //}
 
-        public IAsyncOperation<FetchResponse> fetch(string input, object init)
-        {
-            return _fetch.fetch(input, null);
-        }
+        //public IAsyncOperation<FetchResponse> fetch(string input, FetchInit init)
+        //{
+        //    return _fetch.fetch(input, null);
+        //}
     }
 }

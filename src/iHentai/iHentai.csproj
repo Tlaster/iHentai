@@ -143,6 +143,7 @@
     <Compile Include="Data\Models\LocalLibraryModel.cs" />
     <Compile Include="Data\Models\SettingItemModel.cs" />
     <Compile Include="Data\SettingsDb.cs" />
+    <Compile Include="Extensions\Common\JavaScriptValueExtension.cs" />
     <Compile Include="Extensions\Common\JSValueExtensions.cs" />
     <Compile Include="Extensions\Common\PathHelper.cs" />
     <Compile Include="Extensions\ExtensionManager.cs" />
@@ -177,7 +178,9 @@
     <Compile Include="Extensions\Hosting\JavaScriptValueType.cs" />
     <Compile Include="Extensions\Hosting\Native.cs" />
     <Compile Include="Extensions\Models\ExtensionManifest.cs" />
+    <Compile Include="Extensions\Runtime\AsyncResult.cs" />
     <Compile Include="Extensions\Runtime\Fetch.cs" />
+    <Compile Include="Extensions\Runtime\FetchInit.cs" />
     <Compile Include="Extensions\Runtime\LocalStorage.cs" />
     <Compile Include="Extensions\Runtime\Log.cs" />
     <Compile Include="Extensions\Runtime\UnPacker.cs" />

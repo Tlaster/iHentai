@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace iHentai.Extensions.Hosting
 {
@@ -25,11 +26,14 @@ namespace iHentai.Extensions.Hosting
             //Native.ThrowIfError(Native.JsProjectWinRTNamespace("Windows"));
             Native.ThrowIfError(Native.JsGetGlobalObject(out var global));
             GlobalObject = global;
+            JSON = new JsJson(global.GetProperty(JavaScriptPropertyId.FromString("JSON")), global);
 #if DEBUG
             Native.ThrowIfError(Native.JsStartDebugging());
 #endif
             LeaveContext();
         }
+
+        public JsJson JSON { get; }
 
         public JavaScriptValue GlobalObject { get; }
 
@@ -115,6 +119,30 @@ namespace iHentai.Extensions.Hosting
             }
 
             _isPromiseLooping = false;
+        }
+    }
+
+    public class JsJson
+    {
+        private readonly JavaScriptValue _global;
+        private JavaScriptValue _json;
+
+        public JsJson(JavaScriptValue json, JavaScriptValue global)
+        {
+            _json = json;
+            _global = global;
+        }
+
+        public string Stringify(JavaScriptValue value)
+        {
+            return _json.GetProperty(JavaScriptPropertyId.FromString("stringify"))
+                .CallFunction(_global, value).ConvertToString().ToString();
+        }
+
+        public JavaScriptValue Parse(string value)
+        {
+            return _json.GetProperty(JavaScriptPropertyId.FromString("parse"))
+                .CallFunction(_global, JavaScriptValue.FromString(value));
         }
     }
 }

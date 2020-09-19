@@ -26,41 +26,37 @@ namespace iHentai.Services
         }
 
 
-        public bool CanHandle(Uri uri)
+        public async Task<bool> CanHandle(Uri uri)
         {
-            //const string functionName = "canModifyRequest";
-            //if (_manifest.Hosts != null && MatchHost(uri) && _engine.HasMember(functionName))
-            //{
-            //    return _engine.InvokeFunction<bool>(functionName, new Arguments {uri.ToString()});
-            //}
+            const string functionName = "canModifyRequest";
+            if (_manifest.Hosts != null && MatchHost(uri) && await _engine.HasMember(functionName))
+            {
+                return await _engine.InvokeFunction<bool>(functionName, uri.ToString());
+            }
 
             return false;
         }
 
-        public void Handle(HttpRequestMessage message)
+        public async Task Handle(HttpRequestMessage message)
         {
             const string functionName = "modifyRequest";
-            //if (_engine.HasMember(functionName))
-            //{
-            //    var arg = JSON.parse(JsonConvert.SerializeObject(ScriptRequestContent.FromHttpRequestMessage(message)));
-            //    var content = Invoke<ScriptRequestContent>(functionName,
-            //        new Arguments
-            //        {
-            //            arg
-            //        });
-            //    content.ToHttpRequestMessage(message);
-            //}
+            if (await _engine.HasMember(functionName))
+            {
+                var arg = _engine.JSON.Parse(JsonConvert.SerializeObject(ScriptRequestContent.FromHttpRequestMessage(message)));
+                var content = await Invoke<ScriptRequestContent>(functionName, arg);
+                content.ToHttpRequestMessage(message);
+            }
         }
 
-        public bool RequireLogin()
+        public async Task<bool> RequireLogin()
         {
             const string functionName = "requireLogin";
-            if (!_engine.HasMember(functionName))
+            if (!await _engine.HasMember(functionName))
             {
                 return false;
             }
 
-            return Invoke<bool>(functionName);
+            return await Invoke<bool>(functionName);
         }
 
         public async Task<int> Login(string userName, string password)
@@ -75,34 +71,31 @@ namespace iHentai.Services
             return await Detail(gallery);
         }
 
-        public bool HasCheckCanOpenChapter()
+        public async Task<bool> HasCheckCanOpenChapter()
         {
             const string functionName = "canReadChapter";
-            return _engine.HasMember(functionName);
+            return await _engine.HasMember(functionName);
         }
 
         public async Task<bool> CheckCanOpenChapter(IMangaChapter chapter)
         {
-            throw new NotImplementedException();
-            //const string functionName = "canReadChapter";
-            //return await InvokeAsync<bool>(functionName,
-            //    new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
+            const string functionName = "canReadChapter";
+            return await InvokeAsync<bool>(functionName,
+                _engine.JSON.Parse(JsonConvert.SerializeObject(chapter)));
         }
 
         public async Task<List<string>> ChapterImages(IMangaChapter chapter)
         {
-            throw new NotImplementedException();
-            //const string functionName = "loadChapterImages";
-            //return await InvokeAsync<List<string>>(functionName,
-            //    new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
+            const string functionName = "loadChapterImages";
+            return await InvokeAsync<List<string>>(functionName,
+                _engine.JSON.Parse(JsonConvert.SerializeObject(chapter)));
         }
 
         public async Task<List<string>> GalleryImagePages(IGalleryDetail detail)
         {
-            throw new NotImplementedException();
-            //const string functionName = "loadGalleryImagePages";
-            //return await InvokeAsync<List<string>>(functionName,
-            //    new Arguments {JSON.parse(JsonConvert.SerializeObject(detail))});
+            const string functionName = "loadGalleryImagePages";
+            return await InvokeAsync<List<string>>(functionName,
+                _engine.JSON.Parse(JsonConvert.SerializeObject(detail)));
         }
 
         public async Task<string> GetImageFromImagePage(string page)
@@ -129,30 +122,29 @@ namespace iHentai.Services
             return await InvokeAsync<List<ScriptGalleryModel>>(functionName, page);
         }
 
-        public bool HasSearch()
+        public async Task<bool> HasSearch()
         {
             const string functionName = "search";
-            return _engine.HasMember(functionName);
+            return await _engine.HasMember(functionName);
         }
 
-        public bool HasDetail()
+        public async Task<bool> HasDetail()
         {
             const string functionName = "detail";
-            return _engine.HasMember(functionName);
+            return await _engine.HasMember(functionName);
         }
 
-        public bool HasGalleryImages()
+        public async Task<bool> HasGalleryImages()
         {
             const string functionName = "loadGalleryImages";
-            return _engine.HasMember(functionName);
+            return await _engine.HasMember(functionName);
         }
 
         public async Task<ScriptGalleryDetailModel> Detail(IGallery gallery)
         {
-            throw new NotImplementedException();
-            //const string functionName = "detail";
-            //return await InvokeAsync<ScriptGalleryDetailModel>(functionName,
-            //    new Arguments {JSON.parse(JsonConvert.SerializeObject(gallery))});
+            const string functionName = "detail";
+            return await InvokeAsync<ScriptGalleryDetailModel>(functionName,
+                _engine.JSON.Parse(JsonConvert.SerializeObject(gallery)));
         }
 
         private bool MatchHost(Uri uri)
@@ -183,11 +175,11 @@ namespace iHentai.Services
             return false;
         }
 
-        private T Invoke<T>(string name, params object[] arguments)
+        private async Task<T> Invoke<T>(string name, params object[] arguments)
         {
-            if (_engine.HasMember(name))
+            if (await _engine.HasMember(name))
             {
-                var scriptResult = _engine.InvokeFunction<string>(name, arguments);
+                var scriptResult = await _engine.InvokeFunction<string>(name, arguments);
                 return JsonConvert.DeserializeObject<T>(scriptResult);
             }
 
@@ -196,7 +188,7 @@ namespace iHentai.Services
 
         private async Task<T> InvokeAsync<T>(string name, params object[] arguments)
         {
-            if (_engine.HasMember(name))
+            if (await _engine.HasMember(name))
             {
                 var scriptResult = await _engine.InvokeFunctionAsync<string>(name, arguments);
                 return JsonConvert.DeserializeObject<T>(scriptResult);

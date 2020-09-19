@@ -1,7 +1,7 @@
 const host = "https://exhentai.org/";
 const cookie_key = 'exhentai_cookie';
 
-const login = async (username, password) => {
+async function login(username, password) {
     const response = await fetch('http://forums.e-hentai.org/index.php?act=Login&CODE=01&CookieDate=1', {
         method: 'POST',
         body: {
@@ -15,12 +15,12 @@ const login = async (username, password) => {
     }
     let cookie = response.headers.get('Set-Cookie');
     const newCookie = await updateCookie(cookie);
-    cookie += (';' + newCookie)
+    cookie += (';' + newCookie);
     setCookie(cookie);
     return 200;
 }
 
-const updateCookie = async (cookie) => {
+async function updateCookie(cookie) {
     const response = await fetch('https://exhentai.org/mytags', {
         headers: {
             Cookie: `${cookie};igneous=`
@@ -32,19 +32,19 @@ const updateCookie = async (cookie) => {
     return response.headers.get('Set-Cookie');
 }
 
-const requireLogin = () => {
+function requireLogin() {
     const cookie = getCookies();
     return cookie === undefined || cookie === null;
 }
 
-const home = async (page) => {
+async function home(page) {
     let uri = `${host}watched`;
     if (page !== 0) {
-        uri += `?page=${page}`
+        uri += `?page=${page}`;
     }
     const response = await fetch(uri);
     const html = await response.text();
-    const doc = parseHtml(html);
+    const doc = runtime.parseHtml(html);
     let items = doc.querySelectorAll('.itg.gltc tr:not(:first-child)');
     if (items.length === 0) {
         items = doc.querySelectorAll('.itg.gltm tr:not(:first-child)');
@@ -57,17 +57,17 @@ const home = async (page) => {
             extra: JSON.stringify({
                 link: it.querySelector('.glname a').attr('href'),
             }),
-        }
+        };
     });
 }
 
-const detail = async (gallery) => {
+async function detail(gallery) {
     const extra = JSON.parse(gallery.extra);
     const url = extra.link;
     return await detailFromLink(url);
 }
 
-const loadGalleryImagePages = async (gallery) => {
+async function loadGalleryImagePages(gallery) {
     const extra = JSON.parse(gallery.extra);
     const pages = extra.pages;
     const list = [];
@@ -83,17 +83,17 @@ const loadGalleryImagePages = async (gallery) => {
     return list;
 }
 
-const loadImageFromPage = async (page) => {
+async function loadImageFromPage(page) {
     const response = await fetch(page);
     const html = await response.text();
-    const doc = parseHtml(html);
+    const doc = runtime.parseHtml(html);
     return doc.querySelector('#img').attr('src');
 }
 
-const detailFromLink = async (url) => {
+async function detailFromLink(url) {
     const response = await fetch(url);
     const html = await response.text();
-    const doc = parseHtml(html);
+    const doc = runtime.parseHtml(html);
     const large = doc.querySelectorAll('.gdtl');
     const medium = doc.querySelectorAll('.gdtm');
     let img = [];
@@ -109,7 +109,7 @@ const detailFromLink = async (url) => {
                 text: it.querySelector('img').attr('alt'),
                 link: it.querySelector('a').attr('href'),
             };
-        })
+        });
     } else {
         img = large.querySelectorAll('.gdtl').map(it => {
             return {
@@ -117,7 +117,7 @@ const detailFromLink = async (url) => {
                 text: it.querySelector('img').attr('alt'),
                 link: it.querySelector('a').attr('href'),
             };
-        })
+        });
     }
     return {
         title: doc.querySelector('#gn').text(),
@@ -141,10 +141,10 @@ const detailFromLink = async (url) => {
         extra: JSON.stringify({
             pages: [...doc.querySelectorAll('.ptt td:not(:first-child):not(:last-child) > a').map(it => it.attr('href'))],
         })
-    }
+    };
 }
 
-const canModifyRequest = (uri) => {
+function canModifyRequest(uri) {
     const cookie = getCookies();
     if (cookie === undefined || cookie === null) {
         return false;
@@ -152,7 +152,7 @@ const canModifyRequest = (uri) => {
     return uri.includes('exhentai.org') || uri.includes('e-hentai.org');
 }
 
-const modifyRequest = (request) => {
+function modifyRequest(request) {
     const cookie = getCookies();
     request.header = { Cookie: cookie };
     return request;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
@@ -32,9 +34,10 @@ namespace iHentai.Scripting.Runtime
             return item == null ? null : new HtmlElement(item);
         }
 
-        public IReadOnlyList<HtmlElement>? querySelectorAll(string selector)
+        public IEnumerable? querySelectorAll(string selector)
         {
-            return _element?.QuerySelectorAll(selector)?.Select(it => new HtmlElement(it))?.ToList();
+            var result = _element?.QuerySelectorAll(selector)?.Select(it => new HtmlElement(it))?.ToArray();
+            return result;
         }
 
         public string? text()

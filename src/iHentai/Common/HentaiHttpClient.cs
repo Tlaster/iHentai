@@ -6,13 +6,14 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using iHentai.Scripting.Runtime;
+using Windows.Foundation;
 
 namespace iHentai.Common
 {
     public interface ICustomHttpHandler
     {
-        bool CanHandle(Uri uri);
-        void Handle(HttpRequestMessage message);
+        Task<bool> CanHandle(Uri uri);
+        Task Handle(HttpRequestMessage message);
     }
 
     public class HentaiHttpHandler : HttpClientHandler, IScriptHttpInterceptor
@@ -36,14 +37,14 @@ namespace iHentai.Common
             _handlers.Add(handler);
         }
 
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            Handle(request);
-            return base.SendAsync(request, cancellationToken);
+            await Handle(request);
+            return await base.SendAsync(request, cancellationToken);
         }
 
-        public void Handle(IDisposable obj)
+        public async Task Handle(IDisposable obj)
         {
             if (obj is HttpRequestMessage request)
             {
@@ -51,14 +52,19 @@ namespace iHentai.Common
                     .Cast<Cookie>()
                     .ToList()
                     .ForEach(c => c.Expired = true);
-                _handlers.ForEach(it =>
+                foreach (var it in _handlers)
                 {
-                    if (it.CanHandle(request.RequestUri))
+                    if (await it.CanHandle(request.RequestUri))
                     {
-                        it.Handle(request);
+                        await it.Handle(request);
                     }
-                });
+                }
             }
+        }
+
+        IAsyncAction IScriptHttpInterceptor.Handle(IDisposable message)
+        {
+            return Handle(message).AsAsyncAction();
         }
     }
 }

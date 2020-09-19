@@ -68,7 +68,7 @@ namespace iHentai.Platform
                             ((FileAttributes) findData.dwFileAttributes & FileAttributes.Directory) !=
                             FileAttributes.Directory)
                         {
-                            FileTimeToSystemTime(ref findData.ftCreationTime, out var systemCreatedDateOutput);
+                            FileTimeToSystemTime(ref findData.ftLastWriteTime, out var systemCreatedDateOutput);
                             var itemCreatedDate = new DateTime(
                                 systemCreatedDateOutput.Year, systemCreatedDateOutput.Month,
                                 systemCreatedDateOutput.Day,

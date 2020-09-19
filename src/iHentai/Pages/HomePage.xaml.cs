@@ -86,7 +86,7 @@ namespace iHentai.Pages
                         var api = await this.Resolve<IExtensionManager>().GetApi(value);
                         if (api != null)
                         {
-                            if (api.RequireLogin())
+                            if (await api.RequireLogin())
                             {
                                 RootFrame.Navigate(typeof(ScriptLoginPage), new ScriptLoginViewModel(api));
                             }

@@ -35,7 +35,7 @@ namespace iHentai.ViewModels.Script
 
         public async Task<bool> CheckCanOpenChapter(IMangaChapter chapter)
         {
-            if (Api.HasCheckCanOpenChapter())
+            if (await Api.HasCheckCanOpenChapter())
             {
                 return await Api.CheckCanOpenChapter(chapter);
             }

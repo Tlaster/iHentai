@@ -25,7 +25,7 @@ namespace iHentai.ViewModels.Script
 
         public ScriptApi Api { get; private set; }
 
-        [DependsOn(nameof(Api))] public bool HasSearch => Api?.HasSearch() ?? false;
+        public bool HasSearch { get; private set; }
 
         public IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery> Source { get; }
 
@@ -37,11 +37,6 @@ namespace iHentai.ViewModels.Script
 
         public void Search(string queryText)
         {
-            if (!Api.HasSearch())
-            {
-                return;
-            }
-
             _loadFunc = page => Api.Search(queryText, page);
             Source.Clear();
             Source.RefreshAsync();
@@ -50,6 +45,7 @@ namespace iHentai.ViewModels.Script
         public void Reset()
         {
             _loadFunc = page => Api.Home(page);
+            Api.HasSearch().ContinueWith(it => HasSearch = it.Result);
             Source.Clear();
             Source.RefreshAsync();
         }
