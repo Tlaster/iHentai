@@ -1,3 +1,0 @@
-[submodule "src/SevenZipSharp"]
-	path = src/SevenZipSharp
-	url = https://github.com/Tlaster/SevenZipSharp.git
