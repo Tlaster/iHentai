@@ -1,5 +1,4 @@
-﻿using NiL.JS.Core.Interop;
-
+﻿
 namespace iHentai.Extensions.Runtime
 {
     public interface IExtensionStorage
@@ -20,13 +19,11 @@ namespace iHentai.Extensions.Runtime
             _storage = storage;
         }
 
-        [DoNotDelete]
         public void setItem(string key, string value)
         {
             _storage.Set(_extensionId, key, value);
         }
 
-        [DoNotDelete]
         public string? getItem(string key)
         {
             return _storage.Get(_extensionId, key);

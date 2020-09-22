@@ -10,8 +10,8 @@ namespace iHentai.Common
 {
     public interface ICustomHttpHandler
     {
-        bool CanHandle(Uri uri);
-        void Handle(HttpRequestMessage message);
+        Task<bool> CanHandle(Uri uri);
+        Task Handle(HttpRequestMessage message);
     }
 
     public class HentaiHttpHandler : HttpClientHandler
@@ -35,21 +35,22 @@ namespace iHentai.Common
             _handlers.Add(handler);
         }
 
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
             CookieContainer.GetCookies(request.RequestUri)
                 .Cast<Cookie>()
                 .ToList()
                 .ForEach(c => c.Expired = true);
-            _handlers.ForEach(it =>
+            
+            foreach (var item in _handlers)
             {
-                if (it.CanHandle(request.RequestUri))
+                if (await item.CanHandle(request.RequestUri))
                 {
-                    it.Handle(request);
+                    await item.Handle(request);
                 }
-            });
-            return base.SendAsync(request, cancellationToken);
+            }
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }

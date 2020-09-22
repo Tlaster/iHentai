@@ -6,10 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using iHentai.Extensions.Common;
 using iHentai.Extensions.Models;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Core;
-using NiL.JS.Core.Interop;
-using NiL.JS.Extensions;
+using Jint.Native;
+using Newtonsoft.Json;
 
 namespace iHentai.Extensions.Runtime
 {
@@ -24,79 +22,44 @@ namespace iHentai.Extensions.Runtime
             _client = new HttpClient(handler);
         }
 
-        [DoNotDelete]
-        public Task<JSValue> fetch(string input, JSObject? init = null)
+        public FetchResponse fetch(string input, FetchInit? init = null)
         {
-            var tsc = new TaskCompletionSource<JSValue>();
 
-            Task.Run(async () =>
+            var task = Task.Run(async () =>
             {
                 var uri = new Uri(input);
                 if (_manifest.Hosts == null || !_manifest.Hosts.Contains(uri.Host))
                 {
-                    tsc.SetException(new JSException(new Error("Access denied for target uri")));
-                    return;
+                    throw new Exception("Access denied for target uri");
                 }
 
                 if (init == null)
                 {
                     using var clientResponse = await _client.GetAsync(uri);
-                    tsc.SetResult(JSValue.Marshal(await FetchResponse.FromHttpResponseMessage(clientResponse)));
-                    return;
+                    return await FetchResponse.FromHttpResponseMessage(clientResponse);
                 }
 
-                using var requestMessage = new HttpRequestMessage {RequestUri = uri};
-                if (init.TryGet("method", out string method))
+                using var requestMessage = new HttpRequestMessage { RequestUri = uri };
+                if (!string.IsNullOrEmpty(init.Method))
                 {
-                    requestMessage.Method = new HttpMethod(method);
+                    requestMessage.Method = new HttpMethod(init.Method);
                 }
 
-                if (init.TryGet("headers", out JSObject headers))
+                if (init.Headers != null)
                 {
-                    foreach (var item in headers)
+                    foreach (var (key, value) in init.Headers)
                     {
-                        requestMessage.Headers.Add(item.Key, item.Value.As<string>());
+                        requestMessage.Headers.Add(key, value);
                     }
                 }
 
-                if (init.TryGet("body", out JSValue body))
+                if (init.Body != null)
                 {
-                    if (init.TryGet("bodyType", out string bodyType))
+                    if (!string.IsNullOrEmpty(init.BodyType))
                     {
-                        MultipartFormDataContent BuildMultipartFormDataContent()
+                        HttpContent? content = init.BodyType switch
                         {
-                            var content = new MultipartFormDataContent();
-                            foreach (var item in body)
-                            {
-                                if (item.Value.Is(JSValueType.Object))
-                                {
-                                    if (item.Value.TryGet("fileName", out string fileName))
-                                    {
-                                        content.Add(new ByteArrayContent(
-                                                Convert.FromBase64String(body.GetProperty("value").ToString()))
-                                            , item.Key, fileName);
-                                    }
-                                    else
-                                    {
-                                        content.Add(new ByteArrayContent(
-                                                Convert.FromBase64String(body.GetProperty("value").ToString()))
-                                            , item.Key);
-                                    }
-                                }
-                                else
-                                {
-                                    content.Add(new StringContent(item.Value.ToString(), Encoding.UTF8), item.Key);
-                                }
-                            }
-
-                            return content;
-                        }
-
-                        HttpContent? content = bodyType switch
-                        {
-                            "FormData" => BuildMultipartFormDataContent(),
-                            "UrlEncoded" => new FormUrlEncodedContent(body.ToDictionary(it => it.Key,
-                                it => it.Value.ToString())),
+                            "UrlEncoded" => new FormUrlEncodedContent(init.Body),
                             _ => null
                         };
                         if (content != null)
@@ -106,20 +69,21 @@ namespace iHentai.Extensions.Runtime
                     }
                     else
                     {
-                        requestMessage.Content = new StringContent(body.ToString(), Encoding.UTF8);
+                        requestMessage.Content = new StringContent(string.Join(";", init.Body.Select(it => it.Key + "=" + it.Value)), Encoding.UTF8);
                     }
                 }
 
-                if (init.TryGet("referrer", out string referrer))
+
+                if (!string.IsNullOrEmpty(init.Referrer))
                 {
-                    requestMessage.Headers.Referrer = new Uri(referrer);
+                    requestMessage.Headers.Referrer = new Uri(init.Referrer);
                 }
 
                 using var response = await _client.SendAsync(requestMessage);
-                tsc.SetResult(JSValue.Marshal(await FetchResponse.FromHttpResponseMessage(response)));
+                return await FetchResponse.FromHttpResponseMessage(response);
             });
-
-            return tsc.Task;
+            task.Wait();
+            return task.Result;
         }
     }
 
@@ -170,7 +134,7 @@ namespace iHentai.Extensions.Runtime
         public FetchHeader headers { get; }
         public bool ok { get; }
 
-        [Hidden] public bool redirected { get; }
+        public bool redirected { get; }
 
         public int status { get; }
         public string statusText { get; }
@@ -195,16 +159,22 @@ namespace iHentai.Extensions.Runtime
                 await message.Content.ReadAsStringAsync(), "string");
         }
 
-        [DoNotDelete]
-        public Task<string> text()
+        public string text()
         {
-            return Task.FromResult(body);
+            return body;
         }
-
-        [DoNotDelete]
-        public Promise json()
-        {
-            return Promise.resolve(JSON.parse(body));
-        }
+    }
+    public class FetchInit
+    {
+        [JsonProperty("method")]
+        public string? Method { get; set; }
+        [JsonProperty("Referrer")]
+        public string? Referrer { get; set; }
+        [JsonProperty("headers")]
+        public Dictionary<string, string>? Headers { get; set; }
+        [JsonProperty("bodyType")]
+        public string? BodyType { get; set; }
+        [JsonProperty("body")]
+        public Dictionary<string, string>? Body { get; set; }
     }
 }

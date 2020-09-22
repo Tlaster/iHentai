@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,9 +9,8 @@ using iHentai.Extensions;
 using iHentai.Extensions.Models;
 using iHentai.Services.Models.Core;
 using iHentai.Services.Models.Script;
+using Jint.Native;
 using Newtonsoft.Json;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Core;
 
 namespace iHentai.Services
 {
@@ -28,28 +28,24 @@ namespace iHentai.Services
         }
 
 
-        public bool CanHandle(Uri uri)
+        public async Task<bool> CanHandle(Uri uri)
         {
             const string functionName = "canModifyRequest";
             if (_manifest.Hosts != null && MatchHost(uri) && _engine.HasMember(functionName))
             {
-                return _engine.InvokeFunction<bool>(functionName, new Arguments {uri.ToString()});
+                return await InvokeAsync<bool>(functionName, uri.ToString());
             }
 
             return false;
         }
 
-        public void Handle(HttpRequestMessage message)
+        public async Task Handle(HttpRequestMessage message)
         {
             const string functionName = "modifyRequest";
             if (_engine.HasMember(functionName))
             {
-                var arg = JSON.parse(JsonConvert.SerializeObject(ScriptRequestContent.FromHttpRequestMessage(message)));
-                var content = Invoke<ScriptRequestContent>(functionName,
-                    new Arguments
-                    {
-                        arg
-                    });
+                var arg = Json(ScriptRequestContent.FromHttpRequestMessage(message));
+                var content =  await InvokeAsync<ScriptRequestContent>(functionName, arg);
                 content.ToHttpRequestMessage(message);
             }
         }
@@ -62,14 +58,14 @@ namespace iHentai.Services
                 return false;
             }
 
-            return Invoke<bool>(functionName, new Arguments());
+            return Invoke<bool>(functionName);
         }
 
         public async Task<int> Login(string userName, string password)
         {
             const string functionName = "login";
             return await InvokeAsync<int>(functionName,
-                new Arguments {userName, password});
+                userName, password);
         }
 
         async Task<IGalleryDetail> IDetailedApi.Detail(IGallery gallery)
@@ -86,46 +82,45 @@ namespace iHentai.Services
         public async Task<bool> CheckCanOpenChapter(IMangaChapter chapter)
         {
             const string functionName = "canReadChapter";
-            return await InvokeAsync<bool>(functionName,
-                new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
+            return await InvokeAsync<bool>(functionName, Json(chapter));
         }
 
         public async Task<List<string>> ChapterImages(IMangaChapter chapter)
         {
             const string functionName = "loadChapterImages";
             return await InvokeAsync<List<string>>(functionName,
-                new Arguments {JSON.parse(JsonConvert.SerializeObject(chapter))});
+                Json(chapter));
         }
 
         public async Task<List<string>> GalleryImagePages(IGalleryDetail detail)
         {
             const string functionName = "loadGalleryImagePages";
             return await InvokeAsync<List<string>>(functionName,
-                new Arguments {JSON.parse(JsonConvert.SerializeObject(detail))});
+                Json(detail));
         }
 
         public async Task<string> GetImageFromImagePage(string page)
         {
             const string functionName = "loadImageFromPage";
-            return await InvokeAsync<string>(functionName, new Arguments { page });
+            return await InvokeAsync<string>(functionName, page);
         }
 
         public async Task<IEnumerable<IGallery>> Home(int page)
         {
             const string functionName = "home";
-            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, new Arguments {page});
+            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, page);
         }
 
         public async Task<IEnumerable<IGallery>> Search(string keyword, int page)
         {
             const string functionName = "search";
-            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, new Arguments {keyword, page});
+            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, keyword, page);
         }
 
         public async Task<IEnumerable<IGallery>> UserTimeline(int page)
         {
             const string functionName = "userTimeline";
-            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, new Arguments {page});
+            return await InvokeAsync<List<ScriptGalleryModel>>(functionName, page);
         }
 
         public bool HasSearch()
@@ -150,7 +145,7 @@ namespace iHentai.Services
         {
             const string functionName = "detail";
             return await InvokeAsync<ScriptGalleryDetailModel>(functionName,
-                new Arguments {JSON.parse(JsonConvert.SerializeObject(gallery))});
+                Json(gallery));
         }
 
         private bool MatchHost(Uri uri)
@@ -181,25 +176,29 @@ namespace iHentai.Services
             return false;
         }
 
-        private T Invoke<T>(string name, Arguments arguments)
+        private JsValue Json(object obj)
+        {
+            return _engine.JSON.Parse(_engine.Engine.Global,
+                new[] {JsValue.FromObject(_engine.Engine, JsonConvert.SerializeObject(obj)),});
+        }
+
+        private T Invoke<T>(string name, params object[] arguments)
         {
             if (_engine.HasMember(name))
             {
-                var scriptResult = _engine.InvokeFunction<JSValue>(name, arguments);
-                var scriptResultText = JSON.stringify(scriptResult);
-                return JsonConvert.DeserializeObject<T>(scriptResultText);
+                var scriptResult = _engine.InvokeFunction<string>(name, arguments);
+                return JsonConvert.DeserializeObject<T>(scriptResult);
             }
 
             throw new NotImplementedException();
         }
 
-        private async Task<T> InvokeAsync<T>(string name, Arguments arguments)
+        private async Task<T> InvokeAsync<T>(string name, params object[] arguments)
         {
             if (_engine.HasMember(name))
             {
-                var scriptResult = await _engine.InvokeFunctionAsync<JSValue>(name, arguments);
-                var scriptResultText = JSON.stringify(scriptResult);
-                return JsonConvert.DeserializeObject<T>(scriptResultText);
+                var scriptResult = await _engine.InvokeFunctionAsync<string>(name, arguments);
+                return JsonConvert.DeserializeObject<T>(scriptResult);
             }
 
             throw new NotImplementedException();

@@ -19,8 +19,8 @@ namespace iHentai.ViewModels.Script
         public ScriptGalleryViewModel(ScriptApi api)
         {
             Api = api;
+            _loadFunc = page => Api.Home(page);
             Source = new IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery>(this);
-            Reset();
         }
 
         public ScriptApi Api { get; private set; }
