@@ -160,12 +160,14 @@
                     </DataTemplate>
                 </views:Optional.ContentTemplate>
             </views:Optional>
-            <views:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}">
+            <views:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}" >
                 <views:Optional.ContentTemplate>
                     <DataTemplate x:DataType="viewModels:ReadingViewModel">
-                        <ScrollViewer ZoomMode="Enabled" MinZoomFactor="1" HorizontalScrollMode="Auto"
+                        <ScrollViewer ZoomMode="Enabled" HorizontalScrollMode="Auto"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Center"
                                       HorizontalScrollBarVisibility="Auto">
-                            <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}">
+                            <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}" HorizontalAlignment="Center">
                                 <controls:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="readingImages:IReadingImage">
                                         <Grid Background="Transparent">
