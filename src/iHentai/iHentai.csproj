@@ -202,6 +202,10 @@
     <Compile Include="Services\Models\Script\ScriptRequestModifier.cs" />
     <Compile Include="Services\ScriptApi.cs" />
     <Compile Include="ViewModels\Archive\ArchiveReadingViewModel.cs" />
+    <Compile Include="ReadingImages\BytesReadingImage.cs" />
+    <Compile Include="ViewModels\Archive\IFileReadingViewModel.cs" />
+    <Compile Include="ViewModels\Archive\PdfReadingViewModel.cs" />
+    <Compile Include="Common\Extensions\StorageFileExtensions.cs" />
     <Compile Include="ViewModels\Extensions\ExtensionsListViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryReadingViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryViewModel.cs" />
@@ -364,7 +368,7 @@
       <Version>1.0.12</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>6.2.4</Version>
+      <Version>6.2.6</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

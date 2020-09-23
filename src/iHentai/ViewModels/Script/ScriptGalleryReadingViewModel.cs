@@ -22,25 +22,16 @@ namespace iHentai.ViewModels.Script
         {
             Api = api;
             Detail = detail;
-            Init();
         }
 
         public ScriptApi Api { get; set; }
 
         public ScriptGalleryDetailModel Detail { get; }
 
-        private async void Init()
+        protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
-            IsLoading = true;
-            try
-            {
-                var files = await Api.GalleryImagePages(Detail);
-                Images = files.Select((it, index) => new ScriptGalleryReadingImage(it, Api, index + 1)).ToList();
-            }
-            catch (Exception e)
-            {
-            }
-            IsLoading = false;
+            var files = await Api.GalleryImagePages(Detail);
+            return files.Select((it, index) => new ScriptGalleryReadingImage(it, Api, index + 1)).ToList();
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
@@ -9,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using iHentai.Common;
+using iHentai.Common.Extensions;
 using iHentai.Common.Helpers;
 using iHentai.Pages;
 using iHentai.ViewModels.Archive;
@@ -40,6 +42,8 @@ namespace iHentai
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
+        internal Frame ContentFrame => RootFrame;
+
         private async Task Init()
         {
             HentaiApp.Instance.Init();
@@ -47,8 +51,6 @@ namespace iHentai
             await ProgressImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
             await ImageEx2.WriteableImageCache.Instance.InitializeAsync(httpMessageHandler: HentaiHttpHandler.Instance);
         }
-
-        internal Frame ContentFrame => RootFrame;
 
         private void InstanceOnThemeChanged(object sender, ElementTheme e)
         {
@@ -99,8 +101,17 @@ namespace iHentai
 
         public void ReadFile(StorageFile file)
         {
-            ContentFrame.Navigate(typeof(ReadingPage), new ArchiveReadingViewModel(file));
+            if (ContentFrame.Content is FrameworkElement element &&
+                element.DataContext is IFileReadingViewModel viewModel &&
+                Path.Combine(viewModel.File.Path, viewModel.File.Name) == Path.Combine(file.Path, file.Name))
+            {
+                return;
+            }
+
+            ContentFrame.Navigate(typeof(ReadingPage), file.GetFileReadingViewModel());
             ContentFrame.BackStack.Clear();
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                AppViewBackButtonVisibility.Collapsed;
         }
     }
 }

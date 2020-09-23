@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Controls;
+using iHentai.Common.Extensions;
 using iHentai.Data.Models;
 using iHentai.ViewModels.Archive;
 using iHentai.ViewModels.Local;
@@ -55,10 +56,11 @@ namespace iHentai.Pages.Local
             picker.FileTypeFilter.Add(".zip");
             picker.FileTypeFilter.Add(".rar");
             picker.FileTypeFilter.Add(".7z");
+            picker.FileTypeFilter.Add(".pdf");
             var result = await picker.PickSingleFileAsync();
             if (result != null)
             {
-                this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), new ArchiveReadingViewModel(result));
+                this.FindAscendant<RootView>().ContentFrame.Navigate(typeof(ReadingPage), result.GetFileReadingViewModel());
             }
         }
     }

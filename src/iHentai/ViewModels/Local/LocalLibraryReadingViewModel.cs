@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using iHentai.Data.Models;
 using iHentai.ReadingImages;
 using iHentai.Services;
@@ -10,17 +12,15 @@ namespace iHentai.ViewModels.Local
         public LocalReadingViewModel(LocalGalleryModel gallery) : base(gallery.Title)
         {
             Gallery = gallery;
-            Init();
         }
 
         public LocalGalleryModel Gallery { get; }
 
-        private async void Init()
+
+        protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
-            IsLoading = true;
             var files = await LocalLibraryManager.Instance.GetGalleryImages(Gallery);
-            Images = files.Select((it, index) => new LocalReadingImage(it, index)).ToList();
-            IsLoading = false;
+            return files.Select((it, index) => new LocalReadingImage(it, index)).ToList();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace iHentai.ReadingImages
 
         public string Url { get; }
 
-        protected override async Task<ImageSource> LoadImage(bool removeCache, CancellationToken token)
+        protected override async Task<ImageSource?> LoadImage(bool removeCache, CancellationToken token)
         {
             if (removeCache)
             {
@@ -46,11 +46,11 @@ namespace iHentai.ReadingImages
     public abstract class ReadingImageBase : IReadingImage, IProgress<float>
     {
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private ImageSource _source;
+        private ImageSource? _source;
 
         public void Report(float value)
         {
-            CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+            _ = CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                 () => Progress = value);
         }
 
@@ -103,9 +103,9 @@ namespace iHentai.ReadingImages
             }
         }
 
-        protected abstract Task<ImageSource> LoadImage(bool removeCache, CancellationToken token);
+        protected abstract Task<ImageSource?> LoadImage(bool removeCache, CancellationToken token);
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

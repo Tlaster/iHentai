@@ -63,6 +63,7 @@ namespace iHentai.Pages
             if (e.Parameter is ReadingViewModel readingViewModel)
             {
                 ViewModel = readingViewModel;
+                ViewModel.Init();
             }
 
             _display.RequestActive();

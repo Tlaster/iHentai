@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using iHentai.Data;
 using iHentai.ReadingImages;
@@ -17,8 +18,21 @@ namespace iHentai.ViewModels
             Title = title;
         }
 
+        public async void Init()
+        {
+            IsLoading = true;
+            try
+            {
+                Images = await InitImages();
+            }
+            catch (Exception exception)
+            {
+            }
+            IsLoading = false;
+        }
+
         public string? Title { get; }
-        public bool IsLoading { get; protected set; }
+        public bool IsLoading { get; private set; }
 
         public int SelectedIndex
         {
@@ -33,7 +47,8 @@ namespace iHentai.ViewModels
             }
         }
 
-        public IEnumerable<IReadingImage>? Images { get; protected set; }
+        public IEnumerable<IReadingImage>? Images { get; private set; }
+        protected abstract Task<IEnumerable<IReadingImage>> InitImages();
 
         [DependsOn(nameof(Images))]
         [AlsoNotifyFor(nameof(ViewMode))]
