@@ -153,6 +153,13 @@ namespace iHentai.Views
 
                     index++;
                 }
+                BookFlipView.SetBinding(FlipView.SelectedIndexProperty, new Binding
+                {
+                    Source = this,
+                    Path = new PropertyPath(nameof(SelectedIndex)),
+                    Converter = new IndexConverter(index - 1, FlipViewSource.Count - 1),
+                    Mode = BindingMode.TwoWay,
+                });
             }
         }
 
@@ -164,14 +171,22 @@ namespace iHentai.Views
 
     internal class IndexConverter : IValueConverter
     {
+        public IndexConverter(int max, int bookMax)
+        {
+            Max = max;
+            BookMax = bookMax;
+        }
+
+        public int Max { get; }
+        public int BookMax { get; }
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (int) value / 2;
+            return Math.Min(System.Convert.ToInt32(Math.Round(System.Convert.ToSingle(value) / 2f)), BookMax);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return (int) value * 2;
+            return Math.Min((int) value * 2, Max);
         }
     }
 

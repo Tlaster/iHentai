@@ -12,11 +12,10 @@
     <UserControl.Resources>
         <views:PageTemplateSelector x:Key="LeftPageTemplateSelector" />
         <views:PageTemplateSelector x:Key="RightPageTemplateSelector" />
-        <views:IndexConverter x:Key="IndexConverter" />
     </UserControl.Resources>
     <FlipView ItemsSource="{x:Bind FlipViewSource, Mode=OneWay}"
               Background="Transparent"
-              SelectedIndex="{x:Bind SelectedIndex, Converter={StaticResource IndexConverter}, Mode=TwoWay}">
+              x:Name="BookFlipView">
         <FlipView.ItemTemplate>
             <DataTemplate x:DataType="views:BookViewItem">
                 <ScrollViewer x:Name="Scroll" MinZoomFactor="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
