@@ -27,19 +27,32 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="32,16,16,16">
             <Border
                 CornerRadius="4">
-                <views:AspectRatioView
-                    Tag="{x:Bind}"
-                    Margin="4" WidthRequest="141"
-                    HeightRequest="236">
-                    <imageEx:ImageEx
-                        animations:Connected.Key="listItem" IsCacheEnabled="True"  Source="{x:Bind ViewModel.Thumb, Mode=OneWay}" />
-                </views:AspectRatioView>
+                <imageEx:ImageEx
+                    animations:Connected.Key="listItem" IsCacheEnabled="True"  Source="{x:Bind ViewModel.Thumb, Mode=OneWay}" />
             </Border>
-            <Grid Height="32" />
+            <Grid Height="16" />
             <Button HorizontalAlignment="Stretch"
                     x:Uid="ReadButton"
                     Visibility="{x:Bind helper:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}"
                     Content="阅读" Style="{ThemeResource AccentButtonStyle}" Click="ReadClicked" />
+            <Grid Height="16" />
+            <controls:ItemsRepeater ItemsSource="{x:Bind ViewModel.Detail.Meta, Mode=OneWay}">
+                <controls:ItemsRepeater.Layout>
+                    <controls:StackLayout/>
+                </controls:ItemsRepeater.Layout>
+                <controls:ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Opacity="0.6" Text="{Binding Key}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Value}"/>
+                        </Grid>
+                    </DataTemplate>
+                </controls:ItemsRepeater.ItemTemplate>
+            </controls:ItemsRepeater>
         </StackPanel>
         <controls:ProgressRing Width="50" Height="50" Grid.Row="1" Grid.Column="1"
                                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
