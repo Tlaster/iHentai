@@ -18,7 +18,8 @@ function home(page) {
         },
         bodyType: 'UrlEncoded'
     });
-    const json = result.json();
+    const text = result.text();
+    const json = JSON.parse(text);
     const items = json.UpdateComicItems.map(it => {
         return {
             id: it.Url,
@@ -41,7 +42,8 @@ function search(keyword, page) {
         },
         bodyType: 'UrlEncoded'
     });
-    const json = result.json();
+    const text = result.text();
+    const json = JSON.parse(text);
     const items = json.map(it => {
         return {
             id: it.UrlKey,
@@ -69,7 +71,7 @@ function detail(gallery) {
                 title: (it.querySelector('.detail-list-2-info-title') || it.querySelector('a')).text(),
                 extra: JSON.stringify({
                     link: it.querySelector('a').attr('href'),
-                    isLocked: it.querySelector('.detail-list-2-info-right') !== undefined,
+                    isLocked: it.querySelector('.detail-list-2-info-right') !== null,
                 }),
             };
         })

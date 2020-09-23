@@ -120,14 +120,13 @@ function detailFromLink(url) {
         max_rating: 5,
         rating: parseFloat(doc.querySelector('#rating_label').text().match(/(\d+(\.\d+)?)/)[1]),
         images: img,
+        meta: doc.querySelectorAll('#gdd > table > tbody > tr').map(it => ({ [it.querySelector('.gdt1').text()]: it.querySelector('.gdt2').text() })).reduce((obj, item) => Object.assign(obj, { ...item }), {}),
         tags: doc.querySelectorAll('#taglist > table > tbody > tr').map(it => ({
             title: it.querySelector('.tc').text(),
-            values: it.querySelectorAll('td:nth-child(2) > div').map(v => {
-                return {
-                    value: v.querySelector('a').text(),
-                    extra: v.querySelector('a').attr('href'),
-                };
-            }),
+            values: it.querySelectorAll('td:nth-child(2) > div').map(v => ({
+                value: v.querySelector('a').text(),
+                extra: v.querySelector('a').attr('href'),
+            })),
         })),
         extra: JSON.stringify({
             pages: [...doc.querySelectorAll('.ptt td:not(:first-child):not(:last-child) > a').map(it => it.attr('href'))],
