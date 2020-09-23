@@ -133,6 +133,7 @@
     <Compile Include="Common\Helpers\ProgressImageCache.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\HentaiHttpClient.cs" />
+    <Compile Include="Common\ObjectPool.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Data\ExtensionDb.cs" />
     <Compile Include="Data\ScriptHistoryDb.cs" />

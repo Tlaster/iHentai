@@ -9,6 +9,7 @@ using iHentai.Extensions;
 using iHentai.Extensions.Models;
 using iHentai.Services.Models.Core;
 using iHentai.Services.Models.Script;
+using Jint;
 using Jint.Native;
 using Newtonsoft.Json;
 
@@ -178,8 +179,9 @@ namespace iHentai.Services
 
         private JsValue Json(object obj)
         {
-            return _engine.JSON.Parse(_engine.Engine.Global,
-                new[] {JsValue.FromObject(_engine.Engine, JsonConvert.SerializeObject(obj)),});
+            var engine = new Engine();
+            return engine.Json.Parse(engine.Global,
+                new[] {JsValue.FromObject(engine, JsonConvert.SerializeObject(obj)),});
         }
 
         private T Invoke<T>(string name, params object[] arguments)
