@@ -6,43 +6,43 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Esprima;
+using Esprima.Ast;
+using iHentai.Common;
 using iHentai.Extensions.Models;
 using iHentai.Extensions.Runtime;
 using iHentai.Extensions.Runtime.Html;
+using Jint;
+using Jint.Native;
+using Jint.Native.Json;
+using Jint.Runtime;
 using LZStringCSharp;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
-using NiL.JS;
-using NiL.JS.BaseLibrary;
-using NiL.JS.Core;
-using NiL.JS.Extensions;
-using Array = NiL.JS.BaseLibrary.Array;
 
 namespace iHentai.Extensions
 {
-    public class ScriptEngine : IModuleResolver
+    public class ScriptEngine 
     {
         private readonly string _extensionId;
         private readonly ExtensionManifest _manifest;
-
-        private readonly StringMap<Module> _modulesCache = new StringMap<Module>();
-        private Fetch _fetch;
-        private Module _module;
+        private readonly Fetch _fetch;
+        private readonly LocalStorage _storage;
+        private readonly Log _log;
+        private readonly ObjectPool<Engine> _enginePool;
+        private Script _script;
+        private List<string> _properties;
 
         public ScriptEngine(string extensionId, ExtensionManifest manifest)
         {
             _extensionId = extensionId;
             _manifest = manifest;
+            _fetch = new Fetch(manifest, HentaiHttpHandler.Instance);
+            _storage = new LocalStorage(_extensionId, HentaiApp.Instance.Resolve<IExtensionStorage>());
+            _log = new Log(_extensionId);
+            _enginePool = new ObjectPool<Engine>(GetEngine);
         }
 
-        //public JSValue ExtensionModules { get; private set; }
-
-
-        public bool TryGetModule(ModuleRequest moduleRequest, out Module result)
-        {
-            var cacheKey = GetCacheKey(moduleRequest);
-
-            return _modulesCache.TryGetValue(cacheKey, out result);
-        }
 
         public async Task Init(string path)
         {
@@ -54,80 +54,65 @@ namespace iHentai.Extensions
             var filePath = Path.Combine(path, _manifest.Entry);
             var file = await StorageFile.GetFileFromPathAsync(filePath);
             var entryFile = await FileIO.ReadTextAsync(file);
-            _module = new Module(_manifest.Entry, entryFile);
-            if (_manifest.Modules != null && _manifest.Modules.Any())
+            var parser = new JavaScriptParser(entryFile);
+            _script = parser.ParseScript();
+            var engine = _enginePool.Get();
+            _properties = engine.Global.GetOwnPropertyKeys().Select(it => it.ToString()).ToList();
+            _enginePool.Return(engine);
+        }
+
+        private Engine GetEngine()
+        {
+            var engine = new Engine();
+            engine.SetValue("localStorage", _storage);
+            engine.SetValue("console", _log);
+            engine.SetValue("fetch", new Func<string, JsValue, FetchResponse>((s, value) =>
             {
-                foreach (var item in _manifest.Modules)
+                FetchInit? init = null;
+                if (value != null)
                 {
-                    var moduleFile =
-                        await FileIO.ReadTextAsync(await StorageFile.GetFileFromPathAsync(Path.Combine(path, item)));
-                    _modulesCache.Add(item.TrimStart('.'), new Module(moduleFile));
+                    init = JsonConvert.DeserializeObject<FetchInit>(engine.Json.Stringify(engine.Global, new[] {value})
+                        .ToString());
                 }
-            }
 
-            _module.ModuleResolversChain.Add(this);
-            _fetch = new Fetch(_manifest, HentaiApp.Instance.Resolve<HttpMessageHandler>());
-            _module.Context.DefineVariable("localStorage")
-                .Assign(
-                    JSValue.Marshal(new LocalStorage(_extensionId, HentaiApp.Instance.Resolve<IExtensionStorage>())));
-            _module.Context.DefineVariable("debug")
-                .Assign(JSValue.Marshal(new Log(_extensionId)));
-            _module.Context.DefineVariable("fetch")
-                .Assign(JSValue.Marshal(new Func<string, JSObject?, Task<JSValue>>(_fetch.fetch)));
-            _module.Context.DefineVariable("parseHtml")
-                .Assign(JSValue.Marshal(new Func<string, JSValue>(s => JSValue.Marshal(HtmlElement.Parse(s)))));
-            _module.Context.DefineVariable("unpack")
-                .Assign(JSValue.Marshal(new Func<string, string?>(UnPacker.Unpack)));
-            _module.Context.DefineVariable("decodeLzStringFromBase64")
-                .Assign(JSValue.Marshal(new Func<string, string>(LZString.DecompressFromBase64)));
-            //_module.Context.DefineVariable("registerExtension")
-            //    .Assign(JSValue.Marshal(new Func<JSValue, bool>(value =>
-            //    {
-            //        ExtensionModules = value;
-            //        return true;
-            //    })));
-            _module.Run();
+                return _fetch.fetch(s, init);
+            }));
+            engine.SetValue("parseHtml", new Func<string, HtmlElement>(HtmlElement.Parse));
+            engine.SetValue("unpack", new Func<string, string?>(UnPacker.Unpack));
+            engine.SetValue("decodeLzStringFromBase64", new Func<string, string>(LZString.DecompressFromBase64));
+            engine.Execute(_script);
+            return engine;
         }
 
 
-        public async Task<T> InvokeFunctionAsync<T>(string name, Arguments arguments)
+        public Task<T> InvokeFunctionAsync<T>(string name, params object[] arguments)
         {
-            var result = _module.Context.GetVariable(name).As<Function>().Call(arguments);
-            if (result.Is<Promise>())
+            return Task.Run(() => InvokeFunction<T>(name, arguments));
+        }
+
+        public T InvokeFunction<T>(string name, params object[] arguments)
+        {
+            var engine = _enginePool.Get();
+            try
             {
-                var task = result.As<Promise>().Task;
-                var promiseResult = await task;
-                return promiseResult.As<T>();
+                var result = engine.Invoke(name, arguments);
+                var json = engine.Json.Stringify(engine.Global, new []{result}).ToString();
+                if (json is T tvalue)
+                {
+                    return tvalue;
+                }
+
+                return JsonConvert.DeserializeObject<T>(json);
             }
-
-            return result.As<T>();
-        }
-
-        public T InvokeFunction<T>(string name, Arguments arguments)
-        {
-            return _module.Context.GetVariable(name).As<Function>().Call(arguments).As<T>();
+            finally
+            {
+                _enginePool.Return(engine);
+            }
         }
 
         public bool HasMember(string name)
         {
-            var member = _module.Context.GetVariable(name);
-            return member != null && member.Exists;
-        }
-
-
-        public virtual string GetCacheKey(ModuleRequest moduleRequest)
-        {
-            return moduleRequest.AbsolutePath;
-        }
-
-        public void RemoveFromCache(string key)
-        {
-            _modulesCache.Remove(key);
-        }
-
-        public void ClearCache()
-        {
-            _modulesCache.Clear();
+            return _properties.Contains(name);
         }
     }
 }

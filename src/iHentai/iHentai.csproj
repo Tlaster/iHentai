@@ -133,6 +133,7 @@
     <Compile Include="Common\Helpers\ProgressImageCache.cs" />
     <Compile Include="Common\Helpers\XamlHelper.cs" />
     <Compile Include="Common\HentaiHttpClient.cs" />
+    <Compile Include="Common\ObjectPool.cs" />
     <Compile Include="Common\SettingsManager.cs" />
     <Compile Include="Data\ExtensionDb.cs" />
     <Compile Include="Data\ScriptHistoryDb.cs" />
@@ -393,9 +394,6 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="NiL.JS">
-      <Version>2.5.1466</Version>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.9</Version>

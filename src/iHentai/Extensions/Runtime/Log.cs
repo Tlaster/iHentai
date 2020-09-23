@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using NiL.JS.Core;
 
 namespace iHentai.Extensions.Runtime
 {
@@ -12,9 +11,8 @@ namespace iHentai.Extensions.Runtime
             _extensionId = extensionId;
         }
 
-        public void log(JSValue value)
+        public void log(object value)
         {
-            var str = value.ToString();
             Debug.WriteLine(_extensionId + ":" + value);
         }
     }
