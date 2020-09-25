@@ -42,6 +42,11 @@ namespace iHentai.Extensions.Runtime.Html
             return _element?.Text();
         }
 
+        public string? html()
+        {
+            return _element?.InnerHtml;
+        }
+
         public string? attr(string attr)
         {
             if (_element == null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -27,6 +28,12 @@ namespace iHentai.ViewModels
             }
             catch (Exception exception)
             {
+#if DEBUG
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+#endif
                 Error = exception;
             }
             IsLoading = false;

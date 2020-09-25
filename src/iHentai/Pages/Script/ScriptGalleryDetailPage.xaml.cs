@@ -78,9 +78,12 @@ namespace iHentai.Pages.Script
 
         }
 
-        private void GalleryImageTapped(object sender, TappedRoutedEventArgs e)
+        private void ShowAllImagesClicked(object sender, RoutedEventArgs e)
         {
-
+            if (ViewModel.Detail?.Images != null)
+            {
+                Frame.Navigate(typeof(ScriptGalleryImagesPage), new ScriptGalleryImagesViewModel(ViewModel.Detail.Images));
+            }
         }
     }
 }

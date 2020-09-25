@@ -147,6 +147,9 @@
   <data name="FavoriteLibraryMenu.Content" xml:space="preserve">
     <value>收藏</value>
   </data>
+  <data name="GalleryDetailImageShowAllText.Text" xml:space="preserve">
+    <value>显示全部</value>
+  </data>
   <data name="LocalGalleryFolder.Text" xml:space="preserve">
     <value>本地漫画库</value>
   </data>

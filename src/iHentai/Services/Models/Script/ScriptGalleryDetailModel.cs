@@ -31,6 +31,8 @@ namespace iHentai.Services.Models.Script
         [JsonProperty("title")] public string? Title { get; set; }
 
         [JsonProperty("thumb")] public string? Thumb { get; set; }
+
+        [JsonProperty("comments")] public List<ScriptComment>? Comments { get; set; }
     }
 
     public class ScriptGalleryThumb
@@ -66,5 +68,12 @@ namespace iHentai.Services.Models.Script
         [JsonProperty("value")] public string? Value { get; set; }
 
         [JsonProperty("extra")] public string? Extra { get; set; }
+    }
+
+    public class ScriptComment
+    {
+        [JsonProperty("content")] public string? Content { get; set; }
+        [JsonProperty("user")] public string? User { get; set; }
+        [JsonProperty("created_at")] public string? CreatedAt { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using iHentai.Services;
 using iHentai.Services.Models.Core;
@@ -37,6 +38,12 @@ namespace iHentai.ViewModels.Script
             }
             catch (Exception exception)
             {
+#if DEBUG
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+#endif
                 Error = exception;
             }
             IsLoading = false;

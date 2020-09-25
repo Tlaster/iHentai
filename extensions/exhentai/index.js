@@ -128,6 +128,11 @@ function detailFromLink(url) {
                 extra: v.querySelector('a').attr('href'),
             })),
         })),
+        comments: doc.querySelectorAll('.c1').map(it => ({
+            content: it.querySelector('.c6').html(),
+            user: it.querySelector('.c3 > a').text(),
+            created_at: `${it.querySelector('.c3').text()}`.match(/Posted on (.*) by:/)[1],
+        })),
         extra: JSON.stringify({
             pages: [...doc.querySelectorAll('.ptt td:not(:first-child):not(:last-child) > a').map(it => it.attr('href'))],
         })
