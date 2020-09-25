@@ -1,4 +1,4 @@
-<Page
+﻿<Page
     x:Class="iHentai.Pages.Script.ScriptGalleryDetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -126,10 +126,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <controls:ItemsRepeater
+                    Margin="0,16,0,0"
                     Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Detail.Images), Mode=OneWay, FallbackValue=Collapsed}"
                     ItemsSource="{x:Bind ViewModel.Detail.Images, Mode=OneWay}">
                     <controls:ItemsRepeater.Layout>
-                        <controls:UniformGridLayout />
+                        <controls:StackLayout Orientation="Horizontal" />
                     </controls:ItemsRepeater.Layout>
                     <controls:ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="script:ScriptGalleryThumb">

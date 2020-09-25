@@ -88,7 +88,9 @@
 
                 <Border Height="16" />
 
-                <TextBlock x:Uid="About" Tapped="UIElement_OnTapped" Text="关于" Style="{ThemeResource TitleTextBlockStyle}" />
+                <Border Background="Transparent" Tapped="UIElement_OnTapped">
+                    <TextBlock x:Uid="About" Text="关于" Style="{ThemeResource TitleTextBlockStyle}" />
+                </Border>
                 <TextBlock x:Uid="AppDesc" Text="iHentai是在AGPL-3.0协议下的开源软件"/>
                 <HyperlinkButton NavigateUri="https://github.com/Tlaster/iHentai" Content="https://github.com/Tlaster/iHentai" />
             </StackPanel>
