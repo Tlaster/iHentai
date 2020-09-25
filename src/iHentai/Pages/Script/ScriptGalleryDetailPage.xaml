@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="iHentai.Pages.Script.ScriptGalleryDetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,6 +13,7 @@
     xmlns:script="using:iHentai.Services.Models.Script"
     xmlns:views="using:iHentai.Views"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:icon="using:Bug10.Icon"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -54,6 +55,14 @@
                 </controls:ItemsRepeater.ItemTemplate>
             </controls:ItemsRepeater>
         </StackPanel>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1"
+                    Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}">
+            <icon:IconView Icon="Error" FontSize="50"/>
+            <Grid Height="16"/>
+            <TextBlock x:Uid="ReadingLoadingErrorText"/>
+        </StackPanel>
+
         <controls:ProgressRing Width="50" Height="50" Grid.Row="1" Grid.Column="1"
                                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
                                Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay}" />

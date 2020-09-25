@@ -183,6 +183,9 @@
   <data name="ReadingDirectionRTL.Text" xml:space="preserve">
     <value>右→左</value>
   </data>
+  <data name="ReadingLoadingErrorText.Text" xml:space="preserve">
+    <value>载入错误</value>
+  </data>
   <data name="ReadingModeAppBarButton.Label" xml:space="preserve">
     <value>阅读模式</value>
   </data>

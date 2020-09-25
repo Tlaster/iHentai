@@ -216,6 +216,12 @@
             <Grid Grid.Column="2" Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnNextClicked" />
         </Grid>
 
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind helpers:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}">
+            <icon:IconView Icon="Error" FontSize="50"/>
+            <Grid Height="16"/>
+            <TextBlock x:Uid="ReadingLoadingErrorText"/>
+        </StackPanel>
+
 
         <Grid Visibility="{x:Bind helpers:XamlHelper.InvertBoolToVisibility(ViewModel.IsLoading), Mode=OneWay}">
             <Grid Background="Transparent"

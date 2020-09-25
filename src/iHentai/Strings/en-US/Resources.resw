@@ -183,6 +183,9 @@
   <data name="ReadingDirectionRTL.Text" xml:space="preserve">
     <value>RTL</value>
   </data>
+  <data name="ReadingLoadingErrorText.Text" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ReadingModeAppBarButton.Label" xml:space="preserve">
     <value>Reading Mode</value>
   </data>

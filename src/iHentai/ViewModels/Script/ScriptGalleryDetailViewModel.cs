@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using iHentai.Services;
 using iHentai.Services.Models.Core;
 using iHentai.Services.Models.Script;
@@ -19,6 +20,7 @@ namespace iHentai.ViewModels.Script
         public ScriptApi Api { get; }
         public ScriptGalleryModel Gallery { get; }
         public ScriptGalleryDetailModel? Detail { get; private set; }
+        public Exception? Error { get; private set; }
 
         [DependsOn(nameof(Gallery), nameof(Detail))]
         public string GalleryTitle => Gallery?.Title ?? Detail?.Title ?? "";
@@ -29,7 +31,14 @@ namespace iHentai.ViewModels.Script
         private async void Init()
         {
             IsLoading = true;
-            Detail = await Api.Detail(Gallery);
+            try
+            {
+                Detail = await Api.Detail(Gallery);
+            }
+            catch (Exception exception)
+            {
+                Error = exception;
+            }
             IsLoading = false;
         }
 

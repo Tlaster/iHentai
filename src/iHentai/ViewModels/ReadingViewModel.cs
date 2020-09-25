@@ -27,12 +27,16 @@ namespace iHentai.ViewModels
             }
             catch (Exception exception)
             {
+                Error = exception;
             }
             IsLoading = false;
         }
 
         public string? Title { get; }
+
         public bool IsLoading { get; private set; }
+
+        public Exception? Error { get; private set; }
 
         public int SelectedIndex
         {
