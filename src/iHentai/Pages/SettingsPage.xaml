@@ -58,7 +58,7 @@
 
                 <Border Height="16" />
 
-                <!--<StackPanel Visibility="{x:Bind common:SettingsManager.Instance.EnableExtension}">
+                <StackPanel x:Name="LocalExtensionFolder">
                     <TextBlock x:Uid="ExtensionFolder" Text="扩展安装文件夹" />
                     <Border Height="8" />
                     <ListViewItem Tapped="{x:Bind ViewModel.SetExtensionFolder}" 
@@ -67,7 +67,7 @@
                     </ListViewItem>
 
                     <Border Height="16" />
-                </StackPanel>-->
+                </StackPanel>
                 
                 <TextBlock x:Uid="Theme" Text="主题" />
                 <Border Height="8" />

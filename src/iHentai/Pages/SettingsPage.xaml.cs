@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using iHentai.Common;
 using iHentai.Data.Models;
+using iHentai.Extensions;
 using iHentai.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -31,6 +32,9 @@ namespace iHentai.Pages
         {
             InitializeComponent();
             ThemeRadio.SelectedIndex = _themes.IndexOf(ViewModel.Theme);
+            LocalExtensionFolder.Visibility = this.Resolve<IExtensionManager>() is LocalExtensionManager
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         private SettingsViewModel ViewModel { get; } = new SettingsViewModel();
