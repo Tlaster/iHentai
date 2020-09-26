@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace iHentai.Extensions.Models
@@ -15,6 +17,36 @@ namespace iHentai.Extensions.Models
         [JsonProperty("hosts")] public List<string>? Hosts { get; set; }
         [JsonProperty("permissions")] public List<string>? Permissions { get; set; }
         [JsonProperty("homepage_url")] public string? HomepageUrl { get; set; }
+
+        
+
+        public bool MatchHost(Uri uri)
+        {
+            if (Hosts == null)
+            {
+                return false;
+            }
+
+            foreach (var item in Hosts)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (item == uri.Host)
+                {
+                    return true;
+                }
+
+                if (Regex.IsMatch(uri.Host, item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     public class ExtensionFolderData

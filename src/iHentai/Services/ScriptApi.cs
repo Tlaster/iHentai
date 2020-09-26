@@ -32,7 +32,7 @@ namespace iHentai.Services
         public async Task<bool> CanHandle(Uri uri)
         {
             const string functionName = "canModifyRequest";
-            if (_manifest.Hosts != null && MatchHost(uri) && _engine.HasMember(functionName))
+            if (_manifest.Hosts != null && _manifest.MatchHost(uri) && _engine.HasMember(functionName))
             {
                 return await InvokeAsync<bool>(functionName, uri.ToString());
             }
@@ -149,34 +149,6 @@ namespace iHentai.Services
                 Json(gallery));
         }
 
-        private bool MatchHost(Uri uri)
-        {
-            if (_manifest.Hosts == null)
-            {
-                return false;
-            }
-
-            foreach (var item in _manifest.Hosts)
-            {
-                if (item == null)
-                {
-                    continue;
-                }
-
-                if (item == uri.Host)
-                {
-                    return true;
-                }
-
-                if (Regex.IsMatch(uri.Host, item))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private JsValue Json(object obj)
         {
             var engine = new Engine();
@@ -202,7 +174,7 @@ namespace iHentai.Services
                 var scriptResult = await _engine.InvokeFunctionAsync<string>(name, arguments);
                 return JsonConvert.DeserializeObject<T>(scriptResult);
             }
-
+            
             throw new NotImplementedException();
         }
     }

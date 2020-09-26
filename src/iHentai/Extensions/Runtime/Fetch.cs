@@ -24,11 +24,10 @@ namespace iHentai.Extensions.Runtime
 
         public FetchResponse fetch(string input, FetchInit? init = null)
         {
-
             var task = Task.Run(async () =>
             {
                 var uri = new Uri(input);
-                if (_manifest.Hosts == null || !_manifest.Hosts.Contains(uri.Host))
+                if (_manifest.Hosts == null || !_manifest.MatchHost(uri))
                 {
                     throw new Exception("Access denied for target uri");
                 }
