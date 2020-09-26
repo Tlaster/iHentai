@@ -11,6 +11,7 @@ namespace iHentai.Extensions.Models
         [JsonProperty("modules")] public List<string>? Modules { get; set; }
         [JsonProperty("icon")] public string? Icon { get; set; }
         [JsonProperty("manifest_version")] public int ManifestVersion { get; set; }
+        [JsonProperty("version")] public int Version { get; set; }
         [JsonProperty("name")] public string? Name { get; set; }
         [JsonProperty("description")] public string? Description { get; set; }
         [JsonProperty("author")] public string? Author { get; set; }

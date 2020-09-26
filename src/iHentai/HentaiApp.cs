@@ -47,7 +47,16 @@ namespace iHentai
             this.Register<HttpMessageHandler, HentaiHttpHandler>(() => HentaiHttpHandler.Instance);
             this.Register<IExtensionStorage, ExtensionStorage>();
             this.Register<IPlatformService, PlatformService>();
-            this.Register<IExtensionManager, ExtensionManager>();
+            if (SettingsManager.Instance.EnableExtension)
+            {
+                this.Register<IExtensionManager, NetworkExtensionManager>();
+                this.Resolve<IExtensionManager>().Init();
+//#if DEBUG
+//            this.Register<IExtensionManager, LocalExtensionManager>();
+//#else
+//            this.Register<IExtensionManager, NetworkExtensionManager>();
+//#endif
+            }
             var sevenZipPath = (RuntimeInformation.ProcessArchitecture) switch
             {
                 Architecture.X86 => Path.Combine(Environment.CurrentDirectory, "Assets", "7z", "x86", "7zUWP.dll"),

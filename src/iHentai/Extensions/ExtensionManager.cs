@@ -5,20 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using iHentai.Common;
 using iHentai.Extensions.Models;
-using iHentai.Platform;
 using iHentai.Services;
-using Newtonsoft.Json;
 
 namespace iHentai.Extensions
 {
-    public interface IExtensionManager
-    {
-        ObservableCollection<ExtensionManifest> Extensions { get; }
-        void Reload();
-        Task<ScriptApi?> GetApi(ExtensionManifest manifest);
-    }
-
-    public class ExtensionManager : IExtensionManager
+    public abstract class ExtensionManager : IExtensionManager
     {
         private readonly Dictionary<ExtensionManifest, ScriptApi> _cacheApis =
             new Dictionary<ExtensionManifest, ScriptApi>();
@@ -28,23 +19,8 @@ namespace iHentai.Extensions
         private readonly Dictionary<string, ExtensionManifest> _extensions =
             new Dictionary<string, ExtensionManifest>();
 
-        public ExtensionManager()
-        {
-            Init();
-        }
-
-        public ObservableCollection<ExtensionManifest> Extensions { get; } =
-            new ObservableCollection<ExtensionManifest>();
-
-        public void Reload()
-        {
-            _cacheApis.Clear();
-            _cacheApis.Clear();
-            _extensions.Clear();
-            Extensions.Clear();
-            Init();
-        }
-
+        public ObservableCollection<ExtensionManifest> Extensions { get; } = new ObservableCollection<ExtensionManifest>();
+        
         public async Task<ScriptApi?> GetApi(ExtensionManifest manifest)
         {
             if (_cacheApis.ContainsKey(manifest))
@@ -52,45 +28,16 @@ namespace iHentai.Extensions
                 return _cacheApis[manifest];
             }
 
-            var item = _extensions.FirstOrDefault(it => it.Value == manifest);
-            if (!string.IsNullOrEmpty(item.Key))
+            var (key, _) = _extensions.FirstOrDefault(it => it.Value == manifest);
+            if (!string.IsNullOrEmpty(key))
             {
-                var api = new ScriptApi(await GetScriptEngineAsync(item.Key), item.Key, manifest);
+                var api = new ScriptApi(await GetScriptEngineAsync(key), key, manifest);
                 HentaiHttpHandler.Instance.RegisterHandler(api);
                 _cacheApis.Add(manifest, api);
                 return api;
             }
 
             return null;
-        }
-
-        private async Task Init()
-        {
-            var folderData = SettingsManager.Instance.ExtensionFolder;
-            if (folderData.Path != null)
-            {
-                var folder = folderData.Token == null
-                    ? await this.Resolve<IPlatformService>().GetFolderFromPath(folderData.Path)
-                    : await this.Resolve<IPlatformService>().GetFolderFromPath(folderData.Path, folderData.Token);
-                if (folder != null)
-                {
-                    var folders = await folder.GetFolders();
-                    foreach (var directory in folders)
-                    {
-                        var files = await directory.GetFiles();
-                        var manifest = files.FirstOrDefault(it => it.Name == "manifest.json");
-                        if (manifest == null)
-                        {
-                            continue;
-                        }
-
-                        var data = JsonConvert.DeserializeObject<ExtensionManifest>(
-                            await manifest.ReadAllTextAsync());
-                        _extensions.Add(directory.Path, data);
-                        Extensions.Add(data);
-                    }
-                }
-            }
         }
 
         private async Task<ScriptEngine> GetScriptEngineAsync(string path)
@@ -111,5 +58,52 @@ namespace iHentai.Extensions
             _cacheEngines.Add(path, engine);
             return engine;
         }
+
+        public async Task Reload()
+        {
+            _cacheApis.Clear();
+            _extensions.Clear();
+            Extensions.Clear();
+            Init();
+        }
+
+        public virtual async Task Init()
+        {
+            var extension = await GetExtensions();
+            foreach (var (key, value) in extension)
+            {
+                AddOrUpgradeExtension(key, value);
+            }
+        }
+
+        protected void AddOrUpgradeExtension(string path, ExtensionManifest manifest)
+        {
+            if (_extensions.ContainsKey(path))
+            {
+                var current = _extensions[path];
+                _extensions[path] = manifest;
+                Extensions.Remove(current);
+                Extensions.Add(manifest);
+                _cacheEngines.Remove(path);
+                _cacheApis.Remove(current);
+            }
+            else
+            {
+                _extensions.Add(path, manifest);
+                Extensions.Add(manifest);
+            }
+        }
+
+        protected void RemoveExtension(string path)
+        {
+            var current = _extensions[path];
+            _extensions.Remove(path);
+            Extensions.Remove(current);
+            _cacheEngines.Remove(path);
+            _cacheApis.Remove(current);
+        }
+
+        protected abstract Task<Dictionary<string, ExtensionManifest>> GetExtensions();
+
     }
 }

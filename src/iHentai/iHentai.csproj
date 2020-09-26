@@ -147,7 +147,11 @@
     <Compile Include="Extensions\Common\JSValueExtensions.cs" />
     <Compile Include="Extensions\Common\PathHelper.cs" />
     <Compile Include="Extensions\ExtensionManager.cs" />
+    <Compile Include="Extensions\IExtensionManager.cs" />
+    <Compile Include="Extensions\LocalExtensionManager.cs" />
     <Compile Include="Extensions\Models\ExtensionManifest.cs" />
+    <Compile Include="Extensions\NetworkExtensionManager.cs" />
+    <Compile Include="Extensions\Models\NetworkExtensionModel.cs" />
     <Compile Include="Extensions\Runtime\Fetch.cs" />
     <Compile Include="Extensions\Runtime\Html\HtmlElement.cs" />
     <Compile Include="Extensions\Runtime\LocalStorage.cs" />
@@ -157,6 +161,9 @@
     <Compile Include="HentaiApp.cs" />
     <Compile Include="Pages\Extensions\ExtensionsListPage.xaml.cs">
       <DependentUpon>ExtensionsListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Extensions\ExtensionStorePage.xaml.cs">
+      <DependentUpon>ExtensionStorePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -317,6 +324,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Pages\Extensions\ExtensionsListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Extensions\ExtensionStorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

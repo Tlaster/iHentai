@@ -24,7 +24,8 @@
             <controls:NavigationView.MenuItems>
                 <controls:NavigationViewItem x:Uid="LocalLibraryMenu" Icon="Folder" Tag="Local.LocalLibraryPage" />
                 <controls:NavigationViewItem Visibility="{x:Bind common:SettingsManager.Instance.EnableExtension}"
-                                             x:Uid="ExtensionLibraryMenu" Icon="Globe" SelectsOnInvoked="False"
+                                             x:Uid="ExtensionLibraryMenu" Icon="Globe"
+                                             Tag="Extensions.ExtensionsListPage"
                                              x:Name="ExtensionMenuItem" />
                 <controls:NavigationViewItem Visibility="Collapsed" x:Uid="FavoriteLibraryMenu" Icon="Favorite" />
                 <controls:NavigationViewItem Visibility="Collapsed" x:Uid="DownloadLibraryMenu" Icon="Download" />

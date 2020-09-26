@@ -44,6 +44,7 @@ namespace iHentai.Pages.Script
             if (result == 200)
             {
                 Frame.Navigate(typeof(ScriptGalleryPage), new ScriptGalleryViewModel(ViewModel.Api));
+                Frame.BackStack.Clear();
             }
             else
             {

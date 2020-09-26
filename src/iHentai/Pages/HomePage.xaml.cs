@@ -38,6 +38,7 @@ namespace iHentai.Pages
                 UpdateMenuItems();
             };
             UpdateMenuItems();
+            ExtensionMenuItem.SelectsOnInvoked = this.Resolve<IExtensionManager>() is INetworkExtensionManager;
             RootNavigationView.SelectedItem = RootNavigationView.MenuItems[0];
             CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
         }
@@ -82,7 +83,6 @@ namespace iHentai.Pages
                         RootFrame.BackStack.Clear();
                         break;
                     case ExtensionManifest value:
-
                         var api = await this.Resolve<IExtensionManager>().GetApi(value);
                         if (api != null)
                         {

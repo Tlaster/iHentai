@@ -135,6 +135,9 @@
   <data name="AppDesc.Text" xml:space="preserve">
     <value>iHentai是在AGPL-3.0协议下的开源软件</value>
   </data>
+  <data name="BrowserNetworkExtensionAppBarButton.Label" xml:space="preserve">
+    <value>安装</value>
+  </data>
   <data name="DownloadLibraryMenu.Content" xml:space="preserve">
     <value>下载</value>
   </data>
@@ -144,11 +147,17 @@
   <data name="ExtensionLibraryMenu.Content" xml:space="preserve">
     <value>扩展源</value>
   </data>
+  <data name="ExtensionText.Text" xml:space="preserve">
+    <value>扩展</value>
+  </data>
   <data name="FavoriteLibraryMenu.Content" xml:space="preserve">
     <value>收藏</value>
   </data>
   <data name="GalleryDetailImageShowAllText.Text" xml:space="preserve">
     <value>显示全部</value>
+  </data>
+  <data name="InstalledExtension.Text" xml:space="preserve">
+    <value>已安装扩展</value>
   </data>
   <data name="LocalGalleryFolder.Text" xml:space="preserve">
     <value>本地漫画库</value>
