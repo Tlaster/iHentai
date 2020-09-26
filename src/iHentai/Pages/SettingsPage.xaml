@@ -58,6 +58,11 @@
 
                 <Border Height="16" />
 
+                <StackPanel Visibility="{x:Bind common:SettingsManager.Instance.EnableExtension}">
+                    <ToggleSwitch Header="使用本地扩展" IsOn="{x:Bind common:SettingsManager.Instance.UseLocalExtension, Mode=TwoWay}" />
+                    <Border Height="16" />
+                </StackPanel>
+
                 <StackPanel x:Name="LocalExtensionFolder">
                     <TextBlock x:Uid="ExtensionFolder" Text="扩展安装文件夹" />
                     <Border Height="8" />

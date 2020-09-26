@@ -49,13 +49,15 @@ namespace iHentai
             this.Register<IPlatformService, PlatformService>();
             if (SettingsManager.Instance.EnableExtension)
             {
-                this.Register<IExtensionManager, NetworkExtensionManager>();
+                if (SettingsManager.Instance.UseLocalExtension)
+                {
+                    this.Register<IExtensionManager, LocalExtensionManager>();
+                }
+                else
+                {
+                    this.Register<IExtensionManager, NetworkExtensionManager>();
+                }
                 this.Resolve<IExtensionManager>().Init();
-//#if DEBUG
-//            this.Register<IExtensionManager, LocalExtensionManager>();
-//#else
-//            this.Register<IExtensionManager, NetworkExtensionManager>();
-//#endif
             }
             var sevenZipPath = (RuntimeInformation.ProcessArchitecture) switch
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using iHentai.Data;
 using iHentai.Extensions;
@@ -38,6 +39,16 @@ namespace iHentai.Common
         {
             get => SettingsDb.Instance.Get("enable_extension", false);
             set => SettingsDb.Instance.Set("enable_extension", value);
+        }
+
+        public bool UseLocalExtension
+        {
+            get => SettingsDb.Instance.Get("use_local_extension", false);
+            set
+            {
+                SettingsDb.Instance.Set("use_local_extension", value);
+                CoreApplication.RequestRestartAsync(string.Empty);
+            }
         }
 
         public event EventHandler<ElementTheme>? ThemeChanged;
