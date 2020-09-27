@@ -33,12 +33,16 @@ namespace iHentai.Pages
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            this.Resolve<IExtensionManager>().Extensions.CollectionChanged += (sender, args) =>
+            var manager = this.Resolve<IExtensionManager?>();
+            if (manager != null)
             {
+                manager.Extensions.CollectionChanged += (sender, args) =>
+                {
+                    UpdateMenuItems();
+                };
                 UpdateMenuItems();
-            };
-            UpdateMenuItems();
-            ExtensionMenuItem.SelectsOnInvoked = this.Resolve<IExtensionManager>() is INetworkExtensionManager;
+                ExtensionMenuItem.SelectsOnInvoked = manager is INetworkExtensionManager;
+            }
             RootNavigationView.SelectedItem = RootNavigationView.MenuItems[0];
             CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
         }
