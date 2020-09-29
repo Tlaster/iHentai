@@ -7,10 +7,11 @@
   <a href="https://github.com/Tlaster/iHentai/pulse" alt="Activity">
     <img src="https://img.shields.io/github/commit-activity/m/Tlaster/iHentai?style=flat-square" />
   </a>
+  <a href="https://lgtm.com/projects/g/Tlaster/iHentai/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/Tlaster/iHentai.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
 </p>
 <br/>
 <p align="center" >
-<img src="images\logo.png" width="350"/>
+<img src="images/logo.png" width="350"/>
 </p>
 <p align="center">
   <a href='https://www.microsoft.com/store/apps/9NL967LKW3BQ'><img
