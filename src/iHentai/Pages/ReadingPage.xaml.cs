@@ -28,7 +28,8 @@ namespace iHentai.Pages
             _titleBar.IsVisibleChanged += TitleBarOnIsVisibleChanged;
             SharedShadow.Receivers.Add(ShadowBackgroundGrid);
         }
-
+        
+        public bool HasChapterControl => ViewModel is IChapterReadingViewModel;
         internal ReadingViewModel ViewModel { get; private set; }
 
         private void TitleBarOnIsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
@@ -154,6 +155,48 @@ namespace iHentai.Pages
             else
             {
                 ViewModel.Previous();
+            }
+        }
+
+        private void OnLeftChapterClicked(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel is IChapterReadingViewModel chapterReadingViewModel)
+            {
+                if (ViewModel.FlowDirection == FlowDirection.LeftToRight)
+                {
+                    if (chapterReadingViewModel.HasPrevious)
+                    {
+                        chapterReadingViewModel.GoPrevious();
+                    }
+                }
+                else
+                {
+                    if (chapterReadingViewModel.HasNext)
+                    {
+                        chapterReadingViewModel.GoNext();
+                    }
+                }
+            }
+        }
+
+        private void OnRightChapterClicked(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel is IChapterReadingViewModel chapterReadingViewModel)
+            {
+                if (ViewModel.FlowDirection == FlowDirection.LeftToRight)
+                {
+                    if (chapterReadingViewModel.HasNext)
+                    {
+                        chapterReadingViewModel.GoNext();
+                    }
+                }
+                else
+                {
+                    if (chapterReadingViewModel.HasPrevious)
+                    {
+                        chapterReadingViewModel.GoPrevious();
+                    }
+                }
             }
         }
     }

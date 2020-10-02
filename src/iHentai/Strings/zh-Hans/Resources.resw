@@ -186,6 +186,9 @@
   <data name="ReadButton.Content" xml:space="preserve">
     <value>阅读</value>
   </data>
+  <data name="ReadingChapterSelectAppBarButton.Label" xml:space="preserve">
+    <value>章节</value>
+  </data>
   <data name="ReadingDirectionAppBarButton.Label" xml:space="preserve">
     <value>阅读方向</value>
   </data>

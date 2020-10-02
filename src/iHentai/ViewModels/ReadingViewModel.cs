@@ -39,7 +39,7 @@ namespace iHentai.ViewModels
             IsLoading = false;
         }
 
-        public string? Title { get; }
+        public string? Title { get; protected set; }
 
         public bool IsLoading { get; private set; }
 

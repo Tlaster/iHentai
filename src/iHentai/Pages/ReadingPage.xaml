@@ -13,6 +13,8 @@
     xmlns:viewModels="using:iHentai.ViewModels"
     xmlns:readingImages="using:iHentai.ReadingImages"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+    xmlns:pages="using:iHentai.Pages"
+    xmlns:core="using:iHentai.Services.Models.Core"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ReadingViewModel}"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
@@ -253,11 +255,35 @@
                         <SymbolIcon Symbol="Back" />
                     </Button>
                     <Grid Width="16" />
-                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title}" VerticalAlignment="Center" />
+                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title, Mode=OneWay}" VerticalAlignment="Center" />
                 </StackPanel>
 
                 <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent"
                             VerticalContentAlignment="Center" DefaultLabelPosition="Right">
+                    <AppBarButton x:Uid="ReadingChapterSelectAppBarButton" Label="章节" Visibility="{x:Bind HasChapterControl}">
+                        <AppBarButton.Icon>
+                            <icon:IconView Icon="List"/>
+                        </AppBarButton.Icon>
+                        <AppBarButton.Flyout>
+                            <Flyout Placement="Bottom">
+                                <views:Optional When="{x:Bind HasChapterControl}" Content="{x:Bind}">
+                                    <views:Optional.ContentTemplate>
+                                        <DataTemplate x:DataType="pages:ReadingPage">
+                                            <ListView MaxHeight="300" MinWidth="200" ItemsSource="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.Chapters)}"
+                                                      SelectionMode="Single"
+                                                      SelectedItem="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.CurrentChapter), Mode=TwoWay}">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="core:IMangaChapter">
+                                                        <TextBlock Text="{x:Bind Title}"/>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </DataTemplate>
+                                    </views:Optional.ContentTemplate>
+                                </views:Optional>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
                     <AppBarButton x:Uid="ReadingModeAppBarButton" Label="阅读模式">
                         <AppBarButton.Icon>
                             <icon:IconView Icon="Page" />
@@ -355,15 +381,36 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="OnLeftClicked">
+                        <views:Optional When="{x:Bind HasChapterControl}" Content="{x:Bind}">
+                            <views:Optional.ContentTemplate>
+                                <DataTemplate x:DataType="pages:ReadingPage">
+                                    <Button Style="{ThemeResource ActionButtonStyle}"
+                                            Click="OnLeftChapterClicked">
+                                        <icon:IconView Icon="Previous" />
+                                    </Button>
+                                </DataTemplate>
+                            </views:Optional.ContentTemplate>
+                        </views:Optional>
+                        <Button Style="{ThemeResource ActionButtonStyle}" Click="OnLeftClicked">
                             <icon:IconView Icon="ChevronLeft" />
                         </Button>
-                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}">
+                        <Button Style="{ThemeResource ActionButtonStyle}">
                             <icon:IconView Icon="Play" />
                         </Button>
-                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}" Click="OnRightClicked">
+                        <Button Style="{ThemeResource ActionButtonStyle}" 
+                                Click="OnRightClicked">
                             <icon:IconView Icon="ChevronRight" />
                         </Button>
+                        <views:Optional When="{x:Bind HasChapterControl}" Content="{x:Bind}">
+                            <views:Optional.ContentTemplate>
+                                <DataTemplate x:DataType="pages:ReadingPage">
+                                    <Button Style="{ThemeResource ActionButtonStyle}"
+                                            Click="OnRightChapterClicked">
+                                        <icon:IconView Icon="Next" />
+                                    </Button>
+                                </DataTemplate>
+                            </views:Optional.ContentTemplate>
+                        </views:Optional>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" Padding="0,0,8,4">
                         <TextBlock Text="{x:Bind ViewModel.SelectedIndex, Mode=OneWay}" />
