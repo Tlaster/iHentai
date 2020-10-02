@@ -266,10 +266,15 @@
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <Flyout Placement="Bottom">
+                                <Flyout.FlyoutPresenterStyle >
+                                    <Style TargetType= "FlyoutPresenter" >
+                                        <Setter Property = "Padding" Value = "0" />
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle >
                                 <views:Optional When="{x:Bind HasChapterControl}" Content="{x:Bind}">
                                     <views:Optional.ContentTemplate>
                                         <DataTemplate x:DataType="pages:ReadingPage">
-                                            <ListView MaxHeight="300" MinWidth="200" ItemsSource="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.Chapters)}"
+                                            <ListView MaxHeight="450" MinWidth="200" ItemsSource="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.Chapters)}"
                                                       SelectionMode="Single"
                                                       SelectedItem="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.CurrentChapter), Mode=TwoWay}">
                                                 <ListView.ItemTemplate>
