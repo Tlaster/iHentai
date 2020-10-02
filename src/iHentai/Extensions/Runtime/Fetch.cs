@@ -167,7 +167,7 @@ namespace iHentai.Extensions.Runtime
     {
         [JsonProperty("method")]
         public string? Method { get; set; }
-        [JsonProperty("Referrer")]
+        [JsonProperty("referrer")]
         public string? Referrer { get; set; }
         [JsonProperty("headers")]
         public Dictionary<string, string>? Headers { get; set; }
