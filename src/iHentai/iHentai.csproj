@@ -217,6 +217,7 @@
     <Compile Include="ViewModels\Archive\PdfReadingViewModel.cs" />
     <Compile Include="Common\Extensions\StorageFileExtensions.cs" />
     <Compile Include="ViewModels\Extensions\ExtensionsListViewModel.cs" />
+    <Compile Include="ViewModels\IChapterReadingViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryReadingViewModel.cs" />
     <Compile Include="ViewModels\Local\LocalLibraryViewModel.cs" />
     <Compile Include="ViewModels\ReadingViewModel.cs" />
@@ -364,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RootView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Button_themeresources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
