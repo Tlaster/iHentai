@@ -162,14 +162,15 @@
                     </DataTemplate>
                 </views:Optional.ContentTemplate>
             </views:Optional>
-            <views:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}" >
+            <views:Optional Content="{x:Bind ViewModel,Mode=OneWay}" When="{x:Bind ViewModel.IsListMode, Mode=OneWay}">
                 <views:Optional.ContentTemplate>
                     <DataTemplate x:DataType="viewModels:ReadingViewModel">
                         <ScrollViewer ZoomMode="Enabled" HorizontalScrollMode="Auto"
                                       HorizontalAlignment="Stretch"
                                       HorizontalContentAlignment="Center"
                                       HorizontalScrollBarVisibility="Auto">
-                            <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}" HorizontalAlignment="Center">
+                            <controls:ItemsRepeater ItemsSource="{x:Bind Images, Mode=OneWay}"
+                                                    HorizontalAlignment="Center">
                                 <controls:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="readingImages:IReadingImage">
                                         <Grid Background="Transparent">
@@ -218,10 +219,11 @@
             <Grid Grid.Column="2" Background="Transparent" extensions:Mouse.Cursor="Hand" Tapped="OnNextClicked" />
         </Grid>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind helpers:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}">
-            <icon:IconView Icon="Error" FontSize="50"/>
-            <Grid Height="16"/>
-            <TextBlock x:Uid="ReadingLoadingErrorText"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Visibility="{x:Bind helpers:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}">
+            <icon:IconView Icon="Error" FontSize="50" />
+            <Grid Height="16" />
+            <TextBlock x:Uid="ReadingLoadingErrorText" />
         </StackPanel>
 
 
@@ -255,31 +257,34 @@
                         <SymbolIcon Symbol="Back" />
                     </Button>
                     <Grid Width="16" />
-                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title, Mode=OneWay}" VerticalAlignment="Center" />
+                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title, Mode=OneWay}"
+                               VerticalAlignment="Center" />
                 </StackPanel>
 
                 <CommandBar Grid.Row="1" Grid.Column="2" OverflowButtonVisibility="Collapsed" Background="Transparent"
                             VerticalContentAlignment="Center" DefaultLabelPosition="Right">
-                    <AppBarButton x:Uid="ReadingChapterSelectAppBarButton" Label="章节" Visibility="{x:Bind HasChapterControl}">
+                    <AppBarButton x:Uid="ReadingChapterSelectAppBarButton" Label="章节"
+                                  Visibility="{x:Bind HasChapterControl}">
                         <AppBarButton.Icon>
-                            <icon:IconView Icon="List"/>
+                            <icon:IconView Icon="List" />
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <Flyout Placement="Bottom">
-                                <Flyout.FlyoutPresenterStyle >
-                                    <Style TargetType= "FlyoutPresenter" >
-                                        <Setter Property = "Padding" Value = "0" />
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0" />
                                     </Style>
-                                </Flyout.FlyoutPresenterStyle >
+                                </Flyout.FlyoutPresenterStyle>
                                 <views:Optional When="{x:Bind HasChapterControl}" Content="{x:Bind}">
                                     <views:Optional.ContentTemplate>
                                         <DataTemplate x:DataType="pages:ReadingPage">
-                                            <ListView MaxHeight="450" MinWidth="200" ItemsSource="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.Chapters)}"
+                                            <ListView MaxHeight="450" MinWidth="200"
+                                                      ItemsSource="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.Chapters)}"
                                                       SelectionMode="Single"
                                                       SelectedItem="{x:Bind ViewModel.(viewModels:IChapterReadingViewModel.CurrentChapter), Mode=TwoWay}">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="core:IMangaChapter">
-                                                        <TextBlock Text="{x:Bind Title}"/>
+                                                        <TextBlock Text="{x:Bind Title}" />
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
@@ -295,7 +300,8 @@
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeBookCoverFirst" Text="双页，第一页封面" GroupName="ViewMode"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingModeBookCoverFirst" Text="双页，第一页封面"
+                                                              GroupName="ViewMode"
                                                               IsChecked="{x:Bind ViewModel.IsBookCoverFirstMode, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="TwoPage" />
@@ -328,13 +334,15 @@
                         </AppBarButton.Icon>
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionLTR" Text="左→右" GroupName="ViewDirection"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionLTR" Text="左→右"
+                                                              GroupName="ViewDirection"
                                                               IsChecked="{x:Bind ViewModel.IsLTR, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="PageRight" />
                                     </controls:RadioMenuFlyoutItem.Icon>
                                 </controls:RadioMenuFlyoutItem>
-                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionRTL" Text="右→左" GroupName="ViewDirection"
+                                <controls:RadioMenuFlyoutItem x:Uid="ReadingDirectionRTL" Text="右→左"
+                                                              GroupName="ViewDirection"
                                                               IsChecked="{x:Bind ViewModel.IsRTL, Mode=TwoWay}">
                                     <controls:RadioMenuFlyoutItem.Icon>
                                         <icon:IconView Icon="PageLeft" />
@@ -402,7 +410,7 @@
                         <Button Style="{ThemeResource ActionButtonStyle}">
                             <icon:IconView Icon="Play" />
                         </Button>
-                        <Button Style="{ThemeResource ActionButtonStyle}" 
+                        <Button Style="{ThemeResource ActionButtonStyle}"
                                 Click="OnRightClicked">
                             <icon:IconView Icon="ChevronRight" />
                         </Button>
