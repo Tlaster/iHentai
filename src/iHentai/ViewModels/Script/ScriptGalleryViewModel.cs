@@ -20,7 +20,12 @@ namespace iHentai.ViewModels.Script
         {
             Api = api;
             _loadFunc = page => Api.Home(page);
-            Source = new IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery>(this);
+            Source = new IncrementalLoadingCollection<IIncrementalSource<IGallery>, IGallery>(this, onError: OnLoadError);
+        }
+
+        private void OnLoadError(Exception obj)
+        {
+            
         }
 
         public ScriptApi Api { get; private set; }
