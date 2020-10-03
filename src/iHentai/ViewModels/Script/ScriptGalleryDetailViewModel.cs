@@ -14,7 +14,7 @@ namespace iHentai.ViewModels.Script
         {
             Api = api;
             Gallery = gallery;
-            Init();
+            Refresh();
         }
 
         public bool IsLoading { get; private set; }
@@ -29,7 +29,7 @@ namespace iHentai.ViewModels.Script
         [DependsOn(nameof(Gallery), nameof(Detail))]
         public string Thumb => Detail?.Thumb ?? Gallery?.Thumb ?? "";
 
-        private async void Init()
+        public async Task Refresh()
         {
             IsLoading = true;
             try

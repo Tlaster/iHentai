@@ -85,5 +85,11 @@ namespace iHentai.Pages.Script
                 Frame.Navigate(typeof(ScriptGalleryImagesPage), new ScriptGalleryImagesViewModel(ViewModel.Detail.Images));
             }
         }
+
+        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            ViewModel.Refresh();
+        }
     }
 }
