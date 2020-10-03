@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI.Xaml.Media;
 using iHentai.Common.Helpers;
 using iHentai.ReadingImages;
 using iHentai.Services;
 using iHentai.Services.Models.Script;
 using Microsoft.Toolkit.Uwp.UI;
+using Newtonsoft.Json;
 
 namespace iHentai.ViewModels.Script
 {
@@ -30,7 +30,19 @@ namespace iHentai.ViewModels.Script
 
         protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
-            var files = await Api.GalleryImagePages(Detail);
+            List<string> files;
+            if (Detail.Id != null)
+            {
+                files = await ScriptImageListCache.Instance.GetFromCacheAsync($"{Api.Id}_{Detail.Id}", Task.Run<Stream>(async () =>
+                {
+                    var result = await Api.GalleryImagePages(Detail);
+                    return new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result)));
+                }));
+            }
+            else
+            {
+                files = await Api.GalleryImagePages(Detail);
+            }
             return files.Select((it, index) => new ScriptGalleryReadingImage(it, Api, index + 1)).ToList();
         }
     }
@@ -68,22 +80,6 @@ namespace iHentai.ViewModels.Script
 
             return await ProgressImageCache.Instance.GetFromCacheAsync(new Uri(src), cancellationToken: token,
                 progress: this);
-        }
-    }
-
-    internal class ScriptGalleryReadingImageCache : CacheBase2<string>
-    {
-        public static ScriptGalleryReadingImageCache Instance { get; } = new ScriptGalleryReadingImageCache();
-        protected override async Task<string> InitializeTypeAsync(Stream stream, List<KeyValuePair<string, object>> initializerKeyValues = null)
-        {
-            var reader = new StreamReader(stream);
-            return await reader.ReadToEndAsync();
-        }
-
-        protected override async Task<string> InitializeTypeAsync(StorageFile baseFile, List<KeyValuePair<string, object>> initializerKeyValues = null)
-        {
-            using var stream = await baseFile.OpenStreamForReadAsync();
-            return await InitializeTypeAsync(stream, initializerKeyValues);
         }
     }
 }

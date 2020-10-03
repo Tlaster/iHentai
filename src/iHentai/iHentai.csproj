@@ -224,9 +224,11 @@
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryDetailViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryImagesViewModel.cs" />
+    <Compile Include="Common\Helpers\ScriptGalleryReadingImageCache.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryReadingViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptGalleryViewModel.cs" />
     <Compile Include="ViewModels\Script\ScriptChapterReadingViewModel.cs" />
+    <Compile Include="Common\Helpers\ScriptImageListCache.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AspectRatioView.cs" />

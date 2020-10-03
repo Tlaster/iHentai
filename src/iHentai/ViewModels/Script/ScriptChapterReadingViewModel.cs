@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using iHentai.Common.Helpers;
 using iHentai.ReadingImages;
 using iHentai.Services;
 using iHentai.Services.Models.Core;
 using iHentai.Services.Models.Script;
 using iHentai.ViewModels.Local;
+using Newtonsoft.Json;
 using PropertyChanged;
 
 namespace iHentai.ViewModels.Script
@@ -40,7 +44,19 @@ namespace iHentai.ViewModels.Script
 
         protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
-            var files = await Api.ChapterImages(Chapter);
+            List<string> files;
+            if (Chapter.Id != null && Detail.Id != null)
+            {
+                files = await ScriptImageListCache.Instance.GetFromCacheAsync($"{Api.Id}_{Detail.Id}_{Chapter.Id}", Task.Run<Stream>(async () =>
+                {
+                    var result = await Api.ChapterImages(Chapter);
+                    return new MemoryStream(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result)));
+                }));
+            }
+            else
+            {
+                files = await Api.ChapterImages(Chapter);
+            }
             return files.Select((it, index) => new ReadingImage(it, index + 1)).ToList();
         }
 
