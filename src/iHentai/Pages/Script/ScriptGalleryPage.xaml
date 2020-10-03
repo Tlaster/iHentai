@@ -7,6 +7,10 @@
     xmlns:views="using:iHentai.Views"
     xmlns:core="using:iHentai.Services.Models.Core"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helper="using:iHentai.Common.Helpers"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:icon="using:Bug10.Icon"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -50,5 +54,18 @@
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.ShowLoadingState, Mode=OneWay}">
+            <controls:ProgressRing Width="50" Height="50" 
+                                   IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                                   Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay}" />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay, FallbackValue=Collapsed}"
+                        Tapped="UIElement_OnTapped"
+                        extensions:Mouse.Cursor="Hand">
+                <icon:IconView Icon="Error" FontSize="50"/>
+                <Grid Height="16"/>
+                <TextBlock x:Uid="ReadingLoadingErrorText"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

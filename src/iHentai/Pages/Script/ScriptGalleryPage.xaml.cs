@@ -60,5 +60,10 @@ namespace iHentai.Pages.Script
                 ViewModel.Reset();
             }
         }
+
+        private void UIElement_OnTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            ViewModel.Reset();
+        }
     }
 }
