@@ -50,6 +50,7 @@ namespace iHentai.Pages
         void UpdateMenuItems()
         {
             ExtensionMenuItem.MenuItemsSource = this.Resolve<IExtensionManager>().Extensions
+                .OrderBy(it => it.Name)
                 .Select(it => new NavigationViewItem
                 {
                     Tag = it,

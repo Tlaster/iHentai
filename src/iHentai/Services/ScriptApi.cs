@@ -21,6 +21,9 @@ namespace iHentai.Services
         private readonly string _extensionId;
         private readonly ExtensionManifest _manifest;
 
+        public string? Name => _manifest.Name;
+        public string Id => _extensionId;
+
         public ScriptApi(ScriptEngine engine, string extensionId, ExtensionManifest manifest)
         {
             _engine = engine;

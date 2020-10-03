@@ -30,7 +30,9 @@ namespace iHentai.Extensions
                 {
                     NetworkExtension.Add(item);
                 }
-                foreach (var manifest in Extensions)
+
+                var copy = Extensions.ToList();
+                foreach (var manifest in copy)
                 {
                     var update = remote.FirstOrDefault(it => it.Name == manifest.Name && it.Version != manifest.Version);
                     if (update != null)
