@@ -58,6 +58,7 @@
         </StackPanel>
         
         <StackPanel Grid.Row="1" Grid.Column="1"
+                    Canvas.ZIndex="100"
                     Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}"
                     Tapped="UIElement_OnTapped"
