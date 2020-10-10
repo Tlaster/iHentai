@@ -5,6 +5,10 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using iHentai.Common;
 using iHentai.Common.Helpers;
+using iHentai.Data;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Uwp.UI;
 
 namespace iHentai
@@ -14,10 +18,13 @@ namespace iHentai
         public App()
         {
             InitializeComponent();
+            AppCenter.Start("8ab592bb-9953-4ecc-a72a-7cf799f92903",
+                typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
             if (!(Window.Current.Content is RootView rootView))
             {
                 rootView = new RootView();

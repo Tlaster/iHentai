@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using iHentai.Data;
+using iHentai.Data.Models;
 using iHentai.ReadingImages;
+using iHentai.Services.Models.Core;
 using PropertyChanged;
 
 namespace iHentai.ViewModels
@@ -25,6 +27,7 @@ namespace iHentai.ViewModels
             try
             {
                 Images = await InitImages();
+                SelectedIndex = RestoreReadingProgress();
             }
             catch (Exception exception)
             {
@@ -38,6 +41,9 @@ namespace iHentai.ViewModels
             }
             IsLoading = false;
         }
+
+        public abstract void SaveReadingHistory();
+        protected abstract int RestoreReadingProgress();
 
         public string? Title { get; protected set; }
 

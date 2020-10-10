@@ -32,6 +32,7 @@ namespace iHentai.ViewModels.Script
         public async Task Refresh()
         {
             IsLoading = true;
+            Error = null;
             try
             {
                 Detail = await Api.Detail(Gallery);

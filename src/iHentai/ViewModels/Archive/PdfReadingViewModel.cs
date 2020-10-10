@@ -23,6 +23,16 @@ namespace iHentai.ViewModels.Archive
 
         public StorageFile File { get; }
 
+        public override void SaveReadingHistory()
+        {
+            
+        }
+
+        protected override int RestoreReadingProgress()
+        {
+            return 0;
+        }
+
         protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
             var doc = await PdfDocument.LoadFromFileAsync(File);

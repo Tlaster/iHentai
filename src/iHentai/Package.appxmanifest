@@ -9,15 +9,15 @@
   IgnorableNamespaces="uap mp desktop4 iot2">
 
   <Identity
-    Name="0c8533d9-a6e9-4fc5-8a83-57cabd4a14e9"
-    Publisher="CN=Asahi"
-    Version="1.0.0.0" />
+    Name="51945Tlaster.iHentai"
+    Publisher="CN=F82B0EE7-EF8D-4515-BEAB-DD968D07D67F"
+    Version="1.0.4.0" />
 
-  <mp:PhoneIdentity PhoneProductId="0c8533d9-a6e9-4fc5-8a83-57cabd4a14e9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="801ed04d-5ff5-4565-ab21-03f6f96ef0f4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>iHentai</DisplayName>
-    <PublisherDisplayName>Asahi</PublisherDisplayName>
+    <PublisherDisplayName>Tlaster</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

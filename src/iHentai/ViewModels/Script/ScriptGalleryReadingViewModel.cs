@@ -6,7 +6,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
+using iHentai.Common;
 using iHentai.Common.Helpers;
+using iHentai.Data;
+using iHentai.Data.Models;
 using iHentai.ReadingImages;
 using iHentai.Services;
 using iHentai.Services.Models.Script;
@@ -27,6 +30,38 @@ namespace iHentai.ViewModels.Script
         public ScriptApi Api { get; set; }
 
         public ScriptGalleryDetailModel Detail { get; }
+
+        public override void SaveReadingHistory()
+        {
+            ReadingHistoryDb.Instance.AddOrUpdate(
+                Detail.Title,
+                Detail.Thumb,
+                Detail.Id,
+                GalleryType.Script,
+                new ScriptGalleryHistoryExtra
+                {
+                    ExtensionId = Api.Id,
+                    GalleryId = Detail.Id,
+                    Progress = SelectedIndex,
+                }.ToJson(),
+                "ScriptGalleryHistoryExtra"
+                );
+        }
+
+        protected override int RestoreReadingProgress()
+        {
+            var item = ReadingHistoryDb.Instance.Source.FirstOrDefault(it =>
+                it.GalleryId == Detail.Id && it.GalleryType == GalleryType.Script &&
+                it.ExtraInstance is ScriptGalleryHistoryExtra extra && extra.ExtensionId == Api.Id);
+            if (item == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return (item.ExtraInstance as ScriptGalleryHistoryExtra)?.Progress ?? 0;
+            }
+        }
 
         protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {
@@ -66,11 +101,11 @@ namespace iHentai.ViewModels.Script
                 var result = await _api.GetImageFromImagePage(_link);
                 return new MemoryStream(Encoding.UTF8.GetBytes(result));
             }, token), cancellationToken: token);
-            
+
             if (removeCache)
             {
-                await ScriptGalleryReadingImageCache.Instance.RemoveAsync(new[] {_link});
-                await ProgressImageCache.Instance.RemoveAsync(new[] {new Uri(src), });
+                await ScriptGalleryReadingImageCache.Instance.RemoveAsync(new[] { _link });
+                await ProgressImageCache.Instance.RemoveAsync(new[] { new Uri(src), });
                 src = await ScriptGalleryReadingImageCache.Instance.GetFromCacheAsync(_link, Task.Run<Stream>(async () =>
                 {
                     var result = await _api.GetImageFromImagePage(_link);

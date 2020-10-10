@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using Windows.Storage;
 using iHentai.Common;
 using iHentai.Data;
 using iHentai.Extensions;

@@ -3,7 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iHentai.Common;
 using iHentai.Common.Helpers;
+using iHentai.Data;
+using iHentai.Data.Models;
 using iHentai.ReadingImages;
 using iHentai.Services;
 using iHentai.Services.Models.Core;
@@ -41,6 +44,55 @@ namespace iHentai.ViewModels.Script
         }
 
         public ScriptGalleryDetailModel Detail { get; }
+
+        public override void SaveReadingHistory()
+        {
+            var current = ReadingHistoryDb.Instance.Source.FirstOrDefault(it =>
+                it.GalleryId == Detail.Id && it.GalleryType == GalleryType.Script &&
+                it.ExtraInstance is ScriptGalleryChapterHistoryExtra extra && extra.ExtensionId == Api.Id)?.ExtraInstance as ScriptGalleryChapterHistoryExtra;
+            var currentChapters = current?.Chapters ?? new List<ScriptChapterHistoryExtra>();
+            if (currentChapters.Any(it => it.ChapterId == Chapter.Id))
+            {
+                currentChapters.FirstOrDefault(it => it.ChapterId == Chapter.Id).Progress = SelectedIndex;
+            }
+            else
+            {
+                currentChapters.Add(new ScriptChapterHistoryExtra
+                {
+                    ChapterId = Chapter.Id,
+                    Progress = SelectedIndex,
+                });
+            }
+            ReadingHistoryDb.Instance.AddOrUpdate(
+                Detail.Title,
+                Detail.Thumb,
+                Detail.Id,
+                GalleryType.Script,
+                new ScriptGalleryChapterHistoryExtra()
+                {
+                    ExtensionId = Api.Id,
+                    Chapters = currentChapters,
+                }.ToJson(),
+                "ScriptGalleryChapterHistoryExtra"
+            );
+        }
+
+        protected override int RestoreReadingProgress()
+        {
+            var item = ReadingHistoryDb.Instance.Source.FirstOrDefault(it =>
+                it.GalleryId == Detail.Id && it.GalleryType == GalleryType.Script &&
+                it.ExtraInstance is ScriptGalleryChapterHistoryExtra extra && extra.ExtensionId == Api.Id &&
+                extra.Chapters.Any(it => it.ChapterId == Chapter.Id));
+            if (item == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return (item.ExtraInstance as ScriptGalleryChapterHistoryExtra)?.Chapters
+                    ?.FirstOrDefault(it => it.ChapterId == Chapter.Id)?.Progress ?? 0;
+            }
+        }
 
         protected override async Task<IEnumerable<IReadingImage>> InitImages()
         {

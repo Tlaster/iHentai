@@ -74,6 +74,7 @@ namespace iHentai.Pages
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            ViewModel.SaveReadingHistory();
             _display.RequestRelease();
             _titleBar.IsVisibleChanged -= TitleBarOnIsVisibleChanged;
         }
