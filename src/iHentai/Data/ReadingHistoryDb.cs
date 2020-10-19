@@ -15,6 +15,7 @@ namespace iHentai.Data
 {
     class ReadingHistoryDb
     {
+        private readonly object _lock = new object();
         public static ReadingHistoryDb Instance { get; } = new ReadingHistoryDb();
         private string DbFile => Path.Combine(this.Resolve<IPlatformService>().LocalPath, "history.db");
         public ObservableCollection<ReadingHistoryModel> Source { get; }
@@ -26,62 +27,73 @@ namespace iHentai.Data
 
         public ReadingHistoryModel AddOrUpdate(string title, string thumb, string galleryId, GalleryType type, string extra, string extraType)
         {
-            using var db = new LiteDatabase(new ConnectionString
+            lock (_lock)
             {
-                Filename = DbFile,
-                Connection = ConnectionType.Shared,
-            });
-            var column = db.GetCollection<ReadingHistoryModel>();
-            var current = column.FindOne(it => it.GalleryId == galleryId);
-            if (current != null)
-            {
-                Update(current);
-                return current;
-            }
-            else
-            {
-                var item = new ReadingHistoryModel
+                using var db = new LiteDatabase(new ConnectionString
                 {
-                    GalleryId = galleryId,
-                    GalleryType = type,
-                    Extra = extra,
-                    ExtraType = extraType,
-                    ReadAt = DateTime.UtcNow,
-                    Title = title,
-                    Thumb = thumb,
-                };
+                    Filename = DbFile,
+                });
+                var column = db.GetCollection<ReadingHistoryModel>();
+                var current = column.FindOne(it => it.GalleryId == galleryId);
+                if (current != null)
+                {
+                    current.ReadAt = DateTime.UtcNow;
+                    current.Extra = extra;
+                    current.ExtraType = extraType;
+                    current.GalleryType = type;
+                    current.Thumb = thumb;
+                    current.Title = title;
+                    column.Update(current);
+                    var index = Source.IndexOf(Source.FirstOrDefault(it => it.GalleryId == galleryId));
+                    Source[index] = current;
+                    Source.Move(index, 0);
+                    return current;
+                }
+                else
+                {
+                    var item = new ReadingHistoryModel
+                    {
+                        GalleryId = galleryId,
+                        GalleryType = type,
+                        Extra = extra,
+                        ExtraType = extraType,
+                        ReadAt = DateTime.UtcNow,
+                        Title = title,
+                        Thumb = thumb,
+                    };
 
-                var id = column.Insert(item);
-                var result = column.FindById(id);
-                Source.Insert(0, result);
-                return result;
+                    var id = column.Insert(item);
+                    var result = column.FindById(id);
+                    Source.Insert(0, result);
+                    return result;
+                }
             }
         }
 
-        public void Update(ReadingHistoryModel model)
-        {
-            var index = Source.IndexOf(model);
-            model.ReadAt = DateTime.UtcNow;
-            using var db = new LiteDatabase(new ConnectionString
-            {
-                Filename = DbFile,
-                Connection = ConnectionType.Shared,
-            });
-            var column = db.GetCollection<ReadingHistoryModel>();
-            column.Update(model);
-            Source.Move(index, 0);
-        }
+        //public void Update(ReadingHistoryModel model)
+        //{
+        //    lock (_lock)
+        //    {
+        //        var index = Source.IndexOf(model);
+        //        model.ReadAt = DateTime.UtcNow;
+        //        using var db = new LiteDatabase(new ConnectionString
+        //        {
+        //            Filename = DbFile,
+        //        });
+        //    }
+        //}
 
         private List<ReadingHistoryModel> GetAll()
         {
-            //actual not work
-            using var db = new LiteDatabase(new ConnectionString
+            lock (_lock)
             {
-                Filename = DbFile,
-                Connection = ConnectionType.Shared,
-            });
-            var column = db.GetCollection<ReadingHistoryModel>();
-            return column.FindAll().OrderByDescending(it => it.ReadAt).ToList();
+                using var db = new LiteDatabase(new ConnectionString
+                {
+                    Filename = DbFile,
+                });
+                var column = db.GetCollection<ReadingHistoryModel>();
+                return column.FindAll().OrderByDescending(it => it.ReadAt).ToList();
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace iHentai.ViewModels.Script
                 new ScriptGalleryHistoryExtra
                 {
                     ExtensionId = Api.Id,
-                    GalleryId = Detail.Id,
+                    Detail = Detail.ToJson(),
                     Progress = SelectedIndex,
                 }.ToJson(),
                 "ScriptGalleryHistoryExtra"

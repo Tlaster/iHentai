@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using iHentai.Services.Models.Core;
@@ -21,11 +22,11 @@ namespace iHentai.Data.Models
         public string ExtraType { get; set; }
         public DateTime ReadAt { get; set; }
 
-        public object ExtraInstance
+        public object? ExtraInstance
         {
             get
             {
-                if (_extraInstance == null)
+                if (_extraInstance == null && Extra != null)
                 {
                     _extraInstance = ExtraType switch
                     {
@@ -50,7 +51,7 @@ namespace iHentai.Data.Models
     {
         public int Progress { get; set; }
         public string ExtensionId { get; set; }
-        public string GalleryId { get; set; }
+        public string Detail { get; set; }
     }
 
     class ScriptGalleryChapterHistoryExtra

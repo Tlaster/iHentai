@@ -75,6 +75,13 @@ namespace iHentai.Data
             return GetAll<LocalGalleryModel>();
         }
 
+        public LocalGalleryModel? FindGallery(string path)
+        {
+            using var db = new LiteDatabase(DbFile);
+            var column = db.GetCollection<LocalGalleryModel>();
+            return column.Exists(it => it.Path == path) ? column.FindOne(it => it.Path == path) : null;
+        }
+
         public void AddLocalGallery(LocalGalleryModel model)
         {
             using var db = new LiteDatabase(DbFile);

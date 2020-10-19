@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:common="using:iHentai.Common"
+    xmlns:icon="using:Bug10.Icon"
     mc:Ignorable="d mc">
     <Grid>
         <controls:NavigationView
@@ -27,6 +28,11 @@
                                              x:Uid="ExtensionLibraryMenu" Icon="Globe"
                                              Tag="Extensions.ExtensionsListPage"
                                              x:Name="ExtensionMenuItem" />
+                <controls:NavigationViewItem x:Uid="HistoryLibraryMenu" Tag="HistoryPage" >
+                    <controls:NavigationViewItem.Icon>
+                        <icon:IconView Icon="History"/>
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
                 <controls:NavigationViewItem Visibility="Collapsed" x:Uid="FavoriteLibraryMenu" Icon="Favorite" />
                 <controls:NavigationViewItem Visibility="Collapsed" x:Uid="DownloadLibraryMenu" Icon="Download" />
             </controls:NavigationView.MenuItems>

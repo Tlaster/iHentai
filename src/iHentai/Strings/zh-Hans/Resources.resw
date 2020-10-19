@@ -156,6 +156,9 @@
   <data name="GalleryDetailImageShowAllText.Text" xml:space="preserve">
     <value>显示全部</value>
   </data>
+  <data name="HistoryLibraryMenu.Content" xml:space="preserve">
+    <value>阅读历史</value>
+  </data>
   <data name="InstalledExtension.Text" xml:space="preserve">
     <value>已安装扩展</value>
   </data>

@@ -60,7 +60,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1"
                     Canvas.ZIndex="100"
                     Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay}"
+                    Visibility="{x:Bind helper:XamlHelper.NonNullToVisibility(ViewModel.Error), Mode=OneWay, FallbackValue=Collapsed}"
                     Tapped="UIElement_OnTapped"
                     extensions:Mouse.Cursor="Hand">
             <icon:IconView Icon="Error" FontSize="50"/>

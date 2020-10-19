@@ -12,6 +12,7 @@ namespace iHentai.Extensions
         Task<ScriptApi?> GetApi(ExtensionManifest manifest);
         Task Init();
         Task Reload();
+        Task<ScriptApi?> GetApiById(string extensionId);
     }
 
     public interface INetworkExtensionManager: IExtensionManager

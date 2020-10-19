@@ -156,6 +156,9 @@
   <data name="GalleryDetailImageShowAllText.Text" xml:space="preserve">
     <value>Show all</value>
   </data>
+  <data name="HistoryLibraryMenu.Content" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="InstalledExtension.Text" xml:space="preserve">
     <value>Installed extensions</value>
   </data>

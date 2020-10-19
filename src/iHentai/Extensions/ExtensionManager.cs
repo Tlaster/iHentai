@@ -67,6 +67,12 @@ namespace iHentai.Extensions
             Init();
         }
 
+        public async Task<ScriptApi?> GetApiById(string extensionId)
+        {
+            var manifest = _extensions.GetValueOrDefault(extensionId);
+            return manifest == null ? null : await GetApi(manifest);
+        }
+
         public virtual async Task Init()
         {
             var extension = await GetExtensions();
